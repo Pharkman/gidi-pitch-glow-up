@@ -1,4 +1,5 @@
 import { ArrowRight, Play } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import heroLaptop from '@/assets/hero-laptop-mockup.jpg';
 
 const HeroSection = () => {
@@ -26,15 +27,15 @@ const HeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-              <button className="btn-hero group">
+              <Button size="lg" className="group">
                 Try Free
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </Button>
               
-              <button className="btn-ghost group">
+              <Button variant="outline" size="lg" className="group">
                 <Play className="mr-2 h-5 w-5" />
                 See How It Works
-              </button>
+              </Button>
             </div>
 
             {/* Trust indicators */}
@@ -44,11 +45,11 @@ const HeroSection = () => {
                 No design skills needed
               </div>
               <div className="flex items-center">
-                <div className="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
                 Built for African founders
               </div>
               <div className="flex items-center">
-                <div className="w-2 h-2 bg-secondary rounded-full mr-2"></div>
+                <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
                 Pitch-ready in minutes
               </div>
             </div>
@@ -70,7 +71,7 @@ const HeroSection = () => {
               </div>
               
               <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-lg p-3 shadow-medium">
-                <div className="text-sm font-semibold text-accent">Financial Model</div>
+                <div className="text-sm font-semibold text-primary">Financial Model</div>
                 <div className="text-xs text-muted-foreground">3-year forecast</div>
               </div>
             </div>
