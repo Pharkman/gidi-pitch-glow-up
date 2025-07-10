@@ -1,0 +1,87 @@
+import { ArrowRight, Play } from 'lucide-react';
+import heroLaptop from '@/assets/hero-laptop-mockup.jpg';
+
+const HeroSection = () => {
+  return (
+    <section id="hero" className="relative min-h-screen flex items-center hero-bg overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Content */}
+          <div className="text-center lg:text-left animate-fade-in-up">
+            <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-6">
+              Build Your{' '}
+              <span className="text-gradient-primary">Investor Pitch</span>{' '}
+              in Minutes
+            </h1>
+            
+            <p className="text-xl lg:text-2xl text-muted-foreground mb-8 leading-relaxed">
+              GidiPitch helps African founders create pitch decks, financials, 
+              and resumes with AI. Get investor-ready in minutes, not weeks.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+              <button className="btn-hero group">
+                Try Free
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              
+              <button className="btn-ghost group">
+                <Play className="mr-2 h-5 w-5" />
+                See How It Works
+              </button>
+            </div>
+
+            {/* Trust indicators */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
+                No design skills needed
+              </div>
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                Built for African founders
+              </div>
+              <div className="flex items-center">
+                <div className="w-2 h-2 bg-secondary rounded-full mr-2"></div>
+                Pitch-ready in minutes
+              </div>
+            </div>
+          </div>
+
+          {/* Hero Image */}
+          <div className="relative animate-scale-in">
+            <div className="relative z-10">
+              <img 
+                src={heroLaptop} 
+                alt="GidiPitch Interface" 
+                className="w-full h-auto rounded-2xl shadow-strong animate-float"
+              />
+              
+              {/* Floating UI elements */}
+              <div className="absolute -top-4 -left-4 bg-card border border-border rounded-lg p-3 shadow-medium">
+                <div className="text-sm font-semibold text-primary">Pitch Deck</div>
+                <div className="text-xs text-muted-foreground">Generated in 2 min</div>
+              </div>
+              
+              <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-lg p-3 shadow-medium">
+                <div className="text-sm font-semibold text-accent">Financial Model</div>
+                <div className="text-xs text-muted-foreground">3-year forecast</div>
+              </div>
+            </div>
+
+            {/* Background glow */}
+            <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-2xl scale-110"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;

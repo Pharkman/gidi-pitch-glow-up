@@ -1,12 +1,25 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Navigation from '@/components/Navigation';
+import HeroSection from '@/components/HeroSection';
+import FeaturesSection from '@/components/FeaturesSection';
+import ProductPreview from '@/components/ProductPreview';
+import HowItWorks from '@/components/HowItWorks';
+import WhyGidiPitch from '@/components/WhyGidiPitch';
+import FAQ from '@/components/FAQ';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <main>
+        <HeroSection />
+        <FeaturesSection />
+        <ProductPreview />
+        <HowItWorks />
+        <WhyGidiPitch />
+        <FAQ />
+      </main>
+      <Footer />
     </div>
   );
 };
