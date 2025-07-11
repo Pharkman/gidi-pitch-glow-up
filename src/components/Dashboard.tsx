@@ -1,0 +1,357 @@
+import { useState } from 'react';
+import { 
+  Plus, 
+  FileText, 
+  User, 
+  BarChart3, 
+  Target, 
+  Users, 
+  Brain, 
+  Bell, 
+  ChevronDown,
+  Clock,
+  ArrowUpRight,
+  Sparkles,
+  FileUp,
+  Zap
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from '@/components/ui/dropdown-menu';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Separator } from '@/components/ui/separator';
+
+const Dashboard = () => {
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [selectedTool, setSelectedTool] = useState('');
+
+  const sidebarItems = [
+    { name: 'Dashboard', icon: BarChart3, active: true, available: true },
+    { name: 'Pitch Deck Generator', icon: FileText, active: false, available: true },
+    { name: 'Resume Builder', icon: User, active: false, available: true },
+    { name: 'Financial Forecast', icon: BarChart3, active: false, available: false },
+    { name: 'Market Estimator', icon: Target, active: false, available: false },
+    { name: 'YC Assistant', icon: Users, active: false, available: false },
+    { name: 'AI Coach', icon: Brain, active: false, available: false },
+  ];
+
+  const recentProjects = [
+    {
+      id: 1,
+      name: 'AgriTech Pitch Deck',
+      type: 'Pitch Deck',
+      lastEdited: '2 hours ago',
+      status: 'Draft'
+    },
+    {
+      id: 2,
+      name: 'Founder Resume',
+      type: 'Resume',
+      lastEdited: '1 day ago',
+      status: 'Complete'
+    },
+    {
+      id: 3,
+      name: 'Series A Deck',
+      type: 'Pitch Deck',
+      lastEdited: '3 days ago',
+      status: 'In Progress'
+    }
+  ];
+
+  const handleCreateNew = (tool: string) => {
+    setSelectedTool(tool);
+    setShowCreateModal(true);
+  };
+
+  const handleStartCreation = (method: string) => {
+    console.log(`Starting ${selectedTool} with ${method}`);
+    setShowCreateModal(false);
+    // Here you would navigate to the respective tool
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Top Navigation */}
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+        <div className="flex h-16 items-center px-6">
+          <div className="flex items-center space-x-4">
+            <h1 className="text-2xl font-bold text-gradient-primary">GidiPitch</h1>
+          </div>
+          
+          <div className="ml-auto flex items-center space-x-4">
+            <Button variant="ghost" size="icon" className="relative">
+              <Bell className="h-5 w-5" />
+              <div className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full"></div>
+            </Button>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="" />
+                    <AvatarFallback>JD</AvatarFallback>
+                  </Avatar>
+                  <span className="hidden md:block">John Doe</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Help</DropdownMenuItem>
+                <Separator />
+                <DropdownMenuItem>Sign out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="p-6">
+            <nav className="space-y-2">
+              {sidebarItems.map((item) => (
+                <Button
+                  key={item.name}
+                  variant={item.active ? 'default' : 'ghost'}
+                  className={`w-full justify-start ${
+                    !item.available ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  disabled={!item.available}
+                >
+                  <item.icon className="mr-3 h-4 w-4" />
+                  {item.name}
+                  {!item.available && (
+                    <Badge variant="secondary" className="ml-auto text-xs">
+                      Soon
+                    </Badge>
+                  )}
+                </Button>
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          <div className="max-w-7xl mx-auto space-y-8">
+            {/* Welcome Section */}
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Welcome back, John!</h2>
+              <p className="text-muted-foreground">
+                Ready to build your next investor-ready document?
+              </p>
+            </div>
+
+            {/* Create New Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Plus className="mr-2 h-5 w-5" />
+                  Create New
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Button
+                    onClick={() => handleCreateNew('Pitch Deck')}
+                    className="h-20 flex-col space-y-2 bg-gradient-primary text-primary-foreground hover:opacity-90"
+                  >
+                    <FileText className="h-6 w-6" />
+                    <span>Pitch Deck Generator</span>
+                  </Button>
+                  
+                  <Button
+                    onClick={() => handleCreateNew('Resume')}
+                    variant="outline"
+                    className="h-20 flex-col space-y-2"
+                  >
+                    <User className="h-6 w-6" />
+                    <span>Resume Builder</span>
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    className="h-20 flex-col space-y-2 opacity-50 cursor-not-allowed"
+                    disabled
+                  >
+                    <BarChart3 className="h-6 w-6" />
+                    <span>Financial Forecast</span>
+                    <Badge variant="secondary" className="text-xs">
+                      Coming Soon
+                    </Badge>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Recent Projects */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span className="flex items-center">
+                    <Clock className="mr-2 h-5 w-5" />
+                    Recent Projects
+                  </span>
+                  <Button variant="ghost" size="sm">
+                    View All
+                    <ArrowUpRight className="ml-1 h-4 w-4" />
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentProjects.map((project) => (
+                    <div
+                      key={project.id}
+                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <div className="p-2 bg-primary/10 rounded-lg">
+                          {project.type === 'Pitch Deck' ? (
+                            <FileText className="h-5 w-5 text-primary" />
+                          ) : (
+                            <User className="h-5 w-5 text-primary" />
+                          )}
+                        </div>
+                        <div>
+                          <h3 className="font-medium">{project.name}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {project.type} • Last edited {project.lastEdited}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge
+                        variant={project.status === 'Complete' ? 'default' : 'secondary'}
+                      >
+                        {project.status}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Total Projects</p>
+                      <p className="text-2xl font-bold">12</p>
+                    </div>
+                    <FileText className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Completed</p>
+                      <p className="text-2xl font-bold">8</p>
+                    </div>
+                    <Badge className="h-8 w-8 rounded-full flex items-center justify-center">
+                      ✓
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Time Saved</p>
+                      <p className="text-2xl font-bold">24h</p>
+                    </div>
+                    <Clock className="h-8 w-8 text-muted-foreground" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      {/* Create Modal */}
+      <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Create {selectedTool}</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <Button
+              onClick={() => handleStartCreation('scratch')}
+              className="w-full justify-start h-16 p-4"
+              variant="outline"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-primary/10 rounded">
+                  <Plus className="h-5 w-5 text-primary" />
+                </div>
+                <div className="text-left">
+                  <div className="font-medium">Start from Scratch</div>
+                  <div className="text-sm text-muted-foreground">
+                    Build completely from blank template
+                  </div>
+                </div>
+              </div>
+            </Button>
+            
+            <Button
+              onClick={() => handleStartCreation('ai')}
+              className="w-full justify-start h-16 p-4"
+              variant="outline"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-primary/10 rounded">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                </div>
+                <div className="text-left">
+                  <div className="font-medium">Start with AI</div>
+                  <div className="text-sm text-muted-foreground">
+                    Let AI help you create initial content
+                  </div>
+                </div>
+              </div>
+            </Button>
+            
+            <Button
+              onClick={() => handleStartCreation('import')}
+              className="w-full justify-start h-16 p-4"
+              variant="outline"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-primary/10 rounded">
+                  <FileUp className="h-5 w-5 text-primary" />
+                </div>
+                <div className="text-left">
+                  <div className="font-medium">Import File</div>
+                  <div className="text-sm text-muted-foreground">
+                    Upload and enhance existing document
+                  </div>
+                </div>
+              </div>
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default Dashboard;
