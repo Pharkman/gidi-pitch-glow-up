@@ -153,47 +153,49 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Create New Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Plus className="mr-2 h-5 w-5" />
-                  Create New
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Button
-                    onClick={() => handleCreateNew('Pitch Deck')}
-                    className="h-20 flex-col space-y-2 bg-gradient-primary text-primary-foreground hover:opacity-90"
-                  >
-                    <FileText className="h-6 w-6" />
-                    <span>Pitch Deck Generator</span>
-                  </Button>
-                  
-                  <Button
-                    onClick={() => handleCreateNew('Resume')}
-                    variant="outline"
-                    className="h-20 flex-col space-y-2"
-                  >
-                    <User className="h-6 w-6" />
-                    <span>Resume Builder</span>
-                  </Button>
-                  
-                  <Button
-                    variant="outline"
-                    className="h-20 flex-col space-y-2 opacity-50 cursor-not-allowed"
-                    disabled
-                  >
-                    <BarChart3 className="h-6 w-6" />
-                    <span>Financial Forecast</span>
-                    <Badge variant="secondary" className="text-xs">
-                      Coming Soon
-                    </Badge>
-                  </Button>
+            {/* Tools Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+              <button
+                onClick={() => handleCreateNew('Pitch Deck')}
+                className="p-6 bg-card border rounded-lg hover:shadow-md transition-all duration-200 flex flex-col items-center space-y-3 group"
+              >
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <FileText className="h-6 w-6 text-blue-600" />
                 </div>
-              </CardContent>
-            </Card>
+                <span className="font-medium text-sm">Pitch Deck</span>
+              </button>
+              
+              <button
+                onClick={() => handleCreateNew('Resume')}
+                className="p-6 bg-card border rounded-lg hover:shadow-md transition-all duration-200 flex flex-col items-center space-y-3 group"
+              >
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <User className="h-6 w-6 text-green-600" />
+                </div>
+                <span className="font-medium text-sm">Resume Builder</span>
+              </button>
+              
+              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <Users className="h-6 w-6 text-purple-600" />
+                </div>
+                <span className="font-medium text-sm">YC Assistant</span>
+              </div>
+              
+              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
+                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                  <Target className="h-6 w-6 text-red-600" />
+                </div>
+                <span className="font-medium text-sm">Market Estimator</span>
+              </div>
+              
+              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
+                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                  <Brain className="h-6 w-6 text-orange-600" />
+                </div>
+                <span className="font-medium text-sm">AI Coach</span>
+              </div>
+            </div>
 
             {/* Recent Projects */}
             <Card>
