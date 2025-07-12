@@ -13,11 +13,14 @@ import {
   ArrowUpRight,
   Sparkles,
   FileUp,
-  Zap
+  Zap,
+  X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { PitchDeckCreator } from './PitchDeckCreator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
   DropdownMenu, 
@@ -25,7 +28,6 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 
 const Dashboard = () => {
@@ -288,70 +290,30 @@ const Dashboard = () => {
         </main>
       </div>
 
-      {/* Create Modal */}
-      <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Create {selectedTool}</DialogTitle>
-          </DialogHeader>
-          
-          <div className="space-y-4 py-4">
-            <Button
-              onClick={() => handleStartCreation('scratch')}
-              className="w-full justify-start h-16 p-4"
-              variant="outline"
-            >
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-primary/10 rounded">
-                  <Plus className="h-5 w-5 text-primary" />
-                </div>
-                <div className="text-left">
-                  <div className="font-medium">Start from Scratch</div>
-                  <div className="text-sm text-muted-foreground">
-                    Build completely from blank template
-                  </div>
-                </div>
-              </div>
-            </Button>
-            
-            <Button
-              onClick={() => handleStartCreation('ai')}
-              className="w-full justify-start h-16 p-4"
-              variant="outline"
-            >
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-primary/10 rounded">
-                  <Sparkles className="h-5 w-5 text-primary" />
-                </div>
-                <div className="text-left">
-                  <div className="font-medium">Start with AI</div>
-                  <div className="text-sm text-muted-foreground">
-                    Let AI help you create initial content
-                  </div>
-                </div>
-              </div>
-            </Button>
-            
-            <Button
-              onClick={() => handleStartCreation('import')}
-              className="w-full justify-start h-16 p-4"
-              variant="outline"
-            >
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-primary/10 rounded">
-                  <FileUp className="h-5 w-5 text-primary" />
-                </div>
-                <div className="text-left">
-                  <div className="font-medium">Import File</div>
-                  <div className="text-sm text-muted-foreground">
-                    Upload and enhance existing document
-                  </div>
-                </div>
-              </div>
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* Pitch Deck Creator */}
+      {selectedTool === 'Pitch Deck' && (
+        <PitchDeckCreator 
+          isOpen={showCreateModal} 
+          onClose={() => setShowCreateModal(false)} 
+        />
+      )}
+
+      {/* Resume Builder Modal - placeholder */}
+      {selectedTool === 'Resume' && (
+        <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Create Resume</DialogTitle>
+            </DialogHeader>
+            <div className="p-4 text-center">
+              <p className="text-muted-foreground">Resume builder coming soon!</p>
+              <Button onClick={() => setShowCreateModal(false)} className="mt-4">
+                Close
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
