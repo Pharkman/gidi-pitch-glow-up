@@ -127,8 +127,8 @@ export default function TeamMembersPage() {
         <PageHeader heading="Team Member Management" subheading="Manage your team, invite new members, and assign roles." />
         <div className="w-full">
           <Button onClick={() => setShowInviteModal(true)} className="mb-6">Invite Team Member</Button>
-          <div className="shadow-sm w-full">
-            <h2 className="text-lg font-semibold">Team Members</h2>
+          <div className="shadow-sm w-full -mx-4 md:-mx-8 lg:-mx-16">
+            <h2 className="text-lg font-semibold px-4 md:px-8 lg:px-16">Team Members</h2>
             <Table className="w-full">
               <TableHeader>
                 <TableRow>
