@@ -1,6 +1,11 @@
 import { FileInput, Settings, Sparkles, Download } from 'lucide-react';
+import React from 'react';
 
-const HowItWorks = () => {
+interface HowItWorksProps {
+  showCardLine?: boolean;
+}
+
+const HowItWorks: React.FC<HowItWorksProps> = ({ showCardLine = false }) => {
   const steps = [
     {
       icon: FileInput,
@@ -44,10 +49,8 @@ const HowItWorks = () => {
 
         {/* Steps */}
         <div className="relative">
-          {/* Connecting Line - Desktop */}
-          <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-primary to-accent transform -translate-y-1/2"></div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+          {/* Steps Grid - no connecting line */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
@@ -75,7 +78,7 @@ const HowItWorks = () => {
                   </p>
 
                   {/* Connecting Arrow - Mobile */}
-                  {index < steps.length - 1 && (
+                  {showCardLine && index < steps.length - 1 && (
                     <div className="lg:hidden flex justify-center mt-8 mb-4">
                       <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-accent"></div>
                     </div>
@@ -83,26 +86,6 @@ const HowItWorks = () => {
                 </div>
               );
             })}
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-card border border-border rounded-2xl p-8 max-w-2xl mx-auto shadow-soft">
-            <h3 className="text-2xl font-bold mb-4">
-              Ready to Get Started?
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Join hundreds of African founders who've already built their pitch materials with GidiPitch.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="btn-hero">
-                Start Building Now
-              </button>
-              <button className="btn-ghost">
-                Watch Demo
-              </button>
-            </div>
           </div>
         </div>
       </div>

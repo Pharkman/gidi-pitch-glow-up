@@ -14,7 +14,9 @@ import {
   Sparkles,
   FileUp,
   Zap,
-  X
+  X,
+  MessageSquare,
+  CreditCard
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -29,22 +31,37 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
+import { colors, typography, spacing, breakpoints } from '@/design-system/tokens';
+import { useNavigate } from 'react-router-dom';
+import PageHeader from './PageHeader';
+import Logo from './Logo';
+import { Sidebar } from './ui/sidebar';
+import { Input } from '@/components/ui/input';
+import { ResumeCreator } from './ResumeCreator';
+
+// Example usage: <div style={{ color: colors.brand }}> ... </div>
+// Tailwind classes like 'bg-primary' map to colors.brand, see tokens.ts for mapping.
 
 const Dashboard = () => {
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showPitchDeckModal, setShowPitchDeckModal] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showSupportModal, setShowSupportModal] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [supportForm, setSupportForm] = useState({ subject: '', message: '' });
+  const [showResumeModal, setShowResumeModal] = useState(false);
+  const navigate = useNavigate();
 
   const sidebarItems = [
-    { name: 'Dashboard', icon: BarChart3, active: true, available: true },
-    { name: 'Pitch Deck Generator', icon: FileText, active: false, available: true },
-    { name: 'Resume Builder', icon: User, active: false, available: true },
-    { name: 'Financial Forecast', icon: BarChart3, active: false, available: false },
-    { name: 'Market Estimator', icon: Target, active: false, available: false },
-    { name: 'YC Assistant', icon: Users, active: false, available: false },
-    { name: 'AI Coach', icon: Brain, active: false, available: false },
+    { name: 'Dashboard', icon: BarChart3, route: '/dashboard', available: true },
+    { name: 'Pitch Deck Generator', icon: FileText, route: '/pitch-decks', available: true },
+    { name: 'Resume Builder', icon: User, route: '/resume-builder', available: true },
+    { name: 'Financial Forecast', icon: BarChart3, route: '', available: false },
+    { name: 'Market Estimator', icon: Target, route: '', available: false },
+    { name: 'YC Assistant', icon: Users, route: '', available: false },
+    { name: 'AI Coach', icon: Brain, route: '', available: false },
   ];
 
   const recentProjects = [
@@ -73,12 +90,10 @@ const Dashboard = () => {
 
   const handleCreateNew = (tool: string) => {
     setSelectedTool(tool);
-    setShowCreateModal(true);
   };
 
   const handleStartCreation = (method: string) => {
     console.log(`Starting ${selectedTool} with ${method}`);
-    setShowCreateModal(false);
     // Here you would navigate to the respective tool
   };
 
@@ -91,86 +106,68 @@ const Dashboard = () => {
     }
   };
 
+  const handleSupportChange = (e) => {
+    setSupportForm({ ...supportForm, [e.target.name]: e.target.value });
+  };
+  const handleSupportSubmit = (e) => {
+    e.preventDefault();
+    setShowSupportModal(false);
+    setShowThankYouModal(true);
+    setSupportForm({ subject: '', message: '' });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navigation */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="flex h-16 items-center px-6">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold text-gradient-primary">GidiPitch</h1>
-          </div>
-          
-          <div className="ml-auto flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <div className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full"></div>
-            </Button>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <span className="hidden md:block">John Doe</span>
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setShowProfileModal(true)}>
-                  Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setShowSettingsModal(true)}>
-                  Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setShowHelpModal(true)}>
-                  Help
-                </DropdownMenuItem>
-                <Separator />
-                <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
-                  Sign out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </header>
+      {/* Remove header section (top navigation bar) */}
 
-      <div className="flex">
+      <div className="flex min-h-screen">
         {/* Sidebar */}
-        <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="p-6">
-            <nav className="space-y-2">
-              {sidebarItems.map((item) => (
-                <Button
-                  key={item.name}
-                  variant={item.active ? 'default' : 'ghost'}
-                  className={`w-full justify-start ${
-                    !item.available ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
-                  disabled={!item.available}
-                >
-                  <item.icon className="mr-3 h-4 w-4" />
-                  {item.name}
-                  {!item.available && (
-                    <Badge variant="secondary" className="ml-auto text-xs">
-                      Soon
-                    </Badge>
-                  )}
-                </Button>
-              ))}
-            </nav>
-          </div>
-        </aside>
+        <Sidebar
+          footer={
+            <div className="p-6 border-t space-y-2">
+              <Button variant="ghost" className="w-full justify-start" onClick={() => setShowSupportModal(true)}>
+                <MessageSquare className="mr-3 h-4 w-4" /> Support
+              </Button>
+              <Button variant="ghost" className="w-full justify-start relative">
+                <CreditCard className="mr-3 h-4 w-4" /> Subscription
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded-full">Coming Soon</span>
+              </Button>
+              <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/team-members')}>
+                <Users className="mr-3 h-4 w-4" /> Team Members
+              </Button>
+            </div>
+          }
+          className="w-[220px] min-h-screen"
+        >
+          <nav className="space-y-2 px-4 pb-6">
+            {sidebarItems.map((item) => (
+              <Button
+                key={item.name}
+                variant={window.location.pathname === item.route ? 'default' : 'ghost'}
+                className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={!item.available}
+                onClick={() => item.route && navigate(item.route)}
+              >
+                <item.icon className="mr-3 h-4 w-4" />
+                {item.name}
+                {!item.available && (
+                  <Badge variant="secondary" className="ml-auto text-xs">
+                    Soon
+                  </Badge>
+                )}
+              </Button>
+            ))}
+          </nav>
+        </Sidebar>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
-          <div className="max-w-7xl mx-auto space-y-8">
+        <main className="main-wrapper">
+          <PageHeader heading="Welcome back, John!" />
+          <div className="w-full">
             {/* Welcome Section */}
             <div>
-              <h2 className="text-3xl font-bold mb-2">Welcome back, John!</h2>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-2 text-base">
                 Ready to build your next investor-ready document?
               </p>
             </div>
@@ -178,7 +175,7 @@ const Dashboard = () => {
             {/* Tools Grid */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
               <button
-                onClick={() => handleCreateNew('Pitch Deck')}
+                onClick={() => setShowPitchDeckModal(true)}
                 className="p-6 bg-card border rounded-lg hover:shadow-md transition-all duration-200 flex flex-col items-center space-y-3 group"
               >
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -188,7 +185,7 @@ const Dashboard = () => {
               </button>
               
               <button
-                onClick={() => handleCreateNew('Resume')}
+                onClick={() => setShowResumeModal(true)}
                 className="p-6 bg-card border rounded-lg hover:shadow-md transition-all duration-200 flex flex-col items-center space-y-3 group"
               >
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -220,54 +217,45 @@ const Dashboard = () => {
             </div>
 
             {/* Recent Projects */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span className="flex items-center">
-                    <Clock className="mr-2 h-5 w-5" />
-                    Recent Projects
-                  </span>
-                  <Button variant="ghost" size="sm">
-                    View All
-                    <ArrowUpRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {recentProjects.map((project) => (
-                    <div
-                      key={project.id}
-                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
-                    >
-                      <div className="flex items-center space-x-4">
-                        <div className="p-2 bg-primary/10 rounded-lg">
-                          {project.type === 'Pitch Deck' ? (
-                            <FileText className="h-5 w-5 text-primary" />
-                          ) : (
-                            <User className="h-5 w-5 text-primary" />
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="font-medium">{project.name}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {project.type} • Last edited {project.lastEdited}
-                          </p>
-                        </div>
+            <div className="mb-8">
+              <div className="mb-2">
+                <span className="text-xl font-semibold">Recent Projects</span>
+              </div>
+              <div className="space-y-4">
+                {recentProjects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <img src="/file.png" alt="Project Icon" className="h-6 w-6 object-contain" />
                       </div>
-                      <Badge
-                        variant={project.status === 'Complete' ? 'default' : 'secondary'}
-                      >
-                        {project.status}
-                      </Badge>
+                      <div>
+                        <h3 className="font-medium">{project.name}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {project.type}  Last edited {project.lastEdited}
+                        </p>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    <span
+                      className={
+                        project.status === 'Complete'
+                          ? 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 hover:bg-green-200 transition-colors'
+                          : project.status === 'In Progress'
+                          ? 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition-colors'
+                          : 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors'
+                      }
+                    >
+                      {project.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Quick Stats - REMOVE THIS SECTION */}
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
@@ -288,7 +276,7 @@ const Dashboard = () => {
                       <p className="text-2xl font-bold">8</p>
                     </div>
                     <Badge className="h-8 w-8 rounded-full flex items-center justify-center">
-                      ✓
+                      
                     </Badge>
                   </div>
                 </CardContent>
@@ -305,35 +293,16 @@ const Dashboard = () => {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
           </div>
         </main>
       </div>
 
-      {/* Pitch Deck Creator */}
-      {selectedTool === 'Pitch Deck' && (
-        <PitchDeckCreator 
-          isOpen={showCreateModal} 
-          onClose={() => setShowCreateModal(false)} 
-        />
-      )}
+      {/* Pitch Deck Creator Modal */}
+      <PitchDeckCreator isOpen={showPitchDeckModal} onClose={() => setShowPitchDeckModal(false)} />
 
-      {/* Resume Builder Modal - placeholder */}
-      {selectedTool === 'Resume' && (
-        <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Create Resume</DialogTitle>
-            </DialogHeader>
-            <div className="p-4 text-center">
-              <p className="text-muted-foreground">Resume builder coming soon!</p>
-              <Button onClick={() => setShowCreateModal(false)} className="mt-4">
-                Close
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
+      {/* Resume Creator Modal */}
+      <ResumeCreator isOpen={showResumeModal} onClose={() => setShowResumeModal(false)} />
 
       {/* Profile Modal */}
       <Dialog open={showProfileModal} onOpenChange={setShowProfileModal}>
@@ -343,9 +312,9 @@ const Dashboard = () => {
           </DialogHeader>
           <div className="p-4 space-y-4">
             <div className="flex items-center space-x-4">
-              <Avatar className="h-16 w-16">
+              <Avatar className="h-16 w-16 bg-[#F8F6F4]">
                 <AvatarImage src="" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarFallback className="text-base">JD</AvatarFallback>
               </Avatar>
               <div>
                 <h3 className="font-semibold">John Doe</h3>
@@ -422,6 +391,35 @@ const Dashboard = () => {
               </Button>
             </div>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Support Modal */}
+      <Dialog open={showSupportModal} onOpenChange={setShowSupportModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Leave Feedback & Support</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSupportSubmit} className="space-y-4 mt-4">
+            <Input name="subject" placeholder="Subject" value={supportForm.subject} onChange={handleSupportChange} required />
+            <textarea name="message" placeholder="Your feedback or support request..." value={supportForm.message} onChange={handleSupportChange} className="w-full min-h-[80px] p-2 border rounded" required />
+            <div className="flex justify-end gap-2">
+              <Button type="button" variant="outline" onClick={() => setShowSupportModal(false)}>
+                Cancel
+              </Button>
+              <Button type="submit">Submit</Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+      {/* Thank You Modal */}
+      <Dialog open={showThankYouModal} onOpenChange={setShowThankYouModal}>
+        <DialogContent className="max-w-sm text-center">
+          <DialogHeader>
+            <DialogTitle>Thank You!</DialogTitle>
+          </DialogHeader>
+          <p className="mb-4">Your feedback or support request has been received. We'll get back to you soon.</p>
+          <Button onClick={() => setShowThankYouModal(false)} className="mx-auto">Close</Button>
         </DialogContent>
       </Dialog>
     </div>

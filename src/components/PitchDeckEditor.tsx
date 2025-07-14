@@ -597,3 +597,9 @@ export function PitchDeckEditor({ isOpen, onClose, initialData }: PitchDeckEdito
     </Dialog>
   );
 }
+
+// Add a default export for routing
+export default function PitchDeckEditorPage() {
+  // You can pass initialData or fetch from context/store as needed
+  return <PitchDeckEditor isOpen={true} onClose={() => {}} initialData={{}} />;
+}

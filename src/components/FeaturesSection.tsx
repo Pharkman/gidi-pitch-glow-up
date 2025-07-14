@@ -1,6 +1,12 @@
 import { FileText, TrendingUp, User, Lightbulb, MessageSquare } from 'lucide-react';
+import React from 'react';
 
-const FeaturesSection = () => {
+interface FeaturesSectionProps {
+  cardCount?: number;
+  showExploreButton?: boolean;
+}
+
+const FeaturesSection: React.FC<FeaturesSectionProps> = ({ cardCount = 6, showExploreButton = false }) => {
   const features = [
     {
       icon: FileText,
@@ -27,6 +33,11 @@ const FeaturesSection = () => {
       title: 'AI Pitch Coach',
       description: 'Coming Soon - Get real-time feedback to perfect your pitch delivery.',
       comingSoon: true
+    },
+    {
+      icon: FileText,
+      title: 'One-Pager Generator',
+      description: 'Generate concise company one-pagers for investors and partners.'
     }
   ];
 
@@ -47,7 +58,7 @@ const FeaturesSection = () => {
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => {
+          {features.slice(0, cardCount).map((feature, index) => {
             const Icon = feature.icon;
             return (
               <div 
@@ -81,13 +92,11 @@ const FeaturesSection = () => {
             );
           })}
         </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <button className="btn-secondary">
-            Explore All Features
-          </button>
-        </div>
+        {showExploreButton && (
+          <div className="text-center mt-12">
+            <button className="btn-hero">Explore all features</button>
+          </div>
+        )}
       </div>
     </section>
   );

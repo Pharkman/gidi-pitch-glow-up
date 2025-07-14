@@ -2,27 +2,12 @@ import { useState } from 'react';
 import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import heroLaptop from '@/assets/hero-laptop-mockup.jpg';
-import AuthModal from './AuthModal';
-import OnboardingFlow from './OnboardingFlow';
 import Dashboard from './Dashboard';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
-  const [showDashboard, setShowDashboard] = useState(false);
+  const navigate = useNavigate();
 
-  const handleAuthSuccess = () => {
-    setShowOnboarding(true);
-  };
-
-  const handleOnboardingComplete = () => {
-    setShowOnboarding(false);
-    setShowDashboard(true);
-  };
-
-  if (showDashboard) {
-    return <Dashboard />;
-  }
   return (
     <section id="hero" className="relative min-h-screen flex items-center hero-bg overflow-hidden">
       {/* Background decorative elements */}
@@ -50,7 +35,7 @@ const HeroSection = () => {
               <Button 
                 size="lg" 
                 className="group"
-                onClick={() => setShowAuthModal(true)}
+                onClick={() => navigate('/signin')}
               >
                 Try Free
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -105,19 +90,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        onAuthSuccess={handleAuthSuccess}
-      />
-
-      {/* Onboarding Flow */}
-      <OnboardingFlow
-        isOpen={showOnboarding}
-        onComplete={handleOnboardingComplete}
-      />
     </section>
   );
 };

@@ -1,26 +1,34 @@
 import { useState } from 'react';
-import { ChevronRight, ChevronLeft, Briefcase, Target, User } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useNavigate } from 'react-router-dom';
+import Confetti from 'react-confetti';
+import { ChevronRight, ChevronLeft, Briefcase, Target, User, FileText, File, ClipboardList } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Card, CardContent } from '@/components/ui/card';
+import { colors, typography, spacing, breakpoints } from '@/design-system/tokens';
+// Example usage: <div style={{ color: colors.brand }}> ... </div>
+// Tailwind classes like 'bg-primary' map to colors.brand, see tokens.ts for mapping.
 
 interface OnboardingFlowProps {
   isOpen: boolean;
   onComplete: () => void;
 }
 
-const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
+export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     industry: '',
     stage: '',
     goal: '',
     role: '',
     background: '',
-    linkedin: ''
+    linkedin: '',
+    location: '', // NEW FIELD
+    referral: ''  // NEW FIELD
   });
 
   const industries = [
@@ -64,17 +72,26 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
   ];
 
   const backgrounds = [
-    { value: 'tech', label: 'Tech' },
-    { value: 'business', label: 'Business' },
-    { value: 'student', label: 'Student' },
-    { value: 'other', label: 'Other' }
+    { value: 'working-class', label: 'Working class' },
+    { value: 'students', label: 'Students' },
+    { value: 'founder', label: 'Founder' },
+    { value: 'none', label: 'None' },
   ];
+
+  const goalIcons = {
+    'pitch-deck': <FileText className="h-6 w-6 text-primary" />,
+    'resume': <File className="h-6 w-6 text-primary" />,
+    'one-pager': <ClipboardList className="h-6 w-6 text-primary" />,
+  };
 
   const handleNext = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
-      onComplete();
+      setShowConfetti(true);
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
     }
   };
 
@@ -102,13 +119,14 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-2xl p-0 gap-0">
-        <DialogHeader className="p-6 pb-4 border-b">
+    <div className="min-h-screen flex items-center justify-center bg-background overflow-y-auto">
+      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} numberOfPieces={400} recycle={false} />}
+      <div className="w-full max-w-3xl bg-card border border-border rounded-xl shadow-md p-4 mx-auto">
+        <div className="p-4 pb-2 border-b">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-2xl font-bold text-gradient-primary">
+            <h2 className="text-2xl font-bold" style={{ color: '#000' }}>
               Let's get you started
-            </DialogTitle>
+            </h2>
             <div className="text-sm text-muted-foreground">
               Step {currentStep} of 3
             </div>
@@ -125,9 +143,9 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
               />
             ))}
           </div>
-        </DialogHeader>
+        </div>
 
-        <div className="p-6">
+        <div className="p-4">
           {/* Step 1: Startup Basics */}
           {currentStep === 1 && (
             <div className="space-y-6">
@@ -142,30 +160,36 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
               <div className="space-y-4">
                 <div>
                   <Label className="text-base font-medium mb-3 block">
-                    What industry are you in?
+                    What industries are you in?
                   </Label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <RadioGroup
+                    value={formData.industry}
+                    onValueChange={(value) => updateFormData('industry', value)}
+                    className="grid grid-cols-3 gap-2"
+                  >
                     {industries.map((industry) => (
-                      <Button
+                      <Card
                         key={industry}
-                        variant={formData.industry === industry ? 'default' : 'outline'}
-                        className="justify-start"
+                        className={`cursor-pointer transition-all flex items-center px-4 py-3 ${formData.industry === industry ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-muted/50'}`}
                         onClick={() => updateFormData('industry', industry)}
                       >
-                        {industry}
-                      </Button>
+                        <RadioGroupItem value={industry} id={industry} checked={formData.industry === industry} />
+                        <Label htmlFor={industry} className="ml-2 cursor-pointer w-full">
+                          {industry}
+                        </Label>
+                      </Card>
                     ))}
-                  </div>
+                  </RadioGroup>
                 </div>
 
                 <div>
                   <Label className="text-base font-medium mb-3 block">
-                    What stage is your startup?
+                    What stage are your startups?
                   </Label>
                   <RadioGroup
                     value={formData.stage}
                     onValueChange={(value) => updateFormData('stage', value)}
-                    className="space-y-3"
+                    className="grid grid-cols-2 gap-3"
                   >
                     {stages.map((stage) => (
                       <div key={stage.value} className="flex items-center space-x-2">
@@ -206,7 +230,7 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
                   >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-4">
-                        <div className="text-2xl">{goal.icon}</div>
+                        <div className="text-2xl">{goalIcons[goal.value]}</div>
                         <div className="flex-1">
                           <h4 className="font-semibold">{goal.title}</h4>
                           <p className="text-sm text-muted-foreground">{goal.desc}</p>
@@ -240,27 +264,23 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
               <div className="space-y-4">
                 <div>
                   <Label className="text-base font-medium mb-3 block">
-                    Your role
+                    What's your current role?
                   </Label>
-                  <RadioGroup
+                  <select
                     value={formData.role}
-                    onValueChange={(value) => updateFormData('role', value)}
-                    className="flex space-x-4"
+                    onChange={e => updateFormData('role', e.target.value)}
+                    className="w-full border border-border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary"
                   >
+                    <option value="">Select your role</option>
                     {roles.map((role) => (
-                      <div key={role.value} className="flex items-center space-x-2">
-                        <RadioGroupItem value={role.value} id={role.value} />
-                        <Label htmlFor={role.value} className="cursor-pointer">
-                          {role.label}
-                        </Label>
-                      </div>
+                      <option key={role.value} value={role.value}>{role.label}</option>
                     ))}
-                  </RadioGroup>
+                  </select>
                 </div>
 
                 <div>
                   <Label className="text-base font-medium mb-3 block">
-                    Background
+                    What stage of life are you?
                   </Label>
                   <RadioGroup
                     value={formData.background}
@@ -280,13 +300,41 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
 
                 <div>
                   <Label htmlFor="linkedin" className="text-base font-medium">
-                    LinkedIn or Website (Optional)
+                    Let's know you better, what's your social/website link?
                   </Label>
                   <Input
                     id="linkedin"
                     placeholder="https://linkedin.com/in/yourname"
                     value={formData.linkedin}
                     onChange={(e) => updateFormData('linkedin', e.target.value)}
+                    className="mt-2"
+                  />
+                </div>
+
+                {/* NEW: Where are you currently based? */}
+                <div>
+                  <Label htmlFor="location" className="text-base font-medium">
+                    Where are you currently based?
+                  </Label>
+                  <Input
+                    id="location"
+                    placeholder="City, Country"
+                    value={formData.location}
+                    onChange={(e) => updateFormData('location', e.target.value)}
+                    className="mt-2"
+                  />
+                </div>
+
+                {/* NEW: How did you get to know GidiPitch? */}
+                <div>
+                  <Label htmlFor="referral" className="text-base font-medium">
+                    How did you get to know GidiPitch?
+                  </Label>
+                  <Input
+                    id="referral"
+                    placeholder="e.g. Twitter, Friend, Event, etc."
+                    value={formData.referral}
+                    onChange={(e) => updateFormData('referral', e.target.value)}
                     className="mt-2"
                   />
                 </div>
@@ -316,9 +364,15 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
             <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+      {showConfetti && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <h2 className="text-3xl font-bold mb-2" style={{ color: '#FD621E' }}>Welcome to GidiPitch!</h2>
+            <p className="text-lg">Your dashboard is ready 🎉</p>
+          </div>
+        </div>
+      )}
+    </div>
   );
-};
-
-export default OnboardingFlow;
+}
