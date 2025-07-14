@@ -47,7 +47,7 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
             </p>
 
             <div className="space-y-8">
-              {benefits.map((benefit, index) => {
+              {benefits.slice(0, 3).map((benefit, index) => {
                 const Icon = benefit.icon;
                 return (
                   <div 

@@ -9,7 +9,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center hero-bg overflow-hidden">
+    <section id="hero" className="relative pt-12 pb-24 bg-background">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
@@ -37,13 +37,13 @@ const HeroSection = () => {
                 className="group"
                 onClick={() => navigate('/signin')}
               >
-                Try Free
+                Get Started for Free
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
               <Button variant="outline" size="lg" className="group">
                 <Play className="mr-2 h-5 w-5" />
-                See How It Works
+                Watch demo
               </Button>
             </div>
 
@@ -70,7 +70,7 @@ const HeroSection = () => {
               <img 
                 src={heroLaptop} 
                 alt="GidiPitch Interface" 
-                className="w-full h-auto rounded-2xl shadow-strong animate-float"
+                className="w-full h-[420px] md:h-[520px] object-cover rounded-2xl shadow-strong animate-float"
               />
               
               {/* Floating UI elements */}

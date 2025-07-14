@@ -30,10 +30,10 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="min-h-screen flex items-center justify-center bg-background w-full">
       <form
         onSubmit={handleSubmit}
-        className="bg-card border border-border rounded-xl shadow-md p-8 w-full max-w-md space-y-6"
+        className="bg-card border border-border rounded-xl shadow-md p-8 space-y-6 w-full max-w-md sm:w-[400px] md:w-[450px] lg:w-[500px]"
       >
         <Logo center />
         <h2 className="text-2xl font-bold mb-1 text-center" style={{ color: '#000' }}>

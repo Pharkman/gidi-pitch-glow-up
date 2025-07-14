@@ -9,7 +9,7 @@ interface FAQProps {
 }
 
 const FAQ: React.FC<FAQProps> = ({
-  heading = 'FAQ',
+  heading = "FAQ's",
   subheading = '',
   noBgNoBorder = false,
 }) => {
@@ -50,11 +50,11 @@ const FAQ: React.FC<FAQProps> = ({
     <section id="faq" className={`py-24 ${noBgNoBorder ? '' : 'bg-muted/30 border-t border-border'}`}>
       <div className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 ${noBgNoBorder ? '' : 'bg-card border border-border rounded-2xl shadow-soft'}`}>
         {/* Section Header */}
+        <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-center" style={{ color: '#000' }}>
+          {heading}
+        </h2>
         <div className={`text-center mb-16 ${noBgNoBorder ? '' : 'bg-card border-b border-border rounded-t-2xl p-8'}`}>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6" style={{ color: '#000' }}>
-            {heading}
-          </h2>
-          {subheading && <p className="text-xl text-muted-foreground">{subheading}</p>}
+          {subheading && <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{subheading}</p>}
         </div>
 
         {/* FAQ Items */}
@@ -93,19 +93,19 @@ const FAQ: React.FC<FAQProps> = ({
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-card border border-border rounded-2xl p-8 shadow-soft">
+          <div className="p-8">
             <h3 className="text-2xl font-bold mb-4">
-              Still Have Questions?
+              Ready to Power Up Your Fundraising?
             </h3>
             <p className="text-muted-foreground mb-6">
-              Our team is here to help you succeed. Get in touch for personalized support.
+              Get personalized support, book a live demo, or reach out to our team—no barriers, just help to get you funded faster.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="btn-hero">
-                Contact Support
+                Get Support
               </button>
               <button className="btn-ghost">
-                Schedule a Demo
+                Book a Live Demo
               </button>
             </div>
           </div>
