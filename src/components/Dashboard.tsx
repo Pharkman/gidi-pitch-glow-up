@@ -33,6 +33,9 @@ import { Separator } from '@/components/ui/separator';
 const Dashboard = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const sidebarItems = [
     { name: 'Dashboard', icon: BarChart3, active: true, available: true },
@@ -79,6 +82,15 @@ const Dashboard = () => {
     // Here you would navigate to the respective tool
   };
 
+  const handleSignOut = () => {
+    if (confirm('Are you sure you want to sign out?')) {
+      // Here you would handle actual sign out logic
+      console.log('Signing out...');
+      // For now, just redirect to home page
+      window.location.href = '/';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navigation */}
@@ -106,11 +118,19 @@ const Dashboard = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Help</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setShowProfileModal(true)}>
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setShowSettingsModal(true)}>
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setShowHelpModal(true)}>
+                  Help
+                </DropdownMenuItem>
                 <Separator />
-                <DropdownMenuItem>Sign out</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
+                  Sign out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -314,6 +334,96 @@ const Dashboard = () => {
           </DialogContent>
         </Dialog>
       )}
+
+      {/* Profile Modal */}
+      <Dialog open={showProfileModal} onOpenChange={setShowProfileModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Profile</DialogTitle>
+          </DialogHeader>
+          <div className="p-4 space-y-4">
+            <div className="flex items-center space-x-4">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src="" />
+                <AvatarFallback>JD</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-semibold">John Doe</h3>
+                <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setShowProfileModal(false)}>
+                Cancel
+              </Button>
+              <Button>Edit Profile</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Settings Modal */}
+      <Dialog open={showSettingsModal} onOpenChange={setShowSettingsModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Settings</DialogTitle>
+          </DialogHeader>
+          <div className="p-4 space-y-4">
+            <div className="space-y-2">
+              <h4 className="font-medium">Preferences</h4>
+              <div className="space-y-1">
+                <label className="flex items-center space-x-2">
+                  <input type="checkbox" defaultChecked />
+                  <span className="text-sm">Email notifications</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input type="checkbox" defaultChecked />
+                  <span className="text-sm">Auto-save drafts</span>
+                </label>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setShowSettingsModal(false)}>
+                Cancel
+              </Button>
+              <Button>Save Changes</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Help Modal */}
+      <Dialog open={showHelpModal} onOpenChange={setShowHelpModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Help & Support</DialogTitle>
+          </DialogHeader>
+          <div className="p-4 space-y-4">
+            <div className="space-y-2">
+              <h4 className="font-medium">Quick Links</h4>
+              <div className="space-y-1">
+                <a href="#" className="block text-sm text-primary hover:underline">
+                  Getting Started Guide
+                </a>
+                <a href="#" className="block text-sm text-primary hover:underline">
+                  Video Tutorials
+                </a>
+                <a href="#" className="block text-sm text-primary hover:underline">
+                  FAQ
+                </a>
+                <a href="#" className="block text-sm text-primary hover:underline">
+                  Contact Support
+                </a>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={() => setShowHelpModal(false)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
