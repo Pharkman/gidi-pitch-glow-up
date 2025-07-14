@@ -70,18 +70,18 @@ export default function PitchDecksPage() {
             ))}
           </nav>
         </Sidebar>
-        <main className="main-wrapper">
+        <main className="main-wrapper flex-1">
           <div className="w-full">
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-2">
+            <div className="flex flex-col gap-4 w-full">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-2 w-full">
                 <div>
                   <PageHeader heading="Pitch Decks" subheading="View, create, and manage all your pitch decks in one place." />
                 </div>
                 <Button onClick={() => setShowPitchDeckModal(true)} className="h-10 px-6">Create New Pitch Deck</Button>
               </div>
-              <div className="grid gap-4">
+              <div className="grid gap-4 w-full">
                 {samplePitchDecks.map(deck => (
-                  <Card key={deck.id} className="flex items-center justify-between p-4 border rounded-lg shadow-sm hover:bg-muted/50 transition-colors cursor-pointer">
+                  <Card key={deck.id} className="flex items-center justify-between p-4 border rounded-lg shadow-sm hover:bg-muted/50 transition-colors cursor-pointer w-full">
                     <div className="flex items-center space-x-4">
                       <div className="p-2 bg-primary/10 rounded-lg">
                         <img src="/file.png" alt="Project Icon" className="h-6 w-6 object-contain" />
