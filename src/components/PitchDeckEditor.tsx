@@ -4,6 +4,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   Save, 
   Share, 
@@ -20,7 +23,16 @@ import {
   Eye,
   Settings,
   Sparkles,
-  X
+  X,
+  Type,
+  Upload,
+  Bold,
+  Italic,
+  Underline,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Palette
 } from 'lucide-react';
 
 interface PitchDeckEditorProps {
@@ -63,6 +75,12 @@ export function PitchDeckEditor({ isOpen, onClose, initialData }: PitchDeckEdito
   const [showAIHelper, setShowAIHelper] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');
   const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [showTextEditor, setShowTextEditor] = useState(false);
+  const [showImageEditor, setShowImageEditor] = useState(false);
+  const [editingElement, setEditingElement] = useState<'title' | 'content' | null>(null);
+  const [textContent, setTextContent] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [isGeneratingContent, setIsGeneratingContent] = useState(false);
 
   const addSlide = (type: 'content' | 'image' | 'chart' = 'content') => {
     const newSlide: Slide = {
@@ -93,13 +111,80 @@ export function PitchDeckEditor({ isOpen, onClose, initialData }: PitchDeckEdito
     }
   };
 
+  const handleTextClick = (type: 'title' | 'content') => {
+    setEditingElement(type);
+    setTextContent(type === 'title' ? currentSlideData.title : currentSlideData.content);
+    setShowTextEditor(true);
+  };
+
+  const handleImageClick = () => {
+    setShowImageEditor(true);
+  };
+
+  const saveTextContent = () => {
+    if (editingElement) {
+      updateSlide(currentSlideData.id, { 
+        [editingElement]: textContent 
+      });
+    }
+    setShowTextEditor(false);
+    setEditingElement(null);
+    setTextContent('');
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+    }
+  };
+
   const handleAIHelp = async () => {
     if (!aiPrompt.trim()) return;
     
-    // Simulate AI assistance
-    console.log('AI helping with:', aiPrompt);
+    setIsGeneratingContent(true);
+    
+    // Simulate AI assistance with realistic delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Generate content based on slide type and prompt
+    const generatedContent = generateAIContent(aiPrompt, currentSlideData.type);
+    
+    if (generatedContent.title) {
+      updateSlide(currentSlideData.id, { title: generatedContent.title });
+    }
+    if (generatedContent.content) {
+      updateSlide(currentSlideData.id, { content: generatedContent.content });
+    }
+    
+    setIsGeneratingContent(false);
     setAiPrompt('');
     setShowAIHelper(false);
+  };
+
+  const generateAIContent = (prompt: string, slideType: string) => {
+    // Simulate AI content generation based on prompt and slide type
+    const templates = {
+      title: {
+        title: `${prompt} - Innovative Solutions`,
+        content: 'Transforming the future with cutting-edge technology'
+      },
+      content: {
+        title: currentSlideData.title,
+        content: `Based on your request: "${prompt}", here's comprehensive content that addresses key market opportunities, strategic advantages, and actionable insights for sustainable growth.`
+      },
+      chart: {
+        title: currentSlideData.title,
+        content: `Market analysis shows significant growth potential. ${prompt} indicates strong market demand with projected 300% growth over the next 3 years.`
+      },
+      image: {
+        title: currentSlideData.title,
+        content: `Visual representation of ${prompt} showcasing key features and benefits through compelling imagery.`
+      }
+    };
+
+    return templates[slideType as keyof typeof templates] || templates.content;
   };
 
   const currentSlideData = slides[currentSlide];
@@ -272,20 +357,35 @@ export function PitchDeckEditor({ isOpen, onClose, initialData }: PitchDeckEdito
                   <Card className="aspect-video bg-white shadow-lg">
                     <CardContent className="p-12 h-full flex flex-col">
                       <div className="space-y-6 flex-1">
-                        <input
-                          type="text"
-                          value={currentSlideData.title}
-                          onChange={(e) => updateSlide(currentSlideData.id, { title: e.target.value })}
-                          className="text-4xl font-bold bg-transparent border-none outline-none w-full text-gray-900 placeholder-gray-400"
-                          placeholder="Slide Title"
-                        />
+                        <div 
+                          onClick={() => handleTextClick('title')}
+                          className="text-4xl font-bold cursor-pointer hover:bg-blue-50 hover:border hover:border-blue-200 rounded p-2 -m-2 transition-all duration-200"
+                        >
+                          {currentSlideData.title || 'Click to edit title'}
+                        </div>
                         
-                        <textarea
-                          value={currentSlideData.content}
-                          onChange={(e) => updateSlide(currentSlideData.id, { content: e.target.value })}
-                          className="text-lg bg-transparent border-none outline-none w-full flex-1 resize-none text-gray-700 placeholder-gray-400"
-                          placeholder="Add your content here..."
-                        />
+                        <div 
+                          onClick={() => handleTextClick('content')}
+                          className="text-lg cursor-pointer hover:bg-blue-50 hover:border hover:border-blue-200 rounded p-4 -m-4 transition-all duration-200 min-h-[200px] flex items-start"
+                        >
+                          {currentSlideData.content || 'Click to edit content'}
+                        </div>
+                        
+                        {currentSlideData.type === 'image' && (
+                          <div 
+                            onClick={handleImageClick}
+                            className="border-2 border-dashed border-gray-300 rounded-lg h-48 flex items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-all duration-200"
+                          >
+                            {imageUrl ? (
+                              <img src={imageUrl} alt="Slide image" className="max-h-full max-w-full object-contain" />
+                            ) : (
+                              <div className="text-center">
+                                <Image className="h-12 w-12 mx-auto text-gray-400 mb-2" />
+                                <p className="text-gray-500">Click to add image</p>
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       {/* Slide Type Indicator */}
@@ -327,6 +427,131 @@ export function PitchDeckEditor({ isOpen, onClose, initialData }: PitchDeckEdito
           </div>
         </div>
 
+        {/* Text Editor Modal */}
+        <Dialog open={showTextEditor} onOpenChange={setShowTextEditor}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center">
+                <Type className="mr-2 h-5 w-5" />
+                Text Editor
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2 border-b pb-3">
+                <Button variant="outline" size="sm">
+                  <Bold className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="sm">
+                  <Italic className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="sm">
+                  <Underline className="h-4 w-4" />
+                </Button>
+                <div className="w-px h-6 bg-border mx-2" />
+                <Button variant="outline" size="sm">
+                  <AlignLeft className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="sm">
+                  <AlignCenter className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="sm">
+                  <AlignRight className="h-4 w-4" />
+                </Button>
+                <div className="w-px h-6 bg-border mx-2" />
+                <Select>
+                  <SelectTrigger className="w-24">
+                    <SelectValue placeholder="14" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="12">12</SelectItem>
+                    <SelectItem value="14">14</SelectItem>
+                    <SelectItem value="16">16</SelectItem>
+                    <SelectItem value="18">18</SelectItem>
+                    <SelectItem value="24">24</SelectItem>
+                    <SelectItem value="32">32</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" size="sm">
+                  <Palette className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              <Textarea
+                value={textContent}
+                onChange={(e) => setTextContent(e.target.value)}
+                className="min-h-[200px] text-base"
+                placeholder={`Enter your ${editingElement} here...`}
+              />
+              
+              <div className="flex justify-end space-x-2">
+                <Button variant="outline" onClick={() => setShowTextEditor(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={saveTextContent}>
+                  Save Changes
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Image Editor Modal */}
+        <Dialog open={showImageEditor} onOpenChange={setShowImageEditor}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center">
+                <Image className="mr-2 h-5 w-5" />
+                Image Editor
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="image-upload">Upload Image</Label>
+                  <div className="mt-2">
+                    <Input
+                      id="image-upload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="cursor-pointer"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="image-url">Or Enter URL</Label>
+                  <Input
+                    id="image-url"
+                    type="url"
+                    placeholder="https://example.com/image.jpg"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    className="mt-2"
+                  />
+                </div>
+              </div>
+              
+              {imageUrl && (
+                <div className="border rounded-lg p-4">
+                  <Label>Preview</Label>
+                  <div className="mt-2 flex justify-center">
+                    <img src={imageUrl} alt="Preview" className="max-h-64 max-w-full object-contain" />
+                  </div>
+                </div>
+              )}
+              
+              <div className="flex justify-end space-x-2">
+                <Button variant="outline" onClick={() => setShowImageEditor(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => setShowImageEditor(false)} disabled={!imageUrl}>
+                  Insert Image
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
         {/* AI Helper Modal */}
         <Dialog open={showAIHelper} onOpenChange={setShowAIHelper}>
           <DialogContent className="max-w-md">
@@ -344,9 +569,22 @@ export function PitchDeckEditor({ isOpen, onClose, initialData }: PitchDeckEdito
                 className="min-h-[100px]"
               />
               <div className="flex space-x-2">
-                <Button onClick={handleAIHelp} disabled={!aiPrompt.trim()} className="flex-1">
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  Help Me
+                <Button 
+                  onClick={handleAIHelp} 
+                  disabled={!aiPrompt.trim() || isGeneratingContent} 
+                  className="flex-1"
+                >
+                  {isGeneratingContent ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="mr-2 h-4 w-4" />
+                      Help Me
+                    </>
+                  )}
                 </Button>
                 <Button variant="outline" onClick={() => setShowAIHelper(false)}>
                   Cancel
