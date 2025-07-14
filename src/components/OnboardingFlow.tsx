@@ -119,9 +119,9 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background overflow-y-auto">
+    <div className="min-h-screen flex items-center justify-center bg-background overflow-y-auto w-full">
       {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} numberOfPieces={400} recycle={false} />}
-      <div className="max-w-3xl mx-auto bg-card border border-border rounded-xl shadow-md p-4 sm:w-[500px] md:w-[650px] lg:w-[800px]">
+      <div className="bg-card border border-border rounded-xl shadow-md p-4 w-full max-w-3xl sm:w-[500px] md:w-[650px] lg:w-[800px] mx-auto">
         <div className="p-4 pb-2 border-b">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold" style={{ color: '#000' }}>

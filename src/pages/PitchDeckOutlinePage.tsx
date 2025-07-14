@@ -75,8 +75,8 @@ export default function PitchDeckOutlinePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-8">
-      <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-8 w-full">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-2xl mx-auto">
         <h2 className="text-2xl font-bold mb-2">Pitch Deck Outline</h2>
         <p className="text-muted-foreground mb-6">Rearrange, edit, or add sections to your pitch deck outline. Drag to reorder.</p>
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
