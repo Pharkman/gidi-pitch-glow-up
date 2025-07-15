@@ -1,11 +1,7 @@
 import { FileInput, Settings, Sparkles, Download } from 'lucide-react';
-import React from 'react';
+import TitleHeader from './TitleHeading';
 
-interface HowItWorksProps {
-  showCardLine?: boolean;
-}
-
-const HowItWorks: React.FC<HowItWorksProps> = ({ showCardLine = false }) => {
+const HowItWorks = () => {
   const steps = [
     {
       icon: FileInput,
@@ -35,6 +31,7 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ showCardLine = false }) => {
 
   return (
     <section id="how-it-works" className="py-24 bg-muted/30">
+      <TitleHeader title='How it works'/>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -49,45 +46,34 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ showCardLine = false }) => {
 
         {/* Steps */}
         <div className="relative">
-          {/* Steps Grid - no connecting line */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+          {/* Connecting Line - Desktop */}
+          {/* <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-primary to-accent transform -translate-y-1/2"></div> */}
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <div 
                   key={index}
-                  className="relative text-center group"
+                  className="bg-[#FFF6F3] rounded-xl shadow-md p-6 py-8 px-8 flex flex-col items-start min-h-[180px] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
                   style={{ animationDelay: `${index * 150}ms` }}
                 >
-                  {/* Step Number */}
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 mx-auto bg-gradient-primary rounded-full flex items-center justify-center shadow-medium group-hover:shadow-strong transition-all duration-300 group-hover:scale-110">
-                      <Icon className="h-8 w-8 text-primary-foreground" />
-                    </div>
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-background border-2 border-primary rounded-full flex items-center justify-center text-sm font-bold text-primary">
-                      {step.number}
-                    </div>
+                  {/* Icon */}
+                  <div className="mb-4 flex items-center justify-center w-10 h-10 rounded-lg bg-[#FDEDE6] group-hover:bg-[#FFD6C2] transition-colors duration-300">
+                    <Icon className="h-6 w-6 text-[#FF5A1F]" />
                   </div>
-
-                  <h3 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors">
+                  <h3 className="text-lg font-semibold mb-2 text-foreground text-left">
                     {step.title}
                   </h3>
-
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-muted-foreground text-left">
                     {step.description}
                   </p>
-
-                  {/* Connecting Arrow - Mobile */}
-                  {showCardLine && index < steps.length - 1 && (
-                    <div className="lg:hidden flex justify-center mt-8 mb-4">
-                      <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-accent"></div>
-                    </div>
-                  )}
                 </div>
               );
             })}
           </div>
         </div>
+
       </div>
     </section>
   );

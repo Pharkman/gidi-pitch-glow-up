@@ -1,12 +1,8 @@
+
 import { FileText, TrendingUp, User, Lightbulb, MessageSquare } from 'lucide-react';
-import React from 'react';
+import TitleHeader from './TitleHeading';
 
-interface FeaturesSectionProps {
-  cardCount?: number;
-  showExploreButton?: boolean;
-}
-
-const FeaturesSection: React.FC<FeaturesSectionProps> = ({ cardCount = 6, showExploreButton = false }) => {
+const FeaturesSection = () => {
   const features = [
     {
       icon: FileText,
@@ -33,16 +29,13 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ cardCount = 6, showEx
       title: 'AI Pitch Coach',
       description: 'Coming Soon - Get real-time feedback to perfect your pitch delivery.',
       comingSoon: true
-    },
-    {
-      icon: FileText,
-      title: 'One-Pager Generator',
-      description: 'Generate concise company one-pagers for investors and partners.'
     }
   ];
 
   return (
     <section id="features" className="py-24 bg-muted/30">
+      <TitleHeader title='Features'/>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -58,7 +51,7 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ cardCount = 6, showEx
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.slice(0, cardCount).map((feature, index) => {
+          {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <div 
@@ -92,11 +85,13 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ cardCount = 6, showEx
             );
           })}
         </div>
-        {showExploreButton && (
-          <div className="text-center mt-12">
-            <button className="btn-hero">Explore all features</button>
-          </div>
-        )}
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-16">
+          <button className="bg-primary text-primary-foreground p-5 rounded-xl hover:bg-primary/80">
+            Explore All Features
+          </button>
+        </div>
       </div>
     </section>
   );

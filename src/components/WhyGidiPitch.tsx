@@ -33,6 +33,13 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
 
   return (
     <section id="why-gidipitch" className="py-24 bg-background">
+        <div className="flex flex-col items-center mb-6 gap-5 shadow-2xl bg-white rounded-lg  w-[10%] mx-16">
+        <div className="">
+          <h1 className="font-medium py-3 rounded-lg md:text-[14px] text-xs text-center">
+          Why Choose
+          </h1>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
@@ -112,6 +119,23 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
             </div>
           </div>
         </div>
+
+        {/* Bottom testimonial */}
+        {/* <div className="mt-24 text-center">
+          <div className="bg-gradient-card border border-border rounded-2xl p-8 max-w-4xl mx-auto shadow-soft">
+            <blockquote className="text-2xl font-medium text-foreground mb-6 leading-relaxed">
+              "GidiPitch helped me create a professional pitch deck in 30 minutes. 
+              I raised $250K within 3 months of launching my startup."
+            </blockquote>
+            <div className="flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-primary rounded-full mr-4"></div>
+              <div className="text-left">
+                <div className="font-semibold">Amara Okafor</div>
+                <div className="text-sm text-muted-foreground">Founder, TechLagos</div>
+              </div>
+>>>>
+          </div>
+        </div> */}
       </div>
     </section>
   );

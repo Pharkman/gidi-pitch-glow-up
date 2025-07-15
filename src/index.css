@@ -141,11 +141,11 @@ All colors MUST be HSL.
 @layer components {
   /* Button variants */
   .btn-hero {
-    @apply bg-gradient-to-r from-primary to-primary-glow text-primary-foreground px-8 py-4 rounded-xl font-semibold text-lg shadow-medium hover:shadow-strong hover:scale-105 transition-all duration-300;
+    @apply bg-gradient-to-r from-primary to-primary-glow text-primary-foreground px-8 py-4 rounded-xl font-semibold text-lg shadow-medium hover:shadow-strong hover:scale-105 transition-all duration-300 items-center;
   }
   
   .btn-secondary {
-    @apply bg-gradient-to-r from-secondary to-accent text-secondary-foreground px-8 py-4 rounded-xl font-semibold text-lg shadow-medium hover:shadow-strong hover:scale-105 transition-all duration-300;
+    @apply bg-primary text-secondary-foreground px-8 py-4 rounded-xl font-semibold text-lg shadow-medium hover:shadow-strong hover:scale-105 transition-all duration-300;
   }
   
   .btn-ghost {

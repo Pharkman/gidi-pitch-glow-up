@@ -1,4 +1,5 @@
 import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
+import GidiLogo from '@/assets/Frame 481473.png'
 
 const Footer = () => {
   const footerLinks = {
@@ -35,10 +36,8 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <h3 className="text-2xl font-bold text-gradient-primary mb-4">
-              GidiPitch
-            </h3>
-            <p className="text-muted-foreground mb-6 leading-relaxed max-w-md">
+          <img src={GidiLogo} alt=''/>
+            <p className="text-muted-foreground mb-6 leading-relaxed mt-1 max-w-md">
               Empowering African founders to build investor-ready materials with AI. 
               From pitch decks to financial models, we help you tell your story professionally.
             </p>

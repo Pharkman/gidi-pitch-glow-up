@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import GidiLogo from '@/assets/Frame 481473.png'
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,14 +36,10 @@ const Navigation = () => {
         ? 'bg-background/95 backdrop-blur-md shadow-soft border-b border-border' 
         : 'bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-gradient-primary">
-              GidiPitch
-            </h1>
-          </div>
+        <img src={GidiLogo} alt=''/>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">

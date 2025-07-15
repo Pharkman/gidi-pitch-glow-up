@@ -15,8 +15,7 @@ import {
   FileUp,
   Zap,
   X,
-  MessageSquare,
-  CreditCard
+  UserPlus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,37 +30,80 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
-import { colors, typography, spacing, breakpoints } from '@/design-system/tokens';
-import { useNavigate } from 'react-router-dom';
-import PageHeader from './PageHeader';
-import Logo from './Logo';
-import { Sidebar } from './ui/sidebar';
-import { Input } from '@/components/ui/input';
-import { ResumeCreator } from './ResumeCreator';
+import GidiLogo from '@/assets/Frame 481473.png'
+import Freepik1 from '@/assets/dashboard1.png'
+import FreePik2 from '@/assets/freepik_assistant_1752223275476 1.png'
+import FreePik3 from '@/assets/freepik_assistant_1752223862097 1.png'
+import FreePiks4 from '@/assets/freepik_assistant_1752224107168 1.png'
+import FreePiks5 from '@/assets/freepik_assistant_1752224815977 1.png'
+import freePik_build1 from '@/assets/freepik_project.png'
+import freepik_build2 from "@/assets/freepik_build2.png"
+import freepik_build3 from "@/assets/freepik_buld3.png"
+import freepik_build4 from "@/assets/freepik_build4.png"
+import freepik_build5 from "@/assets/freepik_build5.png"
+import freepik_build6 from "@/assets/freepik_build6.png"
+// Reusable ToolCard component
+const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle }: {
+  image: string,
+  label: string,
+  onClick?: () => void,
+  disabled?: boolean,
+  variant?: 'grid' | 'project',
+  subtitle?: string
+}) => {
+  if (variant === 'project') {
+    return (
+      <div className="bg-white rounded-xl shadow-md p-0 w-full border-1 border-[#E4E4E4CC]">
+        <img src={image} alt={label} className="object-cover w-full h-[172px] rounded-t-xl" />
+        <div className="w-full px-4 py-3">
+          <div className="font-semibold text-base text-foreground mb-1">{label}</div>
+          {subtitle && <div className="text-sm text-muted-foreground">{subtitle}</div>}
+        </div>
+      </div>
+    );
+  }
+  // Default to grid style
+  return (
+    <div
+      className={`flex flex-col items-center bg-white border-1 border-[#E4E4E4CC] shadow-md rounded-[12px] pb-3 p-[3px] ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+      onClick={disabled ? undefined : onClick}
+      tabIndex={disabled ? -1 : 0}
+      role="button"
+      aria-disabled={disabled}
+    >
+      <div className='bg-[#F5F5F5] mx-auto flex justify-center w-full mb-2 rounded-[12px] h-[106px]'>
+        <img src={image} alt={label} className="object-contain" />
+      </div>
+      <span className={`font-semibold text-base text-center ${disabled ? 'opacity-50' : ''}`}>{label}</span>
+    </div>
+  );
+};
 
-// Example usage: <div style={{ color: colors.brand }}> ... </div>
-// Tailwind classes like 'bg-primary' map to colors.brand, see tokens.ts for mapping.
+// Reusable InviteButton component
+const InviteButton = () => (
+  <button
+    className="flex items-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-2 rounded-lg font-semibold text-base shadow transition-colors"
+    type="button"
+  >
+    <UserPlus className="w-5 h-5" />
+    Invite to GIDIPitch
+  </button>
+);
 
 const Dashboard = () => {
-  const [showPitchDeckModal, setShowPitchDeckModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
-  const [showProfileModal, setShowProfileModal] = useState(false);
-  const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const [showHelpModal, setShowHelpModal] = useState(false);
-  const [showSupportModal, setShowSupportModal] = useState(false);
-  const [showThankYouModal, setShowThankYouModal] = useState(false);
-  const [supportForm, setSupportForm] = useState({ subject: '', message: '' });
-  const [showResumeModal, setShowResumeModal] = useState(false);
-  const navigate = useNavigate();
+  const [view, setView] = useState<'grid' | 'list'>('grid');
 
   const sidebarItems = [
-    { name: 'Dashboard', icon: BarChart3, route: '/dashboard', available: true },
-    { name: 'Pitch Deck Generator', icon: FileText, route: '/pitch-decks', available: true },
-    { name: 'Resume Builder', icon: User, route: '/resume-builder', available: true },
-    { name: 'Financial Forecast', icon: BarChart3, route: '', available: false },
-    { name: 'Market Estimator', icon: Target, route: '', available: false },
-    { name: 'YC Assistant', icon: Users, route: '', available: false },
-    { name: 'AI Coach', icon: Brain, route: '', available: false },
+    { name: 'Dashboard', icon: BarChart3, active: true, available: true },
+    { name: 'Pitch Deck Generator', icon: FileText, active: false, available: true },
+    { name: 'Resume Builder', icon: User, active: false, available: true },
+    { name: 'Financial Forecast', icon: BarChart3, active: false, available: true },
+    { name: 'Market Estimator', icon: Target, active: false, available: true },
+    { name: 'YC Assistant', icon: Users, active: false, available: true },
+    { name: 'AI Coach', icon: Brain, active: false, available: true },
+    // { name: 'AI Coach', icon: Brain, active: false, available: false },
   ];
 
   const recentProjects = [
@@ -90,171 +132,187 @@ const Dashboard = () => {
 
   const handleCreateNew = (tool: string) => {
     setSelectedTool(tool);
+    setShowCreateModal(true);
   };
 
   const handleStartCreation = (method: string) => {
     console.log(`Starting ${selectedTool} with ${method}`);
+    setShowCreateModal(false);
     // Here you would navigate to the respective tool
   };
 
-  const handleSignOut = () => {
-    if (confirm('Are you sure you want to sign out?')) {
-      // Here you would handle actual sign out logic
-      console.log('Signing out...');
-      // For now, just redirect to home page
-      window.location.href = '/';
-    }
-  };
-
-  const handleSupportChange = (e) => {
-    setSupportForm({ ...supportForm, [e.target.name]: e.target.value });
-  };
-  const handleSupportSubmit = (e) => {
-    e.preventDefault();
-    setShowSupportModal(false);
-    setShowThankYouModal(true);
-    setSupportForm({ subject: '', message: '' });
-  };
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation */}
-      {/* Remove header section (top navigation bar) */}
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+        <div className="flex h-16 items-center px-6">
+         <img src={GidiLogo} alt='GidiLogo'/>
+          
+          <div className="ml-auto flex items-center space-x-4">
+            <Button variant="ghost" size="icon" className="relative">
+              <Bell className="h-5 w-5" />
+              <div className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full"></div>
+            </Button>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="" />
+                    <AvatarFallback>JD</AvatarFallback>
+                  </Avatar>
+                  <span className="hidden md:block">John Doe</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Help</DropdownMenuItem>
+                <Separator />
+                <DropdownMenuItem>Sign out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </header>
 
-      <div className="flex min-h-screen">
+      <div className="flex">
         {/* Sidebar */}
-        <Sidebar
-          footer={
-            <div className="p-6 border-t space-y-2">
-              <Button variant="ghost" className="w-full justify-start" onClick={() => setShowSupportModal(true)}>
-                <MessageSquare className="mr-3 h-4 w-4" /> Support
-              </Button>
-              <Button variant="ghost" className="w-full justify-start relative">
-                <CreditCard className="mr-3 h-4 w-4" /> Subscription
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded-full">Coming Soon</span>
-              </Button>
-              <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/team-members')}>
-                <Users className="mr-3 h-4 w-4" /> Team Members
-              </Button>
-            </div>
-          }
-          className="w-[220px] min-h-screen"
-        >
-          <nav className="space-y-2 px-4 pb-6">
-            {sidebarItems.map((item) => (
-              <Button
-                key={item.name}
-                variant={window.location.pathname === item.route ? 'default' : 'ghost'}
-                className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
-                disabled={!item.available}
-                onClick={() => item.route && navigate(item.route)}
-              >
-                <item.icon className="mr-3 h-4 w-4" />
-                {item.name}
-                {!item.available && (
-                  <Badge variant="secondary" className="ml-auto text-xs">
-                    Soon
-                  </Badge>
-                )}
-              </Button>
-            ))}
-          </nav>
-        </Sidebar>
+        <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex flex-col justify-between h-screen">
+          <div className="p-2 mt-3 ">
+            <nav className="space-y-2 ">
+              {sidebarItems.map((item) => (
+                <Button
+                  key={item.name}
+                  variant={item.active ? 'default' : 'ghost'}
+                  className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!item.available}
+                >
+                  <item.icon className="mr-3 h-4 w-4" />
+                  {item.name}
+                  {!item.available && (
+                    <Badge variant="secondary" className="ml-auto text-xs">
+                      Soon
+                    </Badge>
+                  )}
+                </Button>
+              ))}
+            </nav>
+          </div>
+          <div className="">
+            <InviteButton />
+          </div>
+        </aside>
 
         {/* Main Content */}
-        <main className="main-wrapper">
-          <PageHeader heading="Welcome back, John!" />
-          <div className="w-full">
+        <main className="flex-1 p-6">
+          <div className="max-w-7xl mx-auto space-y-8">
             {/* Welcome Section */}
             <div>
-              <p className="text-muted-foreground mb-2 text-base">
+              <h2 className="text-3xl font-bold mb-2">Welcome back, John!</h2>
+              <p className="text-muted-foreground">
                 Ready to build your next investor-ready document?
               </p>
             </div>
 
             {/* Tools Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-              <button
-                onClick={() => setShowPitchDeckModal(true)}
-                className="p-6 bg-card border rounded-lg hover:shadow-md transition-all duration-200 flex flex-col items-center space-y-3 group"
-              >
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <FileText className="h-6 w-6 text-blue-600" />
-                </div>
-                <span className="font-medium text-sm">Pitch Deck</span>
-              </button>
-              
-              <button
-                onClick={() => setShowResumeModal(true)}
-                className="p-6 bg-card border rounded-lg hover:shadow-md transition-all duration-200 flex flex-col items-center space-y-3 group"
-              >
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <User className="h-6 w-6 text-green-600" />
-                </div>
-                <span className="font-medium text-sm">Resume Builder</span>
-              </button>
-              
-              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Users className="h-6 w-6 text-purple-600" />
-                </div>
-                <span className="font-medium text-sm">YC Assistant</span>
-              </div>
-              
-              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                  <Target className="h-6 w-6 text-red-600" />
-                </div>
-                <span className="font-medium text-sm">Market Estimator</span>
-              </div>
-              
-              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <Brain className="h-6 w-6 text-orange-600" />
-                </div>
-                <span className="font-medium text-sm">AI Coach</span>
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+              <ToolCard image={FreePik2} label="Pitch Desk" onClick={() => handleCreateNew('Pitch Deck')} />
+              <ToolCard image={FreePik3} label="Resume Builder" onClick={() => handleCreateNew('Resume')} disabled />
+              <ToolCard image={Freepik1} label="YC Assistant" onClick={() => handleCreateNew('YC Assistant')} disabled />
+              <ToolCard image={FreePiks4} label="Market Estimator" onClick={() => handleCreateNew('Market Estimator')} disabled />
+              <ToolCard image={FreePiks5} label="AI Coach" onClick={() => handleCreateNew('AI Coach')} disabled />
             </div>
 
-            {/* Recent Projects */}
-            <div className="mb-8">
-              <div className="mb-2">
-                <span className="text-xl font-semibold">Recent Projects</span>
+
+
+{/* Recents Title */}
+<section className='flex justify-between items-center'>
+<div>
+              <p className='text-[#2D2D2D] font-semibold text-[18px]'>Recents</p>
+            </div>
+
+
+            {/* View Toggle */}
+            <div className="flex items-center mb-4">
+              <div className="flex bg-[#F5F5F5] rounded-xl p-1 w-[76px] h-[40px]">
+                <button
+                  className={`flex-1 flex items-center justify-center rounded-lg transition-colors h-[32px] w-[32px] ${view === 'grid' ? 'bg-white shadow font-semibold' : ''}`}
+                  onClick={() => setView('grid')}
+                  aria-label="Grid view"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="5" height="5" rx="1" fill="#2D2D2D"/><rect x="12" y="3" width="5" height="5" rx="1" fill="#2D2D2D"/><rect x="3" y="12" width="5" height="5" rx="1" fill="#2D2D2D"/><rect x="12" y="12" width="5" height="5" rx="1" fill="#2D2D2D"/></svg>
+                </button>
+                <button
+                  className={`flex-1 flex items-center justify-center rounded-lg transition-colors h-[32px] w-[32px] ${view === 'list' ? 'bg-white shadow font-semibold' : ''}`}
+                  onClick={() => setView('list')}
+                  aria-label="List view"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="2.5" rx="1" fill="#2D2D2D"/><rect x="3" y="8.75" width="14" height="2.5" rx="1" fill="#2D2D2D"/><rect x="3" y="13.5" width="14" height="2.5" rx="1" fill="#2D2D2D"/></svg>
+                </button>
               </div>
-              <div className="space-y-4">
-                {recentProjects.map((project) => (
-                  <div
-                    key={project.id}
-                    className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors cursor-pointer"
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <img src="/file.png" alt="Project Icon" className="h-6 w-6 object-contain" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">{project.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {project.type}  Last edited {project.lastEdited}
-                        </p>
-                      </div>
-                    </div>
-                    <span
-                      className={
-                        project.status === 'Complete'
-                          ? 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 hover:bg-green-200 transition-colors'
-                          : project.status === 'In Progress'
-                          ? 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition-colors'
-                          : 'inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors'
-                      }
+            </div>
+            </section>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+              <ToolCard variant="project" image={freePik_build1} label="Pitch Desk" subtitle="Updated 8mins ago" />
+              <ToolCard variant="project" image={freepik_build2} label="Resume Builder" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('Resume')} disabled />
+              <ToolCard variant="project" image={freepik_build3} label="YC Assistant" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('YC Assistant')} disabled />
+              <ToolCard variant="project" image={freepik_build4} label="Market Estimator" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('Market Estimator')} disabled />
+              <ToolCard variant="project" image={freepik_build5} label="AI Coach" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('AI Coach')} disabled />
+              <ToolCard variant="project" image={freepik_build6} label="AI Coach" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('AI Coach')} disabled />
+            </div>
+
+            {/* <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span className="flex items-center">
+                    <Clock className="mr-2 h-5 w-5" />
+                    Recent Projects
+                  </span>
+                  <Button variant="ghost" size="sm">
+                    View All
+                    <ArrowUpRight className="ml-1 h-4 w-4" />
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentProjects.map((project) => (
+                    <div
+                      key={project.id}
+                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
                     >
-                      {project.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="p-2 bg-primary/10 rounded-lg">
+                          {project.type === 'Pitch Deck' ? (
+                            <FileText className="h-5 w-5 text-primary" />
+                          ) : (
+                            <User className="h-5 w-5 text-primary" />
+                          )}
+                        </div>
+                        <div>
+                          <h3 className="font-medium">{project.name}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {project.type} • Last edited {project.lastEdited}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge
+                        variant={project.status === 'Complete' ? 'default' : 'secondary'}
+                      >
+                        {project.status}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card> */}
 
-            {/* Quick Stats - REMOVE THIS SECTION */}
+
+
+            {/* Quick Stats */}
             {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card>
                 <CardContent className="p-6">
@@ -276,7 +334,7 @@ const Dashboard = () => {
                       <p className="text-2xl font-bold">8</p>
                     </div>
                     <Badge className="h-8 w-8 rounded-full flex items-center justify-center">
-                      
+                      ✓
                     </Badge>
                   </div>
                 </CardContent>
@@ -298,130 +356,30 @@ const Dashboard = () => {
         </main>
       </div>
 
-      {/* Pitch Deck Creator Modal */}
-      <PitchDeckCreator isOpen={showPitchDeckModal} onClose={() => setShowPitchDeckModal(false)} />
+      {/* Pitch Deck Creator */}
+      {selectedTool === 'Pitch Deck' && (
+        <PitchDeckCreator 
+          isOpen={showCreateModal} 
+          onClose={() => setShowCreateModal(false)} 
+        />
+      )}
 
-      {/* Resume Creator Modal */}
-      <ResumeCreator isOpen={showResumeModal} onClose={() => setShowResumeModal(false)} />
-
-      {/* Profile Modal */}
-      <Dialog open={showProfileModal} onOpenChange={setShowProfileModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Profile</DialogTitle>
-          </DialogHeader>
-          <div className="p-4 space-y-4">
-            <div className="flex items-center space-x-4">
-              <Avatar className="h-16 w-16 bg-[#F8F6F4]">
-                <AvatarImage src="" />
-                <AvatarFallback className="text-base">JD</AvatarFallback>
-              </Avatar>
-              <div>
-                <h3 className="font-semibold">John Doe</h3>
-                <p className="text-sm text-muted-foreground">john.doe@example.com</p>
-              </div>
-            </div>
-            <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setShowProfileModal(false)}>
-                Cancel
-              </Button>
-              <Button>Edit Profile</Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Settings Modal */}
-      <Dialog open={showSettingsModal} onOpenChange={setShowSettingsModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Settings</DialogTitle>
-          </DialogHeader>
-          <div className="p-4 space-y-4">
-            <div className="space-y-2">
-              <h4 className="font-medium">Preferences</h4>
-              <div className="space-y-1">
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" defaultChecked />
-                  <span className="text-sm">Email notifications</span>
-                </label>
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" defaultChecked />
-                  <span className="text-sm">Auto-save drafts</span>
-                </label>
-              </div>
-            </div>
-            <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setShowSettingsModal(false)}>
-                Cancel
-              </Button>
-              <Button>Save Changes</Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Help Modal */}
-      <Dialog open={showHelpModal} onOpenChange={setShowHelpModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Help & Support</DialogTitle>
-          </DialogHeader>
-          <div className="p-4 space-y-4">
-            <div className="space-y-2">
-              <h4 className="font-medium">Quick Links</h4>
-              <div className="space-y-1">
-                <a href="#" className="block text-sm text-primary hover:underline">
-                  Getting Started Guide
-                </a>
-                <a href="#" className="block text-sm text-primary hover:underline">
-                  Video Tutorials
-                </a>
-                <a href="#" className="block text-sm text-primary hover:underline">
-                  FAQ
-                </a>
-                <a href="#" className="block text-sm text-primary hover:underline">
-                  Contact Support
-                </a>
-              </div>
-            </div>
-            <div className="flex justify-end">
-              <Button onClick={() => setShowHelpModal(false)}>
+      {/* Resume Builder Modal - placeholder */}
+      {selectedTool === 'Resume' && (
+        <Dialog open={showCreateModal} onOpenChange={setShowCreateModal}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Create Resume</DialogTitle>
+            </DialogHeader>
+            <div className="p-4 text-center">
+              <p className="text-muted-foreground">Resume builder coming soon!</p>
+              <Button onClick={() => setShowCreateModal(false)} className="mt-4">
                 Close
               </Button>
             </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Support Modal */}
-      <Dialog open={showSupportModal} onOpenChange={setShowSupportModal}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Leave Feedback & Support</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSupportSubmit} className="space-y-4 mt-4">
-            <Input name="subject" placeholder="Subject" value={supportForm.subject} onChange={handleSupportChange} required />
-            <textarea name="message" placeholder="Your feedback or support request..." value={supportForm.message} onChange={handleSupportChange} className="w-full min-h-[80px] p-2 border rounded" required />
-            <div className="flex justify-end gap-2">
-              <Button type="button" variant="outline" onClick={() => setShowSupportModal(false)}>
-                Cancel
-              </Button>
-              <Button type="submit">Submit</Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
-      {/* Thank You Modal */}
-      <Dialog open={showThankYouModal} onOpenChange={setShowThankYouModal}>
-        <DialogContent className="max-w-sm text-center">
-          <DialogHeader>
-            <DialogTitle>Thank You!</DialogTitle>
-          </DialogHeader>
-          <p className="mb-4">Your feedback or support request has been received. We'll get back to you soon.</p>
-          <Button onClick={() => setShowThankYouModal(false)} className="mx-auto">Close</Button>
-        </DialogContent>
-      </Dialog>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };

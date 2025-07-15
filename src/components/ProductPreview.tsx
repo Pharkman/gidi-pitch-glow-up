@@ -50,6 +50,7 @@ const ProductPreview: React.FC<ProductPreviewProps> = ({ gradientTextColor = '#F
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             See <span style={{ color: '#FD621E' }}>GidiPitch</span> in Action
+            See <span className="text-primary">GidiPitch</span> in Action
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Explore our intuitive interface designed specifically for African founders. 

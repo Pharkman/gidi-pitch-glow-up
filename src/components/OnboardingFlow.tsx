@@ -1,34 +1,29 @@
+
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Confetti from 'react-confetti';
-import { ChevronRight, ChevronLeft, Briefcase, Target, User, FileText, File, ClipboardList } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { ChevronRight, ChevronLeft, Briefcase, Target, User } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { colors, typography, spacing, breakpoints } from '@/design-system/tokens';
-// Example usage: <div style={{ color: colors.brand }}> ... </div>
-// Tailwind classes like 'bg-primary' map to colors.brand, see tokens.ts for mapping.
+import { Card, CardContent } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 interface OnboardingFlowProps {
   isOpen: boolean;
   onComplete: () => void;
 }
 
-export default function OnboardingPage() {
+const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
+  const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(1);
-  const [showConfetti, setShowConfetti] = useState(false);
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     industry: '',
     stage: '',
     goal: '',
     role: '',
     background: '',
-    linkedin: '',
-    location: '', // NEW FIELD
-    referral: ''  // NEW FIELD
+    linkedin: ''
   });
 
   const industries = [
@@ -72,26 +67,19 @@ export default function OnboardingPage() {
   ];
 
   const backgrounds = [
-    { value: 'working-class', label: 'Working class' },
-    { value: 'students', label: 'Students' },
-    { value: 'founder', label: 'Founder' },
-    { value: 'none', label: 'None' },
+    { value: 'tech', label: 'Tech' },
+    { value: 'business', label: 'Business' },
+    { value: 'student', label: 'Student' },
+    { value: 'other', label: 'Other' }
   ];
-
-  const goalIcons = {
-    'pitch-deck': <FileText className="h-6 w-6 text-primary" />,
-    'resume': <File className="h-6 w-6 text-primary" />,
-    'one-pager': <ClipboardList className="h-6 w-6 text-primary" />,
-  };
 
   const handleNext = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
+     
     } else {
-      setShowConfetti(true);
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
+      onComplete();
+      navigate('/dashboard')
     }
   };
 
@@ -119,14 +107,13 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background overflow-y-auto w-full">
-      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} numberOfPieces={400} recycle={false} />}
-      <div className="bg-card border border-border rounded-xl shadow-md p-4 w-full max-w-3xl sm:w-[500px] md:w-[650px] lg:w-[800px] mx-auto">
-        <div className="p-4 pb-2 border-b">
+    <Dialog open={isOpen} onOpenChange={() => {}}>
+      <DialogContent className="sm:max-w-3xl p-0 gap-0 overflow-y-auto max-h-screen my-4">
+        <DialogHeader className="p-6 pb-4 border-b">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold" style={{ color: '#000' }}>
+            <DialogTitle className="text-2xl font-bold text-gradient-primary">
               Let's get you started
-            </h2>
+            </DialogTitle>
             <div className="text-sm text-muted-foreground">
               Step {currentStep} of 3
             </div>
@@ -143,9 +130,9 @@ export default function OnboardingPage() {
               />
             ))}
           </div>
-        </div>
+        </DialogHeader>
 
-        <div className="p-4">
+        <div className="p-6 w-full max-w-3xl mx-auto">
           {/* Step 1: Startup Basics */}
           {currentStep === 1 && (
             <div className="space-y-6">
@@ -160,43 +147,37 @@ export default function OnboardingPage() {
               <div className="space-y-4">
                 <div>
                   <Label className="text-base font-medium mb-3 block">
-                    What industries are you in?
+                    What industry are you in?
                   </Label>
-                  <RadioGroup
-                    value={formData.industry}
-                    onValueChange={(value) => updateFormData('industry', value)}
-                    className="grid grid-cols-3 gap-2"
-                  >
+                  <div className="grid grid-cols-2 gap-5">
                     {industries.map((industry) => (
-                      <Card
+                      <Button
                         key={industry}
-                        className={`cursor-pointer transition-all flex items-center px-4 py-3 ${formData.industry === industry ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-muted/50'}`}
+                        variant={formData.industry === industry ? 'default' : 'outline'}
+                        className="justify-start hover:bg-primary"
                         onClick={() => updateFormData('industry', industry)}
                       >
-                        <RadioGroupItem value={industry} id={industry} checked={formData.industry === industry} />
-                        <Label htmlFor={industry} className="ml-2 cursor-pointer w-full">
-                          {industry}
-                        </Label>
-                      </Card>
+                        {industry}
+                      </Button>
                     ))}
-                  </RadioGroup>
+                  </div>
                 </div>
 
                 <div>
-                  <Label className="text-base font-medium mb-3 block">
-                    What stage are your startups?
+                  <Label className="text-base font-medium mb-3 mt-2 block">
+                    What stage is your startup?
                   </Label>
                   <RadioGroup
                     value={formData.stage}
                     onValueChange={(value) => updateFormData('stage', value)}
-                    className="grid grid-cols-2 gap-3"
+                    className="space-y-3"
                   >
                     {stages.map((stage) => (
                       <div key={stage.value} className="flex items-center space-x-2">
                         <RadioGroupItem value={stage.value} id={stage.value} />
-                        <Label htmlFor={stage.value} className="flex-1 cursor-pointer">
-                          <div className="font-medium">{stage.label}</div>
-                          <div className="text-sm text-muted-foreground">{stage.desc}</div>
+                        <Label htmlFor={stage.value} className="flex-1 cursor-pointer ">
+                          <div className="font-medium mb-1 mt-2">{stage.label}</div>
+                          <div className="text-sm text-muted-foreground ">{stage.desc}</div>
                         </Label>
                       </div>
                     ))}
@@ -230,7 +211,7 @@ export default function OnboardingPage() {
                   >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-4">
-                        <div className="text-2xl">{goalIcons[goal.value]}</div>
+                        <div className="text-2xl">{goal.icon}</div>
                         <div className="flex-1">
                           <h4 className="font-semibold">{goal.title}</h4>
                           <p className="text-sm text-muted-foreground">{goal.desc}</p>
@@ -264,23 +245,27 @@ export default function OnboardingPage() {
               <div className="space-y-4">
                 <div>
                   <Label className="text-base font-medium mb-3 block">
-                    What's your current role?
+                    Your role
                   </Label>
-                  <select
+                  <RadioGroup
                     value={formData.role}
-                    onChange={e => updateFormData('role', e.target.value)}
-                    className="w-full border border-border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                    onValueChange={(value) => updateFormData('role', value)}
+                    className="flex space-x-4"
                   >
-                    <option value="">Select your role</option>
                     {roles.map((role) => (
-                      <option key={role.value} value={role.value}>{role.label}</option>
+                      <div key={role.value} className="flex items-center space-x-2">
+                        <RadioGroupItem value={role.value} id={role.value} />
+                        <Label htmlFor={role.value} className="cursor-pointer">
+                          {role.label}
+                        </Label>
+                      </div>
                     ))}
-                  </select>
+                  </RadioGroup>
                 </div>
 
                 <div>
-                  <Label className="text-base font-medium mb-3 block">
-                    What stage of life are you?
+                  <Label className="text-base font-medium mb-3 block mt-6">
+                    Background
                   </Label>
                   <RadioGroup
                     value={formData.background}
@@ -288,7 +273,7 @@ export default function OnboardingPage() {
                     className="flex space-x-4"
                   >
                     {backgrounds.map((bg) => (
-                      <div key={bg.value} className="flex items-center space-x-2">
+                      <div key={bg.value} className="flex items-center space-x-2 mb-4">
                         <RadioGroupItem value={bg.value} id={bg.value} />
                         <Label htmlFor={bg.value} className="cursor-pointer">
                           {bg.label}
@@ -298,43 +283,15 @@ export default function OnboardingPage() {
                   </RadioGroup>
                 </div>
 
-                <div>
-                  <Label htmlFor="linkedin" className="text-base font-medium">
-                    Let's know you better, what's your social/website link?
+                <div >
+                  <Label htmlFor="linkedin" className="text-base font-medium mt-5">
+                    LinkedIn or Website (Optional)
                   </Label>
                   <Input
                     id="linkedin"
                     placeholder="https://linkedin.com/in/yourname"
                     value={formData.linkedin}
                     onChange={(e) => updateFormData('linkedin', e.target.value)}
-                    className="mt-2"
-                  />
-                </div>
-
-                {/* NEW: Where are you currently based? */}
-                <div>
-                  <Label htmlFor="location" className="text-base font-medium">
-                    Where are you currently based?
-                  </Label>
-                  <Input
-                    id="location"
-                    placeholder="City, Country"
-                    value={formData.location}
-                    onChange={(e) => updateFormData('location', e.target.value)}
-                    className="mt-2"
-                  />
-                </div>
-
-                {/* NEW: How did you get to know GidiPitch? */}
-                <div>
-                  <Label htmlFor="referral" className="text-base font-medium">
-                    How did you get to know GidiPitch?
-                  </Label>
-                  <Input
-                    id="referral"
-                    placeholder="e.g. Twitter, Friend, Event, etc."
-                    value={formData.referral}
-                    onChange={(e) => updateFormData('referral', e.target.value)}
                     className="mt-2"
                   />
                 </div>
@@ -364,15 +321,9 @@ export default function OnboardingPage() {
             <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
         </div>
-      </div>
-      {showConfetti && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <h2 className="text-3xl font-bold mb-2" style={{ color: '#FD621E' }}>Welcome to GidiPitch!</h2>
-            <p className="text-lg">Your dashboard is ready 🎉</p>
-          </div>
-        </div>
-      )}
-    </div>
+      </DialogContent>
+    </Dialog>
   );
-}
+};
+
+export default OnboardingFlow;

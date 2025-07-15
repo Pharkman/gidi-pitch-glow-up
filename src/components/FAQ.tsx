@@ -1,18 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import React from 'react';
 
-interface FAQProps {
-  heading?: string;
-  subheading?: string;
-  noBgNoBorder?: boolean;
-}
-
-const FAQ: React.FC<FAQProps> = ({
-  heading = "FAQ's",
-  subheading = '',
-  noBgNoBorder = false,
-}) => {
+const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs = [
@@ -47,14 +36,17 @@ const FAQ: React.FC<FAQProps> = ({
   };
 
   return (
-    <section id="faq" className={`py-24 ${noBgNoBorder ? '' : 'bg-muted/30 border-t border-border'}`}>
-      <div className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 ${noBgNoBorder ? '' : 'bg-card border border-border rounded-2xl shadow-soft'}`}>
+    <section id="faq" className="py-24 bg-muted/30">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-center" style={{ color: '#000' }}>
-          {heading}
-        </h2>
-        <div className={`text-center mb-16 ${noBgNoBorder ? '' : 'bg-card border-b border-border rounded-t-2xl p-8'}`}>
-          {subheading && <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{subheading}</p>}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            Frequently Asked{' '}
+            <span className="text-gradient-primary">Questions</span>
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Everything you need to know about GidiPitch and how it works.
+          </p>
         </div>
 
         {/* FAQ Items */}
@@ -91,25 +83,26 @@ const FAQ: React.FC<FAQProps> = ({
           ))}
         </div>
 
+        
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <div className="p-8">
+        {/* <div className="text-center mt-16">
+          <div className="bg-gradient-card border border-border rounded-2xl p-8 max-w-2xl mx-auto shadow-soft">
             <h3 className="text-2xl font-bold mb-4">
-              Ready to Power Up Your Fundraising?
+              Ready to Get Started?
             </h3>
             <p className="text-muted-foreground mb-6">
-              Get personalized support, book a live demo, or reach out to our team—no barriers, just help to get you funded faster.
+              Join hundreds of African founders who've already built their pitch materials with GidiPitch.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="btn-hero">
-                Get Support
+                Start Building Now
               </button>
               <button className="btn-ghost">
-                Book a Live Demo
+                Watch Demo
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
