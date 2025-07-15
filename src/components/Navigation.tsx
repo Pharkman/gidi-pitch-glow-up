@@ -18,9 +18,7 @@ const Navigation = () => {
   const navItems = [
     { href: '#hero', label: 'Home' },
     { href: '#features', label: 'Features' },
-    { href: '#preview', label: 'Product Preview' },
-    { href: '#how-it-works', label: 'How It Works' },
-    { href: '#why-gidipitch', label: 'Why GidiPitch' },
+    { href: '#preview', label: 'Demo' },
     { href: '#faq', label: 'FAQ' },
   ];
 
@@ -58,9 +56,12 @@ const Navigation = () => {
             </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <button className="btn-hero text-sm px-6 py-2">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <button className="btn-ghost text-sm px-6 py-2" onClick={() => window.location.href='/signin'}>
+              Login
+            </button>
+            <button className="btn-hero text-sm px-6 py-2 ml-0">
               Try Free
             </button>
           </div>

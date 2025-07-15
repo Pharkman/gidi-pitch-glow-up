@@ -1,8 +1,13 @@
 import { Clock, Users, Zap, Target } from 'lucide-react';
 import founderPresenting from '@/assets/founder-presenting.jpg';
-import TitleHeader from './TitleHeading';
+import React from 'react';
 
-const WhyGidiPitch = () => {
+interface WhyGidiPitchProps {
+  showReadySection?: boolean;
+  showSuccessStoriesButton?: boolean;
+}
+
+const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, showSuccessStoriesButton = false }) => {
   const benefits = [
     {
       icon: Users,
@@ -40,8 +45,7 @@ const WhyGidiPitch = () => {
           {/* Content */}
           <div className="animate-fade-in-up">
             <h2 className="text-4xl lg:text-5xl font-bold mb-8">
-              Why Choose{' '}
-              <span className="text-primary">GidiPitch</span>?
+              Why Choose <span style={{ color: '#FD621E' }}>GidiPitch</span>?
             </h2>
             
             <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
@@ -50,7 +54,7 @@ const WhyGidiPitch = () => {
             </p>
 
             <div className="space-y-8">
-              {benefits.map((benefit, index) => {
+              {benefits.slice(0, 3).map((benefit, index) => {
                 const Icon = benefit.icon;
                 return (
                   <div 
@@ -59,7 +63,7 @@ const WhyGidiPitch = () => {
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div className="flex-shrink-0 mr-6">
-                      <div className="w-12 h-12 bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300">
+                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300">
                         <Icon className="h-6 w-6 text-primary" />
                       </div>
                     </div>
@@ -76,44 +80,42 @@ const WhyGidiPitch = () => {
                 );
               })}
             </div>
-
-            {/* <div className="mt-12">
-              <button className="btn-secondary">
-                See Success Stories
-              </button>
-            </div> */}
+            {showSuccessStoriesButton && (
+              <div className="mt-8">
+                <button className="btn-hero">See success stories</button>
+              </div>
+            )}
+            {showReadySection && (
+              <div className="mt-12 p-8 bg-muted/30 rounded-2xl text-center">
+                <h3 className="text-2xl font-bold mb-2">Ready to Get Started?</h3>
+                <p className="text-muted-foreground mb-4">Sign up and start building your investor materials today.</p>
+                <button className="btn-hero">Get Started</button>
+              </div>
+            )}
           </div>
 
           {/* Image */}
-          <div className="relative animate-scale-in">
-            <div className="relative z-10">
-              <img 
-                src={founderPresenting}
-                alt="African founder presenting to investors"
-                className="w-full h-auto rounded-3xl shadow-strong"
-              />
-              
-              {/* Floating stats */}
-              <div className="absolute top-8 left-8 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-                <div className="text-2xl font-bold text-primary">500+</div>
-                <div className="text-sm text-muted-foreground">Founders Helped</div>
-              </div>
-              
-              <div className="absolute bottom-8 right-8 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-                <div className="text-2xl font-bold text-accent">$10M+</div>
-                <div className="text-sm text-muted-foreground">Funding Raised</div>
-              </div>
-              
-              <div className="absolute top-1/2 -right-4 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-                <div className="text-2xl font-bold text-secondary">95%</div>
-                <div className="text-sm text-muted-foreground">Success Rate</div>
-              </div>
+          <div className="relative z-10">
+            <img 
+              src={founderPresenting}
+              alt="African founder presenting to investors"
+              className="w-full h-auto rounded-3xl shadow-strong"
+            />
+            
+            {/* Floating stats */}
+            <div className="absolute top-8 left-8 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
+              <div className="text-2xl font-bold text-primary">500+</div>
+              <div className="text-sm text-muted-foreground">Founders Helped</div>
             </div>
-
-            {/* Background effects */}
-            <div className="absolute inset-0 -z-10">
-              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/20 rounded-full blur-2xl"></div>
-              <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-accent/20 rounded-full blur-2xl"></div>
+            
+            <div className="absolute bottom-8 right-8 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
+              <div className="text-2xl font-bold text-accent">$10M+</div>
+              <div className="text-sm text-muted-foreground">Funding Raised</div>
+            </div>
+            
+            <div className="absolute top-1/2 -right-4 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
+              <div className="text-2xl font-bold text-secondary">95%</div>
+              <div className="text-sm text-muted-foreground">Success Rate</div>
             </div>
           </div>
         </div>
@@ -131,7 +133,7 @@ const WhyGidiPitch = () => {
                 <div className="font-semibold">Amara Okafor</div>
                 <div className="text-sm text-muted-foreground">Founder, TechLagos</div>
               </div>
-            </div>
+>>>>
           </div>
         </div> */}
       </div>

@@ -2,28 +2,13 @@ import { useState } from 'react';
 import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import heroLaptop from '@/assets/hero-laptop-mockup.jpg';
-import AuthModal from './AuthModal';
-import OnboardingFlow from './OnboardingFlow';
 import Dashboard from './Dashboard';
 import heroBanner from '@/assets/hero_dashboard.png'
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
-  const [showDashboard, setShowDashboard] = useState(false);
+  const navigate = useNavigate();
 
-  const handleAuthSuccess = () => {
-    setShowOnboarding(true);
-  };
-
-  const handleOnboardingComplete = () => {
-    setShowOnboarding(false);
-    setShowDashboard(true);
-  };
-
-  if (showDashboard) {
-    return <Dashboard />;
-  }
   return (
     <section id="hero" className="relative min-h-screen flex items-center hero-bg overflow-hidden">
      
@@ -52,15 +37,15 @@ const HeroSection = () => {
               <Button 
                 size="lg" 
                 className="group"
-                onClick={() => setShowAuthModal(true)}
+                onClick={() => navigate('/signin')}
               >
-                Try Free
+                Get Started for Free
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
               <Button variant="outline" size="lg" className="group hover:bg-primary hover:text-primary-foreground hover:border-primary">
                 <Play className="mr-2 h-5 w-5" />
-                See How It Works
+                Watch demo
               </Button>
             </div>
 
@@ -87,7 +72,7 @@ const HeroSection = () => {
               <img 
                 src={heroBanner} 
                 alt="GidiPitch Interface" 
-                className="w-full h-auto rounded-2xl shadow-strong animate-float"
+                className="w-full h-[420px] md:h-[520px] object-cover rounded-2xl shadow-strong animate-float"
               />
               
               {/* Floating UI elements */}
@@ -107,19 +92,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        onAuthSuccess={handleAuthSuccess}
-      />
-
-      {/* Onboarding Flow */}
-      <OnboardingFlow
-        isOpen={showOnboarding}
-        onComplete={handleOnboardingComplete}
-      />
     </section>
   );
 };
