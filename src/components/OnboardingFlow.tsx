@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Card, CardContent } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 interface OnboardingFlowProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface OnboardingFlowProps {
 }
 
 const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
+  const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     industry: '',
@@ -73,8 +75,10 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
   const handleNext = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
+     
     } else {
       onComplete();
+      navigate('/dashboard')
     }
   };
 
@@ -103,7 +107,7 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-2xl p-0 gap-0">
+      <DialogContent className="sm:max-w-3xl p-0 gap-0 overflow-y-auto max-h-screen my-4">
         <DialogHeader className="p-6 pb-4 border-b">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-2xl font-bold text-gradient-primary">
@@ -127,7 +131,7 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
           </div>
         </DialogHeader>
 
-        <div className="p-6">
+        <div className="p-6 w-full max-w-3xl mx-auto">
           {/* Step 1: Startup Basics */}
           {currentStep === 1 && (
             <div className="space-y-6">
@@ -144,12 +148,12 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
                   <Label className="text-base font-medium mb-3 block">
                     What industry are you in?
                   </Label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-5">
                     {industries.map((industry) => (
                       <Button
                         key={industry}
                         variant={formData.industry === industry ? 'default' : 'outline'}
-                        className="justify-start"
+                        className="justify-start hover:bg-primary"
                         onClick={() => updateFormData('industry', industry)}
                       >
                         {industry}
@@ -159,7 +163,7 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
                 </div>
 
                 <div>
-                  <Label className="text-base font-medium mb-3 block">
+                  <Label className="text-base font-medium mb-3 mt-2 block">
                     What stage is your startup?
                   </Label>
                   <RadioGroup
@@ -170,9 +174,9 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
                     {stages.map((stage) => (
                       <div key={stage.value} className="flex items-center space-x-2">
                         <RadioGroupItem value={stage.value} id={stage.value} />
-                        <Label htmlFor={stage.value} className="flex-1 cursor-pointer">
-                          <div className="font-medium">{stage.label}</div>
-                          <div className="text-sm text-muted-foreground">{stage.desc}</div>
+                        <Label htmlFor={stage.value} className="flex-1 cursor-pointer ">
+                          <div className="font-medium mb-1 mt-2">{stage.label}</div>
+                          <div className="text-sm text-muted-foreground ">{stage.desc}</div>
                         </Label>
                       </div>
                     ))}
@@ -259,7 +263,7 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
                 </div>
 
                 <div>
-                  <Label className="text-base font-medium mb-3 block">
+                  <Label className="text-base font-medium mb-3 block mt-6">
                     Background
                   </Label>
                   <RadioGroup
@@ -268,7 +272,7 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
                     className="flex space-x-4"
                   >
                     {backgrounds.map((bg) => (
-                      <div key={bg.value} className="flex items-center space-x-2">
+                      <div key={bg.value} className="flex items-center space-x-2 mb-4">
                         <RadioGroupItem value={bg.value} id={bg.value} />
                         <Label htmlFor={bg.value} className="cursor-pointer">
                           {bg.label}
@@ -278,8 +282,8 @@ const OnboardingFlow = ({ isOpen, onComplete }: OnboardingFlowProps) => {
                   </RadioGroup>
                 </div>
 
-                <div>
-                  <Label htmlFor="linkedin" className="text-base font-medium">
+                <div >
+                  <Label htmlFor="linkedin" className="text-base font-medium mt-5">
                     LinkedIn or Website (Optional)
                   </Label>
                   <Input

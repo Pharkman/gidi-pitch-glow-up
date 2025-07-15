@@ -1,4 +1,5 @@
 import { FileText, TrendingUp, User, Lightbulb, MessageSquare } from 'lucide-react';
+import TitleHeader from './TitleHeading';
 
 const FeaturesSection = () => {
   const features = [
@@ -32,6 +33,8 @@ const FeaturesSection = () => {
 
   return (
     <section id="features" className="py-24 bg-muted/30">
+      <TitleHeader title='Features'/>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -84,7 +87,7 @@ const FeaturesSection = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <button className="btn-secondary">
+          <button className="bg-primary text-primary-foreground p-5 rounded-xl hover:bg-primary/80">
             Explore All Features
           </button>
         </div>

@@ -83,25 +83,26 @@ const FAQ = () => {
           ))}
         </div>
 
+        
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-card border border-border rounded-2xl p-8 shadow-soft">
+        {/* <div className="text-center mt-16">
+          <div className="bg-gradient-card border border-border rounded-2xl p-8 max-w-2xl mx-auto shadow-soft">
             <h3 className="text-2xl font-bold mb-4">
-              Still Have Questions?
+              Ready to Get Started?
             </h3>
             <p className="text-muted-foreground mb-6">
-              Our team is here to help you succeed. Get in touch for personalized support.
+              Join hundreds of African founders who've already built their pitch materials with GidiPitch.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="btn-hero">
-                Contact Support
+                Start Building Now
               </button>
               <button className="btn-ghost">
-                Schedule a Demo
+                Watch Demo
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

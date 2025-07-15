@@ -42,7 +42,7 @@ const ProductPreview = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            See <span className="text-gradient-secondary">GidiPitch</span> in Action
+            See <span className="text-primary">GidiPitch</span> in Action
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Explore our intuitive interface designed specifically for African founders. 
@@ -85,9 +85,11 @@ const ProductPreview = () => {
                         ))}
                       </ul>
 
-                      <button className="btn-hero w-fit group">
-                        Try This Tool
-                        <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      <button
+                        className="btn-hero w-[50%] flex justify-center items-center gap-2 font-semibold rounded-lg shadow-lg bg-primary text-white transition-all duration-200 hover:bg-primary/90 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 py-3 px-6 group"
+                      >
+                        <span>Try This Tool</span>
+                        <ExternalLink className="h-5 w-5 ml-1 group-hover:translate-x-1 transition-transform" />
                       </button>
                     </div>
 

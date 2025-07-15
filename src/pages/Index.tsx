@@ -14,7 +14,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <FeaturesSection />
-        <ProductPreview />
+        {/* <ProductPreview /> */}
         <HowItWorks />
         <WhyGidiPitch />
         <FAQ />

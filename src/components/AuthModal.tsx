@@ -40,22 +40,22 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }: AuthModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md p-0 gap-0">
+      <DialogContent className="sm:max-w-md p-0 gap-0 bg-white rounded-2xl shadow-2xl border border-border">
         <DialogHeader className="p-6 pb-4">
           <DialogTitle className="text-2xl font-bold text-center text-gradient-primary">
             Join GidiPitch
           </DialogTitle>
         </DialogHeader>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mx-6 mb-6">
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
-            <TabsTrigger value="login">Log In</TabsTrigger>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full px-2">
+          <TabsList className="grid w-full grid-cols-2  mb-6 bg-muted rounded-lg p-1">
+            <TabsTrigger value="signup" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-white transition-colors">Sign Up</TabsTrigger>
+            <TabsTrigger value="login" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-white transition-colors">Log In</TabsTrigger>
           </TabsList>
 
           {/* Sign Up Tab */}
-          <TabsContent value="signup" className="px-6 pb-6 mt-0">
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <TabsContent value="signup" className="px-4 pb-8 mt-0">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="fullName" className="text-sm font-medium">
                   Full Name
@@ -65,7 +65,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }: AuthModalProps) => {
                   <Input
                     id="fullName"
                     placeholder="Enter your full name"
-                    className="pl-10"
+                    className="pl-10 bg-muted rounded-lg border border-border  focus:ring-2 focus:ring-primary/20 transition"
                     required
                   />
                 </div>
@@ -81,7 +81,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }: AuthModalProps) => {
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="pl-10"
+                    className="pl-10 bg-muted rounded-lg border border-border focus:ring-2 focus:ring-primary/20 transition"
                     required
                   />
                 </div>
@@ -97,7 +97,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }: AuthModalProps) => {
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Create a password"
-                    className="pl-10 pr-10"
+                    className="pl-10 pr-10 bg-muted rounded-lg border border-border focus:ring-2 focus:ring-primary/20 transition"
                     required
                   />
                   <button
@@ -112,26 +112,26 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }: AuthModalProps) => {
 
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary/90 transition-all text-base py-3"
                 size="lg"
                 disabled={loading}
               >
                 {loading ? 'Creating Account...' : 'Sign Up'}
               </Button>
 
-              <div className="relative">
+              <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Or</span>
+                  <span className="bg-white px-2 text-muted-foreground">Or</span>
                 </div>
               </div>
 
               <Button
                 type="button"
                 variant="outline"
-                className="w-full"
+                className="w-full bg-white border border-border rounded-lg shadow-sm hover:bg-muted transition-all text-base py-3 flex items-center justify-center"
                 size="lg"
                 onClick={handleGoogleAuth}
                 disabled={loading}
@@ -160,7 +160,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }: AuthModalProps) => {
           </TabsContent>
 
           {/* Login Tab */}
-          <TabsContent value="login" className="px-6 pb-6 mt-0">
+          <TabsContent value="login" className="px-4 pb-6 mt-0">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="loginEmail" className="text-sm font-medium">

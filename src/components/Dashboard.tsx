@@ -14,7 +14,8 @@ import {
   Sparkles,
   FileUp,
   Zap,
-  X
+  X,
+  UserPlus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -29,19 +30,80 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
+import GidiLogo from '@/assets/Frame 481473.png'
+import Freepik1 from '@/assets/dashboard1.png'
+import FreePik2 from '@/assets/freepik_assistant_1752223275476 1.png'
+import FreePik3 from '@/assets/freepik_assistant_1752223862097 1.png'
+import FreePiks4 from '@/assets/freepik_assistant_1752224107168 1.png'
+import FreePiks5 from '@/assets/freepik_assistant_1752224815977 1.png'
+import freePik_build1 from '@/assets/freepik_project.png'
+import freepik_build2 from "@/assets/freepik_build2.png"
+import freepik_build3 from "@/assets/freepik_buld3.png"
+import freepik_build4 from "@/assets/freepik_build4.png"
+import freepik_build5 from "@/assets/freepik_build5.png"
+import freepik_build6 from "@/assets/freepik_build6.png"
+// Reusable ToolCard component
+const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle }: {
+  image: string,
+  label: string,
+  onClick?: () => void,
+  disabled?: boolean,
+  variant?: 'grid' | 'project',
+  subtitle?: string
+}) => {
+  if (variant === 'project') {
+    return (
+      <div className="bg-white rounded-xl shadow-md p-0 w-full border-1 border-[#E4E4E4CC]">
+        <img src={image} alt={label} className="object-cover w-full h-[172px] rounded-t-xl" />
+        <div className="w-full px-4 py-3">
+          <div className="font-semibold text-base text-foreground mb-1">{label}</div>
+          {subtitle && <div className="text-sm text-muted-foreground">{subtitle}</div>}
+        </div>
+      </div>
+    );
+  }
+  // Default to grid style
+  return (
+    <div
+      className={`flex flex-col items-center bg-white border-1 border-[#E4E4E4CC] shadow-md rounded-[12px] pb-3 p-[3px] ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+      onClick={disabled ? undefined : onClick}
+      tabIndex={disabled ? -1 : 0}
+      role="button"
+      aria-disabled={disabled}
+    >
+      <div className='bg-[#F5F5F5] mx-auto flex justify-center w-full mb-2 rounded-[12px] h-[106px]'>
+        <img src={image} alt={label} className="object-contain" />
+      </div>
+      <span className={`font-semibold text-base text-center ${disabled ? 'opacity-50' : ''}`}>{label}</span>
+    </div>
+  );
+};
+
+// Reusable InviteButton component
+const InviteButton = () => (
+  <button
+    className="flex items-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-2 rounded-lg font-semibold text-base shadow transition-colors"
+    type="button"
+  >
+    <UserPlus className="w-5 h-5" />
+    Invite to GIDIPitch
+  </button>
+);
 
 const Dashboard = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
+  const [view, setView] = useState<'grid' | 'list'>('grid');
 
   const sidebarItems = [
     { name: 'Dashboard', icon: BarChart3, active: true, available: true },
     { name: 'Pitch Deck Generator', icon: FileText, active: false, available: true },
     { name: 'Resume Builder', icon: User, active: false, available: true },
-    { name: 'Financial Forecast', icon: BarChart3, active: false, available: false },
-    { name: 'Market Estimator', icon: Target, active: false, available: false },
-    { name: 'YC Assistant', icon: Users, active: false, available: false },
-    { name: 'AI Coach', icon: Brain, active: false, available: false },
+    { name: 'Financial Forecast', icon: BarChart3, active: false, available: true },
+    { name: 'Market Estimator', icon: Target, active: false, available: true },
+    { name: 'YC Assistant', icon: Users, active: false, available: true },
+    { name: 'AI Coach', icon: Brain, active: false, available: true },
+    // { name: 'AI Coach', icon: Brain, active: false, available: false },
   ];
 
   const recentProjects = [
@@ -80,13 +142,11 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation */}
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
         <div className="flex h-16 items-center px-6">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold text-gradient-primary">GidiPitch</h1>
-          </div>
+         <img src={GidiLogo} alt='GidiLogo'/>
           
           <div className="ml-auto flex items-center space-x-4">
             <Button variant="ghost" size="icon" className="relative">
@@ -119,16 +179,14 @@ const Dashboard = () => {
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="p-6">
-            <nav className="space-y-2">
+        <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex flex-col justify-between h-screen">
+          <div className="p-2 mt-3 ">
+            <nav className="space-y-2 ">
               {sidebarItems.map((item) => (
                 <Button
                   key={item.name}
                   variant={item.active ? 'default' : 'ghost'}
-                  className={`w-full justify-start ${
-                    !item.available ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
+                  className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={!item.available}
                 >
                   <item.icon className="mr-3 h-4 w-4" />
@@ -141,6 +199,9 @@ const Dashboard = () => {
                 </Button>
               ))}
             </nav>
+          </div>
+          <div className="">
+            <InviteButton />
           </div>
         </aside>
 
@@ -156,51 +217,54 @@ const Dashboard = () => {
             </div>
 
             {/* Tools Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-              <button
-                onClick={() => handleCreateNew('Pitch Deck')}
-                className="p-6 bg-card border rounded-lg hover:shadow-md transition-all duration-200 flex flex-col items-center space-y-3 group"
-              >
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <FileText className="h-6 w-6 text-blue-600" />
-                </div>
-                <span className="font-medium text-sm">Pitch Deck</span>
-              </button>
-              
-              <button
-                onClick={() => handleCreateNew('Resume')}
-                className="p-6 bg-card border rounded-lg hover:shadow-md transition-all duration-200 flex flex-col items-center space-y-3 group"
-              >
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <User className="h-6 w-6 text-green-600" />
-                </div>
-                <span className="font-medium text-sm">Resume Builder</span>
-              </button>
-              
-              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Users className="h-6 w-6 text-purple-600" />
-                </div>
-                <span className="font-medium text-sm">YC Assistant</span>
-              </div>
-              
-              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                  <Target className="h-6 w-6 text-red-600" />
-                </div>
-                <span className="font-medium text-sm">Market Estimator</span>
-              </div>
-              
-              <div className="p-6 bg-card border rounded-lg opacity-50 cursor-not-allowed flex flex-col items-center space-y-3">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <Brain className="h-6 w-6 text-orange-600" />
-                </div>
-                <span className="font-medium text-sm">AI Coach</span>
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+              <ToolCard image={FreePik2} label="Pitch Desk" onClick={() => handleCreateNew('Pitch Deck')} />
+              <ToolCard image={FreePik3} label="Resume Builder" onClick={() => handleCreateNew('Resume')} disabled />
+              <ToolCard image={Freepik1} label="YC Assistant" onClick={() => handleCreateNew('YC Assistant')} disabled />
+              <ToolCard image={FreePiks4} label="Market Estimator" onClick={() => handleCreateNew('Market Estimator')} disabled />
+              <ToolCard image={FreePiks5} label="AI Coach" onClick={() => handleCreateNew('AI Coach')} disabled />
             </div>
 
-            {/* Recent Projects */}
-            <Card>
+
+
+{/* Recents Title */}
+<section className='flex justify-between items-center'>
+<div>
+              <p className='text-[#2D2D2D] font-semibold text-[18px]'>Recents</p>
+            </div>
+
+
+            {/* View Toggle */}
+            <div className="flex items-center mb-4">
+              <div className="flex bg-[#F5F5F5] rounded-xl p-1 w-[76px] h-[40px]">
+                <button
+                  className={`flex-1 flex items-center justify-center rounded-lg transition-colors h-[32px] w-[32px] ${view === 'grid' ? 'bg-white shadow font-semibold' : ''}`}
+                  onClick={() => setView('grid')}
+                  aria-label="Grid view"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="5" height="5" rx="1" fill="#2D2D2D"/><rect x="12" y="3" width="5" height="5" rx="1" fill="#2D2D2D"/><rect x="3" y="12" width="5" height="5" rx="1" fill="#2D2D2D"/><rect x="12" y="12" width="5" height="5" rx="1" fill="#2D2D2D"/></svg>
+                </button>
+                <button
+                  className={`flex-1 flex items-center justify-center rounded-lg transition-colors h-[32px] w-[32px] ${view === 'list' ? 'bg-white shadow font-semibold' : ''}`}
+                  onClick={() => setView('list')}
+                  aria-label="List view"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="2.5" rx="1" fill="#2D2D2D"/><rect x="3" y="8.75" width="14" height="2.5" rx="1" fill="#2D2D2D"/><rect x="3" y="13.5" width="14" height="2.5" rx="1" fill="#2D2D2D"/></svg>
+                </button>
+              </div>
+            </div>
+            </section>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+              <ToolCard variant="project" image={freePik_build1} label="Pitch Desk" subtitle="Updated 8mins ago" />
+              <ToolCard variant="project" image={freepik_build2} label="Resume Builder" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('Resume')} disabled />
+              <ToolCard variant="project" image={freepik_build3} label="YC Assistant" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('YC Assistant')} disabled />
+              <ToolCard variant="project" image={freepik_build4} label="Market Estimator" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('Market Estimator')} disabled />
+              <ToolCard variant="project" image={freepik_build5} label="AI Coach" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('AI Coach')} disabled />
+              <ToolCard variant="project" image={freepik_build6} label="AI Coach" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('AI Coach')} disabled />
+            </div>
+
+            {/* <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span className="flex items-center">
@@ -244,10 +308,12 @@ const Dashboard = () => {
                   ))}
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
+
+
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
@@ -285,7 +351,7 @@ const Dashboard = () => {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </div> */}
           </div>
         </main>
       </div>

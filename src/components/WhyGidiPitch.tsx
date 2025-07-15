@@ -1,5 +1,6 @@
 import { Clock, Users, Zap, Target } from 'lucide-react';
 import founderPresenting from '@/assets/founder-presenting.jpg';
+import TitleHeader from './TitleHeading';
 
 const WhyGidiPitch = () => {
   const benefits = [
@@ -27,13 +28,20 @@ const WhyGidiPitch = () => {
 
   return (
     <section id="why-gidipitch" className="py-24 bg-background">
+        <div className="flex flex-col items-center mb-6 gap-5 shadow-2xl bg-white rounded-lg  w-[10%] mx-16">
+        <div className="">
+          <h1 className="font-medium py-3 rounded-lg md:text-[14px] text-xs text-center">
+          Why Choose
+          </h1>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <div className="animate-fade-in-up">
             <h2 className="text-4xl lg:text-5xl font-bold mb-8">
               Why Choose{' '}
-              <span className="text-gradient-secondary">GidiPitch</span>?
+              <span className="text-primary">GidiPitch</span>?
             </h2>
             
             <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
@@ -69,11 +77,11 @@ const WhyGidiPitch = () => {
               })}
             </div>
 
-            <div className="mt-12">
+            {/* <div className="mt-12">
               <button className="btn-secondary">
                 See Success Stories
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* Image */}
@@ -111,7 +119,7 @@ const WhyGidiPitch = () => {
         </div>
 
         {/* Bottom testimonial */}
-        <div className="mt-24 text-center">
+        {/* <div className="mt-24 text-center">
           <div className="bg-gradient-card border border-border rounded-2xl p-8 max-w-4xl mx-auto shadow-soft">
             <blockquote className="text-2xl font-medium text-foreground mb-6 leading-relaxed">
               "GidiPitch helped me create a professional pitch deck in 30 minutes. 
@@ -125,7 +133,7 @@ const WhyGidiPitch = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
