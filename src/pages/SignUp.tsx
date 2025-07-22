@@ -1,106 +1,164 @@
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { colors } from '@/design-system/tokens';
-import { Link, useNavigate } from 'react-router-dom';
+import { toast } from '@/components/ui/use-toast';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
+import { verifyEmaill, completeAuth } from '@/lib/query';
 
 export default function SignUp() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    // Require first name, last name, email, and password
-    if (!firstName || !lastName || !email || !password) {
-      setError('Please fill in all fields.');
-      return;
-    }
-    // Simulate successful registration
-    navigate('/onboarding');
-  };
+  // Check for token in query params
+  const params = new URLSearchParams(location.search);
+  const token = params.get('token');
 
+  // Magic link mutation
+  const verifyEmail = useMutation({
+    mutationFn: verifyEmaill,
+    onSuccess: () => {
+      setSubmitted(true);
+      toast({ title: 'Verification link sent!', description: 'Check your email for the login link.' });
+    },
+    onError: (err: any) => {
+      toast({ title: 'Error', description: err.message || 'Failed to send magic link', variant: 'destructive' });
+    },
+  });
+
+  // Complete registration mutation
+  const completeMutation = useMutation({
+    mutationFn: completeAuth,
+    onSuccess: () => {
+      toast({ title: 'Registration complete!', description: 'You can now access your dashboard.' });
+      navigate('/dashboard');
+    },
+    onError: (err: any) => {
+      toast({ title: 'Error', description: err.message || 'Failed to complete registration', variant: 'destructive' });
+    },
+  });
+
+  // Render
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background w-full">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-card border border-border rounded-xl shadow-md p-8 space-y-6 w-full max-w-md sm:w-[400px] md:w-[450px] lg:w-[500px]"
-      >
-        <Logo center />
-        <h2 className="text-2xl font-bold mb-1 text-center" style={{ color: '#000' }}>
-          Create Your Account
-        </h2>
-        <span className="text-sm text-muted-foreground mb-4 block text-center" style={{ maxWidth: 260, margin: '0 auto 1rem auto' }}>
-          AI-powered pitch tools for African founders
-        </span>
-        {error && <div className="text-red-600 text-sm text-center">{error}</div>}
-        <div>
-          <Label htmlFor="firstName">First Name</Label>
-          <Input
-            id="firstName"
-            type="text"
-            value={firstName}
-            onChange={e => setFirstName(e.target.value)}
-            placeholder="First Name"
-            required
-            className="mt-1"
-          />
-        </div>
-        <div>
-          <Label htmlFor="lastName">Last Name</Label>
-          <Input
-            id="lastName"
-            type="text"
-            value={lastName}
-            onChange={e => setLastName(e.target.value)}
-            placeholder="Last Name"
-            required
-            className="mt-1"
-          />
-        </div>
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            required
-            className="mt-1"
-          />
-        </div>
-        <div>
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="••••••••"
-            required
-            className="mt-1"
-          />
-        </div>
-        <Button type="submit" className="w-full h-12 text-lg mt-2" style={{ background: colors.brand, color: '#fff' }}>
-          Sign Up
-        </Button>
-        <div className="text-center text-sm mt-2">
-          Already have an account?{' '}
-          <Link to="/signin" className="text-primary hover:underline">
-            Sign In
-          </Link>
-        </div>
-        <div className="flex justify-between text-sm mt-2">
-          <Link to="/forgot-password" className="text-primary hover:underline">Forgot password?</Link>
-        </div>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f8fafc] to-[#e0e7ef] w-full ">
+      {!token ? (
+        submitted ? (
+          <div className="bg-white border border-border rounded-2xl shadow-2xl p-10 space-y-8 w-full max-w-lg transition-all duration-300 text-center text-base text-muted-foreground">
+            We sent a link to <span className="font-semibold">{email}</span>.<br />Click the link in your email to continue.
+          </div>
+        ) : (
+          <Formik
+            initialValues={{ email: '' }}
+            validationSchema={Yup.object({
+              email: Yup.string().email('Invalid email address').required('Email is required'),
+            })}
+            onSubmit={({ email }) => {
+              verifyEmail.mutate(email);
+            }}
+          >
+            {({ isSubmitting, isValid, dirty, values }) => (
+              <Form className="bg-white border border-border rounded-2xl shadow-2xl p-10 space-y-8 w-full max-w-lg transition-all duration-300">
+                <Logo center />
+                <h2 className="text-3xl font-extrabold mb-2 text-center text-gray-900 tracking-tight">Create Your Account</h2>
+                <p className="text-base text-muted-foreground mb-4 text-center max-w-xs mx-auto">
+                  AI-powered pitch tools for African founders. Join us and build your story!
+                </p>
+                <div className="space-y-2">
+                  <Field
+                    as={Input}
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                    disabled={verifyEmail.status === 'pending' || isSubmitting}
+                  />
+                  <ErrorMessage name="email" component="div" className="text-red-600 text-xs font-medium mt-1" />
+                </div>
+                <Button type="submit" className="w-full h-12 text-[16px] font-semibold mt-6 rounded-lg shadow-md bg-primary hover:bg-primary/90 transition-all" disabled={verifyEmail.status === 'pending' || isSubmitting || !isValid || !dirty}>
+                  {verifyEmail.status === 'pending' || isSubmitting ? 'Sending...' : 'Verify Email'}
+                </Button>
+                <div className="relative my-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t border-border" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-white px-2 text-muted-foreground">Or</span>
+                  </div>
+                </div>
+                <div className="text-center text-sm mt-4">
+                  Already have an account?{' '}
+                  <Link to="/signin" className="text-primary hover:underline font-medium">
+                    Sign In
+                  </Link>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        )
+      ) : (
+        <Formik
+          initialValues={{ username: '', password: '' }}
+          validationSchema={Yup.object({
+            username: Yup.string().min(2, 'Username must be at least 2 characters').required('Username is required'),
+            password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+          })}
+          onSubmit={({ username, password }) => {
+            completeMutation.mutate({ username, password, token });
+          }}
+        >
+          {({ isSubmitting, isValid, dirty }) => (
+            <Form className="bg-white border border-border rounded-2xl shadow-2xl p-10 space-y-8 w-full max-w-lg transition-all duration-300">
+              <Logo center />
+              <h2 className="text-3xl font-extrabold mb-2 text-center text-gray-900 tracking-tight">Complete Your Registration</h2>
+              <p className="text-base text-muted-foreground mb-4 text-center max-w-xs mx-auto">
+                Set your username and password to finish creating your account.
+              </p>
+              <div className="space-y-2">
+                <Field
+                  as={Input}
+                  id="username"
+                  name="username"
+                  type="text"
+                  placeholder="Username"
+                  className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                  disabled={completeMutation.status === 'pending' || isSubmitting}
+                />
+                <ErrorMessage name="username" component="div" className="text-red-600 text-xs font-medium mt-1" />
+              </div>
+              <div className="space-y-2">
+                <Field
+                  as={Input}
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                  disabled={completeMutation.status === 'pending' || isSubmitting}
+                />
+                <ErrorMessage name="password" component="div" className="text-red-600 text-xs font-medium mt-1" />
+              </div>
+              <Button type="submit" className="w-full h-12 text-[16px] font-semibold mt-6 rounded-lg shadow-md bg-primary hover:bg-primary/90 transition-all" disabled={completeMutation.status === 'pending' || isSubmitting || !isValid || !dirty}>
+                {completeMutation.status === 'pending' || isSubmitting ? 'Completing...' : 'Complete Registration'}
+              </Button>
+              <div className="text-center text-sm mt-4">
+                Already have an account?{' '}
+                <Link to="/signin" className="text-primary hover:underline font-medium">
+                  Sign In
+                </Link>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
     </div>
   );
 } 

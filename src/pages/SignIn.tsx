@@ -1,81 +1,86 @@
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { colors } from '@/design-system/tokens';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '@/components/Logo';
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    // Placeholder authentication logic
-    if (!email || !password) {
-      setError('Please enter both email and password.');
-      return;
-    }
-    // Simulate successful login
-    navigate('/dashboard');
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background w-full">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-card border border-border rounded-xl shadow-md p-8 space-y-6 w-full max-w-md sm:w-[400px] md:w-[450px] lg:w-[500px]"
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f8fafc] to-[#e0e7ef] w-full ">
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={Yup.object({
+          email: Yup.string().email('Invalid email address').required('Email is required'),
+          password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+        })}
+        onSubmit={({ email, password }, { setSubmitting, setErrors }) => {
+          setError('');
+          if (!email || !password) {
+            setErrors({ email: !email ? 'Email is required' : undefined, password: !password ? 'Password is required' : undefined });
+            setSubmitting(false);
+            return;
+          }
+          // Simulate successful login
+          navigate('/dashboard');
+        }}
       >
-        <Logo center />
-        <h2 className="text-2xl font-bold mb-1 text-center" style={{ color: '#000' }}>
-          Sign In to GidiPitch
-        </h2>
-        <span className="text-sm text-muted-foreground mb-4 block text-center" style={{ maxWidth: 260, margin: '0 auto 1rem auto' }}>
-          AI-powered pitch tools for African founders
-        </span>
-        {error && <div className="text-red-600 text-sm text-center">{error}</div>}
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            required
-            className="mt-1"
-          />
-        </div>
-        <div>
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="••••••••"
-            required
-            className="mt-1"
-          />
-        </div>
-        <Button type="submit" className="w-full h-12 text-lg mt-2" style={{ background: colors.brand, color: '#fff' }}>
-          Sign In
-        </Button>
-        <div className="text-center text-sm mt-2">
-          Don&apos;t have an account?{' '}
-          <Link to="/signup" className="text-primary hover:underline">
-            Sign Up
-          </Link>
-        </div>
-        <div className="flex justify-between text-sm mt-2">
-          <Link to="/forgot-password" className="text-primary hover:underline">Forgot password?</Link>
-          <Link to="/reset-password" className="text-primary hover:underline">Reset password</Link>
-        </div>
-      </form>
+        {({ isSubmitting, isValid, dirty }) => (
+          <Form className="bg-white border border-border rounded-2xl shadow-2xl p-10 space-y-8 w-full max-w-lg transition-all duration-300">
+            <Logo center />
+            <h2 className="text-3xl font-extrabold mb-2 text-center text-gray-900 tracking-tight">
+              Sign In to GidiPitch
+            </h2>
+            <p className="text-base text-muted-foreground mb-4 text-center max-w-xs mx-auto">
+              Welcome back! Log in to access your AI-powered pitch tools.
+            </p>
+            {error && <div className="text-red-600 text-sm text-center font-medium">{error}</div>}
+            <div className="space-y-2">
+              <Field
+                as={Input}
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+              />
+              <ErrorMessage name="email" component="div" className="text-red-600 text-xs font-medium mt-1" />
+            </div>
+            <div className="space-y-2">
+              <Field
+                as={Input}
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+              />
+              <ErrorMessage name="password" component="div" className="text-red-600 text-xs font-medium mt-1" />
+            </div>
+            <Button type="submit" className="w-full h-12 text-[16px] font-semibold mt-6 rounded-lg shadow-md bg-primary hover:bg-primary/90 transition-all" disabled={isSubmitting || !isValid || !dirty}>
+              {isSubmitting ? 'Signing In...' : 'Sign In'}
+            </Button>
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-border" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-white px-2 text-muted-foreground">Or</span>
+              </div>
+            </div>
+            <div className="text-center text-sm mt-4">
+              Don&apos;t have an account?{' '}
+              <Link to="/signup" className="text-primary hover:underline font-medium">
+                Sign Up
+              </Link>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 } 
