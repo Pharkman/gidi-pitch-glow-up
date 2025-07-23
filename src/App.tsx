@@ -83,6 +83,7 @@ import ResumeGeneratingPage from './pages/ResumeGeneratingPage';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { ResumeEditorPage } from './pages/ResumeBuilderPage';
 import { Input } from '@/components/ui/input';
+import CompleteProfile from './pages/CompleteProfile'
 
 
 const queryClient = new QueryClient();
@@ -97,6 +98,7 @@ const App = () => (
         <Route path="/" element={<Index />} />
          <Route path="/signin" element={<SignIn />} />
              <Route path="/signup" element={<SignUp />} />
+             <Route path="/complete-profile" element={<CompleteProfile />} />
              <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
              <Route path="/onboarding" element={<Onboarding />} />
