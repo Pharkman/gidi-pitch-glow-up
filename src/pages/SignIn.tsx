@@ -5,6 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '@/components/Logo';
+import { loginUser } from '@/lib/query';
+import Spinner from '@/components/spinner';
+import { toast } from '@/components/ui/use-toast';
 
 export default function SignIn() {
   const [error, setError] = useState('');
@@ -18,15 +21,29 @@ export default function SignIn() {
           email: Yup.string().email('Invalid email address').required('Email is required'),
           password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
         })}
-        onSubmit={({ email, password }, { setSubmitting, setErrors }) => {
+        onSubmit={async ({ email, password }, { setSubmitting, setErrors }) => {
           setError('');
           if (!email || !password) {
-            setErrors({ email: !email ? 'Email is required' : undefined, password: !password ? 'Password is required' : undefined });
+            setErrors({
+              email: !email ? 'Email is required' : undefined,
+              password: !password ? 'Password is required' : undefined
+            });
             setSubmitting(false);
             return;
           }
-          // Simulate successful login
-          navigate('/dashboard');
+
+          try {
+            const response = await loginUser({ email, password });
+            localStorage.setItem('user', JSON.stringify(response.user));
+            localStorage.setItem('token', response.token);
+            toast({ title: 'Login successful!', description: 'You can now access your dashboard.' });
+            navigate('/dashboard');
+          } catch (err: any) {
+            setError(err.message || 'Something went wrong');
+            toast({ title: 'Login failed!', description: err.message || 'Please try again.' });
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
         {({ isSubmitting, isValid, dirty }) => (
@@ -60,9 +77,14 @@ export default function SignIn() {
                 className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
               />
               <ErrorMessage name="password" component="div" className="text-red-600 text-xs font-medium mt-1" />
+               <div className="text-right text-sm">
+    <Link to="/forgot-password" className="text-primary hover:underline font-medium">
+      Forgot Password?
+    </Link>
+  </div>
             </div>
             <Button type="submit" className="w-full h-12 text-[16px] font-semibold mt-6 rounded-lg shadow-md bg-primary hover:bg-primary/90 transition-all" disabled={isSubmitting || !isValid || !dirty}>
-              {isSubmitting ? 'Signing In...' : 'Sign In'}
+              {isSubmitting ? <Spinner /> : 'Sign In'}
             </Button>
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
@@ -83,4 +105,4 @@ export default function SignIn() {
       </Formik>
     </div>
   );
-} 
+}

@@ -5,23 +5,37 @@ import { Label } from '@/components/ui/label';
 import { colors } from '@/design-system/tokens';
 import { Link } from 'react-router-dom';
 import Logo from '@/components/Logo';
+import { forgotPassword } from '@/lib/query';
+import Spinner from '@/components/spinner';
+import { toast } from '@/components/ui/use-toast';
+
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setMessage('');
-    // Placeholder reset logic
+
     if (!email) {
       setError('Please enter your email.');
       return;
     }
-    // Simulate sending reset email
-    setMessage('If an account exists for this email, a reset link has been sent.');
+
+    try {
+      setLoading(true);
+      const res = await forgotPassword(email);
+      toast({ title: 'Reset password email sent!', description: 'Please check your inbox for the reset link.' });
+      setMessage(res.message || 'If an account exists for this email, a reset link has been sent.');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,8 +65,13 @@ export default function ForgotPassword() {
             className="mt-1"
           />
         </div>
-        <Button type="submit" className="w-full h-12 text-lg mt-2" style={{ background: colors.brand, color: '#fff' }}>
-          Send Reset Link
+        <Button
+          type="submit"
+          className="w-full h-12 text-lg mt-2"
+          style={{ background: colors.brand, color: '#fff' }}
+          disabled={loading}
+        >
+          {loading ? <Spinner /> : 'Reset Password'}
         </Button>
         <div className="flex justify-between text-sm mt-2">
           <Link to="/reset-password" className="text-primary hover:underline">Reset password</Link>
@@ -66,4 +85,4 @@ export default function ForgotPassword() {
       </form>
     </div>
   );
-} 
+}

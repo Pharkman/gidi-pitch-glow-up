@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
   Plus, 
   FileText, 
@@ -42,6 +42,7 @@ import freepik_build3 from "@/assets/freepik_buld3.png"
 import freepik_build4 from "@/assets/freepik_build4.png"
 import freepik_build5 from "@/assets/freepik_build5.png"
 import freepik_build6 from "@/assets/freepik_build6.png"
+import { getUserDetails, logout } from '@/lib/query';
 // Reusable ToolCard component
 const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle }: {
   image: string,
@@ -51,6 +52,10 @@ const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle 
   variant?: 'grid' | 'project',
   subtitle?: string
 }) => {
+
+  
+
+
   if (variant === 'project') {
     return (
       <div className="bg-white rounded-xl shadow-md p-0 w-full border-1 border-[#E4E4E4CC]">
@@ -92,8 +97,19 @@ const InviteButton = () => (
 
 const Dashboard = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
   const [view, setView] = useState<'grid' | 'list'>('grid');
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUserDetails();
+      setUser(userData);
+    };
+
+    fetchUser();
+  }, []);
 
   const sidebarItems = [
     { name: 'Dashboard', icon: BarChart3, active: true, available: true },
@@ -141,6 +157,12 @@ const Dashboard = () => {
     // Here you would navigate to the respective tool
   };
 
+ const handleLogout = async () => {
+  setIsLoggingOut(true);
+  await logout();
+  setIsLoggingOut(false);
+};
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation */}
@@ -170,7 +192,9 @@ const Dashboard = () => {
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Help</DropdownMenuItem>
                 <Separator />
-                <DropdownMenuItem>Sign out</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>
+  {isLoggingOut ? 'Logging out...' : 'Sign out'}
+</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -210,7 +234,9 @@ const Dashboard = () => {
           <div className="max-w-7xl mx-auto space-y-8">
             {/* Welcome Section */}
             <div>
-              <h2 className="text-3xl font-bold mb-2">Welcome back, John!</h2>
+             <h2 className="text-2xl font-bold tracking-tight">
+  {user?.name ? `Welcome back, ${user.name.split(' ')[0]}` : 'Welcome back'}
+</h2>
               <p className="text-muted-foreground">
                 Ready to build your next investor-ready document?
               </p>

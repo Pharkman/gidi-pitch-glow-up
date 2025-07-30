@@ -68,9 +68,9 @@ export default function SignUp() {
               <Form className="bg-white border border-border rounded-2xl shadow-2xl p-10 space-y-8 w-full max-w-lg transition-all duration-300">
                 <Logo center />
                 <h2 className="text-3xl font-extrabold mb-2 text-center text-gray-900 tracking-tight">Create Your Account</h2>
-                <p className="text-base text-muted-foreground mb-4 text-center max-w-xs mx-auto">
+                {/* <p className="text-base text-muted-foreground mb-4 text-center max-w-xs mx-auto">
                   AI-powered pitch tools for African founders. Join us and build your story!
-                </p>
+                </p> */}
                 <div className="space-y-2">
                   <Field
                     as={Input}
@@ -78,7 +78,7 @@ export default function SignUp() {
                     name="email"
                     type="email"
                     placeholder="you@example.com"
-                    className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+                    className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300   transition"
                     disabled={verifyEmail.status === 'pending' || isSubmitting}
                   />
                   <ErrorMessage name="email" component="div" className="text-red-600 text-xs font-medium mt-1" />
@@ -104,61 +104,7 @@ export default function SignUp() {
             )}
           </Formik>
         )
-      ) : (
-        <Formik
-          initialValues={{ username: '', password: '' }}
-          validationSchema={Yup.object({
-            username: Yup.string().min(2, 'Username must be at least 2 characters').required('Username is required'),
-            password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-          })}
-          onSubmit={({ username, password }) => {
-            completeMutation.mutate({ username, password, token });
-          }}
-        >
-          {({ isSubmitting, isValid, dirty }) => (
-            <Form className="bg-white border border-border rounded-2xl shadow-2xl p-10 space-y-8 w-full max-w-lg transition-all duration-300">
-              <Logo center />
-              <h2 className="text-3xl font-extrabold mb-2 text-center text-gray-900 tracking-tight">Complete Your Registration</h2>
-              <p className="text-base text-muted-foreground mb-4 text-center max-w-xs mx-auto">
-                Set your username and password to finish creating your account.
-              </p>
-              <div className="space-y-2">
-                <Field
-                  as={Input}
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder="Username"
-                  className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-                  disabled={completeMutation.status === 'pending' || isSubmitting}
-                />
-                <ErrorMessage name="username" component="div" className="text-red-600 text-xs font-medium mt-1" />
-              </div>
-              <div className="space-y-2">
-                <Field
-                  as={Input}
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  className="mt-1 text-base px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
-                  disabled={completeMutation.status === 'pending' || isSubmitting}
-                />
-                <ErrorMessage name="password" component="div" className="text-red-600 text-xs font-medium mt-1" />
-              </div>
-              <Button type="submit" className="w-full h-12 text-[16px] font-semibold mt-6 rounded-lg shadow-md bg-primary hover:bg-primary/90 transition-all" disabled={completeMutation.status === 'pending' || isSubmitting || !isValid || !dirty}>
-                {completeMutation.status === 'pending' || isSubmitting ? 'Completing...' : 'Complete Registration'}
-              </Button>
-              <div className="text-center text-sm mt-4">
-                Already have an account?{' '}
-                <Link to="/signin" className="text-primary hover:underline font-medium">
-                  Sign In
-                </Link>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      )}
+      ) : null}
     </div>
   );
 } 
