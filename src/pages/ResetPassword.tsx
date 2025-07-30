@@ -3,30 +3,52 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { colors } from '@/design-system/tokens';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Logo from '@/components/Logo';
+import { resetPassword } from '@/lib/query';
+import { toast } from '@/components/ui/use-toast';
 
 export default function ResetPassword() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setMessage('');
-    // Placeholder reset logic
+
     if (!password || !confirmPassword) {
       setError('Please fill in all fields.');
       return;
     }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
-    // Simulate successful password reset
-    setMessage('Your password has been reset. You can now sign in.');
+
+    if (!token) {
+      setError('Missing or invalid token.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await resetPassword({ password, confirmPassword, token });
+      setMessage('Your password has been reset. You can now sign in.');
+       toast({ title: 'Password reset successful!', description: 'You can now sign in with your new password.' });
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong');
+      toast({ title: 'Error', description: err.message || 'Failed to reset password', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,8 +90,8 @@ export default function ResetPassword() {
             className="mt-1"
           />
         </div>
-        <Button type="submit" className="w-full h-12 text-lg mt-2" style={{ background: colors.brand, color: '#fff' }}>
-          Reset Password
+        <Button type="submit" className="w-full h-12 text-lg mt-2" style={{ background: colors.brand, color: '#fff' }} disabled={loading}>
+          {loading ? 'Resetting...' : 'Reset Password'}
         </Button>
         <div className="flex justify-between text-sm mt-2">
           <Link to="/signin" className="text-primary hover:underline">Sign In</Link>
@@ -78,4 +100,4 @@ export default function ResetPassword() {
       </form>
     </div>
   );
-} 
+}
