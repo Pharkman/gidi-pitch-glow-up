@@ -23,6 +23,7 @@ import { ResumeEditorPage } from './pages/ResumeBuilderPage';
 import { Input } from '@/components/ui/input';
 import CompleteProfile from './pages/CompleteProfile'
 import ProtectedRoute from "./components/ProtectedRoute";
+import Waitlist from "./pages/Waitlist";
 
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/waitlist" element={<Waitlist />} />
          <Route path="/signin" element={<SignIn />} />
              <Route path="/signup" element={<SignUp />} />
              <Route path="/complete-profile" element={<CompleteProfile />} />
@@ -43,9 +45,9 @@ const App = () => (
              <Route path="/onboarding" element={<Onboarding />} />
 
           <Route path="/dashboard"   element={
-    // <ProtectedRoute>
+
       <Dashboard />
-    // </ProtectedRoute>
+  
   } />
           
 //             <Route path="/pitch-decks" element={<PitchDecksPage />} />
