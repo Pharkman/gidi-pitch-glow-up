@@ -1,3 +1,4 @@
+
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -7,6 +8,7 @@ import WhyGidiPitch from '@/components/WhyGidiPitch';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 import CTASection from '@/components/CtaBanner';
+
 
 const Index = () => {
   return (
