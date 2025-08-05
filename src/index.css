@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /*
   NOTE: The CSS variables below should be kept in sync with src/design-system/tokens.ts
   If you update tokens.ts, update these variables accordingly.
@@ -10,6 +10,10 @@
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
+
+*{
+    font-family: "Geist", sans-serif;
+}
 
 @layer base {
   :root {
@@ -129,7 +133,8 @@ All colors MUST be HSL.
   }
 
   * {
-    @apply border-border;
+    @apply border-border ;
+    
   }
 
   body {

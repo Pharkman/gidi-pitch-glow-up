@@ -2,30 +2,29 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import Index from "./pages/Index";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Index from "./pages/Index";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import AdminDashboard from "./pages/AdminDashboard";
+import SellerDashboard from "./pages/SellerDashboard";
+import UserDashboard from "./pages/UserDashboard";
+import AuctionDetails from "./pages/AuctionDetails";
+import UpdateAuction from "./pages/UpdateAuction";
+import AuctionListing from "./pages/AuctionListing";
+import SingleAuction from "./pages/SingleAuction";
 import NotFound from "./pages/NotFound";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import Onboarding from "./pages/Onboarding";
-import Dashboard from "./components/Dashboard";
-import PitchDecksPage from "./pages/PitchDecksPage";
-import ResumeBuilderPage from "./pages/ResumeBuilderPage";
-import TeamMembersPage from "./pages/TeamMembersPage";
-import PitchDeckOutlinePage from "./pages/PitchDeckOutlinePage";
-import PitchDeckGeneratingPage from "./pages/PitchDeckGeneratingPage";
-import PitchDeckEditorPage from "./components/PitchDeckEditor";
-import ResumeGeneratingPage from "./pages/ResumeGeneratingPage";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { ResumeEditorPage } from "./pages/ResumeBuilderPage";
-import { Input } from "@/components/ui/input";
-import CompleteProfile from "./pages/CompleteProfile";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Index from "./pages/Home";
+import { isAuthenticated } from "@/lib/utils";
 
 const queryClient = new QueryClient();
+
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -34,40 +33,17 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/complete-profile" element={<CompleteProfile />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route
-            path="/dashboard"
-            element={
-              // <ProtectedRoute>
-              <Dashboard />
-              // </ProtectedRoute>
-            }
-          />
-          // <Route path="/pitch-decks" element={<PitchDecksPage />} />
-          // <Route path="/resume-builder" element={<ResumeBuilderPage />} />
-          //{" "}
-          <Route path="/resume-builder-editor" element={<ResumeEditorPage />} />
-          // <Route path="/team-members" element={<TeamMembersPage />} />
-          //{" "}
-          <Route
-            path="/pitch-deck-outline"
-            element={<PitchDeckOutlinePage />}
-          />
-          //{" "}
-          <Route
-            path="/pitch-deck-generating"
-            element={<PitchDeckGeneratingPage />}
-          />
-          //{" "}
-          <Route path="/pitch-deck-editor" element={<PitchDeckEditorPage />} />
-          //{" "}
-          <Route path="/resume-generating" element={<ResumeGeneratingPage />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/admin-dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin-dashboard/auction/:id" element={<ProtectedRoute><AuctionDetails /></ProtectedRoute>} />
+          <Route path="/auction-details/:id" element={<ProtectedRoute><AuctionDetails /></ProtectedRoute>} />
+          <Route path="/update-auction/:id" element={<ProtectedRoute><UpdateAuction /></ProtectedRoute>} />
+          <Route path="/auction" element={<ProtectedRoute><AuctionListing /></ProtectedRoute>} />
+          <Route path="/auction/:id" element={<ProtectedRoute><SingleAuction /></ProtectedRoute>} />
+          <Route path="/seller-dashboard" element={<ProtectedRoute><SellerDashboard /></ProtectedRoute>} />
+          <Route path="/user-dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
