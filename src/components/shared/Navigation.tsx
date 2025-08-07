@@ -100,8 +100,14 @@ const Navigation = () => {
                 </button>
               ))}
               <div className="pt-2">
-                <button className="btn-hero text-sm px-6 py-2 w-full">
-                  Try Free
+                <button
+                  className="text-primary text-sm px-4 py-2 block mb-2"
+                  onClick={() => (window.location.href = "/signin")}
+                >
+                  Login
+                </button>
+                <button className="inline-flex gap-2 btn-hero text-sm px-6 py-2 w-full">
+                  Try Free <ArrowRight />
                 </button>
               </div>
             </div>

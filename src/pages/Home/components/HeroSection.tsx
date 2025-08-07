@@ -1,9 +1,4 @@
-import { useState } from "react";
-import { ArrowRight, Play } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import heroLaptop from "@/assets/hero-laptop-mockup.jpg";
-import Dashboard from "../../../components/Dashboard";
-import heroBanner from "@/assets/hero_dashboard.png";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import lgHeroImage from "/assets/lgHeroImage.svg";
 import smHeroImage from "/assets/smHeroImage.svg";
@@ -37,9 +32,8 @@ const HeroSection = () => {
 
         {/* Buttons */}
         <div className="mb-16 flex flex-col items-center justify-center gap-4 md:flex-row">
-          <button className="flex items-center justify-center gap-2 btn-hero py-3 w-full md:w-fit">
-            Try for free
-            <span>→</span>
+          <button className="inline-flex items-center justify-center gap-2 btn-hero py-3 w-full md:w-fit">
+            Try for free <ArrowRight />
           </button>
           <button className="w-full md:w-fit rounded-lg border border-[#FF5619] font-semibold text-[#FF5619] py-3 px-6">
             Watch Demo

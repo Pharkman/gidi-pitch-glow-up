@@ -1,32 +1,30 @@
-import {
-  FileText,
-  User,
-  MessageSquare,
-  BookOpenCheck,
-  ArrowUpRight,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import pitchDeck from "/assets/features/pitchDeck.svg";
+import resumeBuilder from "/assets/features/resumeBuilder.svg";
+import applicationAssistant from "/assets/features/applicationAssistant.svg";
+import pitchPractice from "/assets/features/pitchPractice.svg";
 
 const features = [
   {
-    icon: FileText,
+    icon: pitchDeck,
     title: "AI-Powered Pitch Deck Builder",
     description:
       "Answer a few smart questions — we turn them into a stunning pitch deck tailored to your startup, your slides, and your industry.",
   },
   {
-    icon: User,
+    icon: resumeBuilder,
     title: "Founder Resume Builder",
     description:
       "GidPitch helps you craft a founder resume that builds trust with VCs and accelerators.",
   },
   {
-    icon: BookOpenCheck,
+    icon: applicationAssistant,
     title: "AI Application Assistant",
     description:
       "Crack one of the hardest startup applications. GidPitch guides you through YC’s exact questions, with AI writing help and examples.",
   },
   {
-    icon: MessageSquare,
+    icon: pitchPractice,
     title: "AI Pitch Practice",
     description:
       "Get AI-simulated investor Q&A based on your pitch. Practice answering tough questions before you're in the room.",
@@ -62,7 +60,11 @@ const FeaturesSection = () => {
                 className="rounded-lg bg-[#F5F5F5] p-6 shadow-sm hover:shadow-md transition duration-300"
               >
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg border bg-[#FF5619] border-[#FFF1EC]">
-                  <Icon className="text-white h-6 w-6" />
+                  <img
+                    src={Icon}
+                    alt={feature.title}
+                    className="text-white h-6 w-6"
+                  />
                 </div>
                 <h3 className="mb-4 text-xl font-semibold text-[#1D1D1D]">
                   {feature.title}
