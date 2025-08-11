@@ -7,7 +7,7 @@ import WhyGidiPitch from "@/components/WhyGidiPitch";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 
-const Index = () => {
+const Homepage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -24,4 +24,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Homepage;
