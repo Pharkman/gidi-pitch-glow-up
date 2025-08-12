@@ -77,9 +77,12 @@ const SignIn = () => {
                     <label className=" text-[#1D1D1D] font-medium">
                       Password
                     </label>{" "}
-                    <span className="text-[#858585] font-medium text-sm">
+                    <Link
+                      to="/forgot-password"
+                      className="text-[#858585] font-medium text-sm"
+                    >
                       Forget password?
-                    </span>
+                    </Link>
                   </div>
                   <Field
                     type="password"

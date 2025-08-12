@@ -5,8 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./components/Dashboard";
 import PitchDecksPage from "./pages/PitchDecksPage";
@@ -25,6 +23,8 @@ import Homepage from "./pages/Home";
 import SignIn from "./pages/Auth/Signin";
 import SignUp from "./pages/Auth/Signup";
 import VerifyEmail from "./pages/Auth/VerifyEmail";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
 
 const queryClient = new QueryClient();
 
