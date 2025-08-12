@@ -1,4 +1,3 @@
-// components/AuthBgTemplate.tsx
 import { ReactNode } from "react";
 import twoGuys from "/assets/twoAuthGuys.svg";
 
@@ -10,12 +9,8 @@ const AuthBgTemplate = ({ children }: AuthBgTemplateProps) => {
   return (
     <div className="flex min-h-screen bg-white p-4">
       {/* Left image section */}
-      <div className="hidden md:flex w-1/2 items-center justify-center bg-gray-50">
-        <img
-          src={twoGuys}
-          alt="Two guys working"
-          className="max-w-full h-full"
-        />
+      <div className="hidden md:flex w-1/2 items-center justify-center flex-1">
+        <img src={twoGuys} alt="Two guys working" className="" />
       </div>
 
       {/* Right form section */}

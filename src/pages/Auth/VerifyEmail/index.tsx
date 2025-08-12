@@ -3,10 +3,13 @@ import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import OTPInput from "react-otp-input";
 import AuthBgTemplate from "@/components/shared/AuthBgTemplate";
+import { useNavigate } from "react-router-dom";
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState("");
   const [wrongCode, setWrongCode] = useState(false);
+  const email = localStorage.getItem("email");
+  const navigate = useNavigate();
 
   return (
     <AuthBgTemplate>
@@ -15,9 +18,8 @@ const VerifyEmail = () => {
           Verify your email
         </h1>
         <p className="text-sm text-gray-500 mt-1">
-          We’ve emailed a one time security code to{" "}
-          <span className="font-medium">you@example.com</span>, please enter it
-          below:
+          We’ve emailed a one time security code to <strong>{email}</strong>,
+          please enter it below:
         </p>
       </div>
 
@@ -32,6 +34,7 @@ const VerifyEmail = () => {
           } else {
             setWrongCode(false);
             console.log("OTP Verified");
+            navigate("/signin");
           }
         }}
       >
@@ -50,7 +53,8 @@ const VerifyEmail = () => {
               renderInput={(props) => (
                 <input
                   {...props}
-                  className={`w-full h-10 border rounded-lg text-center text-lg focus:outline-none ${
+                  style={{ width: "48px", height: "48px" }}
+                  className={`border rounded-lg text-center text-lg focus:outline-none ${
                     wrongCode
                       ? "border-red-500 text-red-500"
                       : "border-gray-300 focus:border-[#F97316]"
@@ -73,9 +77,12 @@ const VerifyEmail = () => {
             </button>
 
             <p className="mt-4 text-center text-sm">
-              <a href="#" className="text-gray-500 hover:underline">
+              <p
+                onClick={() => navigate(-1)}
+                className="cursor-pointer text-gray-500 hover:underline"
+              >
                 Go back
-              </a>
+              </p>
             </p>
           </Form>
         )}
