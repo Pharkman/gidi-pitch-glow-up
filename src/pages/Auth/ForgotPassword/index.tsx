@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -23,23 +24,32 @@ const ForgotPassword = () => {
     otp: Yup.string().length(6, "Must be 6 digits").required("Required"),
   });
 
-  const handleEmailSubmit = (values: { email: string }) => {
+  const handleEmailSubmit = (
+    values: { email: string },
+    { setSubmitting }: any
+  ) => {
     setEmail(values.email);
     try {
       console.log("Sending reset code to:", values.email);
       setStep("otp");
     } catch (error) {
       console.log("error is", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const handleOtpSubmit = (values: { otp: string }) => {
-    if (values.otp !== "123456") {
-      setWrongCode(true);
-    } else {
-      setWrongCode(false);
-      console.log("OTP Verified");
-      navigate("/reset-password");
+  const handleOtpSubmit = (values: { otp: string }, { setSubmitting }: any) => {
+    try {
+      if (values.otp !== "123456") {
+        setWrongCode(true);
+      } else {
+        setWrongCode(false);
+        console.log("OTP Verified");
+        navigate("/reset-password");
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -86,7 +96,7 @@ const ForgotPassword = () => {
                     </div>
 
                     <button
-                      type="button"
+                      type="submit"
                       disabled={isSubmitting}
                       className="mt-6 w-full bg-[#F97316] text-white py-3.5 rounded-md font-semibold hover:bg-orange-600"
                     >
@@ -165,7 +175,7 @@ const ForgotPassword = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="mt-12 w-full bg-[#F97316] text-white py-3.5 rounded-md font-semibold hover:bg-orange-600"
+                      className="mt-12 w-full bg-[#F97316] text-white py-3.5 rounded-md font-semibold"
                     >
                       {isSubmitting ? "Confirming..." : "Confirm email"}
                     </button>
