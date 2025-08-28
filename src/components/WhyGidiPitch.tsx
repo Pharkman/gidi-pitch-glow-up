@@ -10,7 +10,7 @@ interface WhyGidiPitchProps {
 const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, showSuccessStoriesButton = false }) => {
   
   return (
-    <section id="why-gidipitch" className="py-24 bg-[#F5F5F5]">
+    <section id="why-gidipitch" className="py-8 container bg-[#F5F5F5]">
         <div className="flex flex-col items-center mb-6 gap-5 shadow-2xl bg-white rounded-lg  w-[10%] mx-16">
       </div>
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,8 +29,8 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div className="flex-shrink-0 mr-6">
-                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300">
-                        <img src={benefit.icon} alt="" className="w-6 h-6" />
+                      <div className="rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300">
+                        <img src={benefit.icon} alt="" className="w-[52px] h-[60px]"/>
                       </div>
                     </div>
                     
@@ -68,21 +68,7 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
               className="w-full  rounded-3xl shadow-strong"
             />
             
-            {/* Floating stats */}
-            <div className="absolute top-8 left-8 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-              <div className="text-2xl font-bold text-primary">500+</div>
-              <div className="text-sm text-muted-foreground">Founders Helped</div>
-            </div>
             
-            <div className="absolute bottom-8 right-8 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-              <div className="text-2xl font-bold text-accent">$10M+</div>
-              <div className="text-sm text-muted-foreground">Funding Raised</div>
-            </div>
-            
-            <div className="absolute top-1/2 -right-4 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-              <div className="text-2xl font-bold text-secondary">95%</div>
-              <div className="text-sm text-muted-foreground">Success Rate</div>
-            </div>
           </div>
         </div>
 

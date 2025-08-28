@@ -9,19 +9,19 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="mx-auto w-[95%] md:w-[98%] mt-4 py-16 text-center"
+      className=" w-[95%] md:w-[98%] mt-4 py-16 text-center container"
     >
       <div className="bg-gradient-to-b from-[#FFFCFB] px-4 pt-4 to-[#FFDCCF] md:rounded-md">
         {/* Badge */}
-        <p className="inline-block rounded-full px-4 py-2 font-medium text-[#FF5619]">
+        <p className="inline-block rounded-full px-4 py-2 font-medium text-[#FF5619] text-[16px] mb-3 bg-[#FFF1EC] py-1">
           Built for African Entrepreneurs
         </p>
 
         {/* Main Heading */}
         <h1 className="mb-6 text-4xl font-semibold text-[#1D1D1D] md:text-6xl">
           Your Complete Startup
-          <br />
-          Toolkit for African Founders
+          <br/>
+          <p className="mt-3">Toolkit for African Founders</p>
         </h1>
 
         {/* Subtitle */}
@@ -33,7 +33,7 @@ const HeroSection = () => {
         {/* Buttons */}
         <div className="mb-16 flex flex-col items-center justify-center gap-4 md:flex-row">
           <button className="inline-flex items-center justify-center gap-2 btn-hero py-3 w-full md:w-fit">
-            Try for free <ArrowRight />
+            Try for free <ArrowRight size={18}/>
           </button>
           <button className="w-full md:w-fit rounded-lg border border-[#FF5619] font-semibold text-[#FF5619] py-3 px-6">
             Watch Demo

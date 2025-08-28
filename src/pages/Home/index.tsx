@@ -6,6 +6,7 @@ import HowItWorks from "@/components/HowItWorks";
 import WhyGidiPitch from "@/components/WhyGidiPitch";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import CTASection from "@/components/CtaBanner";
 
 const Index = () => {
   return (
@@ -15,9 +16,10 @@ const Index = () => {
         <HeroSection />
         <FeaturesSection />
         {/* <ProductPreview /> */}
-        <HowItWorks />
+        {/* <HowItWorks /> */}
         <WhyGidiPitch />
         <FAQ />
+        <CTASection />
       </main>
       <Footer />
     </div>
