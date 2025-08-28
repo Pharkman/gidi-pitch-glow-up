@@ -13,11 +13,11 @@ export default function CTASection() {
         </p>
 
         <div className="flex justify-center items-center gap-4 flex-wrap">
-          <button className="bg-white text-[#FF5619] font-medium py-3 px-6 rounded-full flex items-center gap-2 hover:bg-orange-100 transition">
+          <button className="bg-white text-[#FF5619] font-semibold py-3 px-6 rounded-xl flex items-center gap-2 hover:bg-orange-100 transition ">
             Try for free <AiOutlineArrowRight size={18} />
           </button>
 
-          <button className="border border-white text-white py-3 px-6 rounded-full hover:bg-white hover:text-[#FF5619] transition">
+          <button className="border border-white text-white py-3 px-6 rounded-xl hover:bg-white font-semibold hover:text-[#FF5619] transition">
             Watch Demo
           </button>
         </div>
