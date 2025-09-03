@@ -45,10 +45,10 @@ export default function ForgotPassword() {
         className="bg-card border border-border rounded-xl shadow-md p-8 space-y-6 w-full max-w-md sm:w-[400px] md:w-[450px] lg:w-[500px]"
       >
         <Logo center />
-        <h2 className="text-2xl font-bold mb-1 text-center" style={{ color: '#000' }}>
+        <h2 className="text-3xl font-bold mb-1 text-center" style={{ color: '#000' }}>
           Forgot Password
         </h2>
-        <span className="text-sm text-muted-foreground mb-4 block text-center" style={{ maxWidth: 260, margin: '0 auto 1rem auto' }}>
+        <span className="text-sm text-muted-foreground mb-4 block text-center " style={{ maxWidth: 260, margin: '0 auto 1rem auto' }}>
           AI-powered pitch tools for African founders
         </span>
         {error && <div className="text-red-600 text-sm text-center">{error}</div>}
