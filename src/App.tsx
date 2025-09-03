@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Onboarding from "./pages/Onboarding";
+import Onboarding from "./pages/Onboarding/Onboarding";
 import Dashboard from "./components/Dashboard";
 import PitchDecksPage from "./pages/PitchDecksPage";
 import ResumeBuilderPage from "./pages/ResumeBuilderPage";
@@ -25,6 +25,9 @@ import SignUp from "./pages/Auth/Signup";
 import VerifyEmail from "./pages/Auth/VerifyEmail";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
+import AboutStartup from "./pages/Onboarding/component/AboutStartup";
+import ShapeStartup from "./pages/Onboarding/component/ShapeStartup";
+import GoalsPreferences from "./pages/Onboarding/component/GoalsPreferences";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +46,9 @@ const App = () => (
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/onboarding/about-startup" element={<AboutStartup />} />
+          <Route path="/onboarding/shape-startup" element={<ShapeStartup />} />
+          <Route path="/onboarding/goal_preference" element={<GoalsPreferences />} />
           <Route
             path="/dashboard"
             element={
