@@ -1,33 +1,10 @@
-import { FileInput, Settings, Sparkles, Download } from 'lucide-react';
+
 import TitleHeader from './TitleHeading';
+import { steps } from './dummy';
+
 
 const HowItWorks = () => {
-  const steps = [
-    {
-      icon: FileInput,
-      number: '01',
-      title: 'Input Your Startup Info',
-      description: 'Share basic details about your startup, vision, and goals through our simple form.'
-    },
-    {
-      icon: Settings,
-      number: '02', 
-      title: 'Select Tools & Templates',
-      description: 'Choose from pitch decks, financial models, resumes, or accelerator applications.'
-    },
-    {
-      icon: Sparkles,
-      number: '03',
-      title: 'Get AI-Generated Results',
-      description: 'Our AI creates professional, investor-ready materials tailored to your startup.'
-    },
-    {
-      icon: Download,
-      number: '04',
-      title: 'Edit, Export & Pitch',
-      description: 'Customize the output, export in multiple formats, and start pitching to investors.'
-    }
-  ];
+  
 
   return (
     <section id="how-it-works" className="py-24 bg-muted/30">

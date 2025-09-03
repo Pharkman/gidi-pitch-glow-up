@@ -38,7 +38,7 @@ const Navigation = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="md:flex md:gap-10">
             {/* Logo */}
@@ -53,7 +53,7 @@ const Navigation = () => {
                   <button
                     key={item.href}
                     onClick={() => scrollToSection(item.href)}
-                    className="text-foreground hover:text-primary px-3 py-2 text-sm font-medium transition-colors duration-200 hover:scale-105"
+                    className="text-foreground hover:text-primary px-3 py-1 text-[16px] text-[#1D1D1D] font-medium transition-colors duration-200 hover:scale-105"
                   >
                     {item.label}
                   </button>
@@ -65,13 +65,13 @@ const Navigation = () => {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <button
-              className="text-primary text-sm px-4 py-2"
+              className="text-primary text-sm px-4 py-2 font-semibold text-[16px]" 
               onClick={() => (window.location.href = "/signin")}
             >
               Login
             </button>
             <button className="btn-hero inline-flex gap-2 text-sm px-6 py-2 ml-0">
-              Try For Free <ArrowRight />
+              Try For Free <ArrowRight size={14}/>
             </button>
           </div>
 
@@ -101,13 +101,13 @@ const Navigation = () => {
               ))}
               <div className="pt-2">
                 <button
-                  className="text-primary text-sm px-4 py-2 block mb-2"
+                  className="text-primary font-semibold text-[16px]  px-4 py-2 block mb-2"
                   onClick={() => (window.location.href = "/signin")}
                 >
                   Login
                 </button>
                 <button className="inline-flex gap-2 btn-hero text-sm px-6 py-2 w-full">
-                  Try Free <ArrowRight />
+                  Try Free <ArrowRight size={14}/>
                 </button>
               </div>
             </div>

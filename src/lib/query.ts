@@ -152,7 +152,7 @@ export const getUserDetails = async () => {
       credentials: 'include', // assuming you're using cookies for auth
       headers: {
         'Content-Type': 'application/json',
-      },
+      }, 
     });
 
     if (!response.ok) {

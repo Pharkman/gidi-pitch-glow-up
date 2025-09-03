@@ -1,61 +1,27 @@
-import { Clock, Users, Zap, Target } from 'lucide-react';
-import founderPresenting from '@/assets/founder-presenting.jpg';
-import React from 'react';
 
+import founderPresenting from '@/assets/landing_investor.png';
+import React from 'react';
+import { benefits } from './dummy';
 interface WhyGidiPitchProps {
   showReadySection?: boolean;
   showSuccessStoriesButton?: boolean;
 }
 
 const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, showSuccessStoriesButton = false }) => {
-  const benefits = [
-    {
-      icon: Users,
-      title: 'Built for African Founders',
-      description: 'Understand the unique challenges and opportunities in African markets with culturally relevant templates and guidance.'
-    },
-    {
-      icon: Zap,
-      title: 'No Design Skills Needed',
-      description: 'Professional-quality materials without hiring expensive designers or learning complex software.'
-    },
-    {
-      icon: Clock,
-      title: 'Save Hours of Manual Work',
-      description: 'What used to take weeks of preparation now takes minutes with our AI-powered automation.'
-    },
-    {
-      icon: Target,
-      title: 'Pitch-Ready in Minutes',
-      description: 'Get investor-ready presentations, financial models, and documents that actually win funding.'
-    }
-  ];
-
+  
   return (
-    <section id="why-gidipitch" className="py-24 bg-background">
+    <section id="why-gidipitch" className="py-8 container bg-[#F5F5F5]">
         <div className="flex flex-col items-center mb-6 gap-5 shadow-2xl bg-white rounded-lg  w-[10%] mx-16">
-        <div className="">
-          <h1 className="font-medium py-3 rounded-lg md:text-[14px] text-xs text-center">
-          Why Choose
-          </h1>
-        </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <div className="animate-fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-8">
+            <h2 className="text-[52px] font-medium lg:text-5xl  mb-10">
               Why Choose <span style={{ color: '#FD621E' }}>GidiPitch</span>?
             </h2>
-            
-            <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-              We built GidiPitch specifically for African entrepreneurs who need to 
-              move fast and pitch smart. Stop letting great ideas wait for perfect presentations.
-            </p>
-
-            <div className="space-y-8">
+            <div className="space-y-6">
               {benefits.slice(0, 3).map((benefit, index) => {
-                const Icon = benefit.icon;
                 return (
                   <div 
                     key={index}
@@ -63,16 +29,16 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div className="flex-shrink-0 mr-6">
-                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300">
-                        <Icon className="h-6 w-6 text-primary" />
+                      <div className="rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300">
+                        <img src={benefit.icon} alt="" className="w-[52px] h-[60px]"/>
                       </div>
                     </div>
                     
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                      <h3 className="text-[#1D1D1D] font-medium text-[27px] cursor-pointer mb-2 group-hover:text-primary transition-colors">
                         {benefit.title}
                       </h3>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className=" leading-relaxed text-[16px] text-[#777777]">
                         {benefit.description}
                       </p>
                     </div>
@@ -99,24 +65,10 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
             <img 
               src={founderPresenting}
               alt="African founder presenting to investors"
-              className="w-full h-auto rounded-3xl shadow-strong"
+              className="w-full  rounded-3xl shadow-strong"
             />
             
-            {/* Floating stats */}
-            <div className="absolute top-8 left-8 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-              <div className="text-2xl font-bold text-primary">500+</div>
-              <div className="text-sm text-muted-foreground">Founders Helped</div>
-            </div>
             
-            <div className="absolute bottom-8 right-8 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-              <div className="text-2xl font-bold text-accent">$10M+</div>
-              <div className="text-sm text-muted-foreground">Funding Raised</div>
-            </div>
-            
-            <div className="absolute top-1/2 -right-4 bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 shadow-medium">
-              <div className="text-2xl font-bold text-secondary">95%</div>
-              <div className="text-sm text-muted-foreground">Success Rate</div>
-            </div>
           </div>
         </div>
 
