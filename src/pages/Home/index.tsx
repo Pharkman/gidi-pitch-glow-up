@@ -8,7 +8,7 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import CTASection from "@/components/CtaBanner";
 
-const Index = () => {
+const Homepage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -26,4 +26,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Homepage;
