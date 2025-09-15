@@ -1,5 +1,9 @@
 // src/lib/query.ts
 
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+
+// const BASE_URL = 
 export async function verifyEmaill(email: string) {
   const res = await fetch('https://gidipitch-backend.onrender.com/api/auth/init', {
     method: 'POST',
@@ -165,4 +169,42 @@ export const getUserDetails = async () => {
     console.error('Error fetching user details:', error);
     return null;
   }
+};
+
+
+export const CreateUserAccount = () => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async ({ email, phone, name, password, password_confirmation }: INewUser) => {
+      try {
+        const res = await fetch(`${BASE_URL}api/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, phone, name, password, password_confirmation })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        console.log(data);
+        if (data.error) throw new Error(data.error);
+
+        // ✅ Save email into localStorage
+        if (data?.data?.user?.email) {
+          localStorage.setItem("registeredEmail", data.data.user.email);
+        }
+
+        toast.success(`${data.message}`);
+        navigate('/auth/verify');
+
+        return data;
+      } catch (error: unknown) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || 'Failed to create user');
+        } else {
+          toast.error('Failed to create user');
+        }
+      }
+    }
+  });
 };

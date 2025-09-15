@@ -3,7 +3,7 @@ import g from "/assets/gLogo.svg";
 
 const ShapeStartup= () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
+    <div className="min-h-screen py-10 max-sm:py-10 flex flex-col items-center justify-center bg-white px-4">
       {/* Go Back */}
       {/* <div className="self-start mb-6 flex items-center cursor-pointer text-gray-700 px-10">
         <span className="mr-2 text-2xl">{'<-'}</span> Go Back
@@ -33,7 +33,7 @@ const ShapeStartup= () => {
       </p>
 
       {/* Form */}
-      <div className="w-full max-w-lg flex flex-col space-y-6">
+      <div className="w-full max-w-xl flex flex-col space-y-6">
         <div className="flex flex-col">
           <label className="mb-3 text-[#1D1D1D] font-medium">Who is your target audience?</label>
           <input
@@ -56,7 +56,7 @@ const ShapeStartup= () => {
       {/* Buttons */}
      
         <button
-      className="w-full max-w-md bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white py-3   rounded-lg font-semibold hover:from-orange-500 hover:to-orange-600 transition-colors mt-10 mb-6"
+      className="w-full max-w-xl bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white py-3   rounded-lg font-semibold hover:from-orange-500 hover:to-orange-600 transition-colors mt-10 mb-6"
       >
       <p className='text-[15px]'> <a href="/onboarding/goal_preference">Continue </a> </p>
       </button>

@@ -35,9 +35,11 @@ const HeroSection = () => {
           <button className="inline-flex items-center justify-center gap-2 btn-hero py-3 w-full md:w-fit">
             Try for free <ArrowRight size={18}/>
           </button>
-          <button className="w-full md:w-fit rounded-lg border border-[#FF5619] font-semibold text-[#FF5619] py-3 px-6">
-            Watch Demo
-          </button>
+       <button className="w-full md:w-fit rounded-lg border border-[#FF5619] font-semibold text-[#FF5619] py-3 px-6 
+  transition-all duration-300 hover:bg-[#FF5619] hover:text-white">
+  Watch Demo
+</button>
+
         </div>
 
         {/* Hero Image */}
