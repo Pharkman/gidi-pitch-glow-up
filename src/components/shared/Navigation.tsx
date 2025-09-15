@@ -63,15 +63,17 @@ const Navigation = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+             <div className="hidden md:flex items-center gap-3">
             <button
-              className="text-primary text-sm px-4 py-2 font-semibold text-[16px]" 
+              className="text-primary text-sm px-4 py-2 font-semibold text-[16px] transition-all duration-300 hover:text-white hover:bg-primary hover:px-6 hover:py-3 rounded-lg"
               onClick={() => (window.location.href = "/signin")}
             >
               Login
             </button>
-            <button className="btn-hero inline-flex gap-2 text-sm px-6 py-2 ml-0">
-              Try For Free <ArrowRight size={14}/>
+            <button className="btn-hero inline-flex gap-2 text-sm px-6 py-3 ml-0 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+           onClick={() => (window.location.href = "/signup")}
+            >
+              Try For Free <ArrowRight size={14} />
             </button>
           </div>
 

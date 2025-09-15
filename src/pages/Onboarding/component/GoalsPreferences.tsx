@@ -25,18 +25,20 @@ export default function GoalsPreferences() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
+    <div className="min-h-screen py-10 max-sm:py-10 flex flex-col items-center justify-center bg-white px-4">
       {/* Back button */}
       <div className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer">
         <FiArrowLeft />
-        <span className="text-sm font-medium"> <a href="/onboarding/shape-startup">Go Back</a></span>
+        <span className="text-sm font-medium">
+          <a href="/onboarding/shape-startup">Go Back</a>
+        </span>
       </div>
 
       {/* Logo */}
       <div className="flex flex-col items-center gap-4">
-         <div className="mb-6">
-       <img src={g} alt="Gidi Logo" />
-      </div>
+        <div className="mb-6">
+          <img src={g} alt="Gidi Logo" />
+        </div>
 
         {/* Progress bar */}
         <div className="flex gap-2 w-40">
@@ -53,9 +55,10 @@ export default function GoalsPreferences() {
       </div>
 
       {/* Goals */}
-      <div className="mt-6 w-full max-w-lg">
+      <div className="mt-6 w-full max-w-xl">
         <p className="font-medium text-sm mb-4">
-          What are your primary goals? <span className="text-gray-500">(Select all that apply)</span>
+          What are your primary goals?{" "}
+          <span className="text-gray-500">(Select all that apply)</span>
         </p>
         <div className="grid grid-cols-2 gap-4">
           {goals.map((goal) => {
@@ -72,13 +75,6 @@ export default function GoalsPreferences() {
               >
                 <div className="mb-2">{goal.icon}</div>
                 <p className="font-medium text-sm">{goal.label}</p>
-                <div
-                  className={`absolute top-3 right-3 w-4 h-4 rounded-full border-2 ${
-                    isSelected ? "bg-white border-white" : "border-gray-400"
-                  }`}
-                >
-                  {isSelected && <div className="w-2 h-2 bg-orange-500 rounded-full m-auto mt-[2px]" />}
-                </div>
               </div>
             );
           })}
@@ -86,8 +82,8 @@ export default function GoalsPreferences() {
       </div>
 
       {/* Finish button */}
-      <button className="w-full max-w-md mt-10 bg-gradient-to-r  from-[#FF7442] to-[#FF5619] text-white py-3 rounded-lg font-semibold hover:from-orange-500 hover:to-orange-600 transition-colors">
-      <a href="/dashboard">Finish</a>  
+      <button className="w-full max-w-xl mt-10 bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white py-3 rounded-lg font-semibold hover:from-orange-500 hover:to-orange-600 transition-colors">
+        <a href="/dashboard">Finish</a>
       </button>
     </div>
   );
