@@ -5,13 +5,16 @@ import OTPInput from "react-otp-input";
 import AuthBgTemplate from "@/components/shared/AuthBgTemplate";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useVerifyEmail } from "@/lib/query";
+import SubmitButton from "@/components/Button";
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState("");
   const [wrongCode, setWrongCode] = useState(false);
-  // const email = localStorage.getItem("email");
-  const email = "unknown@email.com";
+  const email = localStorage.getItem("registeredEmail") || "unknown@email.com"; 
   const navigate = useNavigate();
+
+  const { mutate, isPending } = useVerifyEmail(); 
 
   return (
     <AuthBgTemplate>
@@ -22,8 +25,8 @@ const VerifyEmail = () => {
               Verify your email
             </h1>
             <p className="font-medium text-[#777777] mt-1">
-              We’ve emailed a one time security code to{" "}
-              <strong className="text-black">{email}</strong>, please enter it
+              We’ve emailed a one time security code to
+              <strong className="text-black ml-1">{email}</strong>, please enter it
               below:
             </p>
           </div>
@@ -36,13 +39,13 @@ const VerifyEmail = () => {
                 .required("Required"),
             })}
             onSubmit={(values) => {
-              if (values.otp !== "123456") {
-                setWrongCode(true);
-              } else {
-                setWrongCode(false);
-                console.log("OTP Verified");
-                navigate("/signin");
-              }
+              mutate(
+                { email, otp: values.otp },
+                {
+                  onError: () => setWrongCode(true),
+                  onSuccess: () => setWrongCode(false),
+                }
+              );
             }}
           >
             {({ setFieldValue, isSubmitting }) => (
@@ -83,16 +86,14 @@ const VerifyEmail = () => {
                   className="text-[#E74C3C] text-xs mb-4"
                 />
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="mt-12 w-full bg-[#F97316] text-white py-3.5 rounded-md font-semibold"
-                >
-                  {isSubmitting ? "Verifying..." : "Confirm email"}{" "}
-                </button>
+  <SubmitButton
+  isLoading={isSubmitting || isPending}
+  text="Confirm email"
+/>
+
                 <p className="mt-4 text-center text-sm">
                   <p
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate('/signup')}
                     className="inline-flex items-center gap-2 cursor-pointer text-[#1D1D1D] font-semibold"
                   >
                     <ArrowLeft />

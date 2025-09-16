@@ -44,7 +44,7 @@ const App = () => (
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="auth/password/reset" element={<ResetPassword />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/onboarding/about-startup" element={<AboutStartup />} />
           <Route path="/onboarding/shape-startup" element={<ShapeStartup />} />
@@ -57,24 +57,19 @@ const App = () => (
               // </ProtectedRoute>
             }
           />
-          // <Route path="/pitch-decks" element={<PitchDecksPage />} />
-          // <Route path="/resume-builder" element={<ResumeBuilderPage />} />
-          //{" "}
+           <Route path="/pitch-decks" element={<PitchDecksPage />} />
+           <Route path="/resume-builder" element={<ResumeBuilderPage />} />
           <Route path="/resume-builder-editor" element={<ResumeEditorPage />} />
-          // <Route path="/team-members" element={<TeamMembersPage />} />
-          //{" "}
+          <Route path="/team-members" element={<TeamMembersPage />} />
           <Route
             path="/pitch-deck-outline"
             element={<PitchDeckOutlinePage />}
           />
-          //{" "}
           <Route
             path="/pitch-deck-generating"
             element={<PitchDeckGeneratingPage />}
           />
-          //{" "}
           <Route path="/pitch-deck-editor" element={<PitchDeckEditorPage />} />
-          //{" "}
           <Route path="/resume-generating" element={<ResumeGeneratingPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

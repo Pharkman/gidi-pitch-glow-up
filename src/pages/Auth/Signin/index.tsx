@@ -1,20 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AuthBgTemplate from "@/components/shared/AuthBgTemplate";
 import g from "/assets/gLogo.svg";
 import google from "/assets/google-icon.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
   function handleLogin(values: any) {
     try {
       navigate("/dashboard");
-    } catch (e) {
+    } catch (e: any) {
       console.log("error is", e.message);
     }
   }
+
   return (
     <AuthBgTemplate>
       <div className="flex flex-col justify-between min-h-full">
@@ -72,11 +77,11 @@ const SignIn = () => {
                   />
                 </div>
 
-                <>
+                <div className="mb-6">
                   <div className="mb-2 flex justify-between">
                     <label className=" text-[#1D1D1D] font-medium">
                       Password
-                    </label>{" "}
+                    </label>
                     <Link
                       to="/forgot-password"
                       className="text-[#858585] font-medium text-sm"
@@ -84,18 +89,27 @@ const SignIn = () => {
                       Forget password?
                     </Link>
                   </div>
-                  <Field
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm"
-                  />
+                  <div className="relative">
+                    <Field
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="••••••••"
+                      className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                    >
+                      {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                    </button>
+                  </div>
                   <ErrorMessage
                     name="password"
                     component="div"
                     className="text-red-500 text-xs mb-5"
                   />
-                </>
+                </div>
 
                 <button
                   type="submit"

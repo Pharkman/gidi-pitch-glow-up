@@ -2,17 +2,19 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { INewUser, IVerifyUser, OnboardingPayload, ResetPasswordPayload } from "../types";
+import { toast } from "sonner";
 
-// const BASE_URL = 
-export async function verifyEmaill(email: string) {
-  const res = await fetch('https://gidipitch-backend.onrender.com/api/auth/init', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email }),
-  });
-  if (!res.ok) throw new Error('Failed to send magic link');
-  return res.json();
-}
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+// export async function verifyEmaill(email: string) {
+//   const res = await fetch(`${BASE_URL}/auth/email/verify`, {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ email }),
+//   });
+//   if (!res.ok) throw new Error('Failed to send magic link');
+//   return res.json();
+// }
 
 export async function completeAuth({
   firstname,
@@ -172,15 +174,15 @@ export const getUserDetails = async () => {
 };
 
 
-export const CreateUserAccount = () => {
+export const useCreateUserAccount = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async ({ email, phone, name, password, password_confirmation }: INewUser) => {
+    mutationFn: async ({ email, password }: INewUser) => {
       try {
-        const res = await fetch(`${BASE_URL}api/auth/register`, {
+        const res = await fetch(`${BASE_URL}/auth/local`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, phone, name, password, password_confirmation })
+          body: JSON.stringify({ email, password})
         });
 
         const data = await res.json();
@@ -188,9 +190,9 @@ export const CreateUserAccount = () => {
         console.log(data);
         if (data.error) throw new Error(data.error);
 
-        // ✅ Save email into localStorage
-        if (data?.data?.user?.email) {
-          localStorage.setItem("registeredEmail", data.data.user.email);
+       
+         if (data?.user?.email) {
+          localStorage.setItem("registeredEmail", data.user.email);
         }
 
         toast.success(`${data.message}`);
@@ -206,5 +208,142 @@ export const CreateUserAccount = () => {
         }
       }
     }
+  });
+};
+
+export const useVerifyEmail = () => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async ({ email, otp }: IVerifyUser) => {
+      try {
+        // FIX: correct endpoint
+        const res = await fetch(`${BASE_URL}/auth/email/verify`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to verify email");
+        console.log("verify response:", data);
+
+        if (data.error) throw new Error(data.error);
+
+        toast.success(`${data.message}`);
+        navigate("/onboarding/about-startup");
+
+        return data;
+      } catch (error: unknown) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || "Failed to verify email");
+        } else {
+          toast.error("Failed to verify email");
+        }
+      }
+    },
+  });
+};
+
+
+
+export const useGoogleLogin = () => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/auth/google`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        console.log(data);
+        if (data.error) throw new Error(data.error);
+
+        toast.success(`${data.message}`);
+        navigate('/onboarding/about-startup');
+
+        return data;
+      } catch (error: unknown) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || 'Failed to create user');
+        } else {
+          toast.error('Failed to create user');
+        }
+      }
+    }
+  });
+};
+
+
+export const useOnboardingFlow = () => {
+  return useMutation({
+    mutationFn: async (payload: OnboardingPayload) => {
+      const res = await fetch(`${BASE_URL}/auth`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(payload),
+        
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result?.error || "Onboarding failed");
+      }
+      return result;
+    },
+    onSuccess: (data: any) => {
+      toast.success(data?.message ?? "Onboarding step saved 🎉");
+    },
+    onError: (error: any) => {
+      toast.error(error?.message ?? "Failed to complete onboarding step ❌");
+    },
+  });
+};
+
+
+export const useForgetPassword = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async ({ email }: { email: string }) => {
+      const res = await fetch(`${BASE_URL}/auth/password/forgot`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to send reset link");
+      }
+
+      return result;
+    },
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: async ({ newPassword, confirmPassword, token }: ResetPasswordPayload) => {
+      const res = await fetch(`${BASE_URL}/auth/password/reset?token=${token}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newPassword, confirmPassword }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to reset password");
+      }
+
+      return result;
+    },
   });
 };
