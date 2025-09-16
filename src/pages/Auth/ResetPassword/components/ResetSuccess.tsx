@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import orangeMark from "/assets/orangeSuccessMark.svg";
+import SubmitButton from "@/components/Button";
 
 const ResetSuccess = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const ResetSuccess = () => {
       <div className="flex-1 flex flex-col justify-center">
         <div className="text-center mb-6">
           <img src={orangeMark} alt="Success mark" className="mx-auto mb-8" />
-          <h1 className="text-3xl md:text-4xl font-semibold text-[#1d1d1d]">
+          <h1 className="text-3xl md:text-4xl mb-2 font-semibold text-[#1d1d1d]">
             Successfully reset!
           </h1>
           <p className="font-medium text-[#777777] mt-1">
@@ -23,6 +24,11 @@ const ResetSuccess = () => {
           >
             Login now
           </button>
+
+                   {/* <SubmitButton
+                      isLoading={isSubmitting || isSendingEmail}
+                      text="Login now"
+                    /> */}
         </div>
       </div>
 

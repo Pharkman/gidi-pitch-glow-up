@@ -15,7 +15,7 @@ const AuthBgTemplate = ({ children }: AuthBgTemplateProps) => {
 
       {/* Right form section */}
       <div className="flex w-full md:w-1/2 justify-center p-2">
-        <div className="w-full max-w-md">{children}</div>
+        <div className="w-full max-w-lg">{children}</div>
       </div>
     </div>
   );

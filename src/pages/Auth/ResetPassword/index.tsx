@@ -3,16 +3,20 @@ import * as Yup from "yup";
 import AuthBgTemplate from "@/components/shared/AuthBgTemplate";
 import { useState } from "react";
 import ResetSuccess from "./components/ResetSuccess";
+import { useSearchParams } from "react-router-dom";
+import { useResetPassword } from "@/lib/query";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const ResetPassword = () => {
   const [showSuccess, setShowSuccess] = useState(false);
-  function handleReset() {
-    try {
-      setShowSuccess(true);
-    } catch (error) {
-      console.log("error is", error);
-    }
-  }
+  const { mutate, isPending, error } = useResetPassword();
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token") || ""; // 👈 grab token from URL
+
+  // password visibility states
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   return (
     <AuthBgTemplate>
       {!showSuccess && (
@@ -29,59 +33,106 @@ const ResetPassword = () => {
             </div>
 
             <Formik
-              initialValues={{ password: "", confirmPassword: "" }}
+              initialValues={{ newPassword: "", confirmPassword: "" }}
               validationSchema={Yup.object({
-                password: Yup.string()
+                newPassword: Yup.string()
                   .min(6, "Must be at least 6 characters")
                   .required("Required"),
                 confirmPassword: Yup.string()
-                  .oneOf([Yup.ref("password"), null], "Passwords must match")
+                  .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
                   .required("Required"),
               })}
-              onSubmit={handleReset}
+              onSubmit={(values) => {
+                mutate(
+                  {
+                    newPassword: values.newPassword,
+                    confirmPassword: values.confirmPassword,
+                    token,
+                  },
+                  {
+                    onSuccess: () => setShowSuccess(true),
+                  }
+                );
+              }}
             >
               {({ isSubmitting, handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
+                  {/* New Password */}
                   <div className="mb-6">
                     <label className=" text-[#1D1D1D] font-medium">
-                      Password
-                    </label>{" "}
-                    <Field
-                      type="password"
-                      name="password"
-                      placeholder="••••••••"
-                      className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm"
-                    />
+                      New Password
+                    </label>
+                    <div className="relative">
+                      <Field
+                        type={showNewPassword ? "text" : "password"}
+                        name="newPassword"
+                        placeholder="••••••••"
+                        className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm pr-10"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowNewPassword((prev) => !prev)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                      >
+                        {showNewPassword ? (
+                          <FiEyeOff size={18} />
+                        ) : (
+                          <FiEye size={18} />
+                        )}
+                      </button>
+                    </div>
                     <ErrorMessage
-                      name="password"
+                      name="newPassword"
                       component="div"
                       className="text-red-500 text-xs mb-5"
                     />
                   </div>
 
-                  <>
+                  {/* Confirm Password */}
+                  <div className="mb-6">
                     <label className=" text-[#1D1D1D] font-medium">
                       Confirm Password
-                    </label>{" "}
-                    <Field
-                      type="password"
-                      name="confirmPassword"
-                      placeholder="••••••••"
-                      className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm"
-                    />
+                    </label>
+                    <div className="relative">
+                      <Field
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        placeholder="••••••••"
+                        className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm pr-10"
+                      />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setShowConfirmPassword((prev) => !prev)
+                        }
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                      >
+                        {showConfirmPassword ? (
+                          <FiEyeOff size={18} />
+                        ) : (
+                          <FiEye size={18} />
+                        )}
+                      </button>
+                    </div>
                     <ErrorMessage
                       name="confirmPassword"
                       component="div"
                       className="text-red-500 text-xs mb-5"
                     />
-                  </>
+                  </div>
+
+                  {error && (
+                    <p className="text-red-500 text-sm">{error.message}</p>
+                  )}
 
                   <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isPending}
                     className="mt-12 w-full bg-[#F97316] text-white py-3.5 rounded-md font-semibold"
                   >
-                    {isSubmitting ? "Resetting..." : "Reset Password"}
+                    {isSubmitting || isPending
+                      ? "Resetting..."
+                      : "Reset Password"}
                   </button>
                 </Form>
               )}

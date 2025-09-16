@@ -1,20 +1,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AuthBgTemplate from "@/components/shared/AuthBgTemplate";
 import g from "/assets/gLogo.svg";
 import google from "/assets/google-icon.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "@/components/ui/use-toast";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useCreateUserAccount } from "@/lib/query";
+import { signupSchema } from "@/lib/validation";
+import { LoadingSpinner } from "@/components/Loader";
+import SubmitButton from "@/components/Button";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { mutate, isPending } = useCreateUserAccount();
+
   function handleSignup(values: any) {
-    try {
-      navigate("/verify-email");
-    } catch (err) {
-      console.log("error is", err);
-    }
+    mutate(values, {
+      onSuccess: (data: any) => {
+        toast({
+          title: "Account created!",
+          description: "Please verify your email to continue.",
+        });
+        // if (data?.data?.user?.email) {
+        //   localStorage.setItem("registeredEmail", data.data.user.email);
+        // }
+        navigate("/verify-email");
+      },
+      onError: (error: any) => {
+        toast({
+          title: "Error",
+          description: error.message || "Failed to create user",
+          variant: "destructive",
+        });
+      },
+    });
   }
+
+   // ✅ function to trigger google login redirect
+  function handleGoogleLogin() {
+    // Instead of mutation, just redirect to backend Google OAuth
+    window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
+  }
+
+
   return (
     <AuthBgTemplate>
       <div className="flex flex-col justify-between min-h-full">
@@ -30,10 +65,12 @@ const SignUp = () => {
             </p>
           </div>
 
-          <button className="w-full border border-[#DBDBDB] rounded-md py-2 mb-4 flex items-center justify-center gap-2 hover:bg-gray-50">
+          <button className="w-full border border-[#DBDBDB] rounded-md py-2 mb-4 flex items-center justify-center gap-2 hover:bg-gray-50"
+          onClick={handleGoogleLogin}
+          >
             <img src={google} alt="Google" className="size-6" />
             <span className="font-medium text-[#1D1D1D]">
-              Sign up with google
+              Sign up with Google
             </span>
           </button>
 
@@ -45,16 +82,11 @@ const SignUp = () => {
 
           <Formik
             initialValues={{ email: "", password: "" }}
-            validationSchema={Yup.object({
-              email: Yup.string().email("Invalid email").required("Required"),
-              password: Yup.string()
-                .min(6, "Must be at least 6 characters")
-                .required("Required"),
-            })}
+            validationSchema={signupSchema}
             onSubmit={handleSignup}
           >
-            {({ isSubmitting, handleSubmit }) => (
-              <Form onSubmit={handleSubmit}>
+            {({ isSubmitting }) => (
+              <Form>
                 <div className="mb-6">
                   <label className="block text-[#1D1D1D] mb-2 font-medium">
                     Email
@@ -72,30 +104,40 @@ const SignUp = () => {
                   />
                 </div>
 
-                <>
+                <div className="mb-6">
                   <label className="block mb-2 text-[#1D1D1D] font-medium">
                     Password
-                  </label>{" "}
-                  <Field
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm"
-                  />
+                  </label>
+                  <div className="relative">
+                    <Field
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="••••••••"
+                      className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-2 flex items-center px-2 text-gray-500"
+                    >
+                      {showPassword ? (
+                        <FiEyeOff size={18} />
+                      ) : (
+                        <FiEye size={18} />
+                      )}
+                    </button>
+                  </div>
                   <ErrorMessage
                     name="password"
                     component="div"
                     className="text-red-500 text-xs mb-5"
                   />
-                </>
+                </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="mt-12 w-full bg-[#F97316] text-white py-3.5 rounded-md font-semibold"
-                >
-                  {isSubmitting ? "Signing up..." : "Sign Up"}
-                </button>
+                <SubmitButton
+                  isLoading={isSubmitting || isPending}
+                  text="Sign Up"
+                />
               </Form>
             )}
           </Formik>
@@ -111,8 +153,8 @@ const SignUp = () => {
           By continuing, you agree to Gidipitch’s{" "}
           <a href="#" className="underline">
             Terms of Service
-          </a>{" "}
-          and{" "}
+          </a>
+          and
           <a href="#" className="underline">
             Privacy Policy
           </a>
