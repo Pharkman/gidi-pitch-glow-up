@@ -47,33 +47,7 @@ export async function completeAuth({
 }
 
 
-export async function loginUser({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) {
-  const res = await fetch('https://gidipitch-backend.onrender.com/api/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  });
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data?.message || 'Login failed');
-  }
-
-  // ✅ Store token and user in localStorage for auth protection
-  if (data.token && data.user) {
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(data.user));
-  }
-
-  return data;
-}
 
 
 export async function forgotPassword(email: string): Promise<{ message: string }> {
@@ -94,31 +68,7 @@ export async function forgotPassword(email: string): Promise<{ message: string }
 }
 
 
-export async function resetPassword({
-  password,
-  confirmPassword,
-  token,
-}: {
-  password: string;
-  confirmPassword: string;
-  token: string;
-}) {
-  const res = await fetch(
-    'https://gidipitch-backend.onrender.com/api/auth/password/reset',
-    {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password, confirmPassword, token }),
-    }
-  );
 
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err?.message || 'Failed to reset password');
-  }
-
-  return res.json();
-}
 
 
 // lib/logout.ts
@@ -279,15 +229,16 @@ export const useGoogleLogin = () => {
 };
 
 
+
 export const useOnboardingFlow = () => {
   return useMutation({
     mutationFn: async (payload: OnboardingPayload) => {
+      
       const res = await fetch(`${BASE_URL}/auth`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
         credentials: "include",
         body: JSON.stringify(payload),
-        
       });
 
       const result = await res.json();
@@ -296,14 +247,51 @@ export const useOnboardingFlow = () => {
       }
       return result;
     },
-    onSuccess: (data: any) => {
+     onSuccess: (data: any) => {
       toast.success(data?.message ?? "Onboarding step saved 🎉");
+
+      // Log cookies (including token if stored as a cookie)
+      console.log("Cookies:", document.cookie);
     },
     onError: (error: any) => {
       toast.error(error?.message ?? "Failed to complete onboarding step ❌");
     },
   });
 };
+
+
+// export const useOnboardingFlow = () => {
+//   return useMutation({
+//     mutationFn: async (payload: OnboardingPayload) => {
+//       // Grab token from cookie
+//       const allCookies = document.cookie;
+//       const match = allCookies.match(/(^| )token=([^;]+)/);
+//       const token = match ? match[2] : null;
+
+//       const res = await fetch(`${BASE_URL}/auth`, {
+//         method: "PUT",
+//         headers: { 
+//           "Content-Type": "application/json",
+//           ...(token ? { Authorization: `Bearer ${token}` } : {}) // 🔑 attach token if found
+//         },
+//         body: JSON.stringify(payload),
+//         credentials: "include",
+//       });
+
+//       const result = await res.json();
+//       if (!res.ok) {
+//         throw new Error(result?.error || "Onboarding failed");
+//       }
+//       return result;
+//     },
+//     onSuccess: (data: any) => {
+//       toast.success(data?.message ?? "Onboarding step saved 🎉");
+//     },
+//     onError: (error: any) => {
+//       toast.error(error?.message ?? "Failed to complete onboarding step ❌");
+//     },
+//   });
+// };
 
 
 export const useForgetPassword = () => {
@@ -343,6 +331,62 @@ export const useResetPassword = () => {
         throw new Error(result.message || "Failed to reset password");
       }
 
+      return result;
+    },
+  });
+};
+
+export const useLoginUser = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async ({ email, password }: INewUser) => {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data?.message || "Login failed");
+
+      // ✅ Save token and user
+      if (data.token && data.user) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
+
+      return data;
+    },
+    onSuccess: (data) => {
+      toast.success(data.message || "Login successful");
+      navigate("/dashboard");
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
+    },
+  });
+};
+
+export const useGetTokenFromQuery = () => {
+  return useMutation({
+    mutationFn: async ({ token }: { token: string }) => {
+      const res = await fetch(`${BASE_URL}/auth/set-cookie/?token=${token}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to set cookie");
+      }
       return result;
     },
   });

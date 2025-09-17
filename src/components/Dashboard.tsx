@@ -163,6 +163,32 @@ const Dashboard = () => {
   setIsLoggingOut(false);
 };
 
+ const { mutate: setToken } = useGetTokenFromQuery();
+
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+
+  
+  
+
+  // Call token setter immediately when token exists
+  useEffect(() => {
+    if (token) {
+      setToken(
+        { token },
+        {
+          onSuccess: () => {
+            console.log("Token saved successfully ✅");
+          },
+          onError: (err: any) => {
+            console.error("Failed to set token ❌", err);
+          },
+        }
+      );
+    }
+  }, [token, setToken]);
+
+  
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation */}
