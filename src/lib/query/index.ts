@@ -123,6 +123,7 @@ export const useWaitlist = () => {
 
   return useMutation({
     mutationFn: async ({ email }: { email: string }) => {
+       console.log("🚀 Sending payload to backend:", { email });
       try {
         const res = await fetch(`${BASE_URL}/waitlist/add`, {
           method: "POST",

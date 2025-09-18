@@ -7,12 +7,16 @@ import GidiLogo from "@/assets/Frame 481473.png";
 import { useGetPeople, useWaitlist } from "@/lib/query";
 import { LoadingSpinner } from "@/components/Loader";
 import { toast } from "sonner";
+import { socialLinks } from "@/components/dummy";
 
 const Waitlist = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState("");
    const { mutate, isPending } = useWaitlist();
+
+   console.log('the one', mutate);
+   
 
 //   const waitlistMutation = useWaitlist();
   const { data: peopleData, isLoading: peopleLoading } = useGetPeople();
@@ -39,6 +43,7 @@ const Waitlist = () => {
   };
 
   return (
+<section>
     <section
       id="hero"
       className="w-[95%] md:w-[98%] mt-4 py-16 text-center container"
@@ -64,7 +69,7 @@ const Waitlist = () => {
             <div className="hidden md:flex items-center gap-3">
               <button
                 className="btn-hero inline-flex gap-2 text-sm px-6 py-3 ml-0 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                                onClick={handleJoinWaitlist}
+                                
 
               >
                 Join Waitlist 
@@ -118,6 +123,8 @@ const Waitlist = () => {
        <div className="mb-4 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto max-sm:gap-3">
   <input
     type="email"
+    value={email}
+     onChange={(e) => setEmail(e.target.value)}
     placeholder="Enter email address"
     className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 max-sm:rounded-lg"
   />
@@ -152,7 +159,29 @@ const Waitlist = () => {
           />
         </div>
       </div>
+
+     
     </section>
+       <div className="flex justify-between px-4 items-center max-sm:flex-wrap max-sm:gap-3 mb-6">
+        <p>© 2025 GidiPitch. All rights reserved.</p>
+
+        <div className="flex space-x-4">
+              {socialLinks.map((social, index) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={index}
+                    href={social.href}
+                    className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground"
+                    aria-label={social.label}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                );
+              })}
+            </div>
+      </div>
+</section>
   );
 };
 
