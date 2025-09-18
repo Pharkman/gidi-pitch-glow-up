@@ -130,7 +130,7 @@ const ResetPassword = () => {
                     disabled={isSubmitting || isPending}
                     className="mt-12 w-full bg-[#F97316] text-white py-3.5 rounded-md font-semibold"
                   >
-                    {isSubmitting || isPending
+                    {isPending
                       ? "Resetting..."
                       : "Reset Password"}
                   </button>

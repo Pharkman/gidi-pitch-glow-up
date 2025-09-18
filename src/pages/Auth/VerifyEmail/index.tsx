@@ -18,7 +18,7 @@ const VerifyEmail = () => {
 
   return (
     <AuthBgTemplate>
-      <div className="flex flex-col justify-between min-h-full">
+      <div className="flex flex-col justify-between min-h-full max-sm:p-4">
         <div className="flex-1 flex flex-col justify-center">
           <div className="text-center mb-6">
             <h1 className="text-3xl md:text-4xl font-semibold text-[#1d1d1d]">

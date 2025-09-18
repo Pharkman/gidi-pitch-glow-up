@@ -1,14 +1,39 @@
+import { useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { startupOptions, teamSizeOptions } from "@/lib/constant";
 import g from "/assets/gLogo.svg";
 import { useOnboardingFlow } from "@/lib/query";
+import { useGetTokenFromQuery } from "@/lib/query"; 
 import SubmitButton from "@/components/Button";
-import { useNavigate } from "react-router-dom";
-
 
 export default function AboutStartup() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { mutate, isPending } = useOnboardingFlow();
+  const { mutate: setToken } = useGetTokenFromQuery();
+
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+
+  
+  
+
+  // Call token setter immediately when token exists
+  useEffect(() => {
+    if (token) {
+      setToken(
+        { token },
+        {
+          onSuccess: () => {
+            console.log("Token saved successfully ✅");
+          },
+          onError: (err: any) => {
+            console.error("Failed to set token ❌", err);
+          },
+        }
+      );
+    }
+  }, [token, setToken]);
 
   return (
     <div className="min-h-screen max-sm:py-10 flex flex-col items-center justify-center bg-white px-4 py-10">
@@ -73,32 +98,28 @@ export default function AboutStartup() {
             <p className="mb-3 text-[16px] text-[#1D1D1D] font-medium">
               What’s your current team size?
             </p>
-            <Field
-              as="select"
-              name="team_size"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-[#777777]"
-            >
-              <option value="">Select team size</option>
-              {teamSizeOptions.map((size) => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </Field>
+            <div className="relative w-full">
+              <Field
+                as="select"
+                name="team_size"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-[#1D1D1D] appearance-none"
+              >
+                <option value="">Select team size</option>
+                {teamSizeOptions.map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </Field>
+
+              {/* Custom arrow */}
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+                ▼
+              </div>
+            </div>
 
             {/* Continue button */}
-            {/* <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white py-3 rounded-lg font-semibold hover:from-orange-500 hover:to-orange-600 transition-colors"
-            >
-              {isLoading ? "Saving..." : "Continue"}
-            </button> */}
-
-            <SubmitButton 
-              isLoading={isPending}
-              text="Continue"
-            />
+            <SubmitButton isLoading={isPending} text="Continue" />
           </Form>
         )}
       </Formik>

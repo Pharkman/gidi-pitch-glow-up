@@ -45,7 +45,6 @@ const SignUp = () => {
 
    // ✅ function to trigger google login redirect
   function handleGoogleLogin() {
-    // Instead of mutation, just redirect to backend Google OAuth
     window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
   }
 
@@ -56,7 +55,7 @@ const SignUp = () => {
         <div>
           <div className="text-center mb-12 md:mb-16">
             <img src={g} alt="Logo" className="mx-auto h-14" />
-            <h1 className="text-3xl md:text-4xl font-semibold text-[#1d1d1d]">
+            <h1 className="text-3xl md:text-4xl mb-2 font-semibold text-[#1d1d1d]">
               Create Your Account
             </h1>
             <p className="font-medium text-[#777777] mt-1">
@@ -150,7 +149,7 @@ const SignUp = () => {
           </p>
         </div>
         <p className="text-sm text-[#777777] font-medium mt-6 px-12 md:px-0 text-center">
-          By continuing, you agree to Gidipitch’s{" "}
+          By continuing, you agree to Gidipitch’s
           <a href="#" className="underline">
             Terms of Service
           </a>

@@ -1,23 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import AuthBgTemplate from "@/components/shared/AuthBgTemplate";
 import g from "/assets/gLogo.svg";
 import google from "/assets/google-icon.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { signinSchema } from "@/lib/validation";
+import { useLoginUser } from "@/lib/query";
+import SubmitButton from "@/components/Button";
 
 const SignIn = () => {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const loginMutation = useLoginUser();
 
-  function handleLogin(values: any) {
-    try {
-      navigate("/dashboard");
-    } catch (e: any) {
-      console.log("error is", e.message);
-    }
+  // ✅ Google login handler
+  function handleGoogleLogin() {
+    window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
   }
 
   return (
@@ -26,7 +25,7 @@ const SignIn = () => {
         <div>
           <div className="text-center mb-12 md:mb-16">
             <img src={g} alt="Logo" className="mx-auto h-14" />
-            <h1 className="text-3xl md:text-4xl font-semibold text-[#1d1d1d]">
+            <h1 className="text-3xl md:text-4xl font-semibold text-[#1d1d1d] mb-2">
               Log into your account
             </h1>
             <p className="font-medium text-[#777777] mt-1">
@@ -35,10 +34,15 @@ const SignIn = () => {
             </p>
           </div>
 
-          <button className="w-full border border-[#DBDBDB] rounded-md py-2 mb-4 flex items-center justify-center gap-2 hover:bg-gray-50">
+          {/* ✅ Sign in with Google */}
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="w-full border border-[#DBDBDB] rounded-md py-2 mb-4 flex items-center justify-center gap-2 hover:bg-gray-50"
+          >
             <img src={google} alt="Google" className="size-6" />
             <span className="font-medium text-[#1D1D1D]">
-              Sign up with google
+              Sign in with Google
             </span>
           </button>
 
@@ -50,13 +54,10 @@ const SignIn = () => {
 
           <Formik
             initialValues={{ email: "", password: "" }}
-            validationSchema={Yup.object({
-              email: Yup.string().email("Invalid email").required("Required"),
-              password: Yup.string()
-                .min(6, "Must be at least 6 characters")
-                .required("Required"),
-            })}
-            onSubmit={handleLogin}
+            validationSchema={signinSchema}
+            onSubmit={(values) => {
+              loginMutation.mutate(values);
+            }}
           >
             {({ isSubmitting, handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
@@ -111,13 +112,10 @@ const SignIn = () => {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="mt-12 w-full bg-[#F97316] text-white py-3.5 rounded-md font-semibold"
-                >
-                  {isSubmitting ? "Signing in..." : "Sign In"}
-                </button>
+                <SubmitButton
+                  isLoading={loginMutation.isPending}
+                  text="Sign In"
+                />
               </Form>
             )}
           </Formik>

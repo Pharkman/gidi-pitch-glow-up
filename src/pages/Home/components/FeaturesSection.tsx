@@ -33,14 +33,14 @@ const features = [
 
 const FeaturesSection = () => {
   return (
-    <section className="bg-white px-20 py-8 md:py-16 container ">
+    <section id="features" className="bg-white px-20 py-8 md:py-16 container max-sm:px-4 max-sm:py-4">
       <div className="">
         {/* Section Header */}
         <div className="mb-16 text-center">
           <p className="mb-2 p-1 text-sm font-medium capitalize border mx-auto text-[#5D5D5D] border-[#DBDBDB] rounded-xl bg-[#F5F5F5] w-fit px-4">
             Features
           </p>
-          <h2 className="mb-4 text-3xl font-medium text-[#2D2D2D] md:text-[52px] leading-[1.2]">
+          <h2 className="mb-4 text-3xl font-medium text-[#2D2D2D] md:text-[52px] leading-[1.2] max-sm:text-2xl">
             Everything You Need to Succeed
           </h2>
           <p className="mx-auto max-w-2xl text-[#8A8A8A] md:text-lg">
