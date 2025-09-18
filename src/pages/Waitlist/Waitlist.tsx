@@ -162,7 +162,7 @@ const Waitlist = () => {
 
      
     </section>
-       <div className="flex justify-between px-4 items-center max-sm:flex-wrap max-sm:gap-3 mb-6">
+       <div className="flex justify-between px-4 items-center max-sm:flex-col max-sm:gap-3 mb-6">
         <p>© 2025 GidiPitch. All rights reserved.</p>
 
         <div className="flex space-x-4">
