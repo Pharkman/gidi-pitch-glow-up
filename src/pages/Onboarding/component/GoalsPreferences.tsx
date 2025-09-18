@@ -4,12 +4,12 @@ import { FaRegFileAlt } from "react-icons/fa";
 import { BsBarChartFill } from "react-icons/bs";
 import { AiOutlineBulb } from "react-icons/ai";
 import { GiSparkles } from "react-icons/gi";
+import { Check } from "lucide-react"; // ✅ Import check icon
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import g from "/assets/gLogo.svg";
 import { useOnboardingFlow } from "@/lib/query";
 import SubmitButton from "@/components/Button";
-
 
 // ✅ Validation
 const goalsSchema = Yup.object().shape({
@@ -29,7 +29,7 @@ export default function GoalsPreferences() {
   return (
     <div className="min-h-screen py-10 flex flex-col items-center justify-center bg-white px-4">
       {/* Back button */}
-      <div className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer">
+      <div className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer max-sm:px-0">
         <FiArrowLeft />
         <span className="text-sm font-medium">
           <a href="/onboarding/shape-startup">Go Back</a>
@@ -61,7 +61,7 @@ export default function GoalsPreferences() {
         initialValues={{ startup_goal: [] as string[] }}
         validationSchema={goalsSchema}
         onSubmit={(values) => {
-          mutate(values); 
+          mutate(values);
         }}
       >
         {({ values, errors, touched, handleSubmit }) => (
@@ -69,7 +69,7 @@ export default function GoalsPreferences() {
             onSubmit={handleSubmit}
             className="mt-6 w-full max-w-xl flex flex-col items-center"
           >
-            <p className="font-medium text-sm mb-4 w-full">
+            <p className="font-medium text-sm sm:text-base mb-4 w-full">
               What are your primary goals?{" "}
               <span className="text-gray-500">(Select all that apply)</span>
             </p>
@@ -90,12 +90,18 @@ export default function GoalsPreferences() {
                               )
                             : arrayHelpers.push(goal.label)
                         }
-                        className={`flex flex-col items-center justify-center p-6 rounded-xl border cursor-pointer transition ${
+                        className={`relative flex flex-col items-center justify-center p-6 rounded-xl border cursor-pointer transition ${
                           isSelected
                             ? "bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white border-none"
                             : "bg-white border-gray-300 text-gray-700 hover:border-orange-400"
                         }`}
                       >
+                        {/* ✅ Checkbox in top-right corner */}
+                        {isSelected && (
+                          <div className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full bg-white">
+                            <Check className="w-4 h-4 text-orange-500" />
+                          </div>
+                        )}
                         <div className="mb-2">{goal.icon}</div>
                         <p className="font-medium text-sm">{goal.label}</p>
                       </div>
@@ -110,12 +116,7 @@ export default function GoalsPreferences() {
             )}
 
             {/* Finish button */}
-          
-
-             <SubmitButton 
-              isLoading={isPending}
-              text="Finish"
-            />
+            <SubmitButton isLoading={isPending} text="Finish" />
           </Form>
         )}
       </Formik>
