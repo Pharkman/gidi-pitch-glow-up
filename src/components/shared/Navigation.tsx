@@ -19,7 +19,7 @@ const Navigation = () => {
   const navItems = [
     { href: "#features", label: "Features" },
     { href: "#preview", label: "Benefits" },
-    { href: "#faq", label: "Pricing" },
+    { href: "#faq", label: "Faq" },
   ];
 
   const scrollToSection = (href: string) => {

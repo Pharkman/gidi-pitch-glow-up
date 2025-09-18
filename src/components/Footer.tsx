@@ -1,34 +1,7 @@
-import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 import GidiLogo from '@/assets/Frame 481473.png'
+import { footerLinks, socialLinks } from './dummy';
 
 const Footer = () => {
-  const footerLinks = {
-    product: [
-      { name: 'Features', href: '#features' },
-      { name: 'Pricing', href: '#pricing' },
-      { name: 'Templates', href: '#templates' },
-      { name: 'Demo', href: '#demo' }
-    ],
-    resources: [
-      { name: 'Documentation', href: '#docs' },
-      { name: 'Blog', href: '#blog' },
-      { name: 'Success Stories', href: '#stories' },
-      { name: 'Help Center', href: '#help' }
-    ],
-    company: [
-      { name: 'About Us', href: '#about' },
-      { name: 'Careers', href: '#careers' },
-      { name: 'Contact', href: '#contact' },
-      { name: 'Partners', href: '#partners' }
-    ]
-  };
-
-  const socialLinks = [
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Github, href: '#', label: 'GitHub' },
-    { icon: Mail, href: 'mailto:hello@gidipitch.com', label: 'Email' }
-  ];
 
   return (
     <footer className="bg-[white] ">

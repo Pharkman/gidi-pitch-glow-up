@@ -42,7 +42,8 @@ import freepik_build3 from "@/assets/freepik_buld3.png"
 import freepik_build4 from "@/assets/freepik_build4.png"
 import freepik_build5 from "@/assets/freepik_build5.png"
 import freepik_build6 from "@/assets/freepik_build6.png"
-import { getUserDetails, logout } from '@/lib/query';
+import { getUserDetails, logout, useGetTokenFromQuery, useGetUser } from '@/lib/query';
+import { useSearchParams } from 'react-router-dom';
 // Reusable ToolCard component
 const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle }: {
   image: string,
@@ -95,7 +96,10 @@ const InviteButton = () => (
   </button>
 );
 
+
 const Dashboard = () => {
+  const {data:user_data, isLoading} = useGetUser();
+  console.log("User", user_data);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
@@ -122,29 +126,7 @@ const Dashboard = () => {
     // { name: 'AI Coach', icon: Brain, active: false, available: false },
   ];
 
-  const recentProjects = [
-    {
-      id: 1,
-      name: 'AgriTech Pitch Deck',
-      type: 'Pitch Deck',
-      lastEdited: '2 hours ago',
-      status: 'Draft'
-    },
-    {
-      id: 2,
-      name: 'Founder Resume',
-      type: 'Resume',
-      lastEdited: '1 day ago',
-      status: 'Complete'
-    },
-    {
-      id: 3,
-      name: 'Series A Deck',
-      type: 'Pitch Deck',
-      lastEdited: '3 days ago',
-      status: 'In Progress'
-    }
-  ];
+
 
   const handleCreateNew = (tool: string) => {
     setSelectedTool(tool);
@@ -188,7 +170,7 @@ const Dashboard = () => {
     }
   }, [token, setToken]);
 
-  
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation */}

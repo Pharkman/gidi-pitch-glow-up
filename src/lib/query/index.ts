@@ -1,9 +1,10 @@
 // src/lib/query.ts
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { INewUser, IVerifyUser, OnboardingPayload, ResetPasswordPayload } from "../types";
 import { toast } from "sonner";
+import { QUERY_KEYS } from "../queryKeys";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 // export async function verifyEmaill(email: string) {
@@ -391,3 +392,23 @@ export const useGetTokenFromQuery = () => {
     },
   });
 };
+
+export const useGetUser = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/auth/user`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", 
+      });
+
+      const result = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to get user");
+      }
+      return result;
+    },
+  });
+}

@@ -1,6 +1,6 @@
 import { FileInput, Settings, Sparkles, Download } from 'lucide-react';
-import { Clock, Users, Zap, Target } from 'lucide-react';
 import check from '../assets/check.png';
+import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 
   export const steps = [
     {
@@ -74,4 +74,32 @@ import check from '../assets/check.png';
       question: 'Do you offer support for teams?',
       answer: 'Yes! Our team plans include collaboration features, shared workspaces, and dedicated account management. We also offer training sessions for accelerators and incubators working with multiple startups.'
     }
+  ];
+
+  export const footerLinks = {
+    product: [
+      { name: 'Features', href: '#features' },
+      { name: 'Pricing', href: '#pricing' },
+      { name: 'Templates', href: '#templates' },
+      { name: 'Demo', href: '#demo' }
+    ],
+    resources: [
+      { name: 'Documentation', href: '#docs' },
+      { name: 'Blog', href: '#blog' },
+      { name: 'Success Stories', href: '#stories' },
+      { name: 'Help Center', href: '#help' }
+    ],
+    company: [
+      { name: 'About Us', href: '#about' },
+      { name: 'Careers', href: '#careers' },
+      { name: 'Contact', href: '#contact' },
+      { name: 'Partners', href: '#partners' }
+    ]
+  };
+
+  export const socialLinks = [
+    { icon: Twitter, href: '#', label: 'Twitter' },
+    { icon: Linkedin, href: '#', label: 'LinkedIn' },
+    { icon: Github, href: '#', label: 'GitHub' },
+    { icon: Mail, href: 'mailto:hello@gidipitch.com', label: 'Email' }
   ];
