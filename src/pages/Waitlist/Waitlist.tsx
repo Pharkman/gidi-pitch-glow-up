@@ -14,6 +14,9 @@ const Waitlist = () => {
   const [email, setEmail] = useState("");
    const { mutate, isPending } = useWaitlist();
 
+   console.log('the one', mutate);
+   
+
 //   const waitlistMutation = useWaitlist();
   const { data: peopleData, isLoading: peopleLoading } = useGetPeople();
 
@@ -118,6 +121,8 @@ const Waitlist = () => {
        <div className="mb-4 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto max-sm:gap-3">
   <input
     type="email"
+    value={email}
+     onChange={(e) => setEmail(e.target.value)}
     placeholder="Enter email address"
     className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 max-sm:rounded-lg"
   />
