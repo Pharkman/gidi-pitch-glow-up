@@ -105,7 +105,7 @@ const ForgotPassword = () => {
             </>
         </div>
 
-        <p className="text-sm text-[#777777] font-medium mt-6 px-12 md:px-0 text-center">
+        <p className="text-sm text-[#777777] font-medium mt-6 px-12 md:px-0 text-center max-sm:px-0">
           By continuing, you agree to Gidipitch's{" "}
           <a href="#" className="underline">
             Terms of Service
