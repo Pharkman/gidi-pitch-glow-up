@@ -105,7 +105,7 @@ const Waitlist = () => {
         {/* Heading */}
         <h1 className="mb-4 text-4xl font-semibold text-[#1D1D1D] md:text-6xl max-sm:text-2xl leading-tight">
           Your Complete Startup <br />
-         <p className="mt-3"> Toolkit for African Founders</p>
+         <p className="mt-3 max-sm:mt-1"> Toolkit for African Founders</p>
         </h1>
 
         {/* Subtitle */}
@@ -115,13 +115,13 @@ const Waitlist = () => {
         </p>
 
         {/* Email Input + Button */}
-       <div className="mb-4 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto">
+       <div className="mb-4 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto max-sm:gap-3">
   <input
     type="email"
     placeholder="Enter email address"
-    className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 "
+    className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 max-sm:rounded-lg"
   />
-  <button className="w-full md:w-auto rounded-r-lg bg-[#FF5619] text-white font-semibold px-6 py-3 transition-all duration-300 hover:bg-[#e14e18] "
+  <button className="w-full md:w-auto rounded-r-lg bg-[#FF5619] text-white font-semibold px-6 py-3 transition-all duration-300 hover:bg-[#e14e18] max-sm:rounded-lg"
   onClick={handleJoinWaitlist}
   >
     {isPending ? <LoadingSpinner /> : "Join Waitlist"}
@@ -129,11 +129,14 @@ const Waitlist = () => {
 </div>
 
         {/* People joined */}
-         <p className="text-sm text-[#555555] mb-12">
-          {peopleLoading
-            ? "Loading..."
-            : `${peopleData?.count || 0} PEOPLE JOINED`}
-        </p>
+        <p className="text-sm text-[#555555] mb-12">
+  {peopleLoading
+    ? "Loading..."
+    : `${peopleData?.data.count || 0} ${
+        peopleData?.data.count === 1 ? "PERSON" : "PEOPLE"
+      } JOINED`}
+</p>
+
 
         {/* Hero Image */}
         <div className="flex justify-center">
