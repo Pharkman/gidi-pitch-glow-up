@@ -18,7 +18,7 @@ const VerifyEmail = () => {
 
   return (
     <AuthBgTemplate>
-      <div className="flex justify-center items-center min-h-screen px-4 py-6 sm:py-10 md:py-16 max-sm:px-0">
+      <div className="flex justify-center items-center px-4 py-6 sm:py-10 md:py-16 max-sm:px-0">
         <div className="bg-white rounded-2xl w-full max-w-md sm:max-w-lg md:max-w-xl p-6 sm:p-8 md:p-10 flex flex-col shadow-xl ring-1 ring-gray-100 transition-all duration-300 transform scale-100 hover:scale-[1.01]">
           {/* Header */}
           <div className="text-center max-sm:text-start mb-6 sm:mb-8">
