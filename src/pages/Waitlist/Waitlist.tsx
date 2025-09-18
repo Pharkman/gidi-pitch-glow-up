@@ -1,0 +1,161 @@
+import { useEffect, useState } from "react";
+import { ArrowRight, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import lgHeroImage from "/assets/lgHeroImage.svg";
+import smHeroImage from "/assets/smHeroImage.svg";
+import GidiLogo from "@/assets/Frame 481473.png";
+import { useGetPeople, useWaitlist } from "@/lib/query";
+import { LoadingSpinner } from "@/components/Loader";
+import { toast } from "sonner";
+
+const Waitlist = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [email, setEmail] = useState("");
+   const { mutate, isPending } = useWaitlist();
+
+//   const waitlistMutation = useWaitlist();
+  const { data: peopleData, isLoading: peopleLoading } = useGetPeople();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+    const handleJoinWaitlist = () => {
+    mutate(
+      { email },
+      {
+        onSuccess: () => {
+          toast.success("🎉 You’ve joined the waitlist!");
+          setEmail(""); // clear input
+        },
+      }
+    );
+  };
+
+  return (
+    <section
+      id="hero"
+      className="w-[95%] md:w-[98%] mt-4 py-16 text-center container"
+    >
+      {/* Navbar */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-background/95 backdrop-blur-md shadow-soft border-b border-border"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="container px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <Link to="/">
+                <img src={GidiLogo} alt="GidiPitch logo" className="h-8" />
+              </Link>
+            </div>
+
+            {/* Desktop CTA */}
+            <div className="hidden md:flex items-center gap-3">
+              <button
+                className="btn-hero inline-flex gap-2 text-sm px-6 py-3 ml-0 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                                onClick={handleJoinWaitlist}
+
+              >
+                Join Waitlist 
+              </button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-foreground hover:text-primary p-2"
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          {isOpen && (
+            <div className="md:hidden animate-fade-in">
+              <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-md border border-border rounded-lg mt-2">
+                <button className="inline-flex gap-2 btn-hero text-sm px-6 py-3 w-full">
+                  Join Waitlist <ArrowRight size={14} />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <div className="bg-gradient-to-b from-[#FFFCFB] to-[#FFDCCF] px-4 pt-4 md:rounded-md">
+        {/* Badge */}
+        <p className="inline-block rounded-full px-4 py-1 font-medium text-[#FF5619] text-[14px] mb-3 bg-[#FFF1EC]">
+          Built for African Entrepreneurs
+        </p>
+
+        {/* Heading */}
+        <h1 className="mb-4 text-4xl font-semibold text-[#1D1D1D] md:text-6xl max-sm:text-2xl leading-tight">
+          Your Complete Startup <br />
+         <p className="mt-3"> Toolkit for African Founders</p>
+        </h1>
+
+        {/* Subtitle */}
+        <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base">
+          GidiPitch helps African founders create pitch decks, financials, and
+          resumes with AI. Get investor-ready in minutes, not weeks.
+        </p>
+
+        {/* Email Input + Button */}
+       <div className="mb-4 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto">
+  <input
+    type="email"
+    placeholder="Enter email address"
+    className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 "
+  />
+  <button className="w-full md:w-auto rounded-r-lg bg-[#FF5619] text-white font-semibold px-6 py-3 transition-all duration-300 hover:bg-[#e14e18] "
+  onClick={handleJoinWaitlist}
+  >
+    {isPending ? <LoadingSpinner /> : "Join Waitlist"}
+  </button>
+</div>
+
+        {/* People joined */}
+         <p className="text-sm text-[#555555] mb-12">
+          {peopleLoading
+            ? "Loading..."
+            : `${peopleData?.count || 0} PEOPLE JOINED`}
+        </p>
+
+        {/* Hero Image */}
+        <div className="flex justify-center">
+          <img
+            src={lgHeroImage}
+            alt="founder and his team"
+            className="hidden md:block"
+          />
+          <img
+            src={smHeroImage}
+            alt="a founder"
+            className="block md:hidden w-full"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Waitlist;
+
+
+
+
+

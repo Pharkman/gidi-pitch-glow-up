@@ -1,8 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import pitchDeck from "/assets/features/landing_succed4.png";
 import resumeBuilder from "/assets/features/landing_succed1.png";
 import applicationAssistant from "/assets/features/landing_succed2.png";
 import pitchPractice from "/assets/features/landing_succed3.png";
+import { useEffect, useRef } from "react";
 
 const features = [
   {
@@ -32,6 +35,30 @@ const features = [
 ];
 
 const FeaturesSection = () => {
+    const sectionRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+  if (!sectionRef.current) return;
+
+  const cards = sectionRef.current.querySelectorAll(".feature-card");
+
+  gsap.fromTo(
+    cards,
+    { opacity: 0, y: 30 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse", // keeps it smooth
+      },
+    }
+  );
+}, []);
+
   return (
     <section id="features" className="bg-white px-20 py-8 md:py-16 container max-sm:px-4 max-sm:py-4">
       <div className="">
@@ -57,7 +84,7 @@ const FeaturesSection = () => {
             return (
               <div
                 key={index}
-                className="rounded-lg bg-[#F5F5F5] p-6 shadow-sm hover:shadow-md transition duration-300 container"
+                className="feature-card rounded-lg bg-[#F5F5F5] p-6 shadow-sm hover:shadow-md transition duration-300 container"
               >
                 <div className="mb-1 flex h-[52px ] w-[52px] items-center justify-center rounded-lg border  border-[#FFF1EC]">
                   <img

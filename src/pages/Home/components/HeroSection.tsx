@@ -13,7 +13,7 @@ const HeroSection = () => {
     >
       <div className="bg-gradient-to-b from-[#FFFCFB] px-4 pt-4 to-[#FFDCCF] md:rounded-md">
         {/* Badge */}
-        <p className="inline-block rounded-full px-4 py-2 font-medium text-[#FF5619] text-[16px] mb-3 bg-[#FFF1EC] py-1">
+        <p className="inline-block rounded-full px-4 py-2 font-medium text-[#FF5619] text-[16px] mb-3 bg-[#FFF1EC] py-1 ">
           Built for African Entrepreneurs
         </p>
 
