@@ -11,6 +11,7 @@ import g from "/assets/gLogo.svg";
 import { useOnboardingFlow } from "@/lib/query";
 import SubmitButton from "@/components/Button";
 
+
 // ✅ Validation
 const goalsSchema = Yup.object().shape({
   startup_goal: Yup.array().min(1, "Please select at least one goal"),
@@ -70,7 +71,7 @@ export default function GoalsPreferences() {
             className="mt-6 w-full max-w-xl flex flex-col items-center"
           >
             <p className="font-medium text-sm sm:text-base mb-4 w-full">
-              What are your primary goals?{" "}
+              What are your primary goals?
               <span className="text-gray-500">(Select all that apply)</span>
             </p>
 

@@ -28,6 +28,7 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 import AboutStartup from "./pages/Onboarding/component/AboutStartup";
 import ShapeStartup from "./pages/Onboarding/component/ShapeStartup";
 import GoalsPreferences from "./pages/Onboarding/component/GoalsPreferences";
+import Waitlist from "./pages/Waitlist/Waitlist";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/complete-profile" element={<CompleteProfile />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="auth/password/reset" element={<ResetPassword />} />
+          <Route path="/waitlist" element={<Waitlist />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/onboarding/about-startup" element={<AboutStartup />} />
           <Route path="/onboarding/shape-startup" element={<ShapeStartup />} />

@@ -7,15 +7,7 @@ import { toast } from "sonner";
 import { QUERY_KEYS } from "../queryKeys";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-// export async function verifyEmaill(email: string) {
-//   const res = await fetch(`${BASE_URL}/auth/email/verify`, {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ email }),
-//   });
-//   if (!res.ok) throw new Error('Failed to send magic link');
-//   return res.json();
-// }
+
 
 export async function completeAuth({
   firstname,
@@ -122,6 +114,63 @@ export const getUserDetails = async () => {
     console.error('Error fetching user details:', error);
     return null;
   }
+};
+
+
+export const useWaitlist = () => {
+  return useMutation({
+    mutationFn: async ({ email }: { email: string }) => {
+      try {
+        const res = await fetch(`${BASE_URL}/waitlist/add`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err?.message || 'Failed to join waitlist');
+        }
+
+        return res.json();
+      } catch (error: unknown) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || 'Failed to join waitlist');
+        } else {
+          toast.error('Failed to join waitlist');
+        }
+      }
+    }
+  });
+};
+
+export const useGetPeople = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_PEOPLE],
+    queryFn: async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/waitlist/count`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err?.message || 'Failed to get people');
+        }
+
+        return res.json();
+      } catch (error: unknown) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || 'Failed to get people');
+        } else {
+          toast.error('Failed to get people');
+        }
+      }
+    }
+  });
 };
 
 
