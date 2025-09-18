@@ -24,7 +24,7 @@ const VerifyEmail = () => {
             <h1 className="text-3xl md:text-4xl font-semibold text-[#1d1d1d]">
               Verify your email
             </h1>
-            <p className="font-medium text-[#777777] mt-1">
+            <p className="font-medium text-[#777777] mt-1 max-sm:leading-8">
               We’ve emailed a one time security code to
               <strong className="text-black ml-1">{email}</strong>, please enter it
               below:
@@ -105,12 +105,12 @@ const VerifyEmail = () => {
           </Formik>
         </div>
 
-        <p className="text-sm text-[#777777] font-medium mt-6 px-12 md:px-0 text-center">
+        <p className="text-sm text-[#777777] font-medium mt-6 px-12 md:px-0 text-center max-sm:px-4">
           By continuing, you agree to Gidipitch’s{" "}
           <a href="#" className="underline">
             Terms of Service
-          </a>{" "}
-          and{" "}
+          </a>
+          and
           <a href="#" className="underline">
             Privacy Policy
           </a>

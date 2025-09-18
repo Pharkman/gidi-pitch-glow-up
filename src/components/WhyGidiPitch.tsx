@@ -10,7 +10,7 @@ interface WhyGidiPitchProps {
 const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, showSuccessStoriesButton = false }) => {
   
   return (
-    <section id="why-gidipitch" className="py-8 container bg-[#F5F5F5]">
+    <section id="benefits" className="py-8 container bg-[#F5F5F5]">
         <div className="flex flex-col items-center mb-6 gap-5 shadow-2xl bg-white rounded-lg  w-[10%] mx-16">
       </div>
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
