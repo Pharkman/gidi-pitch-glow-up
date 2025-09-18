@@ -1,6 +1,6 @@
 // src/lib/query.ts
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { INewUser, IVerifyUser, OnboardingPayload, ResetPasswordPayload } from "../types";
 import { toast } from "sonner";
@@ -117,33 +117,41 @@ export const getUserDetails = async () => {
 };
 
 
+
 export const useWaitlist = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async ({ email }: { email: string }) => {
       try {
         const res = await fetch(`${BASE_URL}/waitlist/add`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
 
         if (!res.ok) {
           const err = await res.json();
-          throw new Error(err?.message || 'Failed to join waitlist');
+          throw new Error(err?.message || "Failed to join waitlist");
         }
 
         return res.json();
       } catch (error: unknown) {
         console.error(error);
         if (error instanceof Error) {
-          toast.error(error.message || 'Failed to join waitlist');
+          toast.error(error.message || "Failed to join waitlist");
         } else {
-          toast.error('Failed to join waitlist');
+          toast.error("Failed to join waitlist");
         }
       }
-    }
+    },
+    onSuccess: () => {
+      // ✅ Invalidate query so the count refetches
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PEOPLE] });
+    },
   });
 };
+
 
 export const useGetPeople = () => {
   return useQuery({
