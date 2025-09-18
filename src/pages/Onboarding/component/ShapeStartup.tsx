@@ -1,31 +1,25 @@
 import { FiArrowLeft } from "react-icons/fi";
 import g from "/assets/gLogo.svg";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { onboardingSchema_shape } from "@/lib/validation";
 import { useOnboardingFlow } from "@/lib/query";
 import SubmitButton from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 
 // ✅ Validation schema
-const shapeStartupSchema = {onboardingSchema_shape};
-
-const goalsOptions = [
-  "Get Funding",
-  "Find Co-Founders",
-  "Build MVP",
-  "Acquire Customers",
-  "Networking",
-];
+const shapeStartupSchema = Yup.object().shape({
+  target_audience: Yup.string().required("Target audience is required"),
+  goal: Yup.string().required("Please enter your goal"),
+});
 
 const ShapeStartup = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { mutate, isPending } = useOnboardingFlow();
 
   return (
     <div className="min-h-screen py-10 max-sm:py-10 flex flex-col items-center justify-center bg-white px-4">
       {/* Back button */}
-      <div className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer">
+      <div className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer max-sm:px-0">
         <FiArrowLeft />
         <span className="text-sm font-medium">Go Back</span>
       </div>
@@ -43,7 +37,7 @@ const ShapeStartup = () => {
       </div>
 
       {/* Title & Subtitle */}
-      <h1 className="text-3xl text-[#1D1D1D] font-semibold mb-2 text-center">
+      <h1 className="text-3xl text-[#1D1D1D] font-semibold mb-2 text-center max-sm:text-2xl">
         Shape Your Startup Journey
       </h1>
       <p className="text-[#858585] text-[15px] mt-1 text-center mb-6">
@@ -54,18 +48,19 @@ const ShapeStartup = () => {
       <Formik
         initialValues={{
           target_audience: "",
-          goals: [] as string[],
+          goal: "",
         }}
         validationSchema={shapeStartupSchema}
         onSubmit={(values) => {
+          console.log("Submitting values 👉", values); // Debug log
           mutate(values, {
             onSuccess: () => {
               navigate("/onboarding/goal_preference");
             },
-          }); // 🔥 send { target_audience, goals[] } to endpoint
+          });
         }}
       >
-        {({ values, handleChange, errors, touched }) => (
+        {({ errors, touched }) => (
           <Form className="w-full max-w-xl flex flex-col space-y-6">
             {/* Target Audience */}
             <div className="flex flex-col">
@@ -85,48 +80,24 @@ const ShapeStartup = () => {
               )}
             </div>
 
-            {/* Goals */}
+            {/* Goal */}
             <div className="flex flex-col">
               <label className="mb-3 text-[#1D1D1D] font-medium">
                 What’s your goal right now?
               </label>
-              <FieldArray
-                name="goals"
-                render={() => (
-                  <div className="grid grid-cols-2 gap-3">
-                    {goalsOptions.map((goal) => (
-                      <label
-                        key={goal}
-                        className={`flex items-center space-x-2 border px-3 py-2 rounded-lg cursor-pointer ${
-                          values.goals.includes(goal)
-                            ? "bg-orange-50 border-orange-500 text-orange-600"
-                            : "bg-gray-50 border-gray-300 text-gray-700"
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          name="goals"
-                          value={goal}
-                          checked={values.goals.includes(goal)}
-                          onChange={handleChange}
-                          className="hidden"
-                        />
-                        <span>{goal}</span>
-                      </label>
-                    ))}
-                  </div>
-                )}
+              <Field
+                name="goal"
+                type="text"
+                placeholder="Write your goal"
+                className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
               />
-              {errors.goals && touched.goals && (
-                <p className="text-red-500 text-sm mt-1">{errors.goals}</p>
+              {errors.goal && touched.goal && (
+                <p className="text-red-500 text-sm mt-1">{errors.goal}</p>
               )}
             </div>
 
             {/* Continue button */}
-             <SubmitButton 
-              isLoading={isPending}
-              text="Continue"
-            />
+            <SubmitButton isLoading={isPending} text="Continue" />
 
             {/* Skip button */}
             <button
