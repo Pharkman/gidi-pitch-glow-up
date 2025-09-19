@@ -10,7 +10,7 @@ export interface IVerifyUser {
 
 export interface OnboardingPayload {
   team_size?: string;
-  startup_goal?: string[];
+  startup_goal?: string;
   goals?: string[];
   industry?: string;
   target_audience?: string;

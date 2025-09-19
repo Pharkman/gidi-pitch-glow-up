@@ -4,13 +4,13 @@ import { FaRegFileAlt } from "react-icons/fa";
 import { BsBarChartFill } from "react-icons/bs";
 import { AiOutlineBulb } from "react-icons/ai";
 import { GiSparkles } from "react-icons/gi";
-import { Check } from "lucide-react"; // ✅ Import check icon
+import { Check } from "lucide-react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import g from "/assets/gLogo.svg";
 import { useOnboardingFlow } from "@/lib/query";
 import SubmitButton from "@/components/Button";
-
+import { useNavigate } from "react-router-dom"; // ✅ for navigation
 
 // ✅ Validation
 const goalsSchema = Yup.object().shape({
@@ -26,6 +26,7 @@ const goals = [
 
 export default function GoalsPreferences() {
   const { mutate, isPending } = useOnboardingFlow();
+  const navigate = useNavigate(); // ✅ init navigate
 
   return (
     <div className="min-h-screen py-10 flex flex-col items-center justify-center bg-white px-4">
@@ -61,8 +62,26 @@ export default function GoalsPreferences() {
       <Formik
         initialValues={{ startup_goal: [] as string[] }}
         validationSchema={goalsSchema}
-        onSubmit={(values) => {
-          mutate(values);
+        onSubmit={(values, { setSubmitting }) => {
+          // ✅ Convert array into a single string
+          const payload = {
+            startup_goal: values.startup_goal.join(","),
+          };
+
+          console.log("Submitting:", payload);
+
+          mutate(payload, {
+            onSuccess: () => {
+              console.log("User goals updated successfully!");
+              navigate("/signin"); // ✅ Redirect to login page
+            },
+            onError: (error) => {
+              console.error("Failed to update user goals:", error);
+            },
+            onSettled: () => {
+              setSubmitting(false);
+            },
+          });
         }}
       >
         {({ values, errors, touched, handleSubmit }) => (

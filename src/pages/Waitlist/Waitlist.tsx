@@ -46,7 +46,7 @@ const Waitlist = () => {
 <section>
     <section
       id="hero"
-      className="w-[95%] md:w-[98%] mt-4 py-16 text-center container"
+      className="w-[95%] md:w-[98%] mt-4 py-16 max-sm:pb-8 text-center container"
     >
       {/* Navbar */}
       <nav
@@ -162,7 +162,7 @@ const Waitlist = () => {
 
      
     </section>
-       <div className="flex justify-between px-4 items-center max-sm:flex-col max-sm:gap-3 mb-6">
+       <div className="flex justify-between px-4 items-center max-sm:flex-col max-sm:gap-5 mb-6">
         <p>© 2025 GidiPitch. All rights reserved.</p>
 
         <div className="flex space-x-4">

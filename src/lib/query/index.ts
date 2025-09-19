@@ -229,6 +229,7 @@ export const useVerifyEmail = () => {
         const res = await fetch(`${BASE_URL}/auth/email/verify`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ email, otp }),
         });
 
@@ -403,6 +404,7 @@ export const useLoginUser = () => {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+         credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
@@ -410,11 +412,7 @@ export const useLoginUser = () => {
 
       if (!res.ok) throw new Error(data?.message || "Login failed");
 
-      // ✅ Save token and user
-      if (data.token && data.user) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-      }
+      
 
       return data;
     },
