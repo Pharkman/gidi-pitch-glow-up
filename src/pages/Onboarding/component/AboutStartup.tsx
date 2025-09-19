@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import { startupOptions, teamSizeOptions } from "@/lib/constant";
 import g from "/assets/gLogo.svg";
 import { useOnboardingFlow } from "@/lib/query";
-import { useGetTokenFromQuery } from "@/lib/query"; 
+import { useGetTokenFromQuery } from "@/lib/query";
 import SubmitButton from "@/components/Button";
 
 export default function AboutStartup() {
@@ -14,9 +14,6 @@ export default function AboutStartup() {
 
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-
-  
-  
 
   // Call token setter immediately when token exists
   useEffect(() => {
@@ -61,6 +58,7 @@ export default function AboutStartup() {
       <Formik
         initialValues={{ industry: "", team_size: "" }}
         onSubmit={(values) => {
+          console.log("Submitting values:", values); // ✅ Debug log
           mutate(
             {
               industry: values.industry,
@@ -94,30 +92,33 @@ export default function AboutStartup() {
               ))}
             </div>
 
-            
+            {/* Team size selection */}
             <p className="mb-3 text-[16px] text-[#1D1D1D] font-medium">
               What’s your current team size?
             </p>
-           <div className="relative w-full">
-  <Field
-    as="select"
-    name="team_size"
-    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-[#1D1D1D] appearance-none text-base sm:text-sm"
-  >
-    <option value="" className="text-base">Select team size</option>
-    {teamSizeOptions.map((size) => (
-      <option key={size} value={size} className="text-sm sm:text-base">
-        {size}
-      </option>
-    ))}
-  </Field>
 
-  {/* Custom arrow */}
-  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400 text-sm">
-    ▼
-  </div>
-</div>
+            <div className="relative w-full mb-6">
+              <Field name="team_size">
+                {({ field }: any) => (
+                  <select
+                    {...field}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-[#1D1D1D] appearance-none text-base sm:text-sm"
+                  >
+                    <option value="">Select team size</option>
+                    {teamSizeOptions.map((size) => (
+                      <option key={size} value={size}>
+                        {size}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </Field>
 
+              {/* Custom arrow */}
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400 text-sm">
+                ▼
+              </div>
+            </div>
 
             {/* Continue button */}
             <SubmitButton isLoading={isPending} text="Continue" />
