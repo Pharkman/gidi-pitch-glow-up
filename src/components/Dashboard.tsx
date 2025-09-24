@@ -187,15 +187,24 @@ const Dashboard = () => {
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <span className="hidden md:block">John Doe</span>
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-                
+               <Button variant="ghost" className="flex items-center space-x-2">
+  <Avatar className="h-8 w-8">
+    <AvatarImage src={user_data?.user?.profileImage || ""} />
+    <AvatarFallback>
+      {user_data?.user?.email
+        ? user_data.user.email.charAt(0).toUpperCase()
+        : "U"}
+    </AvatarFallback>
+  </Avatar>
+  <span className="hidden md:block">
+    {user_data?.user?.email
+      ? user_data.user.email.split("@")[0] 
+      : "User"}
+  </span>
+  <ChevronDown className="h-4 w-4" />
+</Button>
+
+
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>Profile</DropdownMenuItem>
