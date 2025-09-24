@@ -16,9 +16,9 @@ const FAQ = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
-          <h2 className="text-[32px] lg:text-[52px] font-medium mb-6 max-sm:text-2xl">
+          <h2 className="text-[32px] lg:text-[52px] font-bold mb-6 max-sm:text-2xl">
             Frequently Asked
-            <span className="text-gradient-primary">Questions</span>
+            <span className="text-gradient-primary ml-3">Questions</span>
           </h2>
         </div>
 
@@ -33,7 +33,7 @@ const FAQ = () => {
                 onClick={() => toggleFAQ(index)}
                 className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-muted/30 transition-colors duration-200"
               >
-                <h3 className="text-lg font-medium text-[#1D1D1D] pr-4 max-sm:text-base">
+                <h3 className="text-lg font-medium text-[#1D1D1D] pr-4 max-sm:text-base ">
                   {faq.question}
                 </h3>
                 <ChevronDown 

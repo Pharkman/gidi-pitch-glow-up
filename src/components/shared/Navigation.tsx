@@ -65,7 +65,7 @@ const Navigation = () => {
           {/* CTA Buttons */}
              <div className="hidden md:flex items-center gap-3">
             <button
-              className="text-primary text-sm px-4 py-2 font-semibold text-[16px] transition-all duration-300 hover:text-white hover:bg-primary hover:px-6 hover:py-3 rounded-lg"
+              className="text-primary text-sm px-4 py-3 font-semibold text-[16px] transition-all duration-300 bg-primary text-white hover:text-white hover:bg-primary hover:px-6 hover:py-3 rounded-lg"
               onClick={() => (window.location.href = "/signin")}
             >
               Login
@@ -108,7 +108,7 @@ const Navigation = () => {
                 >
                   Login
                 </button>
-                <button className="inline-flex gap-2 btn-hero text-sm px-6 py-2 w-full">
+                <button className="inline-flex gap-2 btn-hero text-sm px-6 py-2 w-full max-sm:py-3">
                   Try Free <ArrowRight size={14}/>
                 </button>
               </div>

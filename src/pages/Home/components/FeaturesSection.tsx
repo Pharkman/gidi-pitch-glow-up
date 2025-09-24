@@ -67,10 +67,10 @@ const FeaturesSection = () => {
           <p className="mb-2 p-1 text-sm font-medium capitalize border mx-auto text-[#5D5D5D] border-[#DBDBDB] rounded-xl bg-[#F5F5F5] w-fit px-4">
             Features
           </p>
-          <h2 className="mb-4 text-3xl font-medium text-[#2D2D2D] md:text-[52px] leading-[1.2] max-sm:text-2xl">
+          <h2 className="mb-4 text-3xl font-bold text-[#2D2D2D] md:text-[52px] leading-[1.2] max-sm:text-2xl">
             Everything You Need to Succeed
           </h2>
-          <p className="mx-auto max-w-2xl text-[#8A8A8A] md:text-lg">
+          <p className="mx-auto max-w-2xl text-[#8A8A8A] md:text-lg font-medium">
             Our comprehensive toolkit is designed specifically for African
             founders, understanding the unique challenges and opportunities in
             your ecosystem.
@@ -93,18 +93,25 @@ const FeaturesSection = () => {
                     className="text-white h-[52px ] w-[52px]"
                   />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold text-[#1D1D1D]">
+                <h3 className="mb-2 text-xl font-bold text-[#1D1D1D]">
                   {feature.title}
                 </h3>
-                <p className="mb-6 text-[#777777] leading-relaxed">
+                <p className="mb-6 text-[#777777] leading-relaxed font-medium">
                   {feature.description}
                 </p>
                 <a
-                  href="#"
-                  className="font-semibold flex items-center gap-2 text-primary text-[16px]"
-                >
-                  Try for free <ArrowUpRight size={18} className="font-semibold"/>
-                </a>
+  href="#"
+  className="group flex items-center gap-2 font-semibold text-primary text-lg hover:text-primary/80 transition-colors duration-200"
+>
+  <span className="relative after:block after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 group-hover:after:w-full">
+    Try for free
+  </span>
+  <ArrowUpRight
+    size={18}
+    className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
+  />
+</a>
+
               </div>
             );
           })}

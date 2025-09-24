@@ -65,32 +65,7 @@ export async function forgotPassword(email: string): Promise<{ message: string }
 
 
 // lib/logout.ts
-export async function logout() {
-  try {
-    const res = await fetch('https://gidipitch-backend.onrender.com/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include', // important if you're using cookies for auth
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
 
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err?.message || 'Logout failed');
-    }
-
-    // Optional: Clear tokens from localStorage or cookies
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-
-    // Optional: Redirect
-    window.location.href = '/login';
-  } catch (error) {
-    console.error('Logout error:', error);
-    alert('Failed to log out');
-  }
-}
 
 // lib/api.ts
 
@@ -467,4 +442,26 @@ export const useGetUser = () => {
       return result;
     },
   });
+}
+
+export async function logout() {
+  try {
+    const res = await fetch(`${BASE_URL}/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err?.message || 'Logout failed');
+    }
+
+    window.location.href = '/login';
+  } catch (error) {
+    console.error('Logout error:', error);
+    alert('Failed to log out');
+  }
 }

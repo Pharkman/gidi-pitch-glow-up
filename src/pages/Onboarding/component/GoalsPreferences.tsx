@@ -14,10 +14,10 @@ import { useNavigate } from "react-router-dom"; // ✅ for navigation
 
 // ✅ Validation
 const goalsSchema = Yup.object().shape({
-  startup_goal: Yup.array().min(1, "Please select at least one goal"),
+  goals: Yup.array().min(1, "Please select at least one goal"),
 });
 
-const goals = [
+const goalsOptions = [
   { label: "Create pitch deck", icon: <BsBarChartFill size={24} /> },
   { label: "Resume Builder", icon: <FaRegFileAlt size={24} /> },
   { label: "Application Assistant", icon: <AiOutlineBulb size={24} /> },
@@ -60,20 +60,18 @@ export default function GoalsPreferences() {
 
       {/* Formik Form */}
       <Formik
-        initialValues={{ startup_goal: [] as string[] }}
+        initialValues={{ goals: [] as string[] }}
         validationSchema={goalsSchema}
         onSubmit={(values, { setSubmitting }) => {
           // ✅ Convert array into a single string
           const payload = {
-            startup_goal: values.startup_goal.join(","),
+            goals: values.goals,
           };
-
-          console.log("Submitting:", payload);
 
           mutate(payload, {
             onSuccess: () => {
               console.log("User goals updated successfully!");
-              navigate("/signin"); // ✅ Redirect to login page
+              navigate("/signin"); 
             },
             onError: (error) => {
               console.error("Failed to update user goals:", error);
@@ -95,18 +93,18 @@ export default function GoalsPreferences() {
             </p>
 
             <FieldArray
-              name="startup_goal"
+              name="goals"
               render={(arrayHelpers) => (
                 <div className="grid grid-cols-2 gap-4 w-full">
-                  {goals.map((goal) => {
-                    const isSelected = values.startup_goal.includes(goal.label);
+                  {goalsOptions.map((goal) => {
+                    const isSelected = values.goals.includes(goal.label);
                     return (
                       <div
                         key={goal.label}
                         onClick={() =>
                           isSelected
                             ? arrayHelpers.remove(
-                                values.startup_goal.indexOf(goal.label)
+                                values.goals.indexOf(goal.label)
                               )
                             : arrayHelpers.push(goal.label)
                         }
@@ -131,8 +129,8 @@ export default function GoalsPreferences() {
               )}
             />
 
-            {errors.startup_goal && touched.startup_goal && (
-              <p className="text-red-500 text-sm mt-2">{errors.startup_goal}</p>
+            {errors.goals && touched.goals && (
+              <p className="text-red-500 text-sm mt-2">{errors.goals}</p>
             )}
 
             {/* Finish button */}
