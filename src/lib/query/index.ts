@@ -459,11 +459,6 @@ export async function logout() {
       throw new Error(err?.message || 'Logout failed');
     }
 
-    // Optional: Clear tokens from localStorage or cookies
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-
-    // Optional: Redirect
     window.location.href = '/login';
   } catch (error) {
     console.error('Logout error:', error);
