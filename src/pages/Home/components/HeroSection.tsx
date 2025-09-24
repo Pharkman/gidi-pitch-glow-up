@@ -18,14 +18,14 @@ const HeroSection = () => {
         </p>
 
         {/* Main Heading */}
-        <h1 className="mb-6 text-4xl font-semibold text-[#1D1D1D] md:text-6xl max-sm:text-2xl">
+        <h1 className="mb-6 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-2xl">
           Your Complete Startup
           <br/>
           <p className="mt-3">Toolkit for African Founders</p>
         </h1>
 
         {/* Subtitle */}
-        <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base">
+        <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base font-medium">
           GidiPitch helps African founders create pitch decks, financials, and
           resumes with AI. Get investor-ready in minutes, not weeks.
         </p>

@@ -99,7 +99,6 @@ const InviteButton = () => (
 
 const Dashboard = () => {
   const {data:user_data, isLoading} = useGetUser();
-  console.log("User", user_data);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
@@ -169,6 +168,8 @@ const Dashboard = () => {
       );
     }
   }, [token, setToken]);
+
+  const username = user_data?.user?.email?.split('@')[0];
 
 
   return (
@@ -242,9 +243,14 @@ const Dashboard = () => {
           <div className="max-w-7xl mx-auto space-y-8">
             {/* Welcome Section */}
             <div>
-             <h2 className="text-2xl font-bold tracking-tight">
+             {/* <h2 className="text-2xl font-bold tracking-tight">
   {user?.name ? `Welcome back, ${user.name.split(' ')[0]}` : 'Welcome back'}
-</h2>
+</h2> */}
+
+   <h2 className='text-2xl font-bold tracking-tight'>
+      {username ? `Welcome back, ${username}` : 'Welcome back'}
+  </h2>
+
               <p className="text-muted-foreground">
                 Ready to build your next investor-ready document?
               </p>

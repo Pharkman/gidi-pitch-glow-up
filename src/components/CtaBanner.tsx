@@ -4,11 +4,11 @@ export default function CTASection() {
   return (
     <section className="w-full py-16 md:py-24 bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white text-center">
       <div className="max-w-3xl mx-auto px-4">
-        <h2 className="text-2xl sm:text-3xl md:text-5xl font-medium mb-4 leading-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 leading-tight">
           Ready to Build Your Startup?
         </h2>
 
-        <p className="text-base sm:text-lg md:text-xl text-white/90 mb-10 leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl text-white/90 mb-10 leading-relaxed font-semibold">
           No tech skills? No startup experience? No problem.<br />
           <span className="block mt-2">GIDIPitch guides you every step of the way.</span>
         </p>
