@@ -37,10 +37,10 @@ const ShapeStartup = () => {
       </div>
 
       {/* Title & Subtitle */}
-      <h1 className="text-3xl text-[#1D1D1D] font-semibold mb-2 text-center max-sm:text-2xl">
+      <h1 className="text-3xl text-[#1D1D1D] font-extrabold mb-2 text-center max-sm:text-2xl">
         Shape Your Startup Journey
       </h1>
-      <p className="text-[#858585] text-[15px] mt-1 text-center mb-6">
+      <p className="text-[#858585] font-medium text-[15px] mt-1 text-center mb-6">
         Tell us who you’re building for and what you’re aiming to achieve.
       </p>
 
@@ -71,7 +71,7 @@ const ShapeStartup = () => {
                 name="target_audience"
                 type="text"
                 placeholder="Enter your target audience"
-                className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="border border-gray-300 rounded-lg placeholder:text-[14px] px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
               />
               {errors.target_audience && touched.target_audience && (
                 <p className="text-red-500 text-sm mt-1">
@@ -89,7 +89,7 @@ const ShapeStartup = () => {
                 name="goal"
                 type="text"
                 placeholder="Write your goal"
-                className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="border border-gray-300 placeholder:text-[14px] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
               />
               {errors.goal && touched.goal && (
                 <p className="text-red-500 text-sm mt-1">{errors.goal}</p>

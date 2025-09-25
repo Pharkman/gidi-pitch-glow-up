@@ -10,7 +10,7 @@ const ResetSuccess = () => {
       <div className="flex-1 flex flex-col justify-center">
         <div className="text-center mb-6">
           <img src={orangeMark} alt="Success mark" className="mx-auto mb-8" />
-          <h1 className="text-3xl md:text-4xl mb-2 font-semibold text-[#1d1d1d]">
+          <h1 className="text-3xl md:text-3xl mb-2 font-extrabold text-[#1d1d1d]">
             Successfully reset!
           </h1>
           <p className="font-medium text-[#777777] mt-1">
@@ -24,11 +24,6 @@ const ResetSuccess = () => {
           >
             Login now
           </button>
-
-                   {/* <SubmitButton
-                      isLoading={isSubmitting || isSendingEmail}
-                      text="Login now"
-                    /> */}
         </div>
       </div>
 

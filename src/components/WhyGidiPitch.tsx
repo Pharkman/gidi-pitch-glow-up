@@ -28,7 +28,7 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
                     className="flex items-start group"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="flex-shrink-0 mr-6">
+                    <div className="flex-shrink-0 mr-6 max-sm:mr-3">
                       <div className="rounded-xl flex items-center justify-center group-hover:from-primary/20 group-hover:to-accent/20 transition-all duration-300">
                         <img src={benefit.icon} alt="" className="w-[52px] h-[60px]"/>
                       </div>

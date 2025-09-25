@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useVerifyEmail } from "@/lib/query";
 import SubmitButton from "@/components/Button";
+import { HiMail } from "react-icons/hi";
+
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState("");
@@ -21,8 +23,9 @@ const VerifyEmail = () => {
       <div className="flex justify-center items-center px-4 py-6 sm:py-10 md:py-16 max-sm:px-0">
         <div className="bg-white rounded-2xl w-full max-w-md sm:max-w-lg md:max-w-xl p-6 sm:p-8 md:p-10 flex flex-col shadow-xl ring-1 ring-gray-100 transition-all duration-300 transform scale-100 hover:scale-[1.01]">
           {/* Header */}
-          <div className="text-center max-sm:text-start mb-6 sm:mb-8">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+          <div className="text-start max-sm:text-start mb-6 sm:mb-8 flex justify-between">
+            <div>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900">
               Verify Your Email
             </h1>
             <p className="text-gray-600 mt-2 sm:mt-3 text-[14px] sm:text-sm md:text-base leading-relaxed">
@@ -33,6 +36,11 @@ const VerifyEmail = () => {
               </strong>
               <span className="mt-1 block">Please enter the code below to continue.</span>
             </p>
+            </div>
+
+<div>
+            <HiMail className="text-3xl max-sm:text-2xl text-gray-600 mt-2 sm:mt-3" />
+            </div>
           </div>
 
           {/* Form */}

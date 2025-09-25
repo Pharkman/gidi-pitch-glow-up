@@ -25,10 +25,10 @@ const SignIn = () => {
         <div>
           <div className="text-center mb-12 md:mb-16">
             <img src={g} alt="Logo" className="mx-auto h-14" />
-            <h1 className="text-3xl md:text-4xl font-semibold text-[#1d1d1d] mb-2">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-[#1d1d1d] mb-3 ">
               Log into your account
             </h1>
-            <p className="font-medium text-[#777777] mt-1">
+            <p className="font-semibold text-[#777777] mt-2">
               AI-powered pitch tools for African founders. Join us and build
               your story!
             </p>

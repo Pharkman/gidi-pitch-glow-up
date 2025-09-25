@@ -50,10 +50,10 @@ const ForgotPassword = () => {
         <div className="flex-1 flex flex-col justify-center">
          <>
               <div className="text-center mb-6">
-                <h1 className="text-3xl mb-3 md:text-4xl font-semibold text-[#1d1d1d]">
+                <h1 className="text-3xl mb-3 md:text-4xl font-extrabold text-[#1d1d1d]">
                   Forgot password?
                 </h1>
-                <p className="font-medium text-[#777777] mt-1 text-[16px]">
+                <p className="font-semibold text-[#777777] mt-1 text-[16px]">
                   Enter email address to reset your password
                 </p>
               </div>

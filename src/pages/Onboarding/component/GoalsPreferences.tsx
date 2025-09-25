@@ -52,8 +52,8 @@ export default function GoalsPreferences() {
         </div>
 
         {/* Headings */}
-        <h2 className="text-2xl font-bold text-center">Goals & Preferences</h2>
-        <p className="text-gray-500 text-center text-sm max-w-sm">
+        <h2 className="text-2xl font-extrabold text-center">Goals & Preferences</h2>
+        <p className="text-gray-500 font-medium text-center text-sm max-w-sm">
           Let us know what you want to achieve with GidiPitch
         </p>
       </div>

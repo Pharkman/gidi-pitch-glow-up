@@ -47,10 +47,10 @@ export default function AboutStartup() {
       </div>
 
       {/* Heading */}
-      <h1 className="text-2xl font-semibold mb-2 text-center max-w-3xl">
+      <h1 className="text-2xl font-extrabold mb-2 text-center max-w-3xl">
         Tell us about your startup
       </h1>
-      <p className="text-gray-500 mb-6 text-center max-w-xs">
+      <p className="text-gray-500 mb-6 text-center max-w-xs font-medium">
         This helps GidiPitch personalize your pitch and recommendations.
       </p>
 
