@@ -16,9 +16,9 @@ const FAQ = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">
-          <h2 className="text-[32px] lg:text-[52px] font-bold mb-6 max-sm:text-2xl">
+          <h2 className="text-[32px] lg:text-[52px] font-bold mb-6 max-sm:text-[23px]">
             Frequently Asked
-            <span className="text-gradient-primary ml-3">Questions</span>
+            <span className="text-gradient-primary ml-3 max-sm:ml-2">Questions</span>
           </h2>
         </div>
 

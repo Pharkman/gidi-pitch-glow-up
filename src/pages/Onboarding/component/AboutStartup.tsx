@@ -75,7 +75,7 @@ export default function AboutStartup() {
         {({ values, setFieldValue }) => (
           <Form className="w-full max-w-xl">
             {/* Startup type selection */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5 max-sm:gap-3 mb-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5 max-sm:gap-5 mb-6 max-sm:px-1">
               {startupOptions.map((option) => (
                 <button
                   key={option}
@@ -84,7 +84,7 @@ export default function AboutStartup() {
                   className={`px-2 py-2 rounded-lg border transition-colors ${
                     values.industry === option
                       ? "bg-orange-50 border-orange-500 text-orange-600"
-                      : "bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200"
+                      : "bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200 max-sm:text-[15px]"
                   }`}
                 >
                   {option}

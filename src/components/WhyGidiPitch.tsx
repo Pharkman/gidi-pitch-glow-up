@@ -17,7 +17,7 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({ showReadySection = false, s
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <div className="animate-fade-in-up">
-            <h2 className="text-[52px] font-bold lg:text-5xl  mb-10 max-sm:text-3xl">
+            <h2 className="text-[52px] font-bold lg:text-5xl  mb-10 max-sm:text-2xl">
               Why Choose <span style={{ color: '#FD621E' }}>GidiPitch</span>?
             </h2>
             <div className="space-y-6">

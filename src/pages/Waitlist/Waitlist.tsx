@@ -103,18 +103,18 @@ const Waitlist = () => {
       {/* Hero Section */}
       <div className="bg-gradient-to-b from-[#FFFCFB] to-[#FFDCCF] px-4 pt-4 md:rounded-md">
         {/* Badge */}
-        <p className="inline-block rounded-full px-4 py-1 font-medium text-[#FF5619] text-[14px] mb-3 bg-[#FFF1EC]">
+        <p className="inline-block rounded-full px-4 py-1 font-medium text-[#FF5619] text-[14px] mb-3 bg-[#FFF1EC] max-sm:mt-2">
           Built for African Entrepreneurs
         </p>
 
         {/* Heading */}
-        <h1 className="mb-4 text-4xl font-semibold text-[#1D1D1D] md:text-6xl max-sm:text-2xl leading-tight">
-          Your Complete Startup <br />
+        <h1 className="mb-4 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-2xl leading-tight">
+          Your Complete Startup <br className="max-sm:hidden"/>
          <p className="mt-3 max-sm:mt-1"> Toolkit for African Founders</p>
         </h1>
 
         {/* Subtitle */}
-        <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base">
+        <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base font-semibold">
           GidiPitch helps African founders create pitch decks, financials, and
           resumes with AI. Get investor-ready in minutes, not weeks.
         </p>
