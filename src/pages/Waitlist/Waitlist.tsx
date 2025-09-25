@@ -108,7 +108,7 @@ const Waitlist = () => {
         </p>
 
         {/* Heading */}
-        <h1 className="mb-4 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-2xl leading-tight">
+        <h1 className="mb-4 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.65rem] leading-tight">
           Your Complete Startup <br className="max-sm:hidden"/>
          <p className="mt-3 max-sm:mt-1"> Toolkit for African Founders</p>
         </h1>

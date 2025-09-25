@@ -18,7 +18,7 @@ const HeroSection = () => {
         </p>
 
         {/* Main Heading */}
-        <h1 className="mb-6 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.8rem] ">
+        <h1 className="mb-6 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.65rem] ">
           Your Complete Startup
           <br/>
           <p className="mt-3 max-sm:mt-1">Toolkit for African Founders</p>
