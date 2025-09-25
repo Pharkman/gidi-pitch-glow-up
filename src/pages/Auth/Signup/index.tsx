@@ -55,7 +55,7 @@ const SignUp = () => {
         <div>
           <div className="text-center mb-12 md:mb-16">
             <img src={g} alt="Logo" className="mx-auto h-14" />
-            <h1 className="text-3xl md:text-4xl mb-3 font-extrabold text-[#1d1d1d]">
+            <h1 className="text-[26px] md:text-4xl mb-3 font-extrabold text-[#1d1d1d]">
               Create Your Account
             </h1>
             <p className="font-semibold text-[#777777] mt-1">
