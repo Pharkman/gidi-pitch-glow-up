@@ -9,8 +9,8 @@ export default function CTASection() {
         </h2>
 
         <p className="text-base sm:text-lg md:text-xl text-white/90 mb-10 leading-relaxed font-semibold">
-          No tech skills? No startup experience? No problem.<br />
-          <span className="block mt-2">GIDIPitch guides you every step of the way.</span>
+          No tech skills? No startup experience? No problem.<br className='max-sm:hidden'/>
+          <span className="md:block mt-2">GIDIPitch guides you every step of the way.</span>
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4">

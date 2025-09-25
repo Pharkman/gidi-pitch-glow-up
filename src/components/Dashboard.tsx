@@ -15,7 +15,8 @@ import {
   FileUp,
   Zap,
   X,
-  UserPlus
+  UserPlus,
+  Menu
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -102,6 +103,7 @@ const Dashboard = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
+   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [user, setUser] = useState(null);
 
@@ -175,78 +177,136 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="flex h-16 items-center px-6">
-         <img src={GidiLogo} alt='GidiLogo'/>
-          
-          <div className="ml-auto flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <div className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full"></div>
-            </Button>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-               <Button variant="ghost" className="flex items-center space-x-2">
-  <Avatar className="h-8 w-8">
-    <AvatarImage src={user_data?.user?.profileImage || ""} />
-    <AvatarFallback>
-      {user_data?.user?.email
-        ? user_data.user.email.charAt(0).toUpperCase()
-        : "U"}
-    </AvatarFallback>
-  </Avatar>
-  <span className="hidden md:block">
-    {user_data?.user?.email
-      ? user_data.user.email.split("@")[0] 
-      : "User"}
-  </span>
-  <ChevronDown className="h-4 w-4" />
-</Button>
+    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+  <div className="flex h-16 items-center justify-between px-4 sm:px-6">
+    {/* Left side: Mobile Menu + Logo */}
+    <div className="flex items-center space-x-3">
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden"
+        onClick={() => setSidebarOpen(true)}
+      >
+        <Menu className="h-6 w-6" />
+      </button>
 
+      {/* Logo */}
+      <img src={GidiLogo} alt="GidiLogo" className="h-8" />
+    </div>
 
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Help</DropdownMenuItem>
-                <Separator />
-                <DropdownMenuItem onClick={handleLogout}>
-  {isLoggingOut ? 'Logging out...' : 'Sign out'}
-</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </header>
+    {/* Right side: Notifications + User Menu */}
+    <div className="flex items-center space-x-3 sm:space-x-4">
+      <Button variant="ghost" size="icon" className="relative">
+        <Bell className="h-5 w-5" />
+        <div className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full"></div>
+      </Button>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="flex items-center space-x-2">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={user_data?.user?.profileImage || ""} />
+              <AvatarFallback>
+                {user_data?.user?.email
+                  ? user_data.user.email.charAt(0).toUpperCase()
+                  : "U"}
+              </AvatarFallback>
+            </Avatar>
+            <span className="hidden md:block">
+              {user_data?.user?.email
+                ? user_data.user.email.split("@")[0]
+                : "User"}
+            </span>
+            <ChevronDown className="h-4 w-4 hidden md:block" />
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem>Help</DropdownMenuItem>
+          <Separator />
+          <DropdownMenuItem onClick={handleLogout}>
+            {isLoggingOut ? "Logging out..." : "Sign out"}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  </div>
+</header>
+
 
       <div className="flex">
-        {/* Sidebar */}
-        <aside className="w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex flex-col justify-between h-screen">
-          <div className="p-2 mt-3 ">
-            <nav className="space-y-2 ">
-              {sidebarItems.map((item) => (
-                <Button
-                  key={item.name}
-                  variant={item.active ? 'default' : 'ghost'}
-                  className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  disabled={!item.available}
-                >
-                  <item.icon className="mr-3 h-4 w-4" />
-                  {item.name}
-                  {!item.available && (
-                    <Badge variant="secondary" className="ml-auto text-xs">
-                      Soon
-                    </Badge>
-                  )}
-                </Button>
-              ))}
-            </nav>
-          </div>
-          <div className="">
-            <InviteButton />
-          </div>
-        </aside>
+        {/* Sidebar (Desktop) */}
+<aside className="hidden md:flex w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex-col justify-between h-screen">
+  <div className="p-2 mt-3">
+    <nav className="space-y-2">
+      {sidebarItems.map((item) => (
+        <Button
+          key={item.name}
+          variant={item.active ? 'default' : 'ghost'}
+          className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={!item.available}
+        >
+          <item.icon className="mr-3 h-4 w-4" />
+          {item.name}
+          {!item.available && (
+            <Badge variant="secondary" className="ml-auto text-xs">
+              Soon
+            </Badge>
+          )}
+        </Button>
+      ))}
+    </nav>
+  </div>
+  <div>
+    <InviteButton />
+  </div>
+</aside>
+
+{/* Sidebar (Mobile Drawer) */}
+{sidebarOpen && (
+  <div className="fixed inset-0 z-50 flex md:hidden">
+    {/* Overlay */}
+    <div
+      className="fixed inset-0 bg-black/40"
+      onClick={() => setSidebarOpen(false)}
+    />
+
+    {/* Drawer */}
+    <aside className="relative w-64 bg-white shadow-lg flex flex-col justify-between h-full">
+      <div className="p-4">
+        <button
+          className="absolute top-3 right-3"
+          onClick={() => setSidebarOpen(false)}
+        >
+          <X className="h-5 w-5" />
+        </button>
+        <nav className="space-y-2 mt-6">
+          {sidebarItems.map((item) => (
+            <Button
+              key={item.name}
+              variant={item.active ? 'default' : 'ghost'}
+              className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={!item.available}
+            >
+              <item.icon className="mr-3 h-4 w-4" />
+              {item.name}
+              {!item.available && (
+                <Badge variant="secondary" className="ml-auto text-xs">
+                  Soon
+                </Badge>
+              )}
+            </Button>
+          ))}
+        </nav>
+      </div>
+      <div className="p-4">
+        <InviteButton />
+      </div>
+    </aside>
+  </div>
+)}
+
 
         {/* Main Content */}
         <main className="flex-1 p-6">
@@ -256,10 +316,15 @@ const Dashboard = () => {
              {/* <h2 className="text-2xl font-bold tracking-tight">
   {user?.name ? `Welcome back, ${user.name.split(' ')[0]}` : 'Welcome back'}
 </h2> */}
+<h2
+  className="
+    text-2xl font-bold tracking-tight text-gray-900 
+    max-sm:text-lg max-sm:font-semibold max-sm:mb-1 max-sm:leading-snug
+  "
+>
+  {username ? `Welcome back, ${username}` : "Welcome back"}
+</h2>
 
-   <h2 className='text-2xl font-bold tracking-tight'>
-      {username ? `Welcome back, ${username}` : 'Welcome back'}
-  </h2>
 
               <p className="text-muted-foreground">
                 Ready to build your next investor-ready document?

@@ -24,10 +24,10 @@ const ResetPassword = () => {
         <div className="flex flex-col justify-between min-h-full max-sm:mt-4">
           <div className="flex-1 flex flex-col justify-center">
             <div className="text-center mb-12 md:mb-16 max-sm:mb-6">
-              <h1 className="text-3xl max-sm:text-3xl md:text-4xl font-semibold text-[#1d1d1d]">
+              <h1 className="text-3xl max-sm:text-3xl md:text-4xl font-extrabold text-[#1d1d1d]">
                 Set New Password
               </h1>
-              <p className="font-medium text-[#777777] mt-1 max-sm:mt-2 max-sm:leading-6">
+              <p className="font-semibold text-[#777777] mt-1 max-sm:mt-2 max-sm:leading-6">
                 Choose a new password and confirm it. Ensure the password is at
                 least 8 characters long.
               </p>
