@@ -3,70 +3,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { INewUser, IVerifyUser, OnboardingPayload, ResetPasswordPayload } from "../types";
-import { toast } from "sonner";
+
 import { QUERY_KEYS } from "../queryKeys";
+import { toast } from "react-toastify";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-
-export async function completeAuth({
-  firstname,
-  lastname,
-  password,
-  confirmPassword,
-  token,
-}: {
-  firstname: string;
-  lastname: string;
-  password: string;
-  confirmPassword: string;
-  token: string;
-}) {
-  const res = await fetch(
-    `https://gidipitch-backend.onrender.com/api/auth/local?token=${token}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstname, lastname, password, confirmPassword, token }),
-    }
-  );
-
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err?.message || 'Failed to complete authentication');
-  }
-
-  return res.json();
-}
-
-
-
-
-
-export async function forgotPassword(email: string): Promise<{ message: string }> {
-  const response = await fetch('https://gidipitch-backend.onrender.com/api/auth/forgot-password', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email }),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Something went wrong');
-  }
-
-  return response.json();
-}
-
-
-
-
-
-// lib/logout.ts
-
-
 // lib/api.ts
 
 export const getUserDetails = async () => {
@@ -111,6 +52,8 @@ export const useWaitlist = () => {
           throw new Error(err?.message || "Failed to join waitlist");
         }
 
+        toast.success(res.message || "Successfully joined waitlist");
+
         return res.json();
       } catch (error: unknown) {
         console.error(error);
@@ -122,7 +65,6 @@ export const useWaitlist = () => {
       }
     },
     onSuccess: () => {
-      // ✅ Invalidate query so the count refetches
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_PEOPLE] });
     },
   });
@@ -173,14 +115,11 @@ export const useCreateUserAccount = () => {
         if (!res.ok) throw new Error(data.error);
         console.log(data);
         if (data.error) throw new Error(data.error);
-
-       
          if (data?.user?.email) {
           localStorage.setItem("registeredEmail", data.user.email);
-        }
-
-        toast.success(`${data.message}`);
+        toast.success("Account created successfully!");
         navigate('/auth/verify');
+        }
 
         return data;
       } catch (error: unknown) {
@@ -200,7 +139,6 @@ export const useVerifyEmail = () => {
   return useMutation({
     mutationFn: async ({ email, otp }: IVerifyUser) => {
       try {
-        // FIX: correct endpoint
         const res = await fetch(`${BASE_URL}/auth/email/verify`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -384,11 +322,7 @@ export const useLoginUser = () => {
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data?.message || "Login failed");
-
-      
-
       return data;
     },
     onSuccess: (data) => {

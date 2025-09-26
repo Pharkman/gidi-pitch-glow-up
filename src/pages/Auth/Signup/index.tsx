@@ -28,9 +28,6 @@ const SignUp = () => {
           title: "Account created!",
           description: "Please verify your email to continue.",
         });
-        // if (data?.data?.user?.email) {
-        //   localStorage.setItem("registeredEmail", data.data.user.email);
-        // }
         navigate("/verify-email");
       },
       onError: (error: any) => {

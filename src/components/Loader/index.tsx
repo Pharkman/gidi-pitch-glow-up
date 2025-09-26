@@ -1,13 +1,30 @@
+import { ClipLoader } from "react-spinners";
 import { motion } from "framer-motion";
-
+import logo from '../../../public/assets/gLogo.svg'
 export const LoadingSpinner = () => {
   return (
-    <div className="flex items-center justify-center">
-      <motion.div
-        className="w-4 h-4 border-4 border-black border-t-transparent rounded-full"
-        animate={{ rotate: 360 }}
-        transition={{ repeat: Infinity, ease: "linear", duration: 1 }}
-      />
+      <div >
+      <span className="loader"></span>
     </div>
   );
 };
+
+
+
+export default function GlobalLoader() {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
+      {/* Spinner Ring */}
+      <div className="relative flex items-center justify-center">
+        <div className="w-28 h-28 border-4 border-[#FF5619]/30 border-t-[#FF5619] rounded-full animate-spin" />
+
+        {/* Logo in the middle */}
+        <img
+          src={logo}
+          alt="Loading..."
+          className="absolute w-12 h-12"
+        />
+      </div>
+    </div>
+  );
+}

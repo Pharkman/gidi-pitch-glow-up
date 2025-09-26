@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import twoGuys from "/assets/twoAuthGuys.svg";
+import twoGuys from "/assets/authbg.png";
 
 interface AuthBgTemplateProps {
   children: ReactNode;
