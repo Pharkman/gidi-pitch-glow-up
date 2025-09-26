@@ -1,10 +1,26 @@
+"use client";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import lgHeroImage from "/assets/lgHeroImage.svg";
 import smHeroImage from "/assets/smHeroImage.svg";
+import { useEffect, useState } from "react";
 
 const HeroSection = () => {
-  const navigate = useNavigate();
+
+   const [displayedText, setDisplayedText] = useState("");
+  const fullText = "Your Complete Startup";
+
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayedText(fullText.slice(0, i + 1));
+      i++;
+      if (i === fullText.length) clearInterval(interval);
+    }, 80); // typing speed
+    return () => clearInterval(interval);
+  }, []);
+
 
   return (
     <section
@@ -18,11 +34,23 @@ const HeroSection = () => {
         </p>
 
         {/* Main Heading */}
-        <h1 className="mb-6 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.65rem] ">
-          Your Complete Startup
-          <br/>
-          <p className="mt-3 max-sm:mt-1">Toolkit for African Founders</p>
-        </h1>
+         <motion.h1
+      className="mb-6 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.65rem]"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+    >
+      {displayedText}
+      <br />
+      <motion.p
+        className="mt-3 max-sm:mt-1"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+      >
+        Toolkit for African Founders
+      </motion.p>
+    </motion.h1>
 
         {/* Subtitle */}
         <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base font-medium">
@@ -32,8 +60,8 @@ const HeroSection = () => {
 
         {/* Buttons */}
         <div className="mb-16 flex flex-col items-center justify-center gap-4 md:flex-row">
-          <button className="inline-flex items-center justify-center gap-2 btn-hero py-3 w-full md:w-fit max-sm:text-[16px] font-bold">
-            Try for free <ArrowRight size={18}/>
+          <button className="inline-flex items-center justify-center gap-2 btn-hero py-3 w-full md:w-fit max-sm:text-[16px] font-bold animate-pulse">
+           <a href="/signup" >Try for free</a> <ArrowRight size={18}/>
           </button>
        <button className="w-full md:w-fit rounded-lg border border-[#FF5619]  text-[#FF5619] py-3 px-6 
   transition-all duration-300 hover:bg-[#FF5619] max-sm:text-[16px] hover:text-white font-bold">

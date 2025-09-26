@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -6,10 +8,24 @@ import smHeroImage from "/assets/smHeroImage.svg";
 import GidiLogo from "@/assets/Frame 481473.png";
 import { useGetPeople, useWaitlist } from "@/lib/query";
 import { LoadingSpinner } from "@/components/Loader";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 import { socialLinks } from "@/components/dummy";
 
 const Waitlist = () => {
+  
+   const [displayedText, setDisplayedText] = useState("");
+  const fullText = "Your Complete Startup";
+
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayedText(fullText.slice(0, i + 1));
+      i++;
+      if (i === fullText.length) clearInterval(interval);
+    }, 80); 
+    return () => clearInterval(interval);
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState("");
@@ -31,12 +47,23 @@ const Waitlist = () => {
   }, []);
 
     const handleJoinWaitlist = () => {
+       // Basic validation
+    if (!email) {
+      toast.error("Email is required");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
     mutate(
       { email },
       {
         onSuccess: () => {
-          toast.success("🎉 You’ve joined the waitlist!");
-          setEmail(""); // clear input
+          setEmail(""); 
         },
       }
     );
@@ -108,10 +135,23 @@ const Waitlist = () => {
         </p>
 
         {/* Heading */}
-        <h1 className="mb-4 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.65rem] leading-tight">
-          Your Complete Startup <br className="max-sm:hidden"/>
-         <p className="mt-3 max-sm:mt-1"> Toolkit for African Founders</p>
-        </h1>
+        <motion.h1
+      className="mb-6 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.65rem]"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+    >
+      {displayedText}
+      <br />
+      <motion.p
+        className="mt-3 max-sm:mt-1"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+      >
+        Toolkit for African Founders
+      </motion.p>
+    </motion.h1>
 
         {/* Subtitle */}
         <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base font-semibold">

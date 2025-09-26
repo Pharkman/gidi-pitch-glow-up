@@ -1,11 +1,18 @@
 import * as Yup from 'yup';
 
 export const signupSchema = Yup.object({
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string()
+    .email("Invalid email")
+    .required("Required"),
   password: Yup.string()
     .min(6, "Must be at least 6 characters")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
+      "Password must contain at least one uppercase letter, one lowercase letter, and one symbol"
+    )
     .required("Required"),
-})
+});
+
 
 export const onboardingSchema_about = Yup.object().shape({
   industry: Yup.string().required("Please select your industry"),
