@@ -46,10 +46,10 @@ const FeaturesSection = () => {
       const header = sectionRef.current.querySelector(".features-header");
       const cards = sectionRef.current.querySelectorAll(".feature-card");
 
-      // Header fade-in
+      // Header fade + slide up
       gsap.fromTo(
         header,
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 50 },
         {
           opacity: 1,
           y: 0,
@@ -63,23 +63,25 @@ const FeaturesSection = () => {
         }
       );
 
-      // Cards stagger fade-in
-      gsap.fromTo(
-        cards,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out",
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
+      // Cards slide in from left/right staggered
+      cards.forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, x: i % 2 === 0 ? -50 : 50, y: 30 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      });
     }, sectionRef);
 
     return () => ctx.revert();
