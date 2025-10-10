@@ -223,7 +223,6 @@ export const useOnboardingFlow = () => {
      onSuccess: (data: any) => {
       toast.success(data?.message ?? "Onboarding step saved 🎉");
 
-      // Log cookies (including token if stored as a cookie)
       console.log("Cookies:", document.cookie);
     },
     onError: (error: any) => {
@@ -393,7 +392,7 @@ export async function logout() {
       throw new Error(err?.message || 'Logout failed');
     }
 
-    window.location.href = '/login';
+    window.location.href = '/signin';
   } catch (error) {
     console.error('Logout error:', error);
     alert('Failed to log out');

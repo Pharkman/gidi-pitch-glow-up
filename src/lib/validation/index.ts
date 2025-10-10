@@ -1,16 +1,22 @@
 import * as Yup from 'yup';
 
 export const signupSchema = Yup.object({
+  firstname: Yup.string()
+    .min(2, "First name must be at least 2 characters")
+    .required("First name is required"),
+  lastname: Yup.string()
+    .min(2, "Last name must be at least 2 characters")
+    .required("Last name is required"),
   email: Yup.string()
     .email("Invalid email")
-    .required("Required"),
+    .required("Email is required"),
   password: Yup.string()
     .min(6, "Must be at least 6 characters")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])/,
       "Password must contain at least one uppercase letter, one lowercase letter, and one symbol"
     )
-    .required("Required"),
+    .required("Password is required"),
 });
 
 
