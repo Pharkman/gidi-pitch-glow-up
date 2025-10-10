@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import GidiLogo from "@/assets/Frame 481473.png";
+import { useLocation } from "react-router-dom";
+import { getPageTitle } from "@/lib/utils/getPageTitle";
 
 const DashboardHeader = ({
   user_data,
@@ -21,10 +23,13 @@ const DashboardHeader = ({
   handleLogout,
   setSidebarOpen,
 }) => {
+  const location = useLocation();
+  const pageTitle = getPageTitle(location.pathname);
+  
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6">
-        {/* Left side: Mobile Menu + Logo */}
+        {/* Left side: Mobile Menu + Logo + Page Title */}
         <div className="flex items-center space-x-3">
           {/* Mobile Menu Button */}
           <button className="md:hidden" onClick={() => setSidebarOpen(true)}>
@@ -33,6 +38,9 @@ const DashboardHeader = ({
 
           {/* Logo */}
           <img src={GidiLogo} alt="GidiLogo" className="h-8 cursor-pointer" />
+          
+          {/* Page Title */}
+          <h1 className="text-[16px] text-[#1D1D1D] pl-24 font-semibold hidden md:block">{pageTitle}</h1>
         </div>
 
         {/* Right side: Notifications + User Menu */}
@@ -42,7 +50,7 @@ const DashboardHeader = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center space-x-2">
-                <Avatar className="h-8 w-8">
+                <Avatar className="h-[40px] w-[40px]">
                   <AvatarImage src={user_data?.user?.profileImage || ""} />
                   <AvatarFallback>
                     {user_data?.user?.email
@@ -50,9 +58,6 @@ const DashboardHeader = ({
                       : "U"}
                   </AvatarFallback>
                 </Avatar>
-                <span className="hidden md:block">
-                 <p className="capitalize"> {user_data?.user?.firstname} {user_data?.user?.lastname}</p> 
-                </span>
                 <ChevronDown className="h-4 w-4 hidden md:block" />
               </Button>
             </DropdownMenuTrigger>
