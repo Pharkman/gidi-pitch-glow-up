@@ -103,12 +103,12 @@ export const useGetPeople = () => {
 export const useCreateUserAccount = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async ({ email, password }: INewUser) => {
+    mutationFn: async ({firstname, lastname, email, password }: INewUser) => {
       try {
         const res = await fetch(`${BASE_URL}/auth/local`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password})
+          body: JSON.stringify({ firstname, lastname, email, password})
         });
 
         const data = await res.json();
@@ -119,6 +119,8 @@ export const useCreateUserAccount = () => {
           localStorage.setItem("registeredEmail", data.user.email);
         toast.success("Account created successfully!");
         navigate('/auth/verify');
+        }else{
+           return
         }
 
         return data;

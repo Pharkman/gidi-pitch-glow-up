@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 // import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Onboarding from "./pages/Onboarding/Onboarding";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import PitchDecksPage from "./pages/PitchDecksPage";
 import ResumeBuilderPage from "./pages/ResumeBuilderPage";
 import TeamMembersPage from "./pages/TeamMembersPage";
@@ -75,7 +75,7 @@ function AppRoutes() {
 
   useEffect(() => {
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 800); // ⏳ fake delay for smoothness
+    const timer = setTimeout(() => setLoading(false), 800); 
     return () => clearTimeout(timer);
   }, [location]);
 
