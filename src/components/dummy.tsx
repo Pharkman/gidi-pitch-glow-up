@@ -1,4 +1,4 @@
-import { FileInput, Settings, Sparkles, Download } from 'lucide-react';
+import { FileInput, Settings, Sparkles, Download, Instagram } from 'lucide-react';
 import check from '../assets/check.png';
 import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 
@@ -97,9 +97,10 @@ import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
     ]
   };
 
-  export const socialLinks = [
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Github, href: '#', label: 'GitHub' },
-    { icon: Mail, href: 'mailto:hello@gidipitch.com', label: 'Email' }
-  ];
+export const socialLinks = [
+  { icon: Twitter, href: 'https://x.com/gidipitch', label: 'Twitter' },
+  { icon: Linkedin, href: '#', label: 'LinkedIn' },
+  { icon: Github, href: 'https://github.com/Pharkman/gidi-pitch-glow-up', label: 'GitHub' },
+  { icon: Instagram, href: 'https://www.instagram.com/gidipitch/', label: 'Instagram' }
+];
+
