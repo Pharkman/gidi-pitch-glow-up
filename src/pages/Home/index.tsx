@@ -15,8 +15,6 @@ const Homepage = () => {
       <main>
         <HeroSection />
         <FeaturesSection />
-        {/* <ProductPreview /> */}
-        {/* <HowItWorks /> */}
         <WhyGidiPitch />
         <FAQ />
         <CTASection />

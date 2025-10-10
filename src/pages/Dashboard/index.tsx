@@ -22,7 +22,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { PitchDeckCreator } from './PitchDeckCreator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
   DropdownMenu, 
@@ -45,6 +44,7 @@ import freepik_build5 from "@/assets/freepik_build5.png"
 import freepik_build6 from "@/assets/freepik_build6.png"
 import { getUserDetails, logout, useGetTokenFromQuery, useGetUser } from '@/lib/query';
 import { useSearchParams } from 'react-router-dom';
+import DashboardHeader from './component/Header';
 // Reusable ToolCard component
 const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle }: {
   image: string,
@@ -97,7 +97,6 @@ const InviteButton = () => (
   </button>
 );
 
-
 const Dashboard = () => {
   const {data:user_data, isLoading} = useGetUser();
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -124,7 +123,6 @@ const Dashboard = () => {
     { name: 'Market Estimator', icon: Target, active: false, available: true },
     { name: 'YC Assistant', icon: Users, active: false, available: true },
     { name: 'AI Coach', icon: Brain, active: false, available: true },
-    // { name: 'AI Coach', icon: Brain, active: false, available: false },
   ];
 
 
@@ -171,69 +169,18 @@ const Dashboard = () => {
     }
   }, [token, setToken]);
 
-  const username = user_data?.user?.email?.split('@')[0];
+  const username = `${user_data?.user?.firstname} ${user_data?.user?.lastname}`;
 
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navigation */}
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-  <div className="flex h-16 items-center justify-between px-4 sm:px-6">
-    {/* Left side: Mobile Menu + Logo */}
-    <div className="flex items-center space-x-3">
-      {/* Mobile Menu Button */}
-      <button
-        className="md:hidden"
-        onClick={() => setSidebarOpen(true)}
-      >
-        <Menu className="h-6 w-6" />
-      </button>
-
-      {/* Logo */}
-      <img src={GidiLogo} alt="GidiLogo" className="h-8" />
-    </div>
-
-    {/* Right side: Notifications + User Menu */}
-    <div className="flex items-center space-x-3 sm:space-x-4">
-      <Button variant="ghost" size="icon" className="relative">
-        <Bell className="h-5 w-5" />
-        <div className="absolute -top-1 -right-1 h-3 w-3 bg-primary rounded-full"></div>
-      </Button>
-
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="flex items-center space-x-2">
-            <Avatar className="h-8 w-8">
-              <AvatarImage src={user_data?.user?.profileImage || ""} />
-              <AvatarFallback>
-                {user_data?.user?.email
-                  ? user_data.user.email.charAt(0).toUpperCase()
-                  : "U"}
-              </AvatarFallback>
-            </Avatar>
-            <span className="hidden md:block">
-              {user_data?.user?.email
-                ? user_data.user.email.split("@")[0]
-                : "User"}
-            </span>
-            <ChevronDown className="h-4 w-4 hidden md:block" />
-          </Button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Help</DropdownMenuItem>
-          <Separator />
-          <DropdownMenuItem onClick={handleLogout}>
-            {isLoggingOut ? "Logging out..." : "Sign out"}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
-  </div>
-</header>
-
+   <DashboardHeader
+    user_data={user_data}
+    isLoggingOut={isLoggingOut}
+    handleLogout={handleLogout}
+    setSidebarOpen={setSidebarOpen}
+  />
 
       <div className="flex">
         {/* Sidebar (Desktop) */}
@@ -319,7 +266,7 @@ const Dashboard = () => {
 <h2
   className="
     text-2xl font-bold tracking-tight text-gray-900 
-    max-sm:text-lg max-sm:font-semibold max-sm:mb-1 max-sm:leading-snug
+    max-sm:text-lg max-sm:font-semibold max-sm:mb-1 max-sm:leading-snug capitalize mb-3
   "
 >
   {username ? `Welcome back, ${username}` : "Welcome back"}
@@ -379,95 +326,7 @@ const Dashboard = () => {
               <ToolCard variant="project" image={freepik_build6} label="AI Coach" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('AI Coach')} disabled />
             </div>
 
-            {/* <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span className="flex items-center">
-                    <Clock className="mr-2 h-5 w-5" />
-                    Recent Projects
-                  </span>
-                  <Button variant="ghost" size="sm">
-                    View All
-                    <ArrowUpRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {recentProjects.map((project) => (
-                    <div
-                      key={project.id}
-                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
-                    >
-                      <div className="flex items-center space-x-4">
-                        <div className="p-2 bg-primary/10 rounded-lg">
-                          {project.type === 'Pitch Deck' ? (
-                            <FileText className="h-5 w-5 text-primary" />
-                          ) : (
-                            <User className="h-5 w-5 text-primary" />
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="font-medium">{project.name}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {project.type} • Last edited {project.lastEdited}
-                          </p>
-                        </div>
-                      </div>
-                      <Badge
-                        variant={project.status === 'Complete' ? 'default' : 'secondary'}
-                      >
-                        {project.status}
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card> */}
-
-
-
-            {/* Quick Stats */}
-            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Total Projects</p>
-                      <p className="text-2xl font-bold">12</p>
-                    </div>
-                    <FileText className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Completed</p>
-                      <p className="text-2xl font-bold">8</p>
-                    </div>
-                    <Badge className="h-8 w-8 rounded-full flex items-center justify-center">
-                      ✓
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Time Saved</p>
-                      <p className="text-2xl font-bold">24h</p>
-                    </div>
-                    <Clock className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                </CardContent>
-              </Card>
-            </div> */}
-          </div>
+                 </div>
         </main>
       </div>
 
