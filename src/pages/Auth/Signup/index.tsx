@@ -51,7 +51,9 @@ const SignUp = () => {
       <div className="flex flex-col justify-between min-h-full">
         <div>
           <div className="text-center mb-12 md:mb-16">
-            <img src={g} alt="Logo" className="mx-auto h-14" />
+            <Link to="/">
+              <img src={g} alt="Logo" className="mx-auto h-14 cursor-pointer" />
+            </Link>
             <h1 className="text-[27px] md:text-4xl mb-3 font-extrabold text-[#1d1d1d]">
               Create Your Account
             </h1>
@@ -77,14 +79,50 @@ const SignUp = () => {
           </div>
 
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{firstname: "", lastname: "",  email: "", password: "" }}
             validationSchema={signupSchema}
             onSubmit={handleSignup}
           >
             {({ isSubmitting }) => (
               <Form>
+               <div className="grid grid-cols-2 gap-4">
+        <div className="">
+          <label className="block text-[#1D1D1D] mb-2 font-medium text-[15px]">
+            First Name
+          </label>
+          <Field
+            type="text"
+            name="firstname"
+            placeholder="Enter first name"
+            className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm"
+          />
+          <ErrorMessage
+            name="firstname"
+            component="div"
+            className="text-red-500 text-xs mb-4"
+          />
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-[#1D1D1D] mb-2 font-medium text-[15px]">
+            Last Name
+          </label>
+          <Field
+            type="text"
+            name="lastname"
+            placeholder="Enter last name"
+            className="w-full border border-[#DBDBDB] rounded-sm px-3 py-2 mb-1 text-sm"
+          />
+          <ErrorMessage
+            name="lastname"
+            component="div"
+            className="text-red-500 text-xs mb-4"
+          />
+        </div>
+      </div>
+
                 <div className="mb-6">
-                  <label className="block text-[#1D1D1D] mb-2 font-medium">
+                  <label className="block text-[#1D1D1D] mb-2 font-medium text-[15px]">
                     Email
                   </label>
                   <Field
@@ -101,7 +139,7 @@ const SignUp = () => {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block mb-2 text-[#1D1D1D] font-medium">
+                  <label className="block text-[15px] mb-2 text-[#1D1D1D] font-medium">
                     Password
                   </label>
                   <div className="relative">

@@ -25,21 +25,21 @@ const VerifyEmail = () => {
           {/* Header */}
           <div className="text-start max-sm:text-start mb-6 sm:mb-8 flex justify-between">
             <div>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900">
-              Verify Your Email
-            </h1>
-            <p className="text-gray-600 mt-2 sm:mt-3 text-[14px] sm:text-sm md:text-base leading-relaxed">
-              We've sent a one-time security code to
-              <br />
-              <strong className="text-gray-900 font-semibold block mt-1 break-words">
-                {email}
-              </strong>
-              <span className="mt-1 block">Please enter the code below to continue.</span>
-            </p>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900">
+                Verify Your Email
+              </h1>
+              <p className="text-gray-600 mt-2 sm:mt-3 text-[14px] sm:text-sm md:text-base leading-relaxed">
+                We've sent a one-time security code to
+                <br />
+                <strong className="text-gray-900 font-semibold block mt-1 break-words">
+                  {email}
+                </strong>
+                <span className="mt-1 block">Please enter the code below to continue.</span>
+              </p>
             </div>
 
-<div>
-            <HiMail className="text-3xl max-sm:text-2xl text-gray-600 mt-2 sm:mt-3" />
+            <div>
+              <HiMail className="text-3xl max-sm:text-2xl text-gray-600 mt-2 sm:mt-3" />
             </div>
           </div>
 
@@ -87,10 +87,9 @@ const VerifyEmail = () => {
                       className={`
                         border rounded-lg sm:rounded-xl text-center text-lg sm:text-xl font-semibold bg-gray-50
                         transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500
-                        ${
-                          wrongCode
-                            ? "border-red-500 text-red-600 animate-shake"
-                            : "border-gray-300 focus:border-orange-500"
+                        ${wrongCode
+                          ? "border-red-500 text-red-600 animate-shake"
+                          : "border-gray-300 focus:border-orange-500"
                         }
                       `}
                     />

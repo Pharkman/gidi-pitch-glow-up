@@ -24,7 +24,9 @@ const SignIn = () => {
       <div className="flex flex-col justify-between min-h-full">
         <div>
           <div className="text-center mb-12 md:mb-16">
-            <img src={g} alt="Logo" className="mx-auto h-14" />
+            <Link to="/">
+              <img src={g} alt="Logo" className="mx-auto h-14 cursor-pointer" />
+            </Link>
             <h1 className="text-[26px] md:text-4xl font-extrabold text-[#1d1d1d] mb-3 ">
               Log into your account
             </h1>
