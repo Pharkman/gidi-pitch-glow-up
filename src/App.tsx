@@ -31,11 +31,47 @@ import Waitlist from "./pages/Waitlist/Waitlist";
 import { ToastContainer } from "react-toastify";
 import GlobalLoader from "./components/Loader";
 import { useEffect, useState } from "react";
+import { useDocumentTitle } from "./hooks/use-document-title";
 
 
 function AppRoutes() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const [pageTitle, setPageTitle] = useState("");
+
+  // Set page title based on current route
+  useEffect(() => {
+    const path = location.pathname;
+    
+    // Map routes to page titles
+    const routeTitles: Record<string, string> = {
+      "/": "Home",
+      "/signin": "Sign In",
+      "/signup": "Sign Up",
+      "/verify-email": "Verify Email",
+      "/forgot-password": "Forgot Password",
+      "/auth/password/reset": "Reset Password",
+      "/waitlist": "Join Waitlist",
+      "/onboarding": "Onboarding",
+      "/onboarding/about-startup": "About Your Startup",
+      "/onboarding/shape-startup": "Shape Your Startup",
+      "/onboarding/goal_preference": "Goals & Preferences",
+      "/dashboard": "Dashboard",
+      "/pitch-decks": "Pitch Decks",
+      "/resume-builder": "Resume Builder",
+      "/resume-builder-editor": "Resume Editor",
+      "/team-members": "Team Members",
+      "/pitch-deck-outline": "Pitch Deck Outline",
+      "/pitch-deck-generating": "Generating Pitch Deck",
+      "/pitch-deck-editor": "Pitch Deck Editor",
+      "/resume-generating": "Generating Resume"
+    };
+    
+    setPageTitle(routeTitles[path] || "Page Not Found");
+  }, [location]);
+
+  // Apply the document title
+  useDocumentTitle(pageTitle);
 
   useEffect(() => {
     setLoading(true);
