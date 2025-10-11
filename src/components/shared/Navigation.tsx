@@ -66,12 +66,12 @@ const Navigation = () => {
              <div className="hidden md:flex items-center gap-3">
             <button
               className="text-primary text-sm px-4 py-3 font-semibold text-[16px] transition-all duration-300 bg-primary text-white hover:text-white hover:bg-primary hover:px-6 hover:py-3 rounded-lg"
-              onClick={() => (window.location.href = "/signin")}
+              onClick={() => (window.location.href = "#")}
             >
               Login
             </button>
             <button className="btn-hero inline-flex gap-2 text-sm px-6 py-3 ml-0 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-           onClick={() => (window.location.href = "/signup")}
+           onClick={() => (window.location.href = "#")}
             >
               Try For Free <ArrowRight size={14} />
             </button>

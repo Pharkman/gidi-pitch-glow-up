@@ -16,7 +16,9 @@ import {
   Zap,
   X,
   UserPlus,
-  Menu
+  Menu,
+  PanelLeftClose,
+  PanelLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -102,7 +104,8 @@ const Dashboard = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
-   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [desktopSidebarVisible, setDesktopSidebarVisible] = useState(true);
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [user, setUser] = useState(null);
 
@@ -180,11 +183,13 @@ const Dashboard = () => {
     isLoggingOut={isLoggingOut}
     handleLogout={handleLogout}
     setSidebarOpen={setSidebarOpen}
+    desktopSidebarVisible={desktopSidebarVisible}
+    setDesktopSidebarVisible={setDesktopSidebarVisible}
   />
 
       <div className="flex">
         {/* Sidebar (Desktop) */}
-<aside className="hidden md:flex w-64 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex-col justify-between h-screen">
+<aside className={`hidden md:flex ${desktopSidebarVisible ? 'w-64' : 'w-16'} transition-all duration-300 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex-col justify-between h-screen`}>
   <div className="p-2 mt-3">
     <nav className="space-y-2">
       {sidebarItems.map((item) => (
@@ -193,20 +198,31 @@ const Dashboard = () => {
           variant={item.active ? 'default' : 'ghost'}
           className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={!item.available}
+          title={!desktopSidebarVisible ? item.name : undefined}
         >
-          <item.icon className="mr-3 h-4 w-4" />
-          {item.name}
-          {!item.available && (
-            <Badge variant="secondary" className="ml-auto text-xs">
-              Soon
-            </Badge>
+          <item.icon className={`${desktopSidebarVisible ? 'mr-3' : 'mx-auto'} h-4 w-4`} />
+          {desktopSidebarVisible && (
+            <>
+              {item.name}
+              {!item.available && (
+                <Badge variant="secondary" className="ml-auto text-xs">
+                  Soon
+                </Badge>
+              )}
+            </>
           )}
         </Button>
       ))}
     </nav>
   </div>
-  <div>
-    <InviteButton />
+  <div className={desktopSidebarVisible ? '' : 'flex justify-center pb-4'}>
+    {desktopSidebarVisible ? (
+      <InviteButton />
+    ) : (
+      <Button size="icon" variant="ghost" title="Invite Team Member">
+        <UserPlus className="h-4 w-4" />
+      </Button>
+    )}
   </div>
 </aside>
 
@@ -218,6 +234,14 @@ const Dashboard = () => {
       className="fixed inset-0 bg-black/40"
       onClick={() => setSidebarOpen(false)}
     />
+    
+    {/* Toggle Button (Mobile) */}
+    <button 
+      className="absolute top-4 right-4 z-50 bg-white rounded-full p-2 shadow-md"
+      onClick={() => setSidebarOpen(false)}
+    >
+      <X className="h-5 w-5" />
+    </button>
 
     {/* Drawer */}
     <aside className="relative w-64 bg-white shadow-lg flex flex-col justify-between h-full">
@@ -256,7 +280,7 @@ const Dashboard = () => {
 
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className={`flex-1 p-6 transition-all duration-300 ${desktopSidebarVisible ? '' : 'md:ml-0'}`}>
           <div className="max-w-7xl mx-auto space-y-8">
             {/* Welcome Section */}
             <div>

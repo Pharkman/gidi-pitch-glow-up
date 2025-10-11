@@ -3,6 +3,8 @@ import {
   Bell,
   ChevronDown,
   Menu,
+  PanelLeft,
+  PanelLeftClose,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,25 +16,48 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import GidiLogo from "@/assets/Frame 481473.png";
+import { useLocation } from "react-router-dom";
+import { getPageTitle } from "@/lib/utils/getPageTitle";
 
 const DashboardHeader = ({
   user_data,
   isLoggingOut,
   handleLogout,
   setSidebarOpen,
+  desktopSidebarVisible,
+  setDesktopSidebarVisible,
 }) => {
+  const location = useLocation();
+  const pageTitle = getPageTitle(location.pathname);
+  
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-      <div className="flex h-16 items-center justify-between px-4 sm:px-6">
-        {/* Left side: Mobile Menu + Logo */}
+      <div className="flex h-16 items-center justify-between ">
+        {/* Left side: Mobile Menu + Logo + Page Title */}
         <div className="flex items-center space-x-3">
           {/* Mobile Menu Button */}
           <button className="md:hidden" onClick={() => setSidebarOpen(true)}>
             <Menu className="h-6 w-6" />
           </button>
 
-          {/* Logo */}
+   {/* Logo */}
           <img src={GidiLogo} alt="GidiLogo" className="h-8 cursor-pointer" />
+          {/* Desktop Sidebar Toggle Button */}
+          <button 
+            className="hidden md:flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100"
+            onClick={() => setDesktopSidebarVisible(!desktopSidebarVisible)}
+          >
+            {desktopSidebarVisible ? (
+              <PanelLeftClose className="h-5 w-5 text-gray-500" />
+            ) : (
+              <PanelLeft className="h-5 w-5 text-gray-500" />
+            )}
+          </button>
+
+       
+          
+          {/* Page Title */}
+          <h1 className="text-[16px] text-[#1D1D1D] pl-24 font-semibold hidden md:block">{pageTitle}</h1>
         </div>
 
         {/* Right side: Notifications + User Menu */}
@@ -41,8 +66,8 @@ const DashboardHeader = ({
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center space-x-2">
-                <Avatar className="h-8 w-8">
+              <Button variant="none" className="flex items-center space-x-0">
+                <Avatar className="h-[40px] w-[40px]">
                   <AvatarImage src={user_data?.user?.profileImage || ""} />
                   <AvatarFallback>
                     {user_data?.user?.email
@@ -50,10 +75,7 @@ const DashboardHeader = ({
                       : "U"}
                   </AvatarFallback>
                 </Avatar>
-                <span className="hidden md:block">
-                 <p className="capitalize"> {user_data?.user?.firstname} {user_data?.user?.lastname}</p> 
-                </span>
-                <ChevronDown className="h-4 w-4 hidden md:block" />
+                <ChevronDown className="h-6 w-6 hidden md:block" />
               </Button>
             </DropdownMenuTrigger>
 
