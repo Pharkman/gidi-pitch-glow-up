@@ -68,13 +68,16 @@ const DashboardHeader = ({
             <DropdownMenuTrigger asChild>
               <Button variant="none" className="flex items-center space-x-0">
                 <Avatar className="h-[40px] w-[40px]">
-                  <AvatarImage src={user_data?.user?.profileImage || ""} />
-                  <AvatarFallback>
-                    {user_data?.user?.email
-                      ? user_data.user.email.charAt(0).toUpperCase()
-                      : "U"}
-                  </AvatarFallback>
-                </Avatar>
+  <AvatarImage src={user_data?.user?.profileImage || ""} />
+  <AvatarFallback>
+    {user_data?.user?.firstname && user_data?.user?.lastname
+      ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
+      : user_data?.user?.email
+      ? user_data.user.email.charAt(0).toUpperCase()
+      : "NA"}
+  </AvatarFallback>
+</Avatar>
+
                 <ChevronDown className="h-6 w-6 hidden md:block" />
               </Button>
             </DropdownMenuTrigger>

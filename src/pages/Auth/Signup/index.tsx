@@ -103,7 +103,7 @@ const SignUp = () => {
           />
         </div>
 
-        <div className="mb-6">
+        <div className="mb-4">
           <label className="block text-[#1D1D1D] mb-2 font-medium text-[15px]">
             Last Name
           </label>
