@@ -136,7 +136,7 @@ const Waitlist = () => {
 
         {/* Heading */}
         <motion.h1
-      className="mb-6 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.65rem]"
+      className="mb-4 text-4xl font-extrabold text-[#1D1D1D] md:text-6xl max-sm:text-[1.67rem]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
@@ -154,7 +154,7 @@ const Waitlist = () => {
     </motion.h1>
 
         {/* Subtitle */}
-        <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base font-semibold">
+        <p className="mx-auto mb-8 max-w-xl text-[16.5px] text-[#777777] max-sm:text-base font-medium">
           GidiPitch helps African founders create pitch decks, financials, and
           resumes with AI. Get investor-ready in minutes, not weeks.
         </p>
