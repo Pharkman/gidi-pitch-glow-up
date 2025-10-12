@@ -32,6 +32,7 @@ import { ToastContainer } from "react-toastify";
 import GlobalLoader from "./components/Loader";
 import { useEffect, useState } from "react";
 import { useDocumentTitle } from "./hooks/use-document-title";
+import PitchSlide from "./pages/Slides/PitchSlide";
 
 
 function AppRoutes() {
@@ -94,6 +95,7 @@ function AppRoutes() {
         <Route path="/onboarding/about-startup" element={<AboutStartup />} />
         <Route path="/onboarding/shape-startup" element={<ShapeStartup />} />
         <Route path="/onboarding/goal_preference" element={<GoalsPreferences />} />
+        <Route path="/pitch-slide" element={<PitchSlide />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/pitch-decks" element={<PitchDecksPage />} />
         <Route path="/resume-builder" element={<ResumeBuilderPage />} />
