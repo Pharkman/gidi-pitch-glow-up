@@ -1,13 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 import pitchDeck from "/assets/features/landing_succed4.png";
 import resumeBuilder from "/assets/features/landing_succed1.png";
 import applicationAssistant from "/assets/features/landing_succed2.png";
 import pitchPractice from "/assets/features/landing_succed3.png";
-import { useEffect, useRef } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const features = [
   {
@@ -36,70 +33,35 @@ const features = [
   },
 ];
 
+const fadeIn = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
+  },
+};
+
+
 const FeaturesSection = () => {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const header = sectionRef.current.querySelector(".features-header");
-      const cards = sectionRef.current.querySelectorAll(".feature-card");
-
-      // Header fade + slide up
-      gsap.fromTo(
-        header,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: header,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      // Cards slide in from left/right staggered
-      cards.forEach((card, i) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, x: i % 2 === 0 ? -50 : 50, y: 30 },
-          {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            duration: 0.7,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
       id="features"
-      ref={sectionRef}
       className="bg-white px-20 py-8 md:py-16 container max-sm:px-4 max-sm:py-0 max-sm:pb-14"
     >
       <div>
         {/* Section Header */}
-        <div className="mb-16 text-center features-header">
+        <motion.div
+          className="mb-16 text-center"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.3 }}
+        >
           <p className="mb-2 p-1 text-sm font-medium capitalize border mx-auto text-[#5D5D5D] border-[#DBDBDB] rounded-xl bg-[#F5F5F5] w-fit px-4 max-sm:mb-2 max-sm:hidden">
             Features
           </p>
-          <h2 className="mb-4 text-3xl font-bold text-[#2D2D2D] md:text-[52px] leading-[1.2] max-sm:text-[1.4rem] ">
+          <h2 className="mb-4 text-3xl font-bold text-[#2D2D2D] md:text-[52px] leading-[1.2] max-sm:text-[1.4rem]">
             Everything You Need to Succeed
           </h2>
           <p className="mx-auto max-w-2xl text-[#8A8A8A] md:text-lg font-medium">
@@ -107,43 +69,46 @@ const FeaturesSection = () => {
             founders, understanding the unique challenges and opportunities in
             your ecosystem.
           </p>
-        </div>
+        </motion.div>
 
         {/* Features Grid */}
-        <div className="grid gap-8 md:grid-cols-2 ">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <div
-                key={index}
-                className="feature-card rounded-lg bg-[#F5F5F5] p-6 shadow-sm hover:shadow-md transition duration-300 container"
-              >
-                <div className="mb-1 flex h-[52px] w-[52px] items-center justify-center rounded-lg border border-[#FFF1EC]">
-                  <img
-                    src={Icon}
-                    alt={feature.title}
-                    className="text-white h-[52px] w-[52px]"
-                  />
-                </div>
-                <h3 className="mb-2 text-xl font-bold text-[#1D1D1D]">
-                  {feature.title}
-                </h3>
-                <p className="mb-6 text-[#777777] leading-relaxed font-medium">
-                  {feature.description}
-                </p>
-                <a
-                  href="#"
-                  className="group inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 font-semibold text-white shadow-md transition-all duration-300 hover:bg-primary/90 hover:shadow-lg active:scale-95"
-                >
-                  <span className="relative">Try for free</span>
-                  <ArrowUpRight
-                    size={18}
-                    className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
-                  />
-                </a>
+        <div className="grid gap-8 md:grid-cols-2">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="rounded-lg bg-[#F5F5F5] p-6 shadow-sm hover:shadow-md transition duration-300 container"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <div className="mb-1 flex h-[52px] w-[52px] items-center justify-center rounded-lg border border-[#FFF1EC]">
+                <img
+                  src={feature.icon}
+                  alt={feature.title}
+                  className="h-[52px] w-[52px]"
+                />
               </div>
-            );
-          })}
+              <h3 className="mb-2 text-xl font-bold text-[#1D1D1D]">
+                {feature.title}
+              </h3>
+              <p className="mb-6 text-[#777777] leading-relaxed font-medium">
+                {feature.description}
+              </p>
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group inline-flex items-center gap-2 rounded-xl bg-[#FF5619] px-5 py-2 font-semibold text-white shadow-md transition-all duration-300 hover:bg-[#ff6b33] hover:shadow-lg active:scale-95"
+              >
+                <span>Try for free</span>
+                <ArrowUpRight
+                  size={18}
+                  className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
+              </motion.a>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
