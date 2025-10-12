@@ -5,11 +5,13 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import lgHeroImage from "/assets/lgHeroImage.svg";
 import smHeroImage from "/assets/smHeroImage.svg";
-import GidiLogo from "@/assets/Frame 481473.png";
+import GidiLogo from "../../../public/assets/Gidipitch Logo.svg";
 import { useGetPeople, useWaitlist } from "@/lib/query";
 import { LoadingSpinner } from "@/components/Loader";
 import { toast } from "react-toastify";
 import { socialLinks } from "@/components/dummy";
+import FAQ from "@/components/FAQ";
+
 
 const Waitlist = () => {
   
@@ -88,7 +90,7 @@ const Waitlist = () => {
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/">
-                <img src={GidiLogo} alt="GidiPitch logo" className="h-8" />
+                 <img src={GidiLogo} alt="" className="w-[86%]"/>
               </Link>
             </div>
 
@@ -166,9 +168,9 @@ const Waitlist = () => {
     value={email}
      onChange={(e) => setEmail(e.target.value)}
     placeholder="Enter email address"
-    className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 max-sm:rounded-lg"
+    className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 max-sm:rounded-lg placeholder:text-[16px]"
   />
-  <button className="w-full md:w-auto rounded-r-lg bg-[#FF5619] text-white font-semibold px-6 py-3 transition-all duration-300 hover:bg-[#e14e18] max-sm:rounded-lg"
+  <button className="w-full md:w-auto rounded-r-lg bg-[#FF5619] text-white font-semibold px-6 py-3 transition-all duration-300 hover:bg-[#e14e18] max-sm:rounded-lg text-sm"
   onClick={handleJoinWaitlist}
   >
     {isPending ? <LoadingSpinner /> : "Join Waitlist"}
@@ -200,6 +202,9 @@ const Waitlist = () => {
         </div>
       </div>
 
+      <div>
+          <FAQ />
+      </div>
      
     </section>
        <div className="flex justify-between px-4 items-center max-sm:flex-col max-sm:gap-5 mb-6">
