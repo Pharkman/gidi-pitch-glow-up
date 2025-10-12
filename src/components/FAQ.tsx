@@ -66,10 +66,10 @@ const FAQ = () => {
       ref={sectionRef}
       className="py-24 max-sm:py-10 bg-white"
     >
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10 faq-header">
-          <h2 className="text-[32px] lg:text-[52px] font-bold mb-6 max-sm:text-[23px]">
+          <h2 className="text-[32px] lg:text-[52px] font-bold mb-6 max-sm:text-[22px]">
             Frequently Asked
             <span className="text-gradient-primary ml-3 max-sm:ml-2">
               Questions
@@ -86,9 +86,9 @@ const FAQ = () => {
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-muted/30 transition-colors duration-200"
+                className="w-full px-8 max-sm:px-4 py-6 text-left flex items-center justify-between hover:bg-muted/30 transition-colors duration-200"
               >
-                <h3 className="text-lg font-medium text-[#1D1D1D] pr-4 max-sm:text-base">
+                <h3 className="text-lg font-medium text-[#1D1D1D] pr-4 max-sm:text-base max-sm:pr-1">
                   {faq.question}
                 </h3>
                 <ChevronDown
@@ -105,8 +105,8 @@ const FAQ = () => {
                     : 'max-h-0 opacity-0'
                 }`}
               >
-                <div className="px-8 pb-6">
-                  <p className="text-[#777777] text-[16px] font-medium leading-relaxed">
+                <div className="px-8 pb-6 max-sm:px-4">
+                  <p className="text-[#777777] text-[16px] font-medium leading-relaxed max-sm:text-[15px] max-sm:text-left">
                     {faq.answer}
                   </p>
                 </div>

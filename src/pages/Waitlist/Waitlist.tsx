@@ -156,7 +156,7 @@ const Waitlist = () => {
     </motion.h1>
 
         {/* Subtitle */}
-        <p className="mx-auto mb-8 max-w-xl text-[16.5px] text-[#777777] max-sm:text-base font-medium">
+        <p className="mx-auto mb-8 max-w-xl text-[16.5px] text-[#777777] max-sm:text-base font-medium ">
           GidiPitch helps African founders create pitch decks, financials, and
           resumes with AI. Get investor-ready in minutes, not weeks.
         </p>
