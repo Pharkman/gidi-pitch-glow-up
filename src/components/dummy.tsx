@@ -51,28 +51,28 @@ import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 
   export const faqs = [
     {
-      question: 'Is GidiPitch free to use?',
-      answer: 'Yes! We offer a free tier that includes basic pitch deck generation and limited financial forecasting. Our premium plans unlock advanced features like unlimited exports, custom branding, and priority support.'
+      question: 'What is GidiPitch and who is it for?',
+      answer: 'GidiPitch is an AI-powered toolkit that helps African founders create investor-ready pitch decks, resumes, and startup materials — fast. It’s built for early-stage founders who want to tell their story clearly and attract investors with confidence.'
     },
     {
-      question: 'Can I edit the generated pitch deck?',
-      answer: 'Absolutely! All generated content is fully editable. You can modify text, add your own images, adjust layouts, and customize the design to match your brand. Export to PowerPoint, PDF, or continue editing in our platform.'
+      question: 'How does joining the waitlist help me?',
+      answer: 'By joining the waitlist, you’ll be among the first to access GidiPitch when we launch. You’ll also get early product updates, sneak peeks, and special founder-only perks before the public rollout.'
     },
     {
-      question: 'Will this work for my specific industry?',
-      answer: 'GidiPitch works across all industries - from fintech and healthtech to agriculture and e-commerce. Our AI is trained on successful pitch decks from various African sectors and adapts content to your specific market and business model.'
+      question: 'When will GidiPitch launch?',
+      answer: 'We’re working hard to make sure GidiPitch delivers the best possible experience. While there’s no fixed date yet, waitlist members will be the first to know once we go live.'
     },
     {
-      question: 'Can I apply to Y Combinator with materials from GidiPitch?',
-      answer: 'Yes! Our YC Assistant specifically helps you prepare application materials that meet Y Combinator\'s requirements. Many of our users have successfully applied to top accelerators using GidiPitch-generated content.'
+      question: 'Will I get early access or rewards for signing up?',
+      answer: 'Yes! Early supporters on the waitlist will get exclusive early access and priority invites — plus a few surprises we’re preparing for our first batch of founders.'
     },
     {
       question: 'How accurate are the financial forecasts?',
       answer: 'Our financial models are based on industry benchmarks and best practices for startup projections. While we provide solid foundations, we always recommend reviewing numbers with a financial advisor or mentor familiar with your specific market.'
     },
     {
-      question: 'Do you offer support for teams?',
-      answer: 'Yes! Our team plans include collaboration features, shared workspaces, and dedicated account management. We also offer training sessions for accelerators and incubators working with multiple startups.'
+      question: 'Is GidiPitch free to use?',
+      answer: 'GidiPitch will have a free plan so you can explore and create right away, with more advanced tools available through premium options once we launch.'
     }
   ];
 
