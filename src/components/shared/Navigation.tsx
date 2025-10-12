@@ -19,7 +19,7 @@ const Navigation = () => {
   const navItems = [
     { href: "#features", label: "Features" },
     { href: "#benefits", label: "Benefits" },
-    { href: "#faq", label: "Faq" },
+    { href: "#faq", label: "FAQs" },
   ];
 
   const scrollToSection = (href: string) => {
@@ -65,7 +65,7 @@ const Navigation = () => {
           {/* CTA Buttons */}
              <div className="hidden md:flex items-center gap-3">
             <button
-              className="text-primary text-sm px-4 py-3 font-semibold text-[16px] transition-all duration-300 bg-primary text-white hover:text-white hover:bg-primary hover:px-6 hover:py-3 rounded-lg"
+              className="text-primary text-sm px-4 py-3 font-semibold text-[16px] transition-all duration-300  hover:text-white hover:bg-primary hover:px-6 hover:py-3 rounded-lg"
               onClick={() => (window.location.href = "#")}
             >
               Login
