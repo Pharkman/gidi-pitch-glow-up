@@ -104,7 +104,7 @@ const Navigation = () => {
               <div className="pt-2">
                 <button
                   className="text-primary font-semibold text-[16px]  px-4 py-3 block mb-2"
-                  onClick={() => (window.location.href = "/signin")}
+                  onClick={() => (window.location.href = "/#")}
                 >
                   Login
                 </button>

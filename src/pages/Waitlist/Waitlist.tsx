@@ -168,7 +168,7 @@ const Waitlist = () => {
     value={email}
      onChange={(e) => setEmail(e.target.value)}
     placeholder="Enter email address"
-    className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 max-sm:rounded-lg placeholder:text-[16px]"
+    className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 max-sm:rounded-lg placeholder:text-[15px]"
   />
   <button className="w-full md:w-auto rounded-r-lg bg-[#FF5619] text-white font-semibold px-6 py-3 transition-all duration-300 hover:bg-[#e14e18] max-sm:rounded-lg text-sm"
   onClick={handleJoinWaitlist}
