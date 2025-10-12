@@ -67,10 +67,6 @@ import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
       answer: 'Yes! Early supporters on the waitlist will get exclusive early access and priority invites — plus a few surprises we’re preparing for our first batch of founders.'
     },
     {
-      question: 'How accurate are the financial forecasts?',
-      answer: 'Our financial models are based on industry benchmarks and best practices for startup projections. While we provide solid foundations, we always recommend reviewing numbers with a financial advisor or mentor familiar with your specific market.'
-    },
-    {
       question: 'Is GidiPitch free to use?',
       answer: 'GidiPitch will have a free plan so you can explore and create right away, with more advanced tools available through premium options once we launch.'
     }
