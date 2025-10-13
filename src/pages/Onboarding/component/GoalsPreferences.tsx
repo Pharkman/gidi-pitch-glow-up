@@ -63,7 +63,6 @@ export default function GoalsPreferences() {
         initialValues={{ goals: [] as string[] }}
         validationSchema={goalsSchema}
         onSubmit={(values, { setSubmitting }) => {
-          // ✅ Convert array into a single string
           const payload = {
             goals: values.goals,
           };
@@ -89,7 +88,7 @@ export default function GoalsPreferences() {
           >
             <p className="font-medium text-sm sm:text-base mb-4 w-full">
               What are your primary goals?
-              <span className="text-gray-500">(Select all that apply)</span>
+              <span className="text-gray-500"> (Select all that apply)</span>
             </p>
 
             <FieldArray
@@ -114,14 +113,14 @@ export default function GoalsPreferences() {
                             : "bg-white border-gray-300 text-gray-700 hover:border-orange-400"
                         }`}
                       >
-                        {/* ✅ Checkbox in top-right corner */}
+                       
                         {isSelected && (
                           <div className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full bg-white">
                             <Check className="w-4 h-4 text-orange-500" />
                           </div>
                         )}
                         <div className="mb-2">{goal.icon}</div>
-                        <p className="font-medium text-sm">{goal.label}</p>
+                        <p className="font-medium text-sm max-sm:text-[14px] max-sm:text-center">{goal.label}</p>
                       </div>
                     );
                   })}
