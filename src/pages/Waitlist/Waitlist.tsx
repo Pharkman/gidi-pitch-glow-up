@@ -162,7 +162,7 @@ const Waitlist = () => {
         </p>
 
         {/* Email Input + Button */}
-       <div className="mb-4 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto max-sm:gap-3">
+       <div className="mb-10 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto max-sm:gap-3">
   <input
     type="email"
     value={email}

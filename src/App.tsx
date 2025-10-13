@@ -33,6 +33,7 @@ import GlobalLoader from "./components/Loader";
 import { useEffect, useState } from "react";
 import { useDocumentTitle } from "./hooks/use-document-title";
 import PitchSlide from "./pages/Slides/PitchSlide";
+import PeopleData from "./pages/people_temp";
 
 
 function AppRoutes() {
@@ -91,6 +92,7 @@ function AppRoutes() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="auth/password/reset" element={<ResetPassword />} />
         <Route path="/waitlist" element={<Waitlist />} />
+        <Route path="/people" element={<PeopleData />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/onboarding/about-startup" element={<AboutStartup />} />
         <Route path="/onboarding/shape-startup" element={<ShapeStartup />} />
