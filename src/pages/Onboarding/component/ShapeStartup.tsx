@@ -37,7 +37,7 @@ const ShapeStartup = () => {
       </div>
 
       {/* Title & Subtitle */}
-      <h1 className="text-3xl text-[#1D1D1D] font-extrabold mb-2 text-center max-sm:text-2xl">
+      <h1 className="text-3xl text-[#1D1D1D] font-extrabold mb-2 text-center max-sm:text-[22px]">
         Shape Your Startup Journey
       </h1>
       <p className="text-[#858585] font-medium text-[15px] mt-1 text-center mb-6">
