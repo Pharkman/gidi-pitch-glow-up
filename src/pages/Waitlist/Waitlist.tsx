@@ -178,13 +178,13 @@ const Waitlist = () => {
 </div>
 
         {/* People joined */}
-        <p className="text-sm text-[#555555] mb-12">
+        {/* <p className="text-sm text-[#555555] mb-12">
   {peopleLoading
     ? "Loading..."
     : `${peopleData?.data.count || 0} ${
         peopleData?.data.count === 1 ? "PERSON" : "PEOPLE"
       } JOINED`}
-</p>
+</p> */}
 
 
         {/* Hero Image */}
