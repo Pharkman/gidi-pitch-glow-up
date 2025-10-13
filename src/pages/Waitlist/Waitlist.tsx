@@ -162,7 +162,7 @@ const Waitlist = () => {
         </p>
 
         {/* Email Input + Button */}
-       <div className="mb-10 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto max-sm:gap-3">
+       <div className="mb-4 flex flex-col md:flex-row items-center justify-center max-w-md mx-auto max-sm:gap-3">
   <input
     type="email"
     value={email}
@@ -178,13 +178,13 @@ const Waitlist = () => {
 </div>
 
         {/* People joined */}
-        {/* <p className="text-sm text-[#555555] mb-12">
+        <p className="text-sm text-[#555555] mb-12">
   {peopleLoading
     ? "Loading..."
     : `${peopleData?.data.count || 0} ${
         peopleData?.data.count === 1 ? "PERSON" : "PEOPLE"
       } JOINED`}
-</p> */}
+</p>
 
 
         {/* Hero Image */}
