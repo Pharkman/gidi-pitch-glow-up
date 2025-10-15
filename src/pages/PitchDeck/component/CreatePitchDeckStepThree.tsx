@@ -1,66 +1,23 @@
+import { FaChevronDown } from "react-icons/fa";
 import { FiArrowLeft } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useCreatePitchDeck } from "@/lib/query";
-import { toast } from "react-toastify";
+import { Formik, Form, Field } from "formik";
 
-
-export default function CreatePitchDeckStepFour({ onClose }) {
+export default function CreatePitchDeckStepThree({ onClose }) {
   const navigate = useNavigate();
-  const { mutate, isPending } = useCreatePitchDeck();
-  const [pitchData, setPitchData] = useState(null);
 
-  // Load data from localStorage when component mounts
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("pitchDeckData"));
-    if (savedData) setPitchData(savedData);
-  }, []);
+  // Load previously saved data if available
+  const savedData = JSON.parse(localStorage.getItem("pitchDeckData")) || {};
 
-  const handleSubmit = () => {
-    if (!pitchData) {
-      toast.error("No pitch data found!");
-      return;
-    }
-
-    // Format payload (ensure keys match your backend API)
-    const payload = {
-      startUpName: pitchData.startupName || "",
-      industry: pitchData.industry || "",
-      brandColor: pitchData.brandColor || "#FF5619", // optional fallback
-      problems: pitchData.problems ? [pitchData.problems] : [],
-      solutions: pitchData.solutions ? [pitchData.solutions] : [],
-      features: pitchData.features ? [pitchData.features] : [],
-      founders: pitchData.team ? [pitchData.team] : [],
-      scope: pitchData.scope || "",
-      slides: pitchData.slides || [],
-    };
-
-    mutate(payload, {
-      onSuccess: () => {
-        localStorage.removeItem("pitchDeckData");
-        toast.success("Pitch Deck Created!");
-        navigate("/dashboard/pitchdecks");
-      },
-    });
-  };
-
-  if (!pitchData) {
-    return (
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="bg-white p-6 rounded-xl text-center">
-          <p className="text-gray-600 text-sm">Loading saved pitch deck data...</p>
-        </div>
-      </div>
-    );
-  }
+  
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white w-full max-w-xl rounded-2xl p-6 shadow-xl border border-gray-100 max-sm:mx-3">
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-lg font-semibold text-gray-900">Review & Submit</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Create Pitch Deck</h2>
           <button
             onClick={onClose}
             className="text-gray-700 hover:text-gray-900 transition"
@@ -76,39 +33,90 @@ export default function CreatePitchDeckStepFour({ onClose }) {
           <div className="w-10 h-1.5 rounded-full bg-orange-500"></div>
         </div>
 
-        {/* Summary (optional for display) */}
-        <div className="space-y-3 mb-6">
-          <p><strong>Startup Name:</strong> {pitchData.startupName}</p>
-          <p><strong>Industry:</strong> {pitchData.industry}</p>
-          <p><strong>Scope:</strong> {pitchData.scope}</p>
-          <p><strong>Team:</strong> {pitchData.team}</p>
-          <p><strong>Problem:</strong> {pitchData.problems}</p>
-          <p><strong>Solution:</strong> {pitchData.solutions}</p>
-          <p><strong>Ask:</strong> {pitchData.ask}</p>
-        </div>
+        {/* Formik Form */}
+        <Formik
+          initialValues={{
+            scope: savedData.scope || "",
+            team: savedData.team || "",
+            ask: savedData.ask || "",
+          }}
+          onSubmit={(values) => {
+            // Merge with previous step data
+            const previousData = JSON.parse(localStorage.getItem("pitchDeckData")) || {};
+            const updatedData = { ...previousData, ...values };
 
-        {/* Navigation Buttons */}
-        <section className="flex justify-between items-center">
-          <div
-            onClick={() => navigate("/create-pitchdeck/step-three")}
-            className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-gray-900 transition"
-          >
-            <FiArrowLeft className="text-lg" />
-            <span className="text-sm font-medium">Go Back</span>
-          </div>
+            // Save to localStorage
+            localStorage.setItem("pitchDeckData", JSON.stringify(updatedData));
 
-          <div className="flex justify-end">
-            <button
-              onClick={handleSubmit}
-              disabled={isPending}
-              className={`${
-                isPending ? "bg-orange-300" : "bg-[#FF5619] hover:bg-orange-600"
-              } text-white text-sm font-medium px-5 py-2.5 rounded-lg transition`}
-            >
-              {isPending ? "Submitting..." : "Submit"}
-            </button>
-          </div>
-        </section>
+            // Navigate to next step
+            navigate("/create-pitchdeck/step-four");
+          }}
+        >
+          {() => (
+            <Form>
+              {/* Scope */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-800 mb-1">
+                  Scope
+                </label>
+                <Field
+                  name="scope"
+                  type="text"
+                  placeholder="e.g. PayLink Africa"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Team */}
+              <div className="mb-3">
+                <label className="block text-sm font-medium text-gray-800 mb-1">
+                  Team
+                </label>
+                <Field
+                  as="textarea"
+                  name="team"
+                  rows="3"
+                  placeholder="e.g. 2 founders with backgrounds in fintech and design."
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Ask */}
+              <div>
+                <label className="block text-sm font-medium text-gray-800 mb-1">
+                  Ask (optional)
+                </label>
+                <Field
+                  as="textarea"
+                  name="ask"
+                  rows="3"
+                  placeholder="e.g. Raising $50k to scale across Africa."
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                />
+              </div>
+
+              {/* Navigation Buttons */}
+              <section className="flex justify-between items-center mt-6">
+                <div
+                  onClick={() => navigate("/create-pitchdeck/step-two")}
+                  className="flex items-center gap-2 text-gray-600 cursor-pointer max-sm:px-0 hover:text-gray-900 transition"
+                >
+                  <FiArrowLeft className="text-lg" />
+                  <span className="text-sm font-medium">Go Back</span>
+                </div>
+
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="bg-[#FF5619] text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-orange-600 transition"
+                  >
+                    Next
+                  </button>
+                </div>
+              </section>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );
