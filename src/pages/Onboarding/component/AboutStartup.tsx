@@ -47,10 +47,10 @@ export default function AboutStartup() {
       </div>
 
       {/* Heading */}
-      <h1 className="text-2xl font-extrabold mb-2 text-center max-w-3xl">
+      <h1 className="text-2xl font-extrabold mb-2 text-center ">
         Tell us about your startup
       </h1>
-      <p className="text-gray-500 mb-6 text-center max-w-xs font-medium">
+      <p className="text-gray-500 mb-6 text-center font-medium">
         This helps GidiPitch personalize your pitch and recommendations.
       </p>
 
@@ -73,7 +73,7 @@ export default function AboutStartup() {
         }}
       >
         {({ values, setFieldValue }) => (
-          <Form className="w-full max-w-xl">
+          <Form className="w-full max-w-3xl max-sm:max-w-xl">
             {/* Startup type selection */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5 max-sm:gap-5 mb-6 max-sm:px-1">
               {startupOptions.map((option) => (

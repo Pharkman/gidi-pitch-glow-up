@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { INewUser, IVerifyUser, OnboardingPayload, ResetPasswordPayload } from "../types";
+import { CreatePitchDeck, INewUser, IVerifyUser, OnboardingPayload, ResetPasswordPayload } from "../types";
 
 import { QUERY_KEYS } from "../queryKeys";
 import { toast } from "react-toastify";
@@ -347,6 +347,7 @@ export const useGetTokenFromQuery = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
+        credentials: "include",
       });
 
       const result = await res.json();
@@ -400,3 +401,112 @@ export async function logout() {
     alert('Failed to log out');
   }
 }
+
+export const useCreatePitchDeck = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async ({
+      startUpName,
+      industry,
+      brandColor,
+      problems,
+      solutions,
+      features,
+      founders,
+      scope,
+      slides
+    }: CreatePitchDeck) => {
+      try {
+        const res = await fetch(`${BASE_URL}/pitch/deck/create`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            startUpName,
+            industry,
+            brandColor,
+            problems,  
+            solutions, 
+            features,  
+            founders,  
+            scope,
+            slides
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error || 'Something went wrong');
+
+        console.log('Pitch deck response:', data);
+
+        // Success flow
+        toast.success('Pitch deck created successfully!');
+        navigate('/dashboard/pitchdecks'); // redirect to dashboard or anywhere you prefer
+
+        return data;
+      } catch (error) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || 'Failed to create pitch deck');
+        } else {
+          toast.error('Failed to create pitch deck');
+        }
+      }
+    },
+  });
+};
+
+
+export const useGetIndustries = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_INDUSTRIES],
+    queryFn: async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/pitch/deck/industries`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err?.message || 'Failed to get industries');
+        }
+
+        return res.json();
+      } catch (error: unknown) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || 'Failed to get industries');
+        } else {
+          toast.error('Failed to get industries');
+        }
+      }
+    }
+  });
+}
+
+export const useGetIndustries_Slides = (industry) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_INDUSTRIES_SLIDES, industry],
+    queryFn: async () => {
+      if (!industry) return null; 
+
+      const res = await fetch(`${BASE_URL}/pitch/deck/slides/${industry}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err?.message || "Failed to get slides for this industry");
+      }
+
+      return res.json();
+    },
+    enabled: !!industry, 
+    onError: (error) => {
+      toast.error(error.message || "Failed to fetch slides");
+    },
+  });
+};

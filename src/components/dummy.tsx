@@ -68,6 +68,28 @@ import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
     },
     {
       question: 'Is GidiPitch free to use?',
+      answer: 'Yes! We offer a free tier that includes basic pitch deck generation and limited financial forecasting. Our premium plans unlock advanced features like unlimited exports, custom branding, and priority support.'
+    }
+  ];
+  export const faqs_landing = [
+    {
+      question: 'Is GidiPitch free to use?',
+      answer: 'GidiPitch is an AI-powered toolkit that helps African founders create investor-ready pitch decks, resumes, and startup materials — fast. It’s built for early-stage founders who want to tell their story clearly and attract investors with confidence.'
+    },
+    {
+      question: 'Can I edit the generated pitch deck?',
+      answer: 'By joining the waitlist, you’ll be among the first to access GidiPitch when we launch. You’ll also get early product updates, sneak peeks, and special founder-only perks before the public rollout.'
+    },
+    {
+      question: 'When will GidiPitch launch?',
+      answer: 'We’re working hard to make sure GidiPitch delivers the best possible experience. While there’s no fixed date yet, waitlist members will be the first to know once we go live.'
+    },
+    {
+      question: 'Will I get early access or rewards for signing up?',
+      answer: 'Yes! Early supporters on the waitlist will get exclusive early access and priority invites — plus a few surprises we’re preparing for our first batch of founders.'
+    },
+    {
+      question: 'Is GidiPitch free to use?',
       answer: 'GidiPitch will have a free plan so you can explore and create right away, with more advanced tools available through premium options once we launch.'
     }
   ];
@@ -243,7 +265,7 @@ import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 export const socialLinks = [
   { icon: Twitter, href: 'https://x.com/gidipitch', label: 'Twitter' },
   { icon: Linkedin, href: 'https://www.linkedin.com/company/gidipitch', label: 'LinkedIn' },
-  { icon: Github, href: 'https://github.com/Pharkman/gidi-pitch-glow-up', label: 'GitHub' },
+  { icon: Github, href: '#', label: 'GitHub' },
   { icon: Instagram, href: 'https://www.instagram.com/gidipitch/', label: 'Instagram' }
 ];
 

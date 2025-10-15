@@ -34,6 +34,11 @@ import { useEffect, useState } from "react";
 import { useDocumentTitle } from "./hooks/use-document-title";
 import PitchSlide from "./pages/Slides/PitchSlide";
 import PeopleData from "./pages/people_temp";
+import { ThemeProvider } from "./lib/context/ThemeProvider";
+import PitchDeckForm from "./pages/PitchDeck/PitchDeck";
+import CreatePitchDeckStepOne from "./pages/PitchDeck/component/CreatePitchDeckStepOne";
+import CreatePitchDeckStepTwo from "./pages/PitchDeck/component/CreatePitchDeckStepTwo";
+import CreatePitchDeckStepThree from "./pages/PitchDeck/component/CreatePitchDeckStepThree";
 
 
 function AppRoutes() {
@@ -93,20 +98,24 @@ function AppRoutes() {
         <Route path="auth/password/reset" element={<ResetPassword />} />
         <Route path="/waitlist" element={<Waitlist />} />
         <Route path="/people" element={<PeopleData />} />
+        <Route path="/pitch-deck" element={<PitchDeckForm />} />
+        <Route path="/create-pitchdeck/step-one" element={<CreatePitchDeckStepOne />} />
+        <Route path="/create-pitchdeck/step-two" element={<CreatePitchDeckStepTwo />} />
+        <Route path="/create-pitchdeck/step-three" element={<CreatePitchDeckStepThree />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/onboarding/about-startup" element={<AboutStartup />} />
         <Route path="/onboarding/shape-startup" element={<ShapeStartup />} />
         <Route path="/onboarding/goal_preference" element={<GoalsPreferences />} />
         <Route path="/pitch-slide" element={<PitchSlide />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/pitch-decks" element={<PitchDecksPage />} />
-        <Route path="/resume-builder" element={<ResumeBuilderPage />} />
-        <Route path="/resume-builder-editor" element={<ResumeEditorPage />} />
-        <Route path="/team-members" element={<TeamMembersPage />} />
-        <Route path="/pitch-deck-outline" element={<PitchDeckOutlinePage />} />
-        <Route path="/pitch-deck-generating" element={<PitchDeckGeneratingPage />} />
-        <Route path="/pitch-deck-editor" element={<PitchDeckEditorPage />} />
-        <Route path="/resume-generating" element={<ResumeGeneratingPage />} />
+        <Route path="/pitch-decks" element={<ProtectedRoute><PitchDecksPage /></ProtectedRoute>} />
+        <Route path="/resume-builder" element={<ProtectedRoute><ResumeBuilderPage /></ProtectedRoute>} />
+        <Route path="/resume-builder-editor" element={<ProtectedRoute><ResumeEditorPage /></ProtectedRoute>} />
+        <Route path="/team-members" element={<ProtectedRoute><TeamMembersPage /></ProtectedRoute>} />
+        <Route path="/pitch-deck-outline" element={<ProtectedRoute><PitchDeckOutlinePage /></ProtectedRoute>} />
+        <Route path="/pitch-deck-generating" element={<ProtectedRoute><PitchDeckGeneratingPage /></ProtectedRoute>} />
+        <Route path="/pitch-deck-editor" element={<ProtectedRoute><PitchDeckEditorPage /></ProtectedRoute>} />
+        <Route path="/resume-generating" element={<ProtectedRoute><ResumeGeneratingPage /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
@@ -117,6 +126,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+  <ThemeProvider defaultTheme="light" storageKey="vobb-ui-theme">
     <TooltipProvider>
       <Toaster />
       <ToastContainer
@@ -138,6 +148,7 @@ const App = () => (
         <AppRoutes />
       </BrowserRouter>
     </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
