@@ -17,7 +17,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import GidiLogo from "@/assets/Frame 481473.png";
 import { useLocation } from "react-router-dom";
-import { getPageTitle } from "@/lib/utils/getPageTitle";
+// import { getPageTitle } from "@/lib/utils/getPageTitle";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const DashboardHeader = ({
   user_data,
@@ -28,7 +29,7 @@ const DashboardHeader = ({
   setDesktopSidebarVisible,
 }) => {
   const location = useLocation();
-  const pageTitle = getPageTitle(location.pathname);
+  // const pageTitle = getPageTitle(location.pathname);
   
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
@@ -57,12 +58,13 @@ const DashboardHeader = ({
        
           
           {/* Page Title */}
-          <h1 className="text-[16px] text-[#1D1D1D] pl-24 font-semibold hidden md:block">{pageTitle}</h1>
+          <h1 className="text-[16px] text-[#1D1D1D] pl-24 font-semibold hidden md:block"></h1>
         </div>
 
-        {/* Right side: Notifications + User Menu */}
+        {/* Right side: Theme Toggle + Notifications + User Menu */}
         <div className="flex items-center space-x-3 sm:space-x-4">
-    
+          {/* Theme Toggle */}
+          {/* <ThemeToggle /> */}
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

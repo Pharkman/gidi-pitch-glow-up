@@ -19,10 +19,14 @@ const ShapeStartup = () => {
   return (
     <div className="min-h-screen py-10 max-sm:py-10 flex flex-col items-center justify-center bg-white px-4">
       {/* Back button */}
-      <div className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer max-sm:px-0">
-        <FiArrowLeft />
-        <span className="text-sm font-medium">Go Back</span>
-      </div>
+     
+      <div
+      onClick={() => navigate("/onboarding/about-startup")}
+      className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer max-sm:px-0 hover:text-gray-900 transition"
+    >
+      <FiArrowLeft className="text-lg" />
+      <span className="text-sm font-medium">Go Back</span>
+    </div>
 
       {/* Logo */}
       <div className="mb-6">
@@ -61,7 +65,7 @@ const ShapeStartup = () => {
         }}
       >
         {({ errors, touched }) => (
-          <Form className="w-full max-w-xl flex flex-col space-y-6">
+          <Form className="w-full max-w-2xl flex flex-col space-y-6 max-sm:max-w-xl">
             {/* Target Audience */}
             <div className="flex flex-col">
               <label className="mb-3 text-[#1D1D1D] font-medium">

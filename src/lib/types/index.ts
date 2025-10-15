@@ -23,3 +23,22 @@ export interface ResetPasswordPayload  {
   confirmPassword: string;
   token: string;
 };
+
+export interface CreatePitchDeck {
+  startUpName: string;
+  industry: string;
+  brandColor: string;
+  problems: string[]; // array of strings
+  solutions: string[]; // array of strings
+  features: {
+    feature: string;
+    description: string;
+  }[]; // array of objects
+  founders: {
+    name: string;
+    title: string;
+    role: string;
+  }[]; // array of objects
+  scope: string;
+  slides: string[]; // array of strings
+}

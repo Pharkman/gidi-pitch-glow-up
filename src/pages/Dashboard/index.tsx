@@ -47,6 +47,9 @@ import freepik_build6 from "@/assets/freepik_build6.png"
 import { getUserDetails, logout, useGetTokenFromQuery, useGetUser } from '@/lib/query';
 import { useSearchParams } from 'react-router-dom';
 import DashboardHeader from './component/Header';
+import Sidebar from '@/components/SideBar/SideBar';
+import { sidebarItems } from '@/components/SideBar/component/SideBarItems';
+import CreatePitchDeckModal from '../PitchDeck/component/CreatePitchDeckModal';
 // Reusable ToolCard component
 const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle }: {
   image: string,
@@ -91,7 +94,7 @@ const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle 
 // Reusable InviteButton component
 const InviteButton = () => (
   <button
-    className="flex items-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-2 rounded-lg font-semibold text-base shadow transition-colors"
+    className="flex items-center justify-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-3 rounded-lg font-semibold text-base shadow-md transition-all duration-200 hover:shadow-lg w-full mx-auto mb-6 border border-[#FF5A1F]"
     type="button"
   >
     <UserPlus className="w-5 h-5" />
@@ -108,6 +111,7 @@ const Dashboard = () => {
   const [desktopSidebarVisible, setDesktopSidebarVisible] = useState(true);
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [user, setUser] = useState(null);
+   const [showPitchDeckModal, setShowPitchDeckModal] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -118,15 +122,6 @@ const Dashboard = () => {
     fetchUser();
   }, []);
 
-  const sidebarItems = [
-    { name: 'Dashboard', icon: BarChart3, active: true, available: true },
-    { name: 'Pitch Deck Generator', icon: FileText, active: false, available: true },
-    { name: 'Resume Builder', icon: User, active: false, available: true },
-    { name: 'Financial Forecast', icon: BarChart3, active: false, available: true },
-    { name: 'Market Estimator', icon: Target, active: false, available: true },
-    { name: 'YC Assistant', icon: Users, active: false, available: true },
-    { name: 'AI Coach', icon: Brain, active: false, available: true },
-  ];
 
 
 
@@ -189,104 +184,20 @@ const Dashboard = () => {
 
       <div className="flex">
         {/* Sidebar (Desktop) */}
-<aside className={`hidden md:flex ${desktopSidebarVisible ? 'w-64' : 'w-16'} transition-all duration-300 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex-col justify-between h-screen`}>
-  <div className="p-2 mt-3">
-    <nav className="space-y-2">
-      {sidebarItems.map((item) => (
-        <Button
-          key={item.name}
-          variant={item.active ? 'default' : 'ghost'}
-          className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={!item.available}
-          title={!desktopSidebarVisible ? item.name : undefined}
-        >
-          <item.icon className={`${desktopSidebarVisible ? 'mr-3' : 'mx-auto'} h-4 w-4`} />
-          {desktopSidebarVisible && (
-            <>
-              {item.name}
-              {!item.available && (
-                <Badge variant="secondary" className="ml-auto text-xs">
-                  Soon
-                </Badge>
-              )}
-            </>
-          )}
-        </Button>
-      ))}
-    </nav>
-  </div>
-  <div className={desktopSidebarVisible ? '' : 'flex justify-center pb-4'}>
-    {desktopSidebarVisible ? (
-      <InviteButton />
-    ) : (
-      <Button size="icon" variant="ghost" title="Invite Team Member">
-        <UserPlus className="h-4 w-4" />
-      </Button>
-    )}
-  </div>
-</aside>
-
-{/* Sidebar (Mobile Drawer) */}
-{sidebarOpen && (
-  <div className="fixed inset-0 z-50 flex md:hidden">
-    {/* Overlay */}
-    <div
-      className="fixed inset-0 bg-black/40"
-      onClick={() => setSidebarOpen(false)}
-    />
-    
-    {/* Toggle Button (Mobile) */}
-    <button 
-      className="absolute top-4 right-4 z-50 bg-white rounded-full p-2 shadow-md"
-      onClick={() => setSidebarOpen(false)}
-    >
-      <X className="h-5 w-5" />
-    </button>
-
-    {/* Drawer */}
-    <aside className="relative w-64 bg-white shadow-lg flex flex-col justify-between h-full">
-      <div className="p-4">
-        <button
-          className="absolute top-3 right-3"
-          onClick={() => setSidebarOpen(false)}
-        >
-          <X className="h-5 w-5" />
-        </button>
-        <nav className="space-y-2 mt-6">
-          {sidebarItems.map((item) => (
-            <Button
-              key={item.name}
-              variant={item.active ? 'default' : 'ghost'}
-              className={`w-full justify-start ${!item.available ? 'opacity-50 cursor-not-allowed' : ''}`}
-              disabled={!item.available}
-            >
-              <item.icon className="mr-3 h-4 w-4" />
-              {item.name}
-              {!item.available && (
-                <Badge variant="secondary" className="ml-auto text-xs">
-                  Soon
-                </Badge>
-              )}
-            </Button>
-          ))}
-        </nav>
-      </div>
-      <div className="p-4">
-        <InviteButton />
-      </div>
-    </aside>
-  </div>
-)}
+ <Sidebar
+  sidebarItems={sidebarItems}
+  sidebarOpen={sidebarOpen}
+  setSidebarOpen={setSidebarOpen}
+  desktopSidebarVisible={desktopSidebarVisible}
+  setDesktopSidebarVisible={setDesktopSidebarVisible}
+  onPitchDeckClick={() => setShowPitchDeckModal(true)} // ✅ Add this line
+/>
 
 
         {/* Main Content */}
         <main className={`flex-1 p-6 transition-all duration-300 ${desktopSidebarVisible ? '' : 'md:ml-0'}`}>
           <div className="max-w-7xl mx-auto space-y-8">
-            {/* Welcome Section */}
             <div>
-             {/* <h2 className="text-2xl font-bold tracking-tight">
-  {user?.name ? `Welcome back, ${user.name.split(' ')[0]}` : 'Welcome back'}
-</h2> */}
 <h2
   className="
     text-2xl font-bold tracking-tight text-gray-900 
@@ -352,15 +263,16 @@ const Dashboard = () => {
 
                  </div>
         </main>
-      </div>
 
+
+      </div> 
       {/* Pitch Deck Creator */}
-      {selectedTool === 'Pitch Deck' && (
-        <PitchDeckCreator 
-          isOpen={showCreateModal} 
-          onClose={() => setShowCreateModal(false)} 
-        />
-      )}
+      {showPitchDeckModal && (
+  <CreatePitchDeckModal   
+    isOpen={showPitchDeckModal}
+    onClose={() => setShowPitchDeckModal(false)}
+  />
+)}
 
       {/* Resume Builder Modal - placeholder */}
       {selectedTool === 'Resume' && (

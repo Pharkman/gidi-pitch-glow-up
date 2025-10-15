@@ -31,12 +31,13 @@ export default function GoalsPreferences() {
   return (
     <div className="min-h-screen py-10 flex flex-col items-center justify-center bg-white px-4">
       {/* Back button */}
-      <div className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer max-sm:px-0">
-        <FiArrowLeft />
-        <span className="text-sm font-medium">
-          <a href="/onboarding/shape-startup">Go Back</a>
-        </span>
-      </div>
+      <div
+      onClick={() => navigate("/onboarding/shape-startup")}
+      className="absolute px-10 top-6 left-6 flex items-center gap-2 text-gray-600 cursor-pointer max-sm:px-0 hover:text-gray-900 transition"
+    >
+      <FiArrowLeft className="text-lg" />
+      <span className="text-sm font-medium">Go Back</span>
+    </div>
 
       {/* Logo */}
       <div className="flex flex-col items-center gap-4">
@@ -45,11 +46,11 @@ export default function GoalsPreferences() {
         </div>
 
         {/* Progress bar */}
-        <div className="flex gap-2 w-40">
-          <div className="h-1 flex-1 rounded-full bg-gray-200"></div>
-          <div className="h-1 flex-1 rounded-full bg-gray-200"></div>
-          <div className="h-1 flex-1 rounded-full bg-orange-500"></div>
-        </div>
+       <div className="flex space-x-2 mb-6">
+        <div className="w-16 h-2 bg-gray-300 rounded-full"></div>
+        <div className="w-16 h-2 bg-gray-300 rounded-full"></div>
+        <div className="w-16 h-2 bg-orange-500 rounded-full"></div>
+      </div>
 
         {/* Headings */}
         <h2 className="text-2xl font-extrabold text-center">Goals & Preferences</h2>
@@ -84,9 +85,9 @@ export default function GoalsPreferences() {
         {({ values, errors, touched, handleSubmit }) => (
           <Form
             onSubmit={handleSubmit}
-            className="mt-6 w-full max-w-xl flex flex-col items-center"
+            className="mt-6 w-full max-w-2xl flex flex-col items-center max-sm:max-w-xl"
           >
-            <p className="font-medium text-sm sm:text-base mb-4 w-full">
+            <p className="font-medium text-center text-sm sm:text-base mb-4 w-full">
               What are your primary goals?
               <span className="text-gray-500"> (Select all that apply)</span>
             </p>
@@ -120,7 +121,7 @@ export default function GoalsPreferences() {
                           </div>
                         )}
                         <div className="mb-2">{goal.icon}</div>
-                        <p className="font-medium text-sm max-sm:text-[14px] max-sm:text-center">{goal.label}</p>
+                        <p className="font-medium text-base max-sm:text-[14px] max-sm:text-center ">{goal.label}</p>
                       </div>
                     );
                   })}
