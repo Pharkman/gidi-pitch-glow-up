@@ -4,34 +4,32 @@ import { useUploadImg } from "@/lib/query";
 const UploadImg = ({ defaultImage, onSave, caption }) => {
   const [preview, setPreview] = useState(defaultImage || null);
   const [uploading, setUploading] = useState(false);
-  const { mutate: uploadImage } = useUploadImg(); // using mutate (not mutateAsync)
+  const { mutate: uploadImage } = useUploadImg();
   const fileInputRef = useRef(null);
 
   const handleClick = () => {
     if (fileInputRef.current) fileInputRef.current.click();
   };
 
-const handleFileChange = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+  const handleFileChange = (e) => {
+    const image = e.target.files[0];
+    if (!image) return;
 
-  setPreview(URL.createObjectURL(file));
-  setUploading(true);
+    setPreview(URL.createObjectURL(image));
+    setUploading(true);
 
-  // Send file directly (the hook will convert it to base64)
-  uploadImage(file, {
-    onSuccess: (response) => {
-      const uploadedUrl = response?.data?.url;
-      if (uploadedUrl) onSave(uploadedUrl);
-      setUploading(false);
-    },
-    onError: (err) => {
-      console.error("Upload failed:", err);
-      setUploading(false);
-    },
-  });
-};
-
+    uploadImage(image, {
+      onSuccess: (response) => {
+        const uploadedUrl = response?.data?.url;
+        if (uploadedUrl) onSave(uploadedUrl);
+        setUploading(false);
+      },
+      onError: (err) => {
+        console.error("Upload failed:", err);
+        setUploading(false);
+      },
+    });
+  };
 
   return (
     <div
@@ -58,7 +56,9 @@ const handleFileChange = (e) => {
       )}
 
       {caption && (
-        <p className="text-xs text-center text-gray-500 mt-2 italic">{caption}</p>
+        <p className="text-xs text-center text-gray-500 mt-2 italic">
+          {caption}
+        </p>
       )}
 
       <input
