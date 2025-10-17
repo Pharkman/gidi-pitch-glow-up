@@ -159,8 +159,12 @@ const Dashboard = () => {
           onSuccess: () => {
             console.log("Token saved successfully ✅");
           },
-          onError: (err: any) => {
-            console.error("Failed to set token ❌", err);
+          onError: (err: unknown) => {
+            if (err instanceof Error) {
+              console.error("Failed to set token ❌", err.message);
+            } else {
+              console.error("Failed to set token ❌", "An unknown error occurred");
+            }
           },
         }
       );

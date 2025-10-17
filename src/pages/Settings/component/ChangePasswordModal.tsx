@@ -37,8 +37,12 @@ export default function ChangePasswordModal() {
 
       toast.success("Password updated successfully!");
       navigate("/settings");
-    } catch (error: any) {
-      toast.error(error?.message || "Failed to update password");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || "Failed to update password");
+      } else {
+        toast.error("An unknown error occurred");
+      }
     }
   };
 
