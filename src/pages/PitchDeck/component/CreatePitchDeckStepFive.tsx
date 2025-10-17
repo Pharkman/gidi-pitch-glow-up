@@ -6,7 +6,8 @@ import { FiArrowLeft } from "react-icons/fi";
 
 export default function CreatePitchDeckStepFive() {
   const navigate = useNavigate();
-  const [pitchData, setPitchData] = useState<Record<string, any>>({});
+  const [pitchData, setPitchData] = useState<Record<string, string | string[]>>({});
+
   const [deckId, setDeckId] = useState<string | null>(null);
 
   // Load saved data from localStorage

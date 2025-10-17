@@ -4,7 +4,8 @@ import File_img from "../../../../public/assets/File.png";
 import Sparkles from "../../../../public/assets/Sparkle.png";
 import CreatePitchDeckStepOne from "./CreatePitchDeckStepOne";
 
-export default function CreatePitchDeckModal({ onClose }) {
+export default function CreatePitchDeckModal({ onClose }: { onClose: () => void }) {
+
   const [showStepOne, setShowStepOne] = useState(false);
 
   // if step modal is open, show it

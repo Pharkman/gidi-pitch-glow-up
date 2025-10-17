@@ -1,10 +1,10 @@
 export interface INewUser {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  newPassword: string;
-  oldPassword: string;
+  firstname?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+  newPassword?: string;
+  oldPassword?: string;
 }
 
 export interface IVerifyUser {

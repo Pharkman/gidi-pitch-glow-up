@@ -16,9 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import GidiLogo from "@/assets/Frame 481473.png";
-import { useLocation, useNavigate } from "react-router-dom";
-// import { getPageTitle } from "@/lib/utils/getPageTitle";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useNavigate } from "react-router-dom";
 
 const DashboardHeader = ({
   user_data,
@@ -68,7 +66,7 @@ const DashboardHeader = ({
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="none" className="flex items-center space-x-0">
+              <Button variant="ghost" className="flex items-center space-x-0">
                 <Avatar className="h-[40px] w-[40px]">
   <AvatarImage src={user_data?.user?.profileImage || ""} />
   <AvatarFallback className="bg-primary text-white font-semibold">

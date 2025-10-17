@@ -14,7 +14,7 @@ const {data:user_data} = useGetUser()
      <div>
         <DropdownMenu>
              <DropdownMenuTrigger asChild>
-              <Button variant="none" className="flex items-center space-x-0">
+              <Button  className="flex items-center space-x-0">
                 <Avatar className="h-[40px] w-[40px]">
   <AvatarImage src={user_data?.user?.profileImage || ""} />
   <AvatarFallback className="bg-primary text-white font-semibold">
