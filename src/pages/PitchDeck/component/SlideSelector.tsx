@@ -15,27 +15,27 @@ export default function SlideSelector({ slideData, selectedSlides = [], setField
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-xl font-semibold mb-3 text-bgprimary">
+      <h2 className="text-sm font-medium mb-3 text-gray-800">
         Select Slides ({selectedSlides.length})
       </h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3">
         {slideData?.data?.allowedSlides?.map((slide) => {
           const isSelected = selectedSlides.includes(slide);
           return (
             <div
               key={slide}
               onClick={() => handleSelect(slide)}
-              className={`relative cursor-pointer border rounded-xl p-4 flex items-center justify-center text-center text-sm font-medium capitalize transition-all duration-200
+              className={`relative cursor-pointer border rounded-lg px-3 py-3 flex items-center justify-center text-center text-sm font-medium capitalize transition-all duration-200
                 ${
                   isSelected
-                    ? "bg-bgprimary text-white border-bgprimary shadow-md scale-105"
-                    : "bg-white text-[#0b1525] border-bgprimary/40 hover:border-bgprimary/60"
+                    ? "bg-orange-100 text-orange-700 border-orange-500 shadow-md ring-2 ring-orange-300 scale-105"
+                    : "bg-white text-gray-700 border-gray-200 hover:border-orange-400 hover:bg-orange-50 hover:shadow-sm"
                 }`}
             >
               {slide}
               {isSelected && (
-                <FaCheckCircle className="absolute top-2 right-2 text-white" />
+                <FaCheckCircle className="absolute top-1.5 right-1.5 text-orange-500 text-[14px]" />
               )}
             </div>
           );

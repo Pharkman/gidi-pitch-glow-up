@@ -407,15 +407,18 @@ export const useCreatePitchDeck = () => {
 
   return useMutation({
     mutationFn: async ({
-      startUpName,
+      startupName,
       industry,
       brandColor,
       problems,
       solutions,
       features,
-      founders,
+      team,
       scope,
-      slides
+      slides,
+      businessModel,
+      imageGenType,
+      competitions
     }: CreatePitchDeck) => {
       try {
         const res = await fetch(`${BASE_URL}/pitch/deck/create`, {
@@ -423,15 +426,18 @@ export const useCreatePitchDeck = () => {
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
           body: JSON.stringify({
-            startUpName,
+            startupName,
             industry,
             brandColor,
             problems,  
             solutions, 
             features,  
-            founders,  
+            team,  
             scope,
-            slides
+            slides,
+            businessModel,
+            imageGenType,
+            competitions
           }),
         });
 
@@ -507,6 +513,103 @@ export const useGetIndustries_Slides = (industry) => {
     enabled: !!industry, 
     onError: (error) => {
       toast.error(error.message || "Failed to fetch slides");
+    },
+  });
+};
+
+export const useGetDeckProgress = (deckId) => {
+  return useQuery({
+    queryKey: ["GET_DECK_PROGRESS", deckId],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/pitch/deck/progress/${deckId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch deck progress");
+      return res.json();
+    },
+    enabled: !!deckId, // only run when deckId exists
+    retry: 20
+  });
+};
+
+export const useUpdateUser = () => {
+  return useMutation({
+    mutationFn: async ({
+      firstname,
+      lastname,
+      email,
+      password,
+      newPassword,
+oldPassword
+    }: INewUser) => {
+      try {
+        const res = await fetch(`${BASE_URL}/auth`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            firstname,
+            lastname,
+            email,
+            password,
+            newPassword,
+oldPassword
+          }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err?.message || 'Failed to update user');
+        }
+
+        return res.json();
+      } catch (error: unknown) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || 'Failed to update user');
+        } else {
+          toast.error('Failed to update user');
+        }
+      }
+    }
+  });
+
+}
+
+export const useUploadImg = () => {
+  return useMutation({
+    mutationFn: async (file) => {
+      // Convert image file to Base64
+      const toBase64 = (file) =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+        });
+
+      const base64Image = await toBase64(file);
+
+      const response = await fetch(`${BASE_URL}/image/upload`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          image: base64Image, // send as JSON
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Image upload failed");
+      }
+
+      return response.json();
     },
   });
 };

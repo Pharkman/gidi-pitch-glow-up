@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import GidiLogo from "@/assets/Frame 481473.png";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 // import { getPageTitle } from "@/lib/utils/getPageTitle";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
@@ -28,7 +28,7 @@ const DashboardHeader = ({
   desktopSidebarVisible,
   setDesktopSidebarVisible,
 }) => {
-  const location = useLocation();
+  const navigate = useNavigate(); 
   // const pageTitle = getPageTitle(location.pathname);
   
   return (
@@ -85,8 +85,15 @@ const DashboardHeader = ({
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+             <DropdownMenuItem onClick={() => navigate("/profile")}>
+                Profile
+              </DropdownMenuItem>
+
+              {/* ✅ Navigate to /setting when clicked */}
+              <DropdownMenuItem onClick={() => navigate("/settings")}>
+                Settings
+              </DropdownMenuItem>
+
               <DropdownMenuItem>Help</DropdownMenuItem>
               <Separator />
               <DropdownMenuItem onClick={handleLogout}>

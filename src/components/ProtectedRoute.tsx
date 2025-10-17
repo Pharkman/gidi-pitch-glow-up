@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useGetUser } from '@/lib/query';
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface ProtectedRouteProps {
@@ -6,36 +7,28 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const { data: user, isLoading, isError, isFetching } = useGetUser();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check for authentication
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
-    
-    if (!token || !user) {
-      navigate('/signin');
-    } else {
-      setIsAuthenticated(true);
-      
-      // Only prevent back button for authenticated users on protected routes
-      const handlePopState = () => {
-        window.history.pushState(null, '', location.pathname);
-      };
-      
-      window.history.pushState(null, '', location.pathname);
-      window.addEventListener('popstate', handlePopState);
-      
-      return () => {
-        window.removeEventListener('popstate', handlePopState);
-      };
+    // Only redirect after query has settled (not during background refetch)
+    if (!isLoading && !isFetching) {
+      if (!user || isError) {
+        // Not authenticated → send to signin
+        navigate('/signin', { replace: true });
+      } else if (user && location.pathname === '/signin') {
+        // Authenticated and still on signin → go to dashboard
+        navigate('/dashboard', { replace: true });
+      }
     }
-  }, [navigate, location.pathname]);
+  }, [user, isError, isLoading, isFetching, navigate, location.pathname]);
 
-  // Only render children when authenticated
-  return isAuthenticated ? <>{children}</> : null;
+  // While verifying user, show nothing or a loader
+  if (isLoading) return null;
+
+  // Render protected content if authenticated
+  return user ? <>{children}</> : null;
 };
 
 export default ProtectedRoute;
