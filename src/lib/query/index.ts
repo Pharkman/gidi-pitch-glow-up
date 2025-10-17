@@ -582,27 +582,14 @@ oldPassword
 
 export const useUploadImg = () => {
   return useMutation({
-    mutationFn: async (file) => {
-      // Convert image file to Base64
-      const toBase64 = (file) =>
-        new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = (error) => reject(error);
-        });
-
-      const base64Image = await toBase64(file);
+    mutationFn: async (image) => {
+      const formData = new FormData();
+      formData.append("image", image); // 👈 send as 'image'
 
       const response = await fetch(`${BASE_URL}/image/upload`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: formData,
         credentials: "include",
-        body: JSON.stringify({
-          image: base64Image, // send as JSON
-        }),
       });
 
       if (!response.ok) {
