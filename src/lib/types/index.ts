@@ -3,6 +3,8 @@ export interface INewUser {
   lastname: string;
   email: string;
   password: string;
+  newPassword: string;
+  oldPassword: string;
 }
 
 export interface IVerifyUser {
@@ -25,20 +27,20 @@ export interface ResetPasswordPayload  {
 };
 
 export interface CreatePitchDeck {
-  startUpName: string;
+  startupName: string;
   industry: string;
   brandColor: string;
-  problems: string[]; // array of strings
-  solutions: string[]; // array of strings
-  features: {
-    feature: string;
-    description: string;
-  }[]; // array of objects
-  founders: {
+  businessModel: string;
+  competitions: string;
+  problems: string; 
+  solutions: string; 
+  imageGenType: string
+  features: string;
+  team: {
     name: string;
     title: string;
     role: string;
   }[]; // array of objects
   scope: string;
-  slides: string[]; // array of strings
+  slides: string[]; 
 }

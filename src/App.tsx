@@ -39,6 +39,14 @@ import PitchDeckForm from "./pages/PitchDeck/PitchDeck";
 import CreatePitchDeckStepOne from "./pages/PitchDeck/component/CreatePitchDeckStepOne";
 import CreatePitchDeckStepTwo from "./pages/PitchDeck/component/CreatePitchDeckStepTwo";
 import CreatePitchDeckStepThree from "./pages/PitchDeck/component/CreatePitchDeckStepThree";
+import CreatePitchDeckSteFour from "./pages/PitchDeck/component/CreatePitchDeckStepFour";
+import CreatePitchDeckStepFive from "./pages/PitchDeck/component/CreatePitchDeckStepFive";
+import Settings from "./pages/Settings/Settings";
+import ChangeNameModal from "./pages/Settings/component/ChangeNameModal";
+import ChangeEmailModal from "./pages/Settings/component/ChangeEmailModal";
+import ChangePasswordModal from "./pages/Settings/component/ChangePasswordModal";
+import DeckPage from "./pages/Slides/component/DeckPage";
+import SlideSidebar from "./pages/Slides/component/SlideSidebar";
 
 
 function AppRoutes() {
@@ -98,16 +106,27 @@ function AppRoutes() {
         <Route path="auth/password/reset" element={<ResetPassword />} />
         <Route path="/waitlist" element={<Waitlist />} />
         <Route path="/people" element={<PeopleData />} />
-        <Route path="/pitch-deck" element={<PitchDeckForm />} />
-        <Route path="/create-pitchdeck/step-one" element={<CreatePitchDeckStepOne />} />
-        <Route path="/create-pitchdeck/step-two" element={<CreatePitchDeckStepTwo />} />
-        <Route path="/create-pitchdeck/step-three" element={<CreatePitchDeckStepThree />} />
+        {/* <Route path="/create-pitchdeck/step-four" element={<PitchSlide />} /> */}
+        <Route path="/create-pitchdeck/step-five" element={<CreatePitchDeckStepFive />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/onboarding/about-startup" element={<AboutStartup />} />
         <Route path="/onboarding/shape-startup" element={<ShapeStartup />} />
         <Route path="/onboarding/goal_preference" element={<GoalsPreferences />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+         <Route path="/pitch-deck" element={<PitchDeckForm />} />
+        <Route path="/create-pitchdeck/step-one" element={<CreatePitchDeckStepOne />} />
+        <Route path="/create-pitchdeck/step-two" element={<CreatePitchDeckStepTwo />} />
+        <Route path="/create-pitchdeck/step-three" element={<CreatePitchDeckStepThree />} />
+        <Route path="/create-pitchdeck/step-four" element={<CreatePitchDeckSteFour />} />
+        <Route path="/deck" element={<DeckPage />} />
         <Route path="/pitch-slide" element={<PitchSlide />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/slidebar" element={<SlideSidebar />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/change-name" element={<ChangeNameModal />} />
+        <Route path="/change-email" element={<ChangeEmailModal />} />
+        <Route path="/change-password" element={<ChangePasswordModal />} />
+
+
         <Route path="/pitch-decks" element={<ProtectedRoute><PitchDecksPage /></ProtectedRoute>} />
         <Route path="/resume-builder" element={<ProtectedRoute><ResumeBuilderPage /></ProtectedRoute>} />
         <Route path="/resume-builder-editor" element={<ProtectedRoute><ResumeEditorPage /></ProtectedRoute>} />

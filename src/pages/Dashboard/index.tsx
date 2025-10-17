@@ -150,7 +150,7 @@ const Dashboard = () => {
   
   
 
-  // Call token setter immediately when token exists
+
   useEffect(() => {
     if (token) {
       setToken(
@@ -190,7 +190,7 @@ const Dashboard = () => {
   setSidebarOpen={setSidebarOpen}
   desktopSidebarVisible={desktopSidebarVisible}
   setDesktopSidebarVisible={setDesktopSidebarVisible}
-  onPitchDeckClick={() => setShowPitchDeckModal(true)} // ✅ Add this line
+  onPitchDeckClick={() => setShowPitchDeckModal(true)}
 />
 
 
