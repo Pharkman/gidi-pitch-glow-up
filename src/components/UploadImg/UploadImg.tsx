@@ -37,7 +37,7 @@ const UploadImg = ({ defaultImage, onSave, caption }) => {
       onClick={handleClick}
     >
       {preview ? (
-        <div className="relative w-full h-[500px] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-[1.01]">
+        <div className="relative w-full h-[600px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-[1.01]">
           <img
             src={preview}
             alt={caption || "Slide image"}
@@ -50,7 +50,7 @@ const UploadImg = ({ defaultImage, onSave, caption }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-[500px] flex items-center justify-center border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 transition">
+        <div className="w-full h-[600px] flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 transition">
           {uploading ? "Uploading..." : "Click to Upload Image"}
         </div>
       )}
