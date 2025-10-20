@@ -1,32 +1,32 @@
 import React from "react";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useGetUser, useUpdateUser } from "@/lib/query"; // ✅ make sure this path matches your setup
+import { useGetUser, useUpdateUser } from "@/lib/query";
 import { toast } from "sonner";
 
-
 export default function ChangeNameModal() {
-const navigate = useNavigate();
-const [name, setName] = React.useState("");
-const { data, isLoading } = useGetUser();
-const user = data?.user;
+  const navigate = useNavigate();
+  const { data, isLoading } = useGetUser();
+  const user = data?.user;
 
+  const [firstname, setFirstname] = React.useState("");
+  const [lastname, setLastname] = React.useState("");
 
-React.useEffect(() => {
-  if (user) {
-    setName(`${user.firstname} ${user.lastname}`);
-  }
-}, [user]);
-  
+  React.useEffect(() => {
+    if (user) {
+      setFirstname(user.firstname || "");
+      setLastname(user.lastname || "");
+    }
+  }, [user]);
+
   const { mutateAsync: updateUser, isPending } = useUpdateUser();
-  console.log("Update",updateUser);
-
-  
-
-
 
   const handleSubmit = async () => {
-    const [firstname, lastname] = name.split(" ");
+    if (!firstname.trim() || !lastname.trim()) {
+      toast.error("Both first and last name are required.");
+      return;
+    }
+
     try {
       await updateUser({ firstname, lastname });
       toast.success("Name updated successfully!");
@@ -50,21 +50,39 @@ React.useEffect(() => {
           </button>
         </div>
 
-        {/* Input field */}
-        <div className="mb-6">
+        {/* First name */}
+        <div className="mb-4">
           <label
-            htmlFor="name"
+            htmlFor="firstname"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Full name
+            First name
           </label>
           <input
-            id="name"
+            id="firstname"
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={firstname}
+            onChange={(e) => setFirstname(e.target.value)}
             className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition"
-            placeholder="Enter your new name"
+            placeholder="Enter your first name"
+          />
+        </div>
+
+        {/* Last name */}
+        <div className="mb-6">
+          <label
+            htmlFor="lastname"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Last name
+          </label>
+          <input
+            id="lastname"
+            type="text"
+            value={lastname}
+            onChange={(e) => setLastname(e.target.value)}
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition"
+            placeholder="Enter your last name"
           />
         </div>
 

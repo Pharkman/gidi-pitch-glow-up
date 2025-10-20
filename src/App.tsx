@@ -112,7 +112,7 @@ function AppRoutes() {
         <Route path="/onboarding/about-startup" element={<AboutStartup />} />
         <Route path="/onboarding/shape-startup" element={<ShapeStartup />} />
         <Route path="/onboarding/goal_preference" element={<GoalsPreferences />} />
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<Dashboard />} />
          <Route path="/pitch-deck" element={<PitchDeckForm />} />
         <Route path="/create-pitchdeck/step-one" element={<CreatePitchDeckStepOne />} />
         <Route path="/create-pitchdeck/step-two" element={<CreatePitchDeckStepTwo />} />

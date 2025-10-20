@@ -33,6 +33,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
             <div className="w-10 h-1.5 rounded-full bg-gray-200"></div>
             <div className="w-10 h-1.5 rounded-full bg-gray-200"></div>
             <div className="w-10 h-1.5 rounded-full bg-[#FF5619]"></div>
+              <div className="w-10 h-1.5 rounded-full bg-gray-200"></div>
           </div>
 
           {/* Formik Form */}
@@ -61,7 +62,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                     name="scope"
                     type="text"
                     placeholder="e.g. PayLink Africa"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-[#FF5619]/80 focus:outline-none transition-all"
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-[#FF5619]/80 focus:outline-none transition-all relative z-[1] focus:z-[50]"
                   />
                 </div>
 

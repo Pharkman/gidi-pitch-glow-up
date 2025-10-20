@@ -59,9 +59,9 @@ const PitchSlide = () => {
                     ref={(el) => (slideRefs.current[index] = el)}
                     className={`flex flex-col ${
                       index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-                    } items-center gap-10 bg-white rounded-2xl shadow-lg border border-gray-200 p-8 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5`}
+                    } items-center gap-10 bg-white  shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5`}
                   >
-                    <div className="w-full md:w-[80%] space-y-5">
+                    <div className="w-full md:w-[80%] space-y-6 px-8 ">
                       <h2 className="text-2xl font-bold text-[#FF5619] max-sm:text-xl">{slide.title}</h2>
                       {slide.bullets && (
                         <ul className="list-disc pl-5 space-y-2 text-gray-700 text-[15px]">

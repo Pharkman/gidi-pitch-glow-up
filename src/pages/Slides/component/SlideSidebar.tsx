@@ -23,20 +23,42 @@ export default function SlideSidebar({ slides = [], onSlideSelect }) {
           <div
             key={i}
             onClick={() => handleClick(i)}
-            className={`group relative cursor-pointer transition-all duration-300 rounded-xl ${
-              activeIndex === i ? "ring-2 ring-[#FF5619]" : "hover:ring-1 hover:ring-gray-300"
+            className={`group relative cursor-pointer transition-all duration-300 rounded-xl overflow-hidden ${
+              activeIndex === i
+                ? "ring-2 ring-[#FF5619] shadow-lg"
+                : "hover:ring-1 hover:ring-gray-300"
             }`}
           >
-            <div className="w-full h-32 bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
+            {/* Mini slide preview */}
+            <div className="bg-gray-50 rounded-xl flex flex-col p-3 gap-2 h-36 overflow-hidden">
+              {/* Image thumbnail */}
               {slide.image ? (
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className="object-cover w-full h-full"
-                />
+                <div className="w-full h-20 rounded-lg overflow-hidden">
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
               ) : (
-                <span className="text-gray-400 text-sm font-medium">{i + 1}</span>
+                <div className="w-full h-20 rounded-lg bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
+                  No Image
+                </div>
               )}
+
+              {/* Text content */}
+              <div className="flex-1 flex flex-col justify-between">
+                <h3 className="text-[12px] font-semibold text-gray-800 truncate">
+                  {slide.title || `Slide ${i + 1}`}
+                </h3>
+                {slide.bullets && slide.bullets.length > 0 && (
+                  <ul className="text-[10px] text-gray-600 list-disc pl-3 leading-tight line-clamp-2 mt-1">
+                    {slide.bullets.slice(0, 2).map((point, idx) => (
+                      <li key={idx}>{point}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
         ))}
