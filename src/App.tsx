@@ -47,6 +47,7 @@ import ChangeEmailModal from "./pages/Settings/component/ChangeEmailModal";
 import ChangePasswordModal from "./pages/Settings/component/ChangePasswordModal";
 import DeckPage from "./pages/Slides/component/DeckPage";
 import SlideSidebar from "./pages/Slides/component/SlideSidebar";
+import CorrectedSlideProgress from "./pages/Slides/component/CorrectedSlideProgress";
 
 
 function AppRoutes() {
@@ -119,6 +120,7 @@ function AppRoutes() {
         <Route path="/create-pitchdeck/step-three" element={<CreatePitchDeckStepThree />} />
         <Route path="/create-pitchdeck/step-four" element={<CreatePitchDeckSteFour />} />
         <Route path="/deck" element={<DeckPage />} />
+        <Route path="/correct-slide/:slideId" element={<CorrectedSlideProgress />} />
         <Route path="/pitch-slide" element={<PitchSlide />} />
         <Route path="/slidebar" element={<SlideSidebar />} />
         <Route path="/settings" element={<Settings />} />

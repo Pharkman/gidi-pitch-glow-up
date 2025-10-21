@@ -29,6 +29,7 @@ export interface ResetPasswordPayload  {
 export interface CreatePitchDeck {
   startupName: string;
   industry: string;
+  moreInfo: string;
   brandColor: string;
   businessModel: string;
   competitions: string;

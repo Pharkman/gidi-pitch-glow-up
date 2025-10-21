@@ -1,11 +1,7 @@
-import { useState } from "react";
 import { Home } from "lucide-react";
 
-export default function SlideSidebar({ slides = [], onSlideSelect }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  const handleClick = (index: number) => {
-    setActiveIndex(index);
+export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex }) {
+  const handleClick = (index) => {
     onSlideSelect(index);
   };
 
@@ -23,20 +19,18 @@ export default function SlideSidebar({ slides = [], onSlideSelect }) {
           <div
             key={i}
             onClick={() => handleClick(i)}
-            className={`group relative cursor-pointer transition-all duration-300  overflow-hidden ${
+            className={`group relative cursor-pointer transition-all duration-300 overflow-hidden ${
               activeIndex === i
-                ? "ring-2 ring-[#FF5619] shadow-lg"
+                ? "ring-2 ring-[#FF5619] shadow-lg border border-1"
                 : "hover:ring-1 hover:ring-gray-300"
             }`}
           >
-            {/* Mini slide preview */}
-            <div className="bg-gray-50  flex flex-row items-center h-36 overflow-hidden">
-              {/* Image on the left */}
-              <div className="w-[45%] h-full overflow-hidden flex-shrink-0">
-                {slide.image ? (
+            <div className="bg-gray-50 flex flex-row items-center h-36 overflow-hidden">
+              <div className="w-[50%] h-full overflow-hidden flex-shrink-0">
+                {slide.images?.[0]?.url ? (
                   <img
-                    src={slide.image}
-                    alt={slide.title}
+                    src={slide.images?.[0]?.url}
+                    alt={slide.title || ""}
                     className="object-cover w-full h-full"
                   />
                 ) : (
@@ -46,18 +40,16 @@ export default function SlideSidebar({ slides = [], onSlideSelect }) {
                 )}
               </div>
 
-              {/* Text content on the right */}
-             <div className="flex-1 flex flex-col justify-center h-full overflow-hidden pr-2 bg-primary text-center px-2 py-2 shadow-sm">
-  <h3 className="text-sm font-semibold text-gray-800 truncate">
-    {slide.title || `Slide ${i + 1}`}{" "}
-    {slide.bullets && slide.bullets.length > 0 && (
-      <span className="text-xs text-black font-normal ml-1 mt-1 line-clamp-2  truncate">
-        {slide.bullets[0]} {/* Only show first bullet for brevity */}
-      </span>
-    )}
-  </h3>
-</div>
-
+              <div className="flex-1 flex flex-col justify-center h-full overflow-hidden pr-2 bg-primary text-center px-2 py-2 shadow-sm">
+                <h3 className="text-sm font-semibold text-white truncate">
+                  {slide.title || `Slide ${i + 1}`}{" "}
+                  {slide.bullets && slide.bullets.length > 0 && (
+                    <span className="text-xs text-white font-normal ml-1 mt-1 line-clamp-2 truncate">
+                      {slide.bullets[0]}
+                    </span>
+                  )}
+                </h3>
+              </div>
             </div>
           </div>
         ))}
