@@ -35,6 +35,9 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId }) => {
     );
   };
 
+  console.log('defaultImage', defaultImage);
+  
+
   return (
     <div
       className="w-full flex flex-col items-center justify-center cursor-pointer"
@@ -43,7 +46,7 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId }) => {
       {preview ? (
         <div className="relative w-full h-[600px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-[1.01]">
           <img
-            src={preview}
+            src={preview || defaultImage}
             alt={caption || "Slide image"}
             className="w-full h-full object-cover"
           />
@@ -59,11 +62,11 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId }) => {
         </div>
       )}
 
-      {caption && (
+      {/* {caption && (
         <p className="text-xs text-center text-gray-500 mt-2 italic">
           {caption}
         </p>
-      )}
+      )} */}
 
       <input
         type="file"

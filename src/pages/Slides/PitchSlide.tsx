@@ -1,12 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { pitchData } from "@/components/dummy";
 import { useGetDeckProgress } from "@/lib/query";
 import { motion, AnimatePresence } from "framer-motion";
 import SlideSidebar from "./component/SlideSidebar";
 import Toolbar from "./component/ToolBar";
 import UploadImg from "@/components/UploadImg/UploadImg";
+import EditWithAIButton from "@/components/EditAiButton/EditAiButton";
+import MessageInputBox from "@/components/MessageInput/MessageInput";
+import SlideCorrectionContainer from "./component/SlideCorrectionContainer";
 
 const PitchSlide = () => {
+    const [showInput, setShowInput] = useState(false);
   const deckId = localStorage.getItem("deckId");
   const { data: deck, isFetching: isProgressLoading } = useGetDeckProgress(deckId || "");
 
@@ -16,6 +20,41 @@ const PitchSlide = () => {
   const isCompleted = progress >= 100 || status === "completed";
 
   const slideRefs = useRef([]);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0); // For syncing sidebar
+
+  // Intersection Observer to detect the currently visible slide
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.5, // At least 50% of slide is visible
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Number(entry.target.dataset.index);
+          setActiveSlideIndex(index);
+          const slideId = deck?.data?.slides?.[index]?._id;
+          if (slideId) {
+            localStorage.setItem("activeSlideId", slideId);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    slideRefs.current.forEach((slide) => {
+      if (slide) observer.observe(slide);
+    });
+
+    return () => {
+      slideRefs.current.forEach((slide) => {
+        if (slide) observer.unobserve(slide);
+      });
+    };
+  }, [deck?.data?.slides]);
 
   const handleScrollToSlide = (index: number) => {
     const el = slideRefs.current[index];
@@ -31,6 +70,7 @@ const PitchSlide = () => {
         <SlideSidebar
           slides={deck?.data?.slides || []}
           onSlideSelect={handleScrollToSlide}
+          activeIndex={activeSlideIndex} // Pass active slide index for highlight
         />
       </aside>
 
@@ -42,76 +82,70 @@ const PitchSlide = () => {
         </header>
 
         {/* Scrollable content */}
-        <main className="flex-1 overflow-y-auto pt-20 pb-10 px-5 max-sm:px-3 space-y-16 flex flex-col items-center justify-center">
-          <AnimatePresence mode="wait">
-            {isCompleted && (
-              <motion.div
-                key="slides"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="space-y-10 w-full max-w-6xl mx-auto"
-              >
-                {deck?.data?.slides?.map((slide, index) => (
-                  <section
-                    key={index}
-                    id={`slide-${index}`}
-                    ref={(el) => (slideRefs.current[index] = el)}
-                    className={`flex flex-col ${
-                      index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-                    } items-center gap-10 bg-white  shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5`}
-                  >
-                    <div className="w-full md:w-[80%] space-y-6 px-8 ">
-                      <h2 className="text-2xl font-bold text-[#FF5619] max-sm:text-xl">{slide.title}</h2>
-                      {slide.bullets && (
-                        <ul className="list-disc pl-5 space-y-2 text-gray-700 text-[15px]">
-                          {slide.bullets.map((point, i) => (
-                            <li key={i}>{point}</li>
-                          ))}
-                        </ul>
-                      )}
-                      <p className="italic text-gray-600 leading-relaxed text-[14px]">
-                        {slide.notes}
-                      </p>
-                    </div>
-                    <div className="w-full md:w-[65%] flex flex-col items-center justify-center gap-3">
-                   <UploadImg
-    caption={slide.images?.[0]?.caption}
-  slideId={slide._id} 
-  defaultImage={slide.image}
-  onSave={(url) => {
-    console.log(`Uploaded image for slide ${index + 1}:`, url);
-  }}
-/>
+     {/* Scrollable content */}
+{/* Scrollable content */}
+<main className="flex-1 overflow-y-auto pt-20 pb-20 px-5 max-sm:px-3 space-y-16 flex flex-col items-center justify-center">
+  <AnimatePresence mode="wait">
+    {isCompleted && (
+      <motion.div
+        key="slides"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="space-y-10 w-full max-w-6xl mx-auto"
+      >
+        {deck?.data?.slides?.map((slide, index) => (
+          <section
+            key={index}
+            id={`slide-${index}`}
+            data-index={index}
+            ref={(el) => (slideRefs.current[index] = el)}
+            className={`flex flex-col ${
+              index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
+            } items-center  bg-primary shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5`}
+          >
+            <div className="w-full md:w-[80%] space-y-7 px-8 ">
+              <h2 className="text-2xl font-extrabold text-[#fff] max-sm:text-xl">
+                {slide.title}
+              </h2>
+              {slide.bullets && (
+                <ul className="list-disc pl-5 space-y-2 text-white text-[15px]">
+                  {slide.bullets.map((point, i) => (
+                    <li key={i}>{point}</li>
+                  ))}
+                </ul>
+              )}
+              <p className="italic text-white leading-relaxed text-[14px]">
+                {slide.notes}
+              </p>
+            </div>
+            <div className="w-full md:w-[80%] flex flex-col items-center justify-center gap-3">
+              <UploadImg
+                caption={slide.images?.[0]?.caption}
+                slideId={slide._id}
+                defaultImage={slide.images?.[0]?.url}
+                onSave={(url) => {
+                  console.log(`Uploaded image for slide ${index + 1}:`, url);
+                }}
+              />
+            </div>
+          </section>
+        ))}
+      </motion.div>
+    )}
+  </AnimatePresence>
 
-
-
-    {/* Upload Button */}
-    {/* <label className="bg-[#FF5619] hover:bg-orange-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg shadow cursor-pointer transition-all duration-300">
-      Upload Image
-      <input
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => {
-          const file = e.target.files[0];
-          if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            // Save uploaded image to localStorage or backend if needed
-            console.log(`Slide ${index + 1} image:`, imageUrl);
-          }
-        }}
-      />
-    </label> */}
-
-    {/* <p className="text-xs text-center text-gray-500 mt-1">{slide.slideType}</p> */}
+  {/* Bottom sticky edit button */}
+  <div className="fixed shadow-xl border-t  bottom-0 left-64 max-sm:left-0 w-[calc(100%-16rem)] max-sm:w-full bg-white z-30 shadow-t  px-5 flex justify-end" onClick={() => setShowInput(true)} >
+    <EditWithAIButton />
   </div>
-                  </section>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </main>
+
+ {/* Bottom sticky edit button or input */}
+<SlideCorrectionContainer />
+
+</main>
+
+
       </div>
     </div>
   );

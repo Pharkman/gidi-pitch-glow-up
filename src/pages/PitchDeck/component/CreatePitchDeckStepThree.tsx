@@ -20,7 +20,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
         })
       )
       .min(1, "At least one team member is required"),
-    ask: Yup.string(),
+    moreInfo: Yup.string(),
   });
 
   return (
@@ -51,7 +51,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
             initialValues={{
               scope: savedData.scope || "",
               team: savedData.team || [{ name: "", role: "", title: "" }],
-              ask: savedData.ask || "",
+              moreInfo: savedData.moreInfo || "",
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
@@ -184,11 +184,11 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                 {/* Ask */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Ask (optional)
+                    More Info (optional)
                   </label>
                   <Field
                     as="textarea"
-                    name="ask"
+                    name="moreInfo"
                     rows="3"
                     placeholder="e.g. Raising $50k to scale across Africa."
                     className="w-full border border-gray-200 rounded-2xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm transition"

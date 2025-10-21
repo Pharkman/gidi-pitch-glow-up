@@ -418,7 +418,8 @@ export const useCreatePitchDeck = () => {
       slides,
       businessModel,
       imageGenType,
-      competitions
+      competitions,
+      moreInfo
     }: CreatePitchDeck) => {
       try {
         const res = await fetch(`${BASE_URL}/pitch/deck/create`, {
@@ -428,6 +429,7 @@ export const useCreatePitchDeck = () => {
           body: JSON.stringify({
             startupName,
             industry,
+            moreInfo,
             brandColor,
             problems,  
             solutions, 
@@ -609,20 +611,17 @@ export const useCorrectGeneratedSlide = () => {
     mutationFn: async ({
       slideId,
       correction,
-      generateImage,
     }: {
       slideId: string;
       correction: string;
-      generateImage: boolean;
     }) => {
       try {
-        const res = await fetch(`${BASE_URL}/api/pitch/deck/correct/${slideId}`, {
+        const res = await fetch(`${BASE_URL}/pitch/deck/correct/${slideId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify({
             correction,
-            generateImage,
           }),
         });
 
@@ -644,5 +643,22 @@ export const useCorrectGeneratedSlide = () => {
         throw error;
       }
     },
+  });
+};
+
+export const useGetCorrectedSlide = (slideId) => {
+  return useQuery({
+    queryKey: ["GET_SLIDE", slideId],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/pitch/deck/correction/progress/${slideId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch slide");
+      return res.json();
+    },
+    enabled: !!slideId, // only run when slideId exists
   });
 };
