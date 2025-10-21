@@ -6,6 +6,7 @@ import { Formik, Form, Field } from "formik";
 import { useGetIndustries_Slides } from "@/lib/query";
 import { useEffect, useState } from "react";
 import SlideSelector from "./SlideSelector";
+import ProgressDots from "./ProgressDot";
 
 export default function CreatePitchDeckStepFour({ onClose }) {
   const navigate = useNavigate();
@@ -41,12 +42,9 @@ export default function CreatePitchDeckStepFour({ onClose }) {
         </div>
 
         {/* Progress Steps */}
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <div className="w-10 h-1.5 rounded-full bg-gray-200"></div>
-          <div className="w-10 h-1.5 rounded-full bg-gray-200"></div>
-          <div className="w-10 h-1.5 rounded-full bg-gray-200"></div>
-          <div className="w-10 h-1.5 rounded-full bg-orange-500"></div>
-        </div>
+        <div className="flex flex-col items-center justify-center">
+      <ProgressDots activeIndex={3} total={4} />
+    </div>
 
         <Formik
           initialValues={{

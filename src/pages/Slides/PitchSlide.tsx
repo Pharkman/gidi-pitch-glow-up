@@ -75,12 +75,13 @@ const PitchSlide = () => {
                       </p>
                     </div>
                     <div className="w-full md:w-[65%] flex flex-col items-center justify-center gap-3">
-                      <UploadImg
+                   <UploadImg
+    caption={slide.images?.[0]?.caption}
+  slideId={slide._id} 
   defaultImage={slide.image}
   onSave={(url) => {
     console.log(`Uploaded image for slide ${index + 1}:`, url);
   }}
-  caption={slide.caption}
 />
 
 

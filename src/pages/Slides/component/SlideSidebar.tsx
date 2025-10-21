@@ -23,42 +23,41 @@ export default function SlideSidebar({ slides = [], onSlideSelect }) {
           <div
             key={i}
             onClick={() => handleClick(i)}
-            className={`group relative cursor-pointer transition-all duration-300 rounded-xl overflow-hidden ${
+            className={`group relative cursor-pointer transition-all duration-300  overflow-hidden ${
               activeIndex === i
                 ? "ring-2 ring-[#FF5619] shadow-lg"
                 : "hover:ring-1 hover:ring-gray-300"
             }`}
           >
             {/* Mini slide preview */}
-            <div className="bg-gray-50 rounded-xl flex flex-col p-3 gap-2 h-36 overflow-hidden">
-              {/* Image thumbnail */}
-              {slide.image ? (
-                <div className="w-full h-20 rounded-lg overflow-hidden">
+            <div className="bg-gray-50  flex flex-row items-center h-36 overflow-hidden">
+              {/* Image on the left */}
+              <div className="w-[45%] h-full overflow-hidden flex-shrink-0">
+                {slide.image ? (
                   <img
                     src={slide.image}
                     alt={slide.title}
                     className="object-cover w-full h-full"
                   />
-                </div>
-              ) : (
-                <div className="w-full h-20 rounded-lg bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
-                  No Image
-                </div>
-              )}
-
-              {/* Text content */}
-              <div className="flex-1 flex flex-col justify-between">
-                <h3 className="text-[12px] font-semibold text-gray-800 truncate">
-                  {slide.title || `Slide ${i + 1}`}
-                </h3>
-                {slide.bullets && slide.bullets.length > 0 && (
-                  <ul className="text-[10px] text-gray-600 list-disc pl-3 leading-tight line-clamp-2 mt-1">
-                    {slide.bullets.slice(0, 2).map((point, idx) => (
-                      <li key={idx}>{point}</li>
-                    ))}
-                  </ul>
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
+                    No Image
+                  </div>
                 )}
               </div>
+
+              {/* Text content on the right */}
+             <div className="flex-1 flex flex-col justify-center h-full overflow-hidden pr-2 bg-primary text-center px-2 py-2 shadow-sm">
+  <h3 className="text-sm font-semibold text-gray-800 truncate">
+    {slide.title || `Slide ${i + 1}`}{" "}
+    {slide.bullets && slide.bullets.length > 0 && (
+      <span className="text-xs text-black font-normal ml-1 mt-1 line-clamp-2  truncate">
+        {slide.bullets[0]} {/* Only show first bullet for brevity */}
+      </span>
+    )}
+  </h3>
+</div>
+
             </div>
           </div>
         ))}

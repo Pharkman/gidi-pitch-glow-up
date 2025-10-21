@@ -45,3 +45,10 @@ export const resetPasswordSchema = Yup.object({
     .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
     .required("Required"),
 })
+
+export const createPitchDeckSchematwo = Yup.object({
+
+    problems: Yup.string().required("Problem field is required"),
+    solutions: Yup.string().required("Solution field is required"),
+    competitions: Yup.string(), // optiona
+})
