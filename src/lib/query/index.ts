@@ -579,12 +579,13 @@ oldPassword
   });
 
 }
-
 export const useUploadImg = () => {
   return useMutation({
-    mutationFn: async (image) => {
+    mutationFn: async ({ image, slideId, caption }: { image: File; slideId: string; caption?: string }) => {
       const formData = new FormData();
-      formData.append("image", image); // 👈 send as 'image'
+      formData.append("image", image);
+      formData.append("slideId", slideId); // 👈 include slide ID
+      if (caption) formData.append("caption", caption); // 👈 include caption if present
 
       const response = await fetch(`${BASE_URL}/image/upload`, {
         method: "POST",
@@ -597,6 +598,51 @@ export const useUploadImg = () => {
       }
 
       return response.json();
+    },
+  });
+};
+
+
+
+export const useCorrectGeneratedSlide = () => {
+  return useMutation({
+    mutationFn: async ({
+      slideId,
+      correction,
+      generateImage,
+    }: {
+      slideId: string;
+      correction: string;
+      generateImage: boolean;
+    }) => {
+      try {
+        const res = await fetch(`${BASE_URL}/api/pitch/deck/correct/${slideId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            correction,
+            generateImage,
+          }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err?.message || "Failed to correct slide");
+        }
+
+        const data = await res.json();
+        toast.success("Slide correction updated successfully!");
+        return data;
+      } catch (error: unknown) {
+        console.error(error);
+        if (error instanceof Error) {
+          toast.error(error.message || "Failed to correct slide");
+        } else {
+          toast.error("Failed to correct slide");
+        }
+        throw error;
+      }
     },
   });
 };

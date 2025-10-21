@@ -1,10 +1,13 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import { FaChevronDown } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { useGetIndustries } from "@/lib/query";
 import { useState } from "react";
+import ProgressDots from "./ProgressDot";
+import { toast } from "react-toastify";
 
 export default function CreatePitchDeckStepOne({ onClose }) {
   const [selectedIndustry, setSelectedIndustry] = useState("");
@@ -16,9 +19,19 @@ export default function CreatePitchDeckStepOne({ onClose }) {
     navigate("/create-pitchdeck/step-two");
   };
 
+  // ✅ Validation Schema
+  const validationSchema = Yup.object({
+    startupName: Yup.string().required("Startup name is required"),
+    industry: Yup.string().required("Industry is required"),
+    features: Yup.string().required("Features are required"),
+  });
+
   return (
     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-      <div className="bg-white w-full max-w-xl rounded-3xl p-8 shadow-2xl border border-gray-100">
+      <div
+        className="bg-white w-full max-w-xl rounded-3xl p-8 shadow-2xl border border-gray-100 
+        max-h-[94vh] overflow-y-auto scrollbar-hide"
+      >
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Create Pitch Deck</h2>
@@ -31,10 +44,8 @@ export default function CreatePitchDeckStepOne({ onClose }) {
         </div>
 
         {/* Progress Steps */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-12 h-2 rounded-full bg-orange-500 shadow-inner"></div>
-          <div className="w-12 h-2 rounded-full bg-gray-200"></div>
-          <div className="w-12 h-2 rounded-full bg-gray-200"></div>
+        <div className="flex flex-col items-center justify-center">
+          <ProgressDots activeIndex={0} total={4} />
         </div>
 
         {/* Formik Form */}
@@ -44,7 +55,19 @@ export default function CreatePitchDeckStepOne({ onClose }) {
             industry: "",
             features: "",
           }}
-          onSubmit={handleNext}
+          validationSchema={validationSchema}
+          onSubmit={(values, { validateForm }) => {
+            validateForm(values).then((errors) => {
+              if (Object.keys(errors).length > 0) {
+                const missingFields = Object.keys(errors)
+                  .map((key) => errors[key])
+                  .join(", ");
+                toast.error(`Please fill in all required fields: ${missingFields}`);
+              } else {
+                handleNext(values);
+              }
+            });
+          }}
         >
           {({ setFieldValue }) => (
             <Form className="space-y-6">
@@ -58,6 +81,11 @@ export default function CreatePitchDeckStepOne({ onClose }) {
                   type="text"
                   placeholder="e.g. PayLink Africa"
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm"
+                />
+                <ErrorMessage
+                  name="startupName"
+                  component="div"
+                  className="text-red-500 text-xs mt-1"
                 />
               </div>
 
@@ -87,12 +115,16 @@ export default function CreatePitchDeckStepOne({ onClose }) {
                       </option>
                     ))}
                   </Field>
-
                   <FaChevronDown
                     size={16}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
                   />
                 </div>
+                <ErrorMessage
+                  name="industry"
+                  component="div"
+                  className="text-red-500 text-xs mt-1"
+                />
               </div>
 
               {/* Features */}
@@ -106,6 +138,11 @@ export default function CreatePitchDeckStepOne({ onClose }) {
                   rows="3"
                   placeholder="e.g. We help small businesses accept cross-border payments in seconds."
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm"
+                />
+                <ErrorMessage
+                  name="features"
+                  component="div"
+                  className="text-red-500 text-xs mt-1"
                 />
               </div>
 

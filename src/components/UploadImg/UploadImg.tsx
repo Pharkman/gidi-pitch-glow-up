@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
 import { useUploadImg } from "@/lib/query";
 
-const UploadImg = ({ defaultImage, onSave, caption }) => {
+const UploadImg = ({ defaultImage, onSave, caption, slideId }) => {
   const [preview, setPreview] = useState(defaultImage || null);
   const [uploading, setUploading] = useState(false);
   const { mutate: uploadImage } = useUploadImg();
   const fileInputRef = useRef(null);
 
   const handleClick = () => {
-    if (fileInputRef.current) fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
   const handleFileChange = (e) => {
@@ -18,17 +18,21 @@ const UploadImg = ({ defaultImage, onSave, caption }) => {
     setPreview(URL.createObjectURL(image));
     setUploading(true);
 
-    uploadImage(image, {
-      onSuccess: (response) => {
-        const uploadedUrl = response?.data?.url;
-        if (uploadedUrl) onSave(uploadedUrl);
-        setUploading(false);
-      },
-      onError: (err) => {
-        console.error("Upload failed:", err);
-        setUploading(false);
-      },
-    });
+    // pass slideId and caption to mutation
+    uploadImage(
+      { image, slideId, caption },
+      {
+        onSuccess: (response) => {
+          const uploadedUrl = response?.data?.url;
+          if (uploadedUrl) onSave(uploadedUrl);
+          setUploading(false);
+        },
+        onError: (err) => {
+          console.error("Upload failed:", err);
+          setUploading(false);
+        },
+      }
+    );
   };
 
   return (
