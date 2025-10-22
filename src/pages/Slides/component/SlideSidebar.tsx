@@ -1,6 +1,6 @@
 import { Home } from "lucide-react";
 
-export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex }) {
+export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, brandKit }) {
   const handleClick = (index) => {
     onSlideSelect(index);
   };
@@ -14,7 +14,7 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex }
       </div>
 
       {/* Slides list */}
-      <div className="flex-1 overflow-y-auto py-4 space-y-4 px-5 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto  py-4 space-y-4 px-5 scrollbar-hide">
         {slides.map((slide, i) => (
           <div
             key={i}
@@ -40,7 +40,7 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex }
                 )}
               </div>
 
-              <div className="flex-1 flex flex-col justify-center h-full overflow-hidden pr-2 bg-primary text-center px-2 py-2 shadow-sm">
+              <div className={ `flex-1 bg-primary flex flex-col justify-center h-full overflow-hidden pr-2  text-center px-2 py-2 shadow-sm ${brandKit.background }`}>
                 <h3 className="text-sm font-semibold text-white truncate">
                   {slide.title || `Slide ${i + 1}`}{" "}
                   {slide.bullets && slide.bullets.length > 0 && (

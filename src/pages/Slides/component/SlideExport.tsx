@@ -2,16 +2,15 @@ import React, { useRef, useState, useEffect } from "react";
 import { pitchData } from "@/components/dummy";
 import { useGetDeckProgress } from "@/lib/query";
 import { motion, AnimatePresence } from "framer-motion";
-import SlideSidebar from "./component/SlideSidebar";
-import Toolbar from "./component/ToolBar";
 import UploadImg from "@/components/UploadImg/UploadImg";
 import EditWithAIButton from "@/components/EditAiButton/EditAiButton";
-import MessageInputBox from "@/components/MessageInput/MessageInput";
-import SlideCorrectionContainer from "./component/SlideCorrectionContainer";
+import { useParams } from "react-router-dom";
 
-const PitchSlide = () => {
+
+
+const SlideExport = () => {
     const [showInput, setShowInput] = useState(false);
-  const deckId = localStorage.getItem("deckId");
+  const { deckId } = useParams();
   const { data: deck, isFetching: isProgressLoading } = useGetDeckProgress(deckId || "");
 
   const progress = deck?.data?.progress ?? 0;
@@ -68,24 +67,12 @@ const PitchSlide = () => {
    console.log(brandKit.background);
   return (
     <div className="flex min-h-screen bg-gray-50 text-gray-800 font-[Geist]">
-      {/* Sidebar */}
-      <aside className="w-64 fixed left-0 top-0 h-screen bg-white shadow-md border-r border-gray-200 z-20 max-sm:hidden ">
-        <SlideSidebar
-          slides={deck?.data?.slides || []}
-          onSlideSelect={handleScrollToSlide}
-          activeIndex={activeSlideIndex} 
-           brandKit={deck?.data?.brandKit}// Pass active slide index for highlight
-        />
-      </aside>
+   
 
       {/* Main Content */}
-      <div className="flex-1 ml-64 flex flex-col min-h-screen max-sm:ml-0">
-        {/* Toolbar */}
-        <header className="fixed top-0 left-64 max-sm:left-0 right-0 z-10 bg-white shadow-sm border-b border-gray-200">
-          <Toolbar />
-        </header>
+      <div className="flex-1 flex flex-col min-h-screen">
 
-<main className="flex-1 overflow-y-auto pt-20 pb-20 px-5 max-sm:px-3 space-y-16 flex flex-col items-center justify-center">
+<main className="flex-1 slide overflow-y-auto max-sm:px-3 space-y-16 flex flex-col items-center justify-center">
   <AnimatePresence mode="wait">
     {isCompleted && (
       <motion.div
@@ -93,7 +80,7 @@ const PitchSlide = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="space-y-10 w-full max-w-6xl mx-auto"
+        className="space-y-10 w-full  mx-auto"
       >
         {deck?.data?.slides?.map((slide, index) => (
           <section
@@ -136,14 +123,6 @@ const PitchSlide = () => {
     )}
   </AnimatePresence>
 
-  {/* Bottom sticky edit button */}
-  <div className="fixed shadow-xl border-t  bottom-0 left-64 max-sm:left-0 w-[calc(100%-16rem)] max-sm:w-full bg-white z-30 shadow-t  px-5 flex justify-end" onClick={() => setShowInput(true)} >
-    <EditWithAIButton />
-  </div>
-
- {/* Bottom sticky edit button or input */}
-<SlideCorrectionContainer />
-
 </main>
 
 
@@ -152,4 +131,4 @@ const PitchSlide = () => {
   );
 };
 
-export default PitchSlide;
+export default SlideExport;
