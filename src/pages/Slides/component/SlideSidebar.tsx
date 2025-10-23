@@ -1,9 +1,19 @@
-import { Home } from "lucide-react";
+import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
+import { Home, CheckCircle } from "lucide-react"; // 👈 Import CheckCircle
+
+// Helper function to get the hex color from a Tailwind class
+const getHexColor = (tailwindClass) => {
+  return TAILWIND_COLOR_MAP[tailwindClass] || '#6366f1'; // Default to Indigo-500 if not found
+};
 
 export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, brandKit }) {
   const handleClick = (index) => {
     onSlideSelect(index);
   };
+
+  const activeSlideBgClass = brandKit?.background || "bg-primary";
+  const activeSlideBgHex = getHexColor(activeSlideBgClass);
+  const activeRingHex = getHexColor(activeSlideBgClass);
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 h-screen flex flex-col max-sm:hidden">
@@ -14,17 +24,35 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
       </div>
 
       {/* Slides list */}
-      <div className="flex-1 overflow-y-auto  py-4 space-y-4 px-5 scrollbar-hide">
+      <div className="flex-1 overflow-y-auto py-4 space-y-4 px-5 scrollbar-hide">
         {slides.map((slide, i) => (
           <div
             key={i}
             onClick={() => handleClick(i)}
+            // Ensure 'relative' is part of the className which it already is
             className={`group relative cursor-pointer transition-all duration-300 overflow-hidden ${
               activeIndex === i
-                ? "ring-2 ring-[#FF5619] shadow-lg border border-1"
+                // Removed the hardcoded ring color here since we use inline style for ring/shadow
+                ? "ring-2 shadow-lg border border-1" 
                 : "hover:ring-1 hover:ring-gray-300"
             }`}
+
+            style={
+              activeIndex === i
+                ? { borderColor: activeRingHex, boxShadow: `0 0 0 2px ${activeRingHex}` }
+                : {}
+            }
           >
+            {/* 👇 CHECK MARK ICON ADDED HERE 👇 */}
+            {activeIndex === i && (
+              <div 
+                className="absolute top-[-8px] right-[-8px] z-10 rounded-full bg-white p-[2px]"
+                style={{ color: activeRingHex, boxShadow: `0 0 0 2px ${activeRingHex}` }} // Border/shadow for the white circle
+              >
+                <CheckCircle size={20} fill={activeRingHex} stroke="white" />
+              </div>
+            )}
+
             <div className="bg-gray-50 flex flex-row items-center h-36 overflow-hidden">
               <div className="w-[50%] h-full overflow-hidden flex-shrink-0">
                 {slide.images?.[0]?.url ? (
@@ -40,7 +68,15 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
                 )}
               </div>
 
-              <div className={ `flex-1 bg-primary flex flex-col justify-center h-full overflow-hidden pr-2  text-center px-2 py-2 shadow-sm ${brandKit.background }`}>
+              {/* Apply dynamic color using inline style */}
+              <div
+                className={`flex-1 flex flex-col justify-center h-full overflow-hidden pr-2 text-center px-2 py-2 shadow-sm`}
+                style={
+                  activeIndex === i
+                    ? { backgroundColor: activeSlideBgHex }
+                    : { backgroundColor: getHexColor(slide.background || activeSlideBgClass) }
+                }
+              >
                 <h3 className="text-sm font-semibold text-white truncate">
                   {slide.title || `Slide ${i + 1}`}{" "}
                   {slide.bullets && slide.bullets.length > 0 && (

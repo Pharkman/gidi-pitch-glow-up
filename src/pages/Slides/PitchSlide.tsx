@@ -8,6 +8,7 @@ import UploadImg from "@/components/UploadImg/UploadImg";
 import EditWithAIButton from "@/components/EditAiButton/EditAiButton";
 import MessageInputBox from "@/components/MessageInput/MessageInput";
 import SlideCorrectionContainer from "./component/SlideCorrectionContainer";
+import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
 
 const PitchSlide = () => {
     const [showInput, setShowInput] = useState(false);
@@ -95,43 +96,116 @@ const PitchSlide = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="space-y-10 w-full max-w-6xl mx-auto"
       >
-        {deck?.data?.slides?.map((slide, index) => (
-          <section
-            key={index}
-            id={`slide-${index}`}
-            data-index={index}
-            ref={(el) => (slideRefs.current[index] = el)}
-            className={`flex flex-col ${
-              index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-            } items-center bg-primary  shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5`}
+      {deck?.data?.slides?.map((slide, index) => {
+        
+       const slideBackgroundColor = TAILWIND_COLOR_MAP[brandKit.background] || 'bg-primary';
+        
+if (slide.slideType === "team") {
+  return (
+    <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+     style={{ backgroundColor: slideBackgroundColor }}
+      className={`flex flex-col items-center shadow-lg border border-gray-200 
+      transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5 py-10 px-6`}
+    >
+      {/* TOP CONTENT */}
+      <div className="w-full  mb-10 space-y-4">
+        <h2 className="text-xl md:text-2xl font-extrabold text-white">
+          {slide.title}
+        </h2>
+
+        {slide.bullets && (
+          <ul className="list-disc list-inside text-white text-[15px] space-y-2 mx-auto w-fit text-left">
+            {slide.bullets.map((point, i) => (
+              <li key={i}>{point}</li>
+            ))}
+          </ul>
+        )}
+
+        {slide.notes && (
+          <p className="italic text-white leading-relaxed text-[15px]  mx-auto">
+            {slide.notes}
+          </p>
+        )}
+      </div>
+
+      {/* TEAM MEMBERS GRID */}
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {slide.images?.map((image, i) => (
+          <div
+            key={i}
+            className="bg-white  shadow-md flex flex-col items-center pb-2  text-center hover:shadow-lg transition-all duration-300"
           >
-            <div className="w-full md:w-[80%] space\-y-7 px-8 ">
-              <h2 className={`text-2xl font-extrabold text-[#fff] max-sm:text-xl`}>
-                {slide.title}
-              </h2>
-              {slide.bullets && (
-                <ul className="list-disc pl-5 space-y-2 text-white text-[15px]">
-                  {slide.bullets.map((point, i) => (
-                    <li key={i}>{point}</li>
-                  ))}
-                </ul>
-              )}
-              <p className="italic text-white leading-relaxed text-[14px]">
-                {slide.notes}
-              </p>
-            </div>
-            <div className="w-full md:w-[80%] flex flex-col items-center justify-center gap-3">
-              <UploadImg
+            <UploadImg
+              caption={image.caption}
+              slideId={slide._id}
+              slideType={slide.slideType}
+              defaultImage={image.url}
+              onSave={(url) => {
+                console.log(
+                  `Uploaded team image ${i + 1} for slide ${index + 1}:`,
+                  url
+                );
+              }}
+            />
+            <p className="text-gray-800 font-semibold mt-3 text-[14px]">
+              {image.caption || "Team Member"}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+  return (
+    <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+        style={{ backgroundColor: slideBackgroundColor }}
+      className={`flex flex-col ${
+        index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
+      } items-center  shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5 `}
+    >
+      <div className="w-full md:w-[80%] space-y-7 px-8">
+        <h2 className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
+          {slide.title}
+        </h2>
+        {slide.bullets && (
+          <ul className="list-disc pl-5 space-y-2 text-white text-[15px]">
+            {slide.bullets.map((point, i) => (
+              <li key={i}>{point}</li>
+            ))}
+          </ul>
+        )}
+        <p className="italic text-white leading-relaxed text-[14px]">
+          {slide.notes}
+        </p>
+      </div>
+
+      <div className="w-full md:w-[80%] flex flex-col items-center justify-center ">
+         <UploadImg
                 caption={slide.images?.[0]?.caption}
                 slideId={slide._id}
                 defaultImage={slide.images?.[0]?.url}
+                slideType={''}
                 onSave={(url) => {
                   console.log(`Uploaded image for slide ${index + 1}:`, url);
                 }}
               />
-            </div>
-          </section>
-        ))}
+      </div>
+    </section>
+  );
+})}
+
+
+        
       </motion.div>
     )}
   </AnimatePresence>

@@ -16,7 +16,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
         Yup.object().shape({
           name: Yup.string().required("Name is required"),
           role: Yup.string().required("Role is required"),
-          title: Yup.string().required("expertise is required"),
+          expertise: Yup.string().required("expertise is required"),
         })
       )
       .min(1, "At least one team member is required"),
@@ -50,7 +50,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
           <Formik
             initialValues={{
               scope: savedData.scope || "",
-              team: savedData.team || [{ name: "", role: "", title: "" }],
+              team: savedData.team || [{ name: "", role: "", expertise: "" }],
               moreInfo: savedData.moreInfo || "",
             }}
             validationSchema={validationSchema}
@@ -137,15 +137,15 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                               />
                             </div>
 
-                            {/* Title */}
+                      
                             <div className="flex flex-col">
                               <div className="flex items-center gap-2">
                                 <Field
-                                  name={`team[${index}].title`}
-                                  placeholder="Title (e.g. CEO)"
+                                  name={`team[${index}].expertise`}
+                                  placeholder="Exp (e.g. CEO)"
                                   className={`w-full border ${
-                                    errors.team?.[index]?.title &&
-                                    touched.team?.[index]?.title
+                                    errors.team?.[index]?.expertise &&
+                                    touched.team?.[index]?.expertise
                                       ? "border-red-400"
                                       : "border-gray-200"
                                   } rounded-xl px-3 py-2 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm transition`}
@@ -161,7 +161,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                                 )}
                               </div>
                               <ErrorMessage
-                                name={`team[${index}].title`}
+                                name={`team[${index}].expertise`}
                                 component="div"
                                 className="text-xs text-red-500 mt-1"
                               />
@@ -171,7 +171,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
 
                         <button
                           type="button"
-                          onClick={() => push({ name: "", role: "", title: "" })}
+                          onClick={() => push({ name: "", role: "", expertise: "" })}
                           className="text-orange-500 text-sm font-medium hover:underline hover:opacity-80 transition-all"
                         >
                           + Add team member

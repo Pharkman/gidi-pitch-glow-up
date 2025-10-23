@@ -1,131 +1,74 @@
-import React, { useRef, useState, useEffect } from "react";
-import { pitchData } from "@/components/dummy";
-import { useGetDeckProgress } from "@/lib/query";
-import { motion, AnimatePresence } from "framer-motion";
-import UploadImg from "@/components/UploadImg/UploadImg";
-import EditWithAIButton from "@/components/EditAiButton/EditAiButton";
-import { useParams } from "react-router-dom";
-
-
+import { LoadingSpinner } from "@/components/Loader";
+import { useExport } from "@/lib/query";
+import React from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const SlideExport = () => {
-    const [showInput, setShowInput] = useState(false);
-  const { deckId } = useParams();
-  const { data: deck, isFetching: isProgressLoading } = useGetDeckProgress(deckId || "");
+  const { mutate: exportSlide, isPending } = useExport();
 
-  const progress = deck?.data?.progress ?? 0;
-  const status = deck?.data?.status ?? "loading";
-  const totalSlides = deck?.data?.totalSlides ?? pitchData.length;
-  const isCompleted = progress >= 100 || status === "completed";
+  const handleExport = (type) => {
+    const formats =
+      type === "PDF"
+        ? { pdf: true, pptx: false }
+        : type === "PPTX"
+        ? { pdf: false, pptx: true }
+        : { pdf: true, pptx: true };
 
-  const slideRefs = useRef([]);
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0); // For syncing sidebar
-
-  // Intersection Observer to detect the currently visible slide
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.5, // At least 50% of slide is visible
-    };
-
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const index = Number(entry.target.dataset.index);
-          setActiveSlideIndex(index);
-          const slideId = deck?.data?.slides?.[index]?._id;
-          if (slideId) {
-            localStorage.setItem("activeSlideId", slideId);
-          }
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    slideRefs.current.forEach((slide) => {
-      if (slide) observer.observe(slide);
-    });
-
-    return () => {
-      slideRefs.current.forEach((slide) => {
-        if (slide) observer.unobserve(slide);
-      });
-    };
-  }, [deck?.data?.slides]);
-
-  const handleScrollToSlide = (index: number) => {
-    const el = slideRefs.current[index];
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+    exportSlide(formats); 
   };
 
-   const brandKit = deck?.data?.brandKit || {};
-
-   console.log(brandKit.background);
   return (
-    <div className="flex min-h-screen bg-gray-50 text-gray-800 font-[Geist]">
-   
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      {/* Modal */}
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+        <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-8 relative overflow-hidden">
+          {/* Decorative gradient accent */}
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent pointer-events-none "></div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen">
+          {/* Modal Header */}
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 ">
+            Export Slides
+          </h2>
+          <p className="text-gray-500 mb-8 text-[15px]">
+            Choose the format you’d like to export your slides in.
+          </p>
 
-<main className="flex-1 slide overflow-y-auto max-sm:px-3 space-y-16 flex flex-col items-center justify-center">
-  <AnimatePresence mode="wait">
-    {isCompleted && (
-      <motion.div
-        key="slides"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="space-y-10 w-full  mx-auto"
-      >
-        {deck?.data?.slides?.map((slide, index) => (
-          <section
-            key={index}
-            id={`slide-${index}`}
-            data-index={index}
-            ref={(el) => (slideRefs.current[index] = el)}
-            className={`flex flex-col ${
-              index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-            } items-center bg-primary  shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5`}
-          >
-            <div className="w-full md:w-[80%] space\-y-7 px-8 ">
-              <h2 className={`text-2xl font-extrabold text-[#fff] max-sm:text-xl`}>
-                {slide.title}
-              </h2>
-              {slide.bullets && (
-                <ul className="list-disc pl-5 space-y-2 text-white text-[15px]">
-                  {slide.bullets.map((point, i) => (
-                    <li key={i}>{point}</li>
-                  ))}
-                </ul>
-              )}
-              <p className="italic text-white leading-relaxed text-[14px]">
-                {slide.notes}
-              </p>
+          {/* Export Buttons */}
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 gap-2">
+            <button
+              onClick={() => handleExport("PDF")}
+              className="w-full py-3 bg-primary text-white rounded-xl font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-md"
+            >
+               {isPending ? <LoadingSpinner /> : "Export as PDF"}
+            </button>
+
+            <button
+              onClick={() => handleExport("PPTX")}
+              className="w-full py-3 bg-primary text-white rounded-xl font-medium hover:scale-[1.02] transition-transform duration-200 shadow-md"
+            >
+              {isPending ? <LoadingSpinner />: "Export as PPTX"}
+            </button>
             </div>
-            <div className="w-full md:w-[80%] flex flex-col items-center justify-center gap-3">
-              <UploadImg
-                caption={slide.images?.[0]?.caption}
-                slideId={slide._id}
-                defaultImage={slide.images?.[0]?.url}
-                onSave={(url) => {
-                  console.log(`Uploaded image for slide ${index + 1}:`, url);
-                }}
-              />
+
+<div>
+            <button
+              onClick={() => handleExport("Both")}
+              className="w-full py-3 bg-gradient-to-r from-primary to-purple-600 text-white rounded-xl font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-md"
+            >
+              {isPending ? <LoadingSpinner /> : "Export Both (PDF + PPTX)"}
+            </button>
             </div>
-          </section>
-        ))}
-      </motion.div>
-    )}
-  </AnimatePresence>
+          </div>
 
-</main>
+          {/* Divider */}
+          <div className="my-6 border-t border-gray-200"></div>
 
-
+          {/* Cancel Button */}
+          <button className="w-full text-gray-500 hover:text-gray-700 font-medium text-sm transition">
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );
