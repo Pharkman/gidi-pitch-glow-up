@@ -1,7 +1,7 @@
 // src/lib/query.ts
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CreatePitchDeck, INewUser, IVerifyUser, OnboardingPayload, ResetPasswordPayload } from "../types";
 
 import { QUERY_KEYS } from "../queryKeys";
@@ -660,5 +660,34 @@ export const useGetCorrectedSlide = (slideId) => {
       return res.json();
     },
     enabled: !!slideId, // only run when slideId exists
+  });
+};
+
+
+export const useExport = () => {
+  return useMutation({
+    mutationFn: async (formats: { pdf: boolean; pptx: boolean }) => {
+      const deckId = localStorage.getItem("deckId"); // 👈 Get from localStorage
+      if (!deckId) throw new Error("Slide ID not found in local storage");
+
+      const res = await fetch(`${BASE_URL}/pitch/deck/export/${deckId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ formats }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err?.message || "Failed to export slide");
+      }
+
+      const data = await res.json();
+      toast.success("Slide export started successfully!");
+      return data;
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to export slide");
+    },
   });
 };

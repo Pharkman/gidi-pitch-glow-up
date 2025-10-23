@@ -18,7 +18,7 @@ export default function SlideSelector({ slideData, selectedSlides = [], setField
       <h2 className="text-sm font-medium mb-3 text-gray-800">
         Select Slides ({selectedSlides.length})
       </h2>
-
+            <h2 className="text-sm font-medium mb-3 text-red-600 border p-3 rounded-md">Note: Add Slides in Order of priority to get an organized slide</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3">
         {slideData?.data?.allowedSlides?.map((slide) => {
           const isSelected = selectedSlides.includes(slide);

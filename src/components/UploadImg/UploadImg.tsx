@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useUploadImg } from "@/lib/query";
 
-const UploadImg = ({ defaultImage, onSave, caption, slideId }) => {
+const UploadImg = ({ defaultImage, onSave, caption, slideId, slideType }) => {
   const [preview, setPreview] = useState(defaultImage || null);
   const [uploading, setUploading] = useState(false);
   const { mutate: uploadImage } = useUploadImg();
@@ -44,7 +44,15 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId }) => {
       onClick={handleClick}
     >
       {preview ? (
-        <div className="relative w-full h-[600px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-[1.01]">
+    <div
+    className={`relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-[1.01] 
+      ${
+        slideType === "team"
+          ? "w-full h-[200px]" // ✅ Team grid style
+          : "w-full h-[600px]" // ✅ Default full slide image
+      }
+    `}
+  >
           <img
             src={preview || defaultImage}
             alt={caption || "Slide image"}
@@ -57,7 +65,15 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-[600px] flex items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50 text-gray-500 text-sm hover:bg-gray-100 transition">
+       <div
+  className={`flex items-center justify-center border-2 border-dashed text-gray-500 text-xs hover:bg-gray-100 transition
+    ${
+      slideType === "team"
+        ? "w-full h-[200px]"
+        : "w-full h-[600px] bg-gray-50" 
+    }
+  `}
+>
           {uploading ? "Uploading..." : "Click to Upload Image"}
         </div>
       )}

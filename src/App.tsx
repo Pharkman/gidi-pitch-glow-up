@@ -82,6 +82,7 @@ function AppRoutes() {
       "/pitch-deck-generating": "Generating Pitch Deck",
       "/pitch-deck-editor": "Pitch Deck Editor",
       "/resume-generating": "Generating Resume"
+      
     };
     
     setPageTitle(routeTitles[path] || "Page Not Found");
