@@ -49,6 +49,7 @@ import DeckPage from "./pages/Slides/component/DeckPage";
 import SlideSidebar from "./pages/Slides/component/SlideSidebar";
 import CorrectedSlideProgress from "./pages/Slides/component/CorrectedSlideProgress";
 import SlideExport from "./pages/Slides/component/SlideExport";
+import SlideExporting from "./pages/Slides/component/SlideExporting";
 
 
 function AppRoutes() {
@@ -123,7 +124,8 @@ function AppRoutes() {
         <Route path="/create-pitchdeck/step-four" element={<CreatePitchDeckSteFour />} />
         <Route path="/deck" element={<DeckPage />} />
         <Route path="/correct-slide/:slideId" element={<CorrectedSlideProgress />} />
-        <Route path="/export-slide/:deckId" element={<SlideExport />} />
+        <Route path="/exportslide" element={<SlideExport />} />
+        <Route path="/export-slide/:deckId" element={<SlideExporting />} />
         <Route path="/pitch-slide" element={<PitchSlide />} />
         <Route path="/slidebar" element={<SlideSidebar />} />
         <Route path="/settings" element={<Settings />} />
