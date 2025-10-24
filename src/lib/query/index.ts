@@ -691,3 +691,21 @@ export const useExport = () => {
     },
   });
 };
+
+export const useGetExportedDeck = () => {
+  return useQuery({
+    queryKey: ["GET_EXPORTED_DECK"],
+    queryFn: async () => {
+         const deckId = localStorage.getItem("deckId"); // 👈 Get from localStorage
+      if (!deckId) throw new Error("Slide ID not found in local storage");
+      const res = await fetch(`${BASE_URL}/pitch/deck/file/${deckId}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch exported deck");
+      return res.json();
+    },
+  });
+}
