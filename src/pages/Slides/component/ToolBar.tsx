@@ -22,6 +22,8 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { logout, useGetUser } from "@/lib/query";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+
 
 export default function Toolbar() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -35,15 +37,41 @@ export default function Toolbar() {
     setIsLoggingOut(false);
   };
 
+  const handlePlayClick = () => {
+    toast("🚧 Coming soon!", {
+      icon: "⏳",
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+        fontSize: "15px",
+        padding: "30px"
+      },
+    });
+  };
+
+  const handleUndoRedo = () => {
+    toast("🚧 Coming soon!", {
+      icon: "⏳",
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+        fontSize: "15px",
+        padding: "30px"
+      },
+    });
+  };
+
   return (
-    <header className="w-full flex items-center justify-between px-4 md:px-6 py-3 border-b bg-white shadow-sm">
-      {/* Left Section - Logo & Undo / Redo */}
+    <header className="w-full flex items-center justify-between px-4 md:px-6 py-3 border-b bg-white shadow-sm relative">
+      {/* Left Section - Undo / Redo */}
       <div className="flex items-center gap-4 md:gap-6">
-        <div className="flex items-center gap-2 text-gray-600 hover:text-black transition cursor-pointer">
+        <div  onClick={handleUndoRedo} className="flex items-center gap-2 text-gray-600 hover:text-black transition cursor-pointer">
           <Undo2 className="w-5 h-5" />
           <span className="hidden sm:inline text-sm font-medium">Undo</span>
         </div>
-        <div className="flex items-center gap-2 text-gray-600 hover:text-black transition cursor-pointer">
+        <div onClick={handleUndoRedo} className="flex items-center gap-2 text-gray-600 hover:text-black transition cursor-pointer">
           <Redo2 className="w-5 h-5" />
           <span className="hidden sm:inline text-sm font-medium">Redo</span>
         </div>
@@ -51,9 +79,12 @@ export default function Toolbar() {
 
       {/* Right Section */}
       <div className="flex items-center gap-3 md:gap-4">
-        {/* Buttons - hidden on small screens */}
+        {/* Desktop Buttons */}
         <div className="hidden md:flex items-center gap-3">
-          <button className="flex items-center gap-2 bg-gray-100 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-200 transition">
+          <button
+            onClick={handlePlayClick}
+            className="flex items-center gap-2 bg-gray-100 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-200 transition"
+          >
             <Play className="w-4 h-4 fill-black" />
             <span className="text-sm font-medium">Play</span>
           </button>
@@ -75,7 +106,7 @@ export default function Toolbar() {
             <Button variant="ghost" className="flex items-center space-x-0">
               <Avatar className="h-[38px] w-[38px]">
                 <AvatarImage src={user_data?.user?.profileImage || ""} />
-                <AvatarFallback className="bg-primary text-white font-semibold">
+                <AvatarFallback className="bg-primary text-white uppercase font-semibold">
                   {user_data?.user?.firstname && user_data?.user?.lastname
                     ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`
                     : user_data?.user?.email
@@ -133,10 +164,13 @@ export default function Toolbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Dropdown */}
       {isMenuOpen && (
         <div className="absolute top-[60px] right-4 bg-white border rounded-xl shadow-lg w-44 p-3 flex flex-col gap-2 z-50 animate-slide-down">
-          <button className="flex items-center gap-2 text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md transition">
+          <button
+            onClick={handlePlayClick}
+            className="flex items-center gap-2 text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md transition"
+          >
             <Play className="w-4 h-4" />
             <span>Play</span>
           </button>

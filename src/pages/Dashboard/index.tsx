@@ -44,12 +44,13 @@ import freepik_build3 from "@/assets/freepik_buld3.png"
 import freepik_build4 from "@/assets/freepik_build4.png"
 import freepik_build5 from "@/assets/freepik_build5.png"
 import freepik_build6 from "@/assets/freepik_build6.png"
-import { getUserDetails, logout, useGetTokenFromQuery, useGetUser } from '@/lib/query';
+import { getUserDetails, logout, useGetGeneratedDecks, useGetTokenFromQuery, useGetUser } from '@/lib/query';
 import { useSearchParams } from 'react-router-dom';
 import DashboardHeader from './component/Header';
 import Sidebar from '@/components/SideBar/SideBar';
 import { sidebarItems } from '@/components/SideBar/component/SideBarItems';
 import CreatePitchDeckModal from '../PitchDeck/component/CreatePitchDeckModal';
+import SearchBar from '@/components/SearchBar/SearchBar';
 // Reusable ToolCard component
 const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle }: {
   image: string,
@@ -113,6 +114,9 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
    const [showPitchDeckModal, setShowPitchDeckModal] = useState(false);
 
+   const {data: generated_decks, isLoading: isLoadingGeneratedDecks} = useGetGeneratedDecks();
+   console.log('generated', generated_decks);
+   
   useEffect(() => {
     const fetchUser = async () => {
       const userData = await getUserDetails();
@@ -128,11 +132,6 @@ const Dashboard = () => {
   const handleCreateNew = (tool: string) => {
     setSelectedTool(tool);
     setShowCreateModal(true);
-  };
-
-  const handleStartCreation = (method: string) => {
-    console.log(`Starting ${selectedTool} with ${method}`);
-    setShowCreateModal(false);
   };
 
  const handleLogout = async () => {
@@ -174,7 +173,8 @@ const Dashboard = () => {
 
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+  <div className="h-screen bg-background flex flex-col overflow-hidden">
+
       {/* Top Navigation */}
    <DashboardHeader
     user_data={user_data}
@@ -198,10 +198,14 @@ const Dashboard = () => {
 
 
         {/* Main Content */}
-        <main className={`flex-1 py-6 px-6 max-sm:px-3 max-sm:py-3 transition-all duration-300 ${desktopSidebarVisible ? '' : 'md:ml-0'}`}>
+        <main
+  className={`flex-1 overflow-y-auto py-6 px-6 max-sm:px-3 max-sm:py-3 transition-all duration-300 ${desktopSidebarVisible ? '' : 'md:ml-0'}`}
+  style={{ height: "calc(100vh - 80px)" }}
+>
           <div className="max-w-7xl mx-auto space-y-8 max-sm:space max-sm:space-y-5 max-sm:mt-1">
+            <div className='flex justify-between max-sm:flex-col max-sm:gap-4'>
            <div className="flex flex-col items-start space-y-6 max-sm:space-y-4">
-    {/* Welcome Text */}
+ 
     <div>
       <h2
         className="
@@ -218,12 +222,14 @@ const Dashboard = () => {
           max-sm:text-sm max-sm:leading-snug
         "
       >
-        Ready to build your next <span className="text-[#FF5619] text-[16px] font-medium">investor-ready</span> document?
+        Ready to build your next <span className="text-[16px] font-medium">investor-ready</span> document?
       </p>
     </div>
+  </div>
 
-
-
+  <div>
+     <SearchBar />
+  </div>
   </div>
 
             {/* Tools Grid */}
@@ -265,14 +271,32 @@ const Dashboard = () => {
             </div>
             </section>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-              <ToolCard variant="project" image={freePik_build1} label="Pitch Desk" subtitle="Updated 8mins ago" />
-              <ToolCard variant="project" image={freepik_build2} label="Resume Builder" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('Resume')} disabled />
-              <ToolCard variant="project" image={freepik_build3} label="YC Assistant" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('YC Assistant')} disabled />
-              <ToolCard variant="project" image={freepik_build4} label="Market Estimator" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('Market Estimator')} disabled />
-              <ToolCard variant="project" image={freepik_build5} label="AI Coach" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('AI Coach')} disabled />
-              <ToolCard variant="project" image={freepik_build6} label="AI Coach" subtitle="Updated 8mins ago" onClick={() => handleCreateNew('AI Coach')} disabled />
-            </div>
+         {/* Recents Section */}
+<div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+  {isLoadingGeneratedDecks ? (
+    <p className="text-gray-500 text-sm col-span-full text-center py-8">Loading your decks...</p>
+  ) : generated_decks?.data?.decks?.length > 0 ? (
+    generated_decks.data.decks.map((deck) => (
+      <ToolCard
+        key={deck._id}
+        variant="project"
+        image={
+          deck?.slides?.length > 0 && deck?.slides[0]?.imageUrl
+            ? deck.slides[0].imageUrl
+            : freePik_build1 // fallback image if no image available
+        }
+        label={deck.startupName || "Untitled Deck"}
+        subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
+        onClick={() => window.open(deck.pdfUrl || "#", "_blank")}
+      />
+    ))
+  ) : (
+    <p className="text-gray-500 text-sm col-span-full text-center py-8">
+      No decks created yet. Click <span className="text-[#FF5619] font-medium cursor-pointer" onClick={() => setShowPitchDeckModal(true)}>here</span> to create one.
+    </p>
+  )}
+</div>
+
 
                  </div>
         </main>

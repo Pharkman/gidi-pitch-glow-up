@@ -1,9 +1,10 @@
 import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
 import { Home, CheckCircle } from "lucide-react"; // 👈 Import CheckCircle
+import GidiLogo from '../../../../public/assets/Gidipitch Logo.svg'
 
 // Helper function to get the hex color from a Tailwind class
 const getHexColor = (tailwindClass) => {
-  return TAILWIND_COLOR_MAP[tailwindClass] || '#6366f1'; // Default to Indigo-500 if not found
+  return tailwindClass || '#6366f1';
 };
 
 export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, brandKit }) {
@@ -12,15 +13,18 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
   };
 
   const activeSlideBgClass = brandKit?.background || "bg-primary";
+  const activeSlidetitleClass = brandKit?.title || "bg-primary";
   const activeSlideBgHex = getHexColor(activeSlideBgClass);
+  const activeSlidetitleHex = getHexColor(activeSlidetitleClass);
   const activeRingHex = getHexColor(activeSlideBgClass);
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 h-screen flex flex-col max-sm:hidden">
       {/* Header */}
       <div className="flex items-center gap-2 px-5 py-4 border-b border-gray-100">
-        <Home className="text-gray-700" size={18} />
-        <h1 className="text-[15px] font-medium text-gray-800">Social Startup</h1>
+        {/* <Home className="text-gray-700" size={18} /> */}
+        {/* <h1 className="text-[15px] font-medium text-gray-800">Social Startup</h1> */}
+        <img src={GidiLogo} alt="GidiPitch Logo" />
       </div>
 
       {/* Slides list */}
@@ -78,7 +82,9 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
                 }
               >
                 <h3 className="text-sm font-semibold text-white truncate">
-                  {slide.title || `Slide ${i + 1}`}{" "}
+              <p 
+                       style={{ color: activeSlidetitleHex  }}
+              >    {slide.title || `Slide ${i + 1}`}</p>
                   {slide.bullets && slide.bullets.length > 0 && (
                     <span className="text-xs text-white font-normal ml-1 mt-1 line-clamp-2 truncate">
                       {slide.bullets[0]}

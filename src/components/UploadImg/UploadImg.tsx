@@ -35,54 +35,51 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId, slideType }) => {
     );
   };
 
-  console.log('defaultImage', defaultImage);
-  
-
   return (
     <div
       className="w-full flex flex-col items-center justify-center cursor-pointer"
       onClick={handleClick}
     >
       {preview ? (
-    <div
-    className={`relative overflow-hidden shadow-lg  transition-all duration-500 
-      ${
-        slideType === "team"
-          ? "w-full h-[200px]" // ✅ Team grid style
-          : "w-full h-[600px] max-sm:h-[300px]" // ✅ Default full slide image
-      }
-    `}
-  >
+        <div
+          className={`group relative overflow-hidden shadow-lg rounded-lg transition-all duration-500 
+            ${
+              slideType === "team"
+                ? "w-full h-[200px]" // Team grid style
+                : "w-full h-[600px] max-sm:h-[300px]" // Default full slide image
+            }
+          `}
+        >
           <img
             src={preview || defaultImage}
             alt={caption || "Slide image"}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-300">
-            <span className="text-white text-sm font-medium">
+
+          {/* Overlay with hover effect */}
+          <div
+            className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 
+                       transition-opacity duration-300 ease-in-out"
+          >
+            <span className="text-white text-sm font-medium tracking-wide">
               {uploading ? "Uploading..." : "Change Image"}
             </span>
           </div>
         </div>
       ) : (
-       <div
-  className={`flex items-center justify-center border-2 border-dashed text-gray-500 text-xs htransition
-    ${
-      slideType === "team"
-        ? "w-full h-[200px]"
-        : "w-full h-[600px] max-sm:h-[300px] bg-gray-50" 
-    }
-  `}
->
+        <div
+          className={`flex items-center justify-center border-2 border-dashed text-gray-500 text-xs 
+                      transition-all duration-300 ease-in-out rounded-lg
+            ${
+              slideType === "team"
+                ? "w-full h-[200px]"
+                : "w-full h-[600px] max-sm:h-[300px] bg-gray-50"
+            }
+          `}
+        >
           {uploading ? "Uploading..." : "Click to Upload Image"}
         </div>
       )}
-
-      {/* {caption && (
-        <p className="text-xs text-center text-gray-500 mt-2 italic">
-          {caption}
-        </p>
-      )} */}
 
       <input
         type="file"

@@ -21,9 +21,8 @@ const PitchSlide = () => {
   const isCompleted = progress >= 100 || status === "completed";
 
   const slideRefs = useRef([]);
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0); // For syncing sidebar
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0); 
 
-  // Intersection Observer to detect the currently visible slide
   useEffect(() => {
     const observerOptions = {
       root: null,
@@ -80,7 +79,7 @@ const PitchSlide = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 ml-64 flex flex-col min-h-screen max-sm:ml-0">
+      <div className="flex-1 bg-[#12110D] ml-64 flex flex-col min-h-screen max-sm:ml-0">
         {/* Toolbar */}
         <header className="fixed top-0 left-64 max-sm:left-0 right-0 z-10 bg-white shadow-sm border-b border-gray-200">
           <Toolbar />
@@ -98,7 +97,10 @@ const PitchSlide = () => {
       >
       {deck?.data?.slides?.map((slide, index) => {
         
-       const slideBackgroundColor = TAILWIND_COLOR_MAP[brandKit.background] || 'bg-primary';
+       const slideBackgroundColor = brandKit.background || 'bg-primary';
+       const slideBulletColor = brandKit.bullets || 'bg-primary';
+       const slidetitleColor = brandKit.title || 'bg-primary';
+       const slidenoteColor = brandKit.note || 'bg-primary';
         
 if (slide.slideType === "team") {
   return (
@@ -113,12 +115,16 @@ if (slide.slideType === "team") {
     >
       {/* TOP CONTENT */}
       <div className="w-full  mb-10 space-y-4">
-        <h2 className="text-xl md:text-2xl font-extrabold text-white">
+        <h2
+          style={{ color: slidetitleColor }}
+        className="text-xl md:text-2xl font-extrabold text-white">
           {slide.title}
         </h2>
 
         {slide.bullets && (
-          <ul className="list-disc list-inside text-white text-[15px] space-y-2 mx-auto w-fit text-left">
+          <ul 
+            style={{ color: slideBulletColor  }}
+          className="list-disc list-inside text-white text-[15px] space-y-2 mx-auto w-fit text-left">
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
             ))}
@@ -126,7 +132,9 @@ if (slide.slideType === "team") {
         )}
 
         {slide.notes && (
-          <p className="italic text-white leading-relaxed text-[15px]  mx-auto">
+          <p 
+            style={{ color: slidenoteColor }}
+          className="italic text-white leading-relaxed text-[15px]  mx-auto">
             {slide.notes}
           </p>
         )}
@@ -174,17 +182,23 @@ if (slide.slideType === "team") {
       } items-center  shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5 max-sm:mb-0 max-sm:pt-4`}
     >
       <div className="w-full md:w-[80%] space-y-7 px-8 max-sm:px-4 max-sm:mb-4">
-        <h2 className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
+        <h2
+         style={{ color: slidetitleColor  }}
+        className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
           {slide.title}
         </h2>
         {slide.bullets && (
-          <ul className="list-disc pl-5 space-y-2 text-white text-[15px]">
+          <ul
+           style={{ color: slideBulletColor  }}
+          className="list-disc pl-5 space-y-2 text-white text-[15px]">
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
             ))}
           </ul>
         )}
-        <p className="italic text-white leading-relaxed text-[14px]">
+        <p
+         style={{ color: slidenoteColor  }}
+        className="italic text-white leading-relaxed text-[14px]">
           {slide.notes}
         </p>
       </div>

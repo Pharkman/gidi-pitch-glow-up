@@ -7,6 +7,7 @@ import { useGetIndustries_Slides } from "@/lib/query";
 import { useEffect, useState } from "react";
 import SlideSelector from "./SlideSelector";
 import ProgressDots from "./ProgressDot";
+import { toast } from "react-toastify";
 
 export default function CreatePitchDeckStepFour({ onClose }) {
   const navigate = useNavigate();
@@ -106,6 +107,11 @@ export default function CreatePitchDeckStepFour({ onClose }) {
                         ? "bg-orange-50 border border-orange-500 text-orange-600"
                         : "text-gray-700 hover:bg-gray-50"
                     }`}
+
+                     onClick={(e) => {
+                      e.preventDefault();
+                      toast("🚀 AI image generation is coming soon!");
+                    }}
                   >
                     <Field
                       type="radio"
