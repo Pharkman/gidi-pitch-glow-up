@@ -5,8 +5,9 @@ import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
 import { useGetDeckProgress } from "@/lib/query";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 const SlideExporting = () => {
-  const deckId = localStorage.getItem("deckId");
+const { deckId } = useParams();
   const { data: deck, isFetching: isProgressLoading } = useGetDeckProgress(deckId || "");
 
   const progress = deck?.data?.progress ?? 0;
@@ -22,7 +23,7 @@ const SlideExporting = () => {
     const observerOptions = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.5, // At least 50% of slide is visible
+      threshold: 0.5, 
     };
 
     const observerCallback = (entries) => {
@@ -74,7 +75,7 @@ const SlideExporting = () => {
       >
       {deck?.data?.slides?.map((slide, index) => {
         
-       const slideBackgroundColor = TAILWIND_COLOR_MAP[brandKit.background] || 'bg-primary';
+const slideBackgroundColor = TAILWIND_COLOR_MAP[brandKit.background] || 'bg-primary';
         
 if (slide.slideType === "team") {
   return (
@@ -85,7 +86,7 @@ if (slide.slideType === "team") {
       ref={(el) => (slideRefs.current[index] = el)}
      style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col items-center shadow-lg border border-gray-200 
-      transition-all duration-500 mb-5 py-10 px-6`}
+      transition-all duration-500 py-10 px-6`}
     >
       {/* TOP CONTENT */}
       <div className="w-full  mb-10 space-y-4">
@@ -113,7 +114,7 @@ if (slide.slideType === "team") {
         {slide.images?.map((image, i) => (
           <div
             key={i}
-            className="bg-white  shadow-md flex flex-col items-center pb-2  text-center hover:shadow-lg transition-all duration-300"
+            className="bg-white  shadow-md flex flex-col items-center pb-2  text-center  transition-all duration-300"
           >
             <UploadImg
               caption={image.caption}
@@ -147,7 +148,7 @@ if (slide.slideType === "team") {
         style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col ${
         index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-      } items-center  shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5 `}
+      } items-center  shadow-lg border border-gray-200 transition-all duration-500 `}
     >
       <div className="w-full md:w-[80%] space-y-7 px-8">
         <h2 className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
