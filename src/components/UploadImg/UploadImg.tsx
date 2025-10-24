@@ -45,7 +45,7 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId, slideType }) => {
     >
       {preview ? (
     <div
-    className={`relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-[1.01] 
+    className={`relative overflow-hidden shadow-lg  transition-all duration-500 
       ${
         slideType === "team"
           ? "w-full h-[200px]" // ✅ Team grid style
@@ -58,7 +58,7 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId, slideType }) => {
             alt={caption || "Slide image"}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-300">
             <span className="text-white text-sm font-medium">
               {uploading ? "Uploading..." : "Change Image"}
             </span>
@@ -66,7 +66,7 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId, slideType }) => {
         </div>
       ) : (
        <div
-  className={`flex items-center justify-center border-2 border-dashed text-gray-500 text-xs hover:bg-gray-100 transition
+  className={`flex items-center justify-center border-2 border-dashed text-gray-500 text-xs htransition
     ${
       slideType === "team"
         ? "w-full h-[200px]"

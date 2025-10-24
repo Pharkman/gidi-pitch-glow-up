@@ -94,7 +94,7 @@ const PitchSlide = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="space-y-10 w-full max-w-6xl mx-auto"
+        className="w-full max-w-6xl mx-auto"
       >
       {deck?.data?.slides?.map((slide, index) => {
         
@@ -109,7 +109,7 @@ if (slide.slideType === "team") {
       ref={(el) => (slideRefs.current[index] = el)}
      style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col items-center shadow-lg border border-gray-200 
-      transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5 py-10 px-6`}
+      transition-all duration-500 mb-5 py-10 px-6`}
     >
       {/* TOP CONTENT */}
       <div className="w-full  mb-10 space-y-4">
