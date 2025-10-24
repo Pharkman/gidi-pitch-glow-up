@@ -134,25 +134,20 @@ export default function Sidebar({
           </button>
 
           <aside className="relative w-64 bg-white shadow-lg flex flex-col justify-between h-full">
-            <div className="p-4">
+            <div className="p-2">
               <nav className="space-y-1 mt-6">
                 {(sidebarItems || []).map((item) => (
                   <Button
                     key={item.name}
                     onClick={() => handleNavigation(item)}
                     disabled={!item.available}
-                    className={`w-full  text-white justify-start flex items-center gap-3 text-sm font-medium transition-all duration-200
-                      ${
-                        item.active
-                          ? "bg-[#FFF1EC] text-[#FF5A1F] border border-[#FFDACC]"
-                          : ""
-                      }
-                      ${
-                        !item.active
-                          ? "bg-[#FFF1EC] text-[#FF5A1F] border border-[#FFDACC]"
-                          : ""
-                      }
-                      ${!item.available ? "opacity-50 cursor-not-allowed" : ""}`}
+                      className={`w-full justify-start flex items-center gap-3 leading-[100%] text-[#858585] text-sm font-medium transition-all duration-200  rounded-[8px] p-[12px]
+                  ${
+                    item.active
+                      ? "bg-[#FFF1EC] text-[#FF5A1F] p-[12px]"
+                      : "bg-transparent text-[#858585] hover:text-white"
+                  }
+                  ${!item.available ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     <img
                       src={item.img}
