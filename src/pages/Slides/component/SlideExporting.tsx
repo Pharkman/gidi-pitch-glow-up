@@ -86,16 +86,16 @@ if (slide.slideType === "team") {
       ref={(el) => (slideRefs.current[index] = el)}
      style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col items-center  border border-gray-200 
-      transition-all duration-500 py-10 px-6`}
+      transition-all duration-500 py-12 px-6`}
     >
       {/* TOP CONTENT */}
       <div className="w-full  space-y-4">
-        <h2 className="text-xl md:text-2xl font-extrabold text-white">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-white">
           {slide.title}
         </h2>
 
         {slide.bullets && (
-          <ul className="list-disc list-inside text-white text-[15px] space-y-2 mx-auto w-fit text-left">
+          <ul className="list-disc list-inside text-white text-[15px] space-y-2 w-fit text-left">
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
             ))}
@@ -110,7 +110,7 @@ if (slide.slideType === "team") {
       </div>
 
       {/* TEAM MEMBERS GRID */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
         {slide.images?.map((image, i) => (
           <div
             key={i}
@@ -151,17 +151,17 @@ if (slide.slideType === "team") {
       } items-center m-0 p-0  shadow-lg border border-gray-200 transition-all duration-500 `}
     >
       <div className="w-full md:w-[78%] space-y-7 px-8 max-sm:px-4 max-sm:py-4">
-        <h2 className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
+        <h2 className="text-3xl font-extrabold text-white max-sm:text-xl leading-[150%]">
           {slide.title}
         </h2>
         {slide.bullets && (
-          <ul className="list-disc pl-5 space-y-2 text-white text-[15px]">
+          <ul className="list-disc pl-5 space-y-2 text-white text-[17px]">
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
             ))}
           </ul>
         )}
-        <p className="italic text-white leading-relaxed text-[14px]">
+        <p className="italic text-white leading-relaxed text-[16px]">
           {slide.notes}
         </p>
       </div>
