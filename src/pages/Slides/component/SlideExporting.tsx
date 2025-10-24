@@ -150,7 +150,7 @@ if (slide.slideType === "team") {
         index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
       } items-center m-0 p-0  shadow-lg border border-gray-200 transition-all duration-500 `}
     >
-      <div className="w-full md:w-[77%] space-y-7 px-8">
+      <div className="w-full md:w-[78%] space-y-7 px-8">
         <h2 className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
           {slide.title}
         </h2>
