@@ -30,8 +30,8 @@ export default function CreatePitchDeckStepFour({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white w-full max-w-xl rounded-2xl p-6 shadow-xl border border-gray-100 max-sm:mx-3 max-h-[90vh] overflow-y-auto scrollbar-hide">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 max-sm:z-0">
+      <div className="bg-white w-full max-w-xl rounded-2xl p-6 max-sm:p-4 shadow-xl border border-gray-100 max-sm:max-h-[100vh] max-sm:rounded-none  max-h-[90vh] overflow-y-auto scrollbar-hide">
 
         {/* Header */}
         <div className="flex items-center justify-between mb-5">

@@ -68,9 +68,9 @@ export default function CreatePitchDeckStepFive() {
   };
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-gray-900/80 via-black/60 to-gray-900/80 backdrop-blur-sm flex items-center justify-center z-50 px-4 py-12">
-      <div className="bg-white/90 backdrop-blur-md w-full max-w-3xl rounded-2xl p-8 shadow-2xl border border-gray-200 animate-fadeIn flex flex-col justify-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+    <div className="fixed inset-0 bg-gradient-to-br from-gray-900/80 via-black/60 to-gray-900/80 backdrop-blur-sm flex items-center justify-center z-50 px-4 py-12 max-sm:z-0 max-sm:px-0">
+      <div className="bg-white/90 backdrop-blur-md w-full max-w-3xl rounded-2xl px-8 py-8 max-sm:px-4 max-sm:rounded-none shadow-2xl border border-gray-200 animate-fadeIn flex flex-col justify-center max-sm:max-h-[100vh]">
+        <h2 className="text-2xl font-bold max-sm:text-xl text-gray-900 mb-6 text-center">
           Review & Submit Your <span className="text-[#FF5619]">Pitch Deck</span>
         </h2>
 

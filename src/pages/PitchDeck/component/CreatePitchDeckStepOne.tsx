@@ -27,10 +27,10 @@ export default function CreatePitchDeckStepOne({ onClose }) {
   });
 
   return (
-    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 px-4 max-sm:px-0 max-sm:z-0">
       <div
-        className="bg-white w-full max-w-xl rounded-3xl p-8 shadow-2xl border border-gray-100 
-        max-h-[94vh] overflow-y-auto scrollbar-hide"
+        className="bg-white w-full max-w-xl rounded-3xl px-8 py-8 max-sm:px-4 shadow-2xl border border-gray-100 
+        max-h-[94vh] max-sm:max-h-[100vh]  overflow-y-auto scrollbar-hide max-sm:rounded-[0px]"
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
