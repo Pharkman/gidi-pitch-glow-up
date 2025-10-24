@@ -1,20 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+@font-face {
+    font-family: Satoshi;
+    src: url('../../../.');
+}
+@font-face {
+    font-family: Heuvel ;
+    src: url('../../../../public/assets/fonts/HeuvelGroteskDEMO-Regular-BF674fe9fb56512.ttf');
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/*
-  NOTE: The CSS variables below should be kept in sync with src/design-system/tokens.ts
-  If you update tokens.ts, update these variables accordingly.
-*/
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+
+
+@theme {
+    --font-satoshi: 'Satoshi', sans-serif;
+    --font-heuvel: 'Heuvel', sans-serif;
+}
 
 *{
     font-family: "Geist", sans-serif;
 }
+
 
 @layer base {
   :root {

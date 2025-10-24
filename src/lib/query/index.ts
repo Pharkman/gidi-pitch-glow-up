@@ -709,3 +709,21 @@ export const useGetExportedDeck = () => {
     },
   });
 }
+
+
+
+export const useGetGeneratedDecks = () => {
+  return useQuery({
+    queryKey: ["GET_GENERATED_DECKS"],
+    queryFn: async () => {
+      const res = await fetch(`${BASE_URL}/pitch/deck/user`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch generated decks");
+      return res.json();
+    },
+  });
+}

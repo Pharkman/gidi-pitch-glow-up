@@ -2,13 +2,14 @@ import { X, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import Plus from '../../../public/assets/UserPlus.png'
 
 const InviteButton = () => (
   <button
-    className="flex items-center justify-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-3 rounded-lg font-semibold text-base shadow-md transition-all duration-200 hover:shadow-lg w-full mx-auto mb-6 border border-[#FF5A1F]"
+    className="flex items-center justify-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-3 rounded-lg font-medium text-sm  transition-all duration-200 hover:shadow-lg w-full mx-auto mb-6 border border-[#FF5A1F]"
     type="button"
   >
-    <UserPlus className="w-5 h-5" />
+    <img src={Plus} alt=""/>
     Invite to GIDIPitch
   </button>
 );
@@ -16,7 +17,7 @@ const InviteButton = () => (
 interface SidebarProps {
   sidebarItems: {
     name: string;
-    icon: React.ElementType;
+    img: string; // updated type
     active: boolean;
     available: boolean;
     path: string;
@@ -25,7 +26,7 @@ interface SidebarProps {
   setSidebarOpen: (value: boolean) => void;
   desktopSidebarVisible: boolean;
   setDesktopSidebarVisible: (value: boolean) => void;
-  onPitchDeckClick: () => void; // ✅ new prop
+  onPitchDeckClick: () => void;
 }
 
 export default function Sidebar({
@@ -41,7 +42,7 @@ export default function Sidebar({
     if (!item.available) return;
 
     if (item.name === "Pitch Deck Generator") {
-      onPitchDeckClick(); // ✅ trigger modal
+      onPitchDeckClick();
       setSidebarOpen(false);
     } else {
       navigate(item.path);
@@ -55,25 +56,30 @@ export default function Sidebar({
       <aside
         className={`hidden md:flex ${
           desktopSidebarVisible ? "w-64" : "w-16"
-        } transition-all duration-300 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex-col justify-between h-screen`}
+        } transition-all duration-300 border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex-col justify-between `}
       >
         <div className="p-2 mt-3">
           <nav className="space-y-2">
             {(sidebarItems || []).map((item) => (
               <Button
                 key={item.name}
-                variant={item.active ? "default" : "ghost"}
-                className={`w-full justify-start ${
-                  !item.available ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                disabled={!item.available}
                 onClick={() => handleNavigation(item)}
+                disabled={!item.available}
                 title={!desktopSidebarVisible ? item.name : undefined}
+                className={`w-full justify-start flex items-center gap-3 leading-[100%] text-[#858585] text-sm font-medium transition-all duration-200  rounded-[8px] p-[12px]
+                  ${
+                    item.active
+                      ? "bg-[#FFF1EC] text-[#FF5A1F] p-[12px]"
+                      : "bg-transparent text-[#858585] hover:text-white"
+                  }
+                  ${!item.available ? "opacity-50 cursor-not-allowed" : ""}`}
               >
-                <item.icon
+                <img
+                  src={item.img}
+                  alt={item.name}
                   className={`${
-                    desktopSidebarVisible ? "mr-3" : "mx-auto"
-                  } h-4 w-4`}
+                    desktopSidebarVisible ? "h-[20px] w-[20px]" : "mx-auto h-4 w-4"
+                  }`}
                 />
                 {desktopSidebarVisible && (
                   <>
@@ -89,24 +95,26 @@ export default function Sidebar({
             ))}
           </nav>
         </div>
+
         <div
           className={
             desktopSidebarVisible
-              ? "px-4 mt-auto"
-              : "flex justify-center pb-4 mt-auto"
+              ? "px-4 mt-6"
+              : "flex justify-center pb-4 "
           }
         >
           {desktopSidebarVisible ? (
             <InviteButton />
           ) : (
-            <Button
-              size="icon"
-              variant="default"
-              className="bg-[#FF5A1F] hover:bg-[#e14e17] text-white mb-6 shadow-md"
-              title="Invite Team Member"
-            >
-              <UserPlus className="h-4 w-4" />
-            </Button>
+            // <Button
+            //   size="icon"
+            //   variant="default"
+            //   className="bg-[#FFF1EC] hover:bg-[#FFF1EC] text-white mb-6 shadow-md"
+            //   title="Invite Team Member"
+            // >
+            //   <UserPlus className="h-4 w-4" />
+            // </Button>
+            <div></div>
           )}
         </div>
       </aside>
@@ -119,7 +127,7 @@ export default function Sidebar({
             onClick={() => setSidebarOpen(false)}
           />
           <button
-            className="absolute top-4 right-4 z-50 bg-white rounded-full p-2 shadow-md"
+            className="absolute top-4 right-4 z-50 bg-[#FFF1EC] rounded-full p-2 shadow-md"
             onClick={() => setSidebarOpen(false)}
           >
             <X className="h-5 w-5" />
@@ -127,18 +135,30 @@ export default function Sidebar({
 
           <aside className="relative w-64 bg-white shadow-lg flex flex-col justify-between h-full">
             <div className="p-4">
-              <nav className="space-y-2 mt-6">
+              <nav className="space-y-1 mt-6">
                 {(sidebarItems || []).map((item) => (
                   <Button
                     key={item.name}
-                    variant={item.active ? "default" : "ghost"}
-                    className={`w-full justify-start ${
-                      !item.available ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
-                    disabled={!item.available}
                     onClick={() => handleNavigation(item)}
+                    disabled={!item.available}
+                    className={`w-full  text-white justify-start flex items-center gap-3 text-sm font-medium transition-all duration-200
+                      ${
+                        item.active
+                          ? "bg-[#FFF1EC] text-[#FF5A1F] border border-[#FFDACC]"
+                          : ""
+                      }
+                      ${
+                        !item.active
+                          ? "bg-[#FFF1EC] text-[#FF5A1F] border border-[#FFDACC]"
+                          : ""
+                      }
+                      ${!item.available ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
-                    <item.icon className="mr-3 h-4 w-4" />
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="mr-3"
+                    />
                     {item.name}
                     {!item.available && (
                       <Badge variant="secondary" className="ml-auto text-xs">
