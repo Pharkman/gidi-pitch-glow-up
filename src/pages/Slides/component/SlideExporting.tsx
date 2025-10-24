@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 const SlideExporting = () => {
-const { deckId } = useParams();
+const { deckId } = useParams(); 
   const { data: deck, isFetching: isProgressLoading } = useGetDeckProgress(deckId || "");
 
   const progress = deck?.data?.progress ?? 0;
@@ -63,7 +63,7 @@ const { deckId } = useParams();
 
    console.log(brandKit.background);
   return (
-    <main className="flex-1 slide overflow-y-auto  max-sm:px-3 flex flex-col items-center justify-center">
+    <main className="flex-1 slide o max-sm:px-3  flex flex-col items-center justify-center">
   <AnimatePresence mode="wait">
     {isCompleted && (
       <motion.div
@@ -85,7 +85,7 @@ if (slide.slideType === "team") {
       data-index={index}
       ref={(el) => (slideRefs.current[index] = el)}
      style={{ backgroundColor: slideBackgroundColor }}
-      className={`flex flex-col items-center shadow-lg border border-gray-200 
+      className={`flex flex-col items-center  border border-gray-200 
       transition-all duration-500 py-10 px-6`}
     >
       {/* TOP CONTENT */}
@@ -148,9 +148,9 @@ if (slide.slideType === "team") {
         style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col ${
         index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-      } items-center  shadow-lg border border-gray-200 transition-all duration-500 `}
+      } items-center m-0 p-0  shadow-lg border border-gray-200 transition-all duration-500 `}
     >
-      <div className="w-full md:w-[80%] space-y-7 px-8">
+      <div className="w-full md:w-[77%] space-y-7 px-8">
         <h2 className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
           {slide.title}
         </h2>

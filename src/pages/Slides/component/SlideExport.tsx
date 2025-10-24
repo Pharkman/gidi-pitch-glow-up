@@ -155,35 +155,113 @@ const SlideExport = () => {
             )}
 
             {exportStatus === "ready" && (
-              <div className="flex flex-col items-center justify-center">
-                <CheckCircle2 className="w-10 h-10 text-green-500 mb-3" />
-                <p className="text-gray-700 font-medium">
-                  Deck export completed successfully!
-                </p>
-                <div className="mt-4 space-y-2">
-                  {deck?.pdfUrl && (
-                    <a
-                      href={deck.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                    >
-                      Download PDF
-                    </a>
-                  )}
-                  {deck?.pptxUrl && (
-                    <a
-                      href={deck.pptxUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
-                    >
-                      Download PPTX
-                    </a>
-                  )}
-                </div>
-              </div>
-            )}
+  <div className="flex flex-col items-center justify-center bg-white shadow-md rounded-2xl p-8 max-w-md mx-auto text-center border border-gray-100">
+    {/* Success Icon */}
+    <div className="bg-green-100 rounded-full p-4 mb-4 animate-bounce">
+      <CheckCircle2 className="w-10 h-10 text-green-600" />
+    </div>
+
+    {/* Title */}
+    <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+      Export Complete! 🎉
+    </h2>
+
+    {/* Subtitle */}
+    <p className="text-gray-600 text-sm mb-6">
+      Your deck has been successfully exported. You can now download your files below.
+    </p>
+
+    {/* Download Buttons */}
+    <div className="flex flex-col w-full gap-3">
+  {/* PDF Download */}
+  {deck?.pdfUrl && (
+    <a
+      href={deck.pdfUrl}
+      download
+      className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium shadow hover:opacity-90 transition-all duration-300"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className="w-5 h-5"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 16.5V3.75m0 12.75-3.75-3.75M12 16.5l3.75-3.75M4.5 19.5h15"
+        />
+      </svg>
+      Download PDF
+    </a>
+  )}
+
+  {/* PPTX Download */}
+  {deck?.pptxUrl && (
+    <a
+      href={deck.pptxUrl}
+      download
+      className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium shadow hover:opacity-90 transition-all duration-300"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className="w-5 h-5"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 16.5V3.75m0 12.75-3.75-3.75M12 16.5l3.75-3.75M4.5 19.5h15"
+        />
+      </svg>
+      Download PPTX
+    </a>
+  )}
+
+  {/* Download Both */}
+  {deck?.pdfUrl && deck?.pptxUrl && (
+    <button
+      onClick={() => {
+        // Trigger both downloads programmatically
+        const pdfLink = document.createElement("a");
+        pdfLink.href = deck.pdfUrl;
+        pdfLink.download = "";
+        pdfLink.click();
+
+        const pptxLink = document.createElement("a");
+        pptxLink.href = deck.pptxUrl;
+        pptxLink.download = "";
+        pptxLink.click();
+      }}
+      className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-lg font-medium shadow hover:opacity-90 transition-all duration-300"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className="w-5 h-5"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 16.5V3.75m0 12.75-3.75-3.75M12 16.5l3.75-3.75M4.5 19.5h15"
+        />
+      </svg>
+      Download Both Files
+    </button>
+  )}
+</div>
+
+  </div>
+)}
+
 
             <div className="mt-6">
               <button

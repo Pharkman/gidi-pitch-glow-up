@@ -131,11 +131,14 @@ All colors MUST be HSL.
     width: 100%;
     max-width: 100vw;
     overflow-x: hidden;
+    padding: 0;
+    margin: 0;
   }
 
   * {
     @apply border-border ;
-    
+    margin: 0;
+    padding: 0
   }
 
   body {
@@ -278,9 +281,15 @@ All colors MUST be HSL.
   display: none;
 }
 
+*{
+  margin: 0;
+  padding: 0;
+}
 html, body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
+  padding: 0;
+    margin: 0;
 }
 
 .loaderr {
@@ -307,7 +316,7 @@ html, body {
       spinner-fade 1.2s linear infinite;
   }
   .loaderr:before {
-    border-top-color: #fff;
+    border-top-color: #000;
   }
   .loaderr:after {
     border-top-color: #ff3d00;
