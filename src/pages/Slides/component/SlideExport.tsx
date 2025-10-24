@@ -59,7 +59,7 @@ const SlideExport = () => {
 
   const deck = exportedDeck?.data?.deck;
 
-  // Helper to handle dual downloads
+  // Handle both downloads cleanly
   const handleDownloadBoth = () => {
     if (deck?.pdfUrl) {
       const pdfLink = document.createElement("a");
@@ -67,7 +67,6 @@ const SlideExport = () => {
       pdfLink.download = "";
       pdfLink.click();
     }
-
     setTimeout(() => {
       if (deck?.pptxUrl) {
         const pptxLink = document.createElement("a");
@@ -75,45 +74,44 @@ const SlideExport = () => {
         pptxLink.download = "";
         pptxLink.click();
       }
-    }, 1000); // wait a bit before second download
+    }, 800);
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Export Modal */}
       <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-        <div className="bg-white rounded-2xl w-full max-w-md p-8 shadow-xl border border-gray-100 relative">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">
+        <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl border border-gray-100 relative">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2 text-center">
             Export Slides
           </h2>
-          <p className="text-gray-500 mb-8 text-center text-[15px]">
+          <p className="text-gray-500 mb-6 text-center text-sm">
             Choose the format you’d like to export your slides in.
           </p>
 
-          {/* Export Buttons */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => handleExport("PDF")}
                 disabled={isPending}
-                className="py-3 bg-primary text-white rounded-xl text-sm font-semibold hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-md disabled:opacity-70"
+                className="py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-sm disabled:opacity-70"
               >
                 {loadingType === "PDF" && isPending ? (
                   <LoadingSpinner />
                 ) : (
-                  "Export as PDF"
+                  "Export PDF"
                 )}
               </button>
 
               <button
                 onClick={() => handleExport("PPTX")}
                 disabled={isPending}
-                className="py-3 bg-primary text-white rounded-xl text-sm font-semibold hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-md disabled:opacity-70"
+                className="py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-sm disabled:opacity-70"
               >
                 {loadingType === "PPTX" && isPending ? (
                   <LoadingSpinner />
                 ) : (
-                  "Export as PPTX"
+                  "Export PPTX"
                 )}
               </button>
             </div>
@@ -121,7 +119,7 @@ const SlideExport = () => {
             <button
               onClick={() => handleExport("Both")}
               disabled={isPending}
-              className="w-full py-3 bg-primary text-white rounded-xl text-sm font-semibold hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-md disabled:opacity-70"
+              className="w-full py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-sm disabled:opacity-70"
             >
               {loadingType === "Both" && isPending ? (
                 <LoadingSpinner />
@@ -131,7 +129,7 @@ const SlideExport = () => {
             </button>
           </div>
 
-          <div className="my-6 border-t border-gray-200"></div>
+          <div className="my-4 border-t border-gray-200"></div>
 
           <button
             onClick={() => setShowStatusModal(true)}
@@ -145,19 +143,19 @@ const SlideExport = () => {
       {/* Status Modal */}
       {showStatusModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-2">
-          <div className="bg-white rounded-2xl w-full max-w-md py-4 px-2 text-center border border-gray-100">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+          <div className="bg-white rounded-xl w-full max-w-sm p-5 text-center border border-gray-100 shadow-lg">
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">
               Export Status
             </h3>
 
             {exportStatus === "exporting" && (
               <div className="flex flex-col items-center justify-center">
-                <span className="loaderr mb-3"></span>
+                <span className="loaderr mb-2"></span>
                 <p className="text-gray-600 text-sm">
-                  Your deck is currently exporting. Please wait...
+                  Your deck is exporting. Please wait...
                 </p>
                 {deck?.activityStatus && (
-                  <p className="mt-2 text-gray-500 text-xs">
+                  <p className="mt-1 text-gray-500 text-xs">
                     {deck.activityStatus}
                   </p>
                 )}
@@ -165,57 +163,70 @@ const SlideExport = () => {
             )}
 
             {exportStatus === "ready" && (
-              <div className="flex flex-col items-center justify-center bg-white rounded-2xl p-6 text-center">
-                <div className="bg-green-100 rounded-full p-4 mb-3 animate-bounce">
-                  <CheckCircle2 className="w-10 h-10 text-green-600" />
+              <div className="flex flex-col items-center justify-center bg-white rounded-xl p-4 text-center">
+                <div className="bg-green-100 rounded-full p-3 mb-2">
+                  <CheckCircle2 className="w-8 h-8 text-green-600" />
                 </div>
 
-                <h2 className="text-xl font-semibold text-gray-800 mb-1">
+                <h2 className="text-lg font-semibold text-gray-800 mb-1">
                   Export Complete 🎉
                 </h2>
-                <p className="text-gray-600 text-sm mb-6">
+                <p className="text-gray-600 text-sm mb-4">
                   Your deck has been successfully exported.
                 </p>
 
-                {/* Download Buttons (dynamic) */}
-                <div className="flex flex-col w-full gap-2 text-[14px]">
-                  {(exportType === "PDF" || exportType === "Both") &&
-                    deck?.pdfUrl && (
-                      <a
-                        href={deck.pdfUrl}
-                        download
-                        className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
-                      >
-                        ⬇ Download PDF
-                      </a>
-                    )}
+                <div className="flex flex-col w-full gap-2 text-sm">
+                  {exportType === "PDF" && deck?.pdfUrl && (
+                    <a
+                      href={deck.pdfUrl}
+                      download
+                      className="flex items-center justify-center gap-2 w-full py-2 bg-primary text-white rounded-md hover:opacity-90 transition-all"
+                    >
+                      ⬇ Download PDF
+                    </a>
+                  )}
 
-                  {(exportType === "PPTX" || exportType === "Both") &&
-                    deck?.pptxUrl && (
-                      <a
-                        href={deck.pptxUrl}
-                        download
-                        className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
-                      >
-                        ⬇ Download PPTX
-                      </a>
-                    )}
+                  {exportType === "PPTX" && deck?.pptxUrl && (
+                    <a
+                      href={deck.pptxUrl}
+                      download
+                      className="flex items-center justify-center gap-2 w-full py-2 bg-primary text-white rounded-md hover:opacity-90 transition-all"
+                    >
+                      ⬇ Download PPTX
+                    </a>
+                  )}
 
                   {exportType === "Both" &&
                     deck?.pdfUrl &&
                     deck?.pptxUrl && (
-                      <button
-                        onClick={handleDownloadBoth}
-                        className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
-                      >
-                        ⬇ Download Both
-                      </button>
+                      <>
+                        <a
+                          href={deck.pdfUrl}
+                          download
+                          className="flex items-center justify-center gap-2 w-full py-2 bg-primary text-white rounded-md hover:opacity-90 transition-all"
+                        >
+                          ⬇ Download PDF
+                        </a>
+                        <a
+                          href={deck.pptxUrl}
+                          download
+                          className="flex items-center justify-center gap-2 w-full py-2 bg-primary text-white rounded-md hover:opacity-90 transition-all"
+                        >
+                          ⬇ Download PPTX
+                        </a>
+                        <button
+                          onClick={handleDownloadBoth}
+                          className="flex items-center justify-center gap-2 w-full py-2 bg-primary text-white rounded-md hover:opacity-90 transition-all"
+                        >
+                          ⬇ Download Both
+                        </button>
+                      </>
                     )}
                 </div>
               </div>
             )}
 
-            <div className="mt-6">
+            <div className="mt-4">
               <button
                 onClick={() => setShowStatusModal(false)}
                 className="w-full py-2 text-gray-500 hover:text-gray-700 font-medium text-sm transition"
