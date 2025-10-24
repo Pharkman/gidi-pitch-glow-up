@@ -203,7 +203,7 @@ const Dashboard = () => {
   style={{ height: "calc(100vh - 80px)" }}
 >
           <div className="max-w-7xl mx-auto space-y-8 max-sm:space max-sm:space-y-5 max-sm:mt-1">
-            <div className='flex justify-between'>
+            <div className='flex justify-between max-sm:flex-col max-sm:gap-4'>
            <div className="flex flex-col items-start space-y-6 max-sm:space-y-4">
  
     <div>
@@ -222,7 +222,7 @@ const Dashboard = () => {
           max-sm:text-sm max-sm:leading-snug
         "
       >
-        Ready to build your next <span className="text-[#FF5619] text-[16px] font-medium">investor-ready</span> document?
+        Ready to build your next <span className="text-[16px] font-medium">investor-ready</span> document?
       </p>
     </div>
   </div>
