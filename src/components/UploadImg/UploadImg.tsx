@@ -49,7 +49,7 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId, slideType }) => {
       ${
         slideType === "team"
           ? "w-full h-[200px]" // ✅ Team grid style
-          : "w-full h-[600px]" // ✅ Default full slide image
+          : "w-full h-[600px] max-sm:h-[300px]" // ✅ Default full slide image
       }
     `}
   >
@@ -70,7 +70,7 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId, slideType }) => {
     ${
       slideType === "team"
         ? "w-full h-[200px]"
-        : "w-full h-[600px] bg-gray-50" 
+        : "w-full h-[600px] max-sm:h-[300px] bg-gray-50" 
     }
   `}
 >

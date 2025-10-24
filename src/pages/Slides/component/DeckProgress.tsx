@@ -98,7 +98,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
                 transition={{ duration: 0.5 }}
                 className="absolute flex flex-col items-center"
               >
-                <span className="text-4xl font-semibold text-gray-900">{progress}%</span>
+                <span className="text-4xl font-semibold text-gray-900 max-sm:text-2xl">{progress}%</span>
                 <span className="text-xs text-gray-500">
                   {completedSlides}/{totalSlides} slides
                 </span>
@@ -119,7 +119,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
-              className="text-gray-700 font-medium text-lg max-w-sm"
+              className="text-gray-700 font-medium text-lg max-w-sm max-sm:text-base"
             >
               {activityStatus}
             </motion.p>
