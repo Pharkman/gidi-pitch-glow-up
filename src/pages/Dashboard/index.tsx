@@ -199,14 +199,14 @@ const Dashboard = () => {
 
         {/* Main Content */}
         <main className={`flex-1 py-6 px-6 max-sm:px-3 max-sm:py-3 transition-all duration-300 ${desktopSidebarVisible ? '' : 'md:ml-0'}`}>
-          <div className="max-w-7xl mx-auto space-y-8 max-sm:space">
+          <div className="max-w-7xl mx-auto space-y-8 max-sm:space max-sm:space-y-5 max-sm:mt-1">
            <div className="flex flex-col items-start space-y-6 max-sm:space-y-4">
     {/* Welcome Text */}
     <div>
       <h2
         className="
-          text-3xl font-bold tracking-tight text-gray-900 
-          sm:text-4xl md:text-5xl max-sm:text-xl 
+          text-2xl font-bold tracking-tight text-gray-900 
+          sm:text-2xl md:text-2xl max-sm:text-xl 
           capitalize leading-tight mb-2
         "
       >
@@ -218,24 +218,16 @@ const Dashboard = () => {
           max-sm:text-sm max-sm:leading-snug
         "
       >
-        Ready to build your next <span className="text-[#FF5619] text-base font-medium">investor-ready</span> document?
+        Ready to build your next <span className="text-[#FF5619] text-[16px] font-medium">investor-ready</span> document?
       </p>
     </div>
 
-    {/* Subtle Accent or Call-to-Action */}
-  <div className="flex flex-wrap items-center gap-4 mt-6">
-  <button className="px-6 py-3 bg-gradient-to-r from-[#FF6A1A] to-[#FF3D00] text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
-    🚀 Start Building
-  </button>
-  <button className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-100 hover:text-gray-900 transition-all duration-300">
-    Learn More
-  </button>
-</div>
+
 
   </div>
 
             {/* Tools Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 max-sm:gap-4 mb-8">
               <ToolCard image={FreePik2} label="Pitch Desk" onClick={() => handleCreateNew('Pitch Deck')} />
               <ToolCard image={FreePik3} label="Resume Builder" onClick={() => handleCreateNew('Resume')} disabled />
               <ToolCard image={Freepik1} label="YC Assistant" onClick={() => handleCreateNew('YC Assistant')} disabled />

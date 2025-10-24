@@ -37,7 +37,7 @@ export default function ChangeNameModal() {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50 max-sm:px-3">
       <div className="bg-white rounded-2xl shadow-xl w-[420px] p-6 border border-gray-100">
         {/* Header */}
         <div className="flex justify-between items-center mb-5">

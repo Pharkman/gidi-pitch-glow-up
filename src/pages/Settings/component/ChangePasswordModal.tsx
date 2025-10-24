@@ -47,7 +47,7 @@ export default function ChangePasswordModal() {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/20">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/20 max-sm:px-3">
       <div className="bg-white rounded-2xl shadow-lg w-[420px] p-6">
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-lg font-semibold text-gray-800">Change Password</h2>
