@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import GidiLogo from "@/assets/Frame 481473.png";
+import Gidi_small from "../../../../public/assets/Gidi_Logo_small.png";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const DashboardHeader = ({
   user_data,
@@ -26,75 +28,113 @@ const DashboardHeader = ({
   desktopSidebarVisible,
   setDesktopSidebarVisible,
 }) => {
-  const navigate = useNavigate(); 
-  // const pageTitle = getPageTitle(location.pathname);
-  
-  return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-      <div className="flex h-16 items-center justify-between ">
-        {/* Left side: Mobile Menu + Logo + Page Title */}
-        <div className="flex items-center space-x-3">
-          {/* Mobile Menu Button */}
-          <button className="md:hidden" onClick={() => setSidebarOpen(true)}>
-            <Menu className="h-6 w-6" />
-          </button>
+  const navigate = useNavigate();
 
-   {/* Logo */}
-          <img src={GidiLogo} alt="GidiLogo" className="h-8 cursor-pointer" />
-          {/* Desktop Sidebar Toggle Button */}
-          <button 
-            className="hidden md:flex items-center justify-center h-8 w-8 rounded-md hover:bg-gray-100"
+  return (
+    <header className="border-b bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
+      <div className="flex h-16 items-center justify-between px-1 md:px-6">
+        {/* LEFT SECTION */}
+        <div className="flex items-center gap-3">
+        
+
+          {/* Logo */}
+          <div className="flex items-center gap-2 cursor-pointer select-none">
+            {/* <img
+              src={Gidi_small}
+              alt="Gidi Logo Small"
+              className="h-8 block md:hidden transition-all duration-300"
+            /> */}
+            <img
+              src={GidiLogo}
+              alt="Gidi Logo"
+              className="h-8 hidden md:block transition-all duration-300"
+            />
+          </div>
+
+  {/* Mobile Menu Button */}
+          <button
+            className="md:hidden flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200 hover:border-[#FF5619] hover:bg-[#FFF3EF] transition-all duration-300 shadow-sm"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu className="h-5 w-5 text-gray-800" />
+          </button>
+          {/* Desktop Sidebar Toggle */}
+          <button
+            className="hidden md:flex items-center justify-center h-9 w-9 rounded-lg hover:bg-gray-100 border border-transparent hover:border-gray-200 transition-all duration-300"
             onClick={() => setDesktopSidebarVisible(!desktopSidebarVisible)}
           >
-            {desktopSidebarVisible ? (
-              <PanelLeftClose className="h-5 w-5 text-gray-500" />
-            ) : (
-              <PanelLeft className="h-5 w-5 text-gray-500" />
-            )}
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={{ rotate: desktopSidebarVisible ? 180 : 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {desktopSidebarVisible ? (
+                <PanelLeftClose className="h-5 w-5 text-gray-500" />
+              ) : (
+                <PanelLeft className="h-5 w-5 text-gray-500" />
+              )}
+            </motion.div>
           </button>
 
-       
-          
-          {/* Page Title */}
-          <h1 className="text-[16px] text-[#1D1D1D] pl-24 font-semibold hidden md:block"></h1>
+          {/* Optional Title */}
+          <h1 className="text-[16px] text-[#1D1D1D] pl-20 font-semibold hidden md:block tracking-tight">
+            Dashboard
+          </h1>
         </div>
 
-        {/* Right side: Theme Toggle + Notifications + User Menu */}
-        <div className="flex items-center space-x-3 sm:space-x-4">
-          {/* Theme Toggle */}
-          {/* <ThemeToggle /> */}
+        {/* RIGHT SECTION */}
+        <div className="flex items-center gap-3 md:gap-5">
+          {/* Notification Bell */}
+          <button className=" sm:flex items-center justify-center p-2 rounded-full bg-gray-50 hover:bg-[#FFF3EF] hover:text-[#FF5619] border border-gray-200 transition-all duration-300 relative">
+            <Bell className="h-5 w-5" />
+            <span className="absolute top-0 right-1 block h-2.5 w-2.5 bg-[#FF5619] rounded-full"></span>
+          </button>
 
+          {/* USER MENU */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center space-x-0">
-                <Avatar className="h-[40px] w-[40px]">
-  <AvatarImage src={user_data?.user?.profileImage || ""} />
-  <AvatarFallback className="bg-primary text-white font-semibold">
-    {user_data?.user?.firstname && user_data?.user?.lastname
-      ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
-      : user_data?.user?.email
-      ? user_data.user.email.charAt(0).toUpperCase()
-      : "NA"}
-  </AvatarFallback>
-</Avatar>
-
-                <ChevronDown className="h-6 w-6 md:h-9 md:w-9 block" />
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 p-1.5 hover:bg-gray-50 rounded-full transition-all duration-300"
+              >
+                <Avatar className="h-10 w-10 border border-gray-200">
+                  <AvatarImage src={user_data?.user?.profileImage || ""} />
+                  <AvatarFallback className="bg-[#FF5619] text-white font-semibold">
+                    {user_data?.user?.firstname && user_data?.user?.lastname
+                      ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
+                      : user_data?.user?.email
+                      ? user_data.user.email.charAt(0).toUpperCase()
+                      : "NA"}
+                  </AvatarFallback>
+                </Avatar>
+                <ChevronDown className="h-5 w-5 text-gray-600" />
               </Button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="end">
-             <DropdownMenuItem onClick={() => navigate("/profile")}>
+            <DropdownMenuContent
+              align="end"
+              className="w-48 rounded-lg shadow-lg border border-gray-100"
+            >
+              <DropdownMenuItem
+                onClick={() => navigate("/profile")}
+                className="hover:bg-gray-50"
+              >
                 Profile
               </DropdownMenuItem>
-
-              {/* ✅ Navigate to /setting when clicked */}
-              <DropdownMenuItem onClick={() => navigate("/settings")}>
+              <DropdownMenuItem
+                onClick={() => navigate("/settings")}
+                className="hover:bg-gray-50"
+              >
                 Settings
               </DropdownMenuItem>
-
-              <DropdownMenuItem>Help</DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-gray-50">
+                Help
+              </DropdownMenuItem>
               <Separator />
-              <DropdownMenuItem onClick={handleLogout}>
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="text-red-600 hover:bg-red-50"
+              >
                 {isLoggingOut ? "Logging out..." : "Sign out"}
               </DropdownMenuItem>
             </DropdownMenuContent>

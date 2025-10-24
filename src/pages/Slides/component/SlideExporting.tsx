@@ -63,7 +63,7 @@ const { deckId } = useParams();
 
    console.log(brandKit.background);
   return (
-    <main className="flex-1 slide o max-sm:px-3  flex flex-col items-center justify-center">
+    <main className="flex-1 slide  flex flex-col items-center justify-center">
   <AnimatePresence mode="wait">
     {isCompleted && (
       <motion.div
@@ -150,7 +150,7 @@ if (slide.slideType === "team") {
         index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
       } items-center m-0 p-0  shadow-lg border border-gray-200 transition-all duration-500 `}
     >
-      <div className="w-full md:w-[77%] space-y-7 px-8">
+      <div className="w-full md:w-[78%] space-y-7 px-8 max-sm:px-4 max-sm:py-4">
         <h2 className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
           {slide.title}
         </h2>

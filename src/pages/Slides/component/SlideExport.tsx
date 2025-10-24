@@ -12,10 +12,12 @@ const SlideExport = () => {
   const [exportStatus, setExportStatus] = useState("idle");
   const [loadingType, setLoadingType] = useState(null);
   const [exportType, setExportType] = useState(null);
+  const [hasExported, setHasExported] = useState(false);
 
   const handleExport = (type) => {
     setLoadingType(type);
     setExportType(type);
+     setHasExported(true); 
 
     const formats =
       type === "PDF"
@@ -37,8 +39,8 @@ const SlideExport = () => {
     });
   };
 
-  useEffect(() => {
-    if (!exportedDeck?.data?.deck) return;
+   useEffect(() => {
+    if (!exportedDeck?.data?.deck || !hasExported) return; // 👈 Only run after export
     const deck = exportedDeck.data.deck;
 
     if (deck.status === "exporting") {
@@ -47,8 +49,7 @@ const SlideExport = () => {
       setExportStatus("ready");
       toast.success("Deck export completed successfully!");
     }
-  }, [exportedDeck]);
-
+  }, [exportedDeck, hasExported]);
   useEffect(() => {
     let interval;
     if (exportStatus === "exporting") {
@@ -143,7 +144,7 @@ const SlideExport = () => {
       {/* Status Modal */}
       {showStatusModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-2">
-          <div className="bg-white rounded-xl w-full max-w-sm p-5 text-center border border-gray-100 shadow-lg">
+          <div className="bg-white rounded-xl w-full max-w-md p-6 text-center border border-gray-100 shadow-lg">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">
               Export Status
             </h3>
@@ -165,7 +166,7 @@ const SlideExport = () => {
             {exportStatus === "ready" && (
               <div className="flex flex-col items-center justify-center bg-white rounded-xl p-4 text-center">
                 <div className="bg-green-100 rounded-full p-3 mb-2">
-                  <CheckCircle2 className="w-8 h-8 text-green-600" />
+                  <CheckCircle2 className="w-6 h-6 text-green-600" />
                 </div>
 
                 <h2 className="text-lg font-semibold text-gray-800 mb-1">
@@ -175,7 +176,7 @@ const SlideExport = () => {
                   Your deck has been successfully exported.
                 </p>
 
-                <div className="flex flex-col w-full gap-2 text-sm">
+                <div className="flex flex-col w-full gap-2 text-sm max-w-md p-4">
                   {exportType === "PDF" && deck?.pdfUrl && (
                     <a
                       href={deck.pdfUrl}

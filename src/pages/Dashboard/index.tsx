@@ -92,15 +92,15 @@ const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle 
 };
 
 // Reusable InviteButton component
-const InviteButton = () => (
-  <button
-    className="flex items-center justify-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-3 rounded-lg font-semibold text-base shadow-md transition-all duration-200 hover:shadow-lg w-full mx-auto mb-6 border border-[#FF5A1F]"
-    type="button"
-  >
-    <UserPlus className="w-5 h-5" />
-    Invite to GIDIPitch
-  </button>
-);
+// const InviteButton = () => (
+//   <button
+//     className="flex items-center justify-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-3 rounded-lg font-semibold text-base shadow-md transition-all duration-200 hover:shadow-lg w-full mx-auto mb-6 border border-[#FF5A1F]"
+//     type="button"
+//   >
+//     <UserPlus className="w-5 h-5" />
+//     Invite to GIDIPitch
+//   </button>
+// );
 
 const Dashboard = () => {
   const {data:user_data, isLoading} = useGetUser();
@@ -133,7 +133,6 @@ const Dashboard = () => {
   const handleStartCreation = (method: string) => {
     console.log(`Starting ${selectedTool} with ${method}`);
     setShowCreateModal(false);
-    // Here you would navigate to the respective tool
   };
 
  const handleLogout = async () => {
@@ -199,26 +198,36 @@ const Dashboard = () => {
 
 
         {/* Main Content */}
-        <main className={`flex-1 p-6 transition-all duration-300 ${desktopSidebarVisible ? '' : 'md:ml-0'}`}>
-          <div className="max-w-7xl mx-auto space-y-8">
-            <div>
-<h2
-  className="
-    text-2xl font-bold tracking-tight text-gray-900 
-    max-sm:text-lg max-sm:font-semibold max-sm:mb-1 max-sm:leading-snug capitalize mb-3
-  "
->
-  {username ? `Welcome back, ${username}` : "Welcome back"}
-</h2>
+        <main className={`flex-1 py-6 px-6 max-sm:px-3 max-sm:py-3 transition-all duration-300 ${desktopSidebarVisible ? '' : 'md:ml-0'}`}>
+          <div className="max-w-7xl mx-auto space-y-8 max-sm:space max-sm:space-y-5 max-sm:mt-1">
+           <div className="flex flex-col items-start space-y-6 max-sm:space-y-4">
+    {/* Welcome Text */}
+    <div>
+      <h2
+        className="
+          text-2xl font-bold tracking-tight text-gray-900 
+          sm:text-2xl md:text-2xl max-sm:text-xl 
+          capitalize leading-tight mb-2
+        "
+      >
+        {username ? `Welcome back, ${username}` : "Welcome back"}
+      </h2>
+      <p
+        className="
+          text-gray-600 text-base md:text-lg 
+          max-sm:text-sm max-sm:leading-snug
+        "
+      >
+        Ready to build your next <span className="text-[#FF5619] text-[16px] font-medium">investor-ready</span> document?
+      </p>
+    </div>
 
 
-              <p className="text-muted-foreground">
-                Ready to build your next investor-ready document?
-              </p>
-            </div>
+
+  </div>
 
             {/* Tools Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 max-sm:gap-4 mb-8">
               <ToolCard image={FreePik2} label="Pitch Desk" onClick={() => handleCreateNew('Pitch Deck')} />
               <ToolCard image={FreePik3} label="Resume Builder" onClick={() => handleCreateNew('Resume')} disabled />
               <ToolCard image={Freepik1} label="YC Assistant" onClick={() => handleCreateNew('YC Assistant')} disabled />

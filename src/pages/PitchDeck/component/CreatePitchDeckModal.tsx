@@ -15,7 +15,7 @@ export default function CreatePitchDeckModal({ onClose }: { onClose: () => void 
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-md p-5 border border-gray-100">
+      <div className="w-full max-w-sm max-sm max-sm:mx-3 bg-white rounded-2xl shadow-md p-5 border border-gray-100">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-900">Create Pitch Deck</h2>
