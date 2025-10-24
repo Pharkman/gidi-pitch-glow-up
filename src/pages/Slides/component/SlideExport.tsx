@@ -11,16 +11,18 @@ const SlideExport = () => {
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [exportStatus, setExportStatus] = useState("idle");
   const [loadingType, setLoadingType] = useState(null);
+  const [exportType, setExportType] = useState(null);
 
   const handleExport = (type) => {
     setLoadingType(type);
+    setExportType(type);
 
     const formats =
       type === "PDF"
         ? { pdf: true, pptx: false }
         : type === "PPTX"
         ? { pdf: false, pptx: true }
-        : { pdf: true, pptx: true };
+        : { pdf: true, pptx: true }; // Both
 
     exportSlide(formats, {
       onSuccess: () => {
@@ -56,6 +58,25 @@ const SlideExport = () => {
   }, [exportStatus, refetch]);
 
   const deck = exportedDeck?.data?.deck;
+
+  // Helper to handle dual downloads
+  const handleDownloadBoth = () => {
+    if (deck?.pdfUrl) {
+      const pdfLink = document.createElement("a");
+      pdfLink.href = deck.pdfUrl;
+      pdfLink.download = "";
+      pdfLink.click();
+    }
+
+    setTimeout(() => {
+      if (deck?.pptxUrl) {
+        const pptxLink = document.createElement("a");
+        pptxLink.href = deck.pptxUrl;
+        pptxLink.download = "";
+        pptxLink.click();
+      }
+    }, 1000); // wait a bit before second download
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -123,8 +144,8 @@ const SlideExport = () => {
 
       {/* Status Modal */}
       {showStatusModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl w-full max-w-md p-8 text-center shadow-xl border border-gray-100">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-2">
+          <div className="bg-white rounded-2xl w-full max-w-md py-4 px-2 text-center border border-gray-100">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">
               Export Status
             </h3>
@@ -145,7 +166,6 @@ const SlideExport = () => {
 
             {exportStatus === "ready" && (
               <div className="flex flex-col items-center justify-center bg-white rounded-2xl p-6 text-center">
-                {/* Success Icon */}
                 <div className="bg-green-100 rounded-full p-4 mb-3 animate-bounce">
                   <CheckCircle2 className="w-10 h-10 text-green-600" />
                 </div>
@@ -154,49 +174,43 @@ const SlideExport = () => {
                   Export Complete 🎉
                 </h2>
                 <p className="text-gray-600 text-sm mb-6">
-                  Your deck has been successfully exported. Download below.
+                  Your deck has been successfully exported.
                 </p>
 
-                {/* Download Buttons */}
+                {/* Download Buttons (dynamic) */}
                 <div className="flex flex-col w-full gap-2 text-[14px]">
-                  {deck?.pdfUrl && (
-                    <a
-                      href={deck.pdfUrl}
-                      download
-                      className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
-                    >
-                      ⬇ Download PDF
-                    </a>
-                  )}
+                  {(exportType === "PDF" || exportType === "Both") &&
+                    deck?.pdfUrl && (
+                      <a
+                        href={deck.pdfUrl}
+                        download
+                        className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
+                      >
+                        ⬇ Download PDF
+                      </a>
+                    )}
 
-                  {deck?.pptxUrl && (
-                    <a
-                      href={deck.pptxUrl}
-                      download
-                      className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary  text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
-                    >
-                      ⬇ Download PPTX
-                    </a>
-                  )}
+                  {(exportType === "PPTX" || exportType === "Both") &&
+                    deck?.pptxUrl && (
+                      <a
+                        href={deck.pptxUrl}
+                        download
+                        className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
+                      >
+                        ⬇ Download PPTX
+                      </a>
+                    )}
 
-                  {deck?.pdfUrl && deck?.pptxUrl && (
-                    <button
-                      onClick={() => {
-                        const pdfLink = document.createElement("a");
-                        pdfLink.href = deck.pdfUrl;
-                        pdfLink.download = "";
-                        pdfLink.click();
-
-                        const pptxLink = document.createElement("a");
-                        pptxLink.href = deck.pptxUrl;
-                        pptxLink.download = "";
-                        pptxLink.click();
-                      }}
-                      className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
-                    >
-                      ⬇ Download Both
-                    </button>
-                  )}
+                  {exportType === "Both" &&
+                    deck?.pdfUrl &&
+                    deck?.pptxUrl && (
+                      <button
+                        onClick={handleDownloadBoth}
+                        className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary text-white rounded-lg shadow hover:opacity-90 transition-all duration-300"
+                      >
+                        ⬇ Download Both
+                      </button>
+                    )}
                 </div>
               </div>
             )}
