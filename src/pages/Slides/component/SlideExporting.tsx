@@ -61,7 +61,6 @@ const { deckId } = useParams();
 
    const brandKit = deck?.data?.brandKit || {};
 
-   console.log(brandKit.background);
   return (
     <main className="flex-1 slide  flex flex-col items-center justify-center">
   <AnimatePresence mode="wait">
@@ -75,7 +74,7 @@ const { deckId } = useParams();
       >
       {deck?.data?.slides?.map((slide, index) => {
         
-const slideBackgroundColor = TAILWIND_COLOR_MAP[brandKit.background] || 'bg-primary';
+const slideBackgroundColor = brandKit.background || 'bg-primary';
         
 if (slide.slideType === "team") {
   return (
