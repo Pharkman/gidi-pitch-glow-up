@@ -61,7 +61,6 @@ const { deckId } = useParams();
 
    const brandKit = deck?.data?.brandKit || {};
 
-   console.log(brandKit.background);
   return (
     <main className="flex-1 slide  flex flex-col items-center justify-center">
   <AnimatePresence mode="wait">
@@ -75,7 +74,10 @@ const { deckId } = useParams();
       >
       {deck?.data?.slides?.map((slide, index) => {
         
-const slideBackgroundColor = TAILWIND_COLOR_MAP[brandKit.background] || 'bg-primary';
+ const slideBackgroundColor = brandKit.background || 'bg-primary';
+       const slideBulletColor = brandKit.bullets || 'bg-primary';
+       const slidetitleColor = brandKit.title || 'bg-primary';
+       const slidenoteColor = brandKit.note || 'bg-primary';
         
 if (slide.slideType === "team") {
   return (
@@ -90,12 +92,16 @@ if (slide.slideType === "team") {
     >
       {/* TOP CONTENT */}
       <div className="w-full  space-y-4">
-        <h2 className="text-2xl md:text-3xl font-extrabold text-white">
+        <h2
+          style={{ color: slidetitleColor }}
+        className="text-2xl md:text-3xl font-extrabold text-white">
           {slide.title}
         </h2>
 
         {slide.bullets && (
-          <ul className="list-disc list-inside text-white text-[15px] space-y-2 w-fit text-left">
+          <ul 
+             style={{ color: slideBulletColor }}
+          className="list-disc list-inside text-white text-[15px] space-y-2 w-fit text-left">
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
             ))}
@@ -103,7 +109,10 @@ if (slide.slideType === "team") {
         )}
 
         {slide.notes && (
-          <p className="italic text-white leading-relaxed text-[15px]  mx-auto">
+          <p 
+          style={{ color: slidenoteColor }}
+            
+          className="italic text-white leading-relaxed text-[15px]  mx-auto">
             {slide.notes}
           </p>
         )}
@@ -151,17 +160,23 @@ if (slide.slideType === "team") {
       } items-center m-0 p-0  shadow-lg border border-gray-200 transition-all duration-500 `}
     >
       <div className="w-full md:w-[78%] space-y-7 px-8 max-sm:px-4 max-sm:py-4">
-        <h2 className="text-3xl font-extrabold text-white max-sm:text-xl leading-[150%]">
+        <h2 
+          style={{ color: slidetitleColor }}
+        className="text-3xl font-extrabold text-white max-sm:text-xl leading-[150%]">
           {slide.title}
         </h2>
         {slide.bullets && (
-          <ul className="list-disc pl-5 space-y-2 text-white text-[17px]">
+          <ul
+           style={{color: slideBulletColor}}
+          className="list-disc pl-5 space-y-2 text-white text-[17px]">
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
             ))}
           </ul>
         )}
-        <p className="italic text-white leading-relaxed text-[16px]">
+        <p 
+          style={{ color: slidenoteColor }}
+        className="italic text-white leading-relaxed text-[16px]">
           {slide.notes}
         </p>
       </div>
