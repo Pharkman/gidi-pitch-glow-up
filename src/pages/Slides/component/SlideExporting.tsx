@@ -1,5 +1,6 @@
 import { pitchData } from "@/components/dummy";
 import UploadImg from "@/components/UploadImg/UploadImg";
+import UploadImgExport from "@/components/UploadImg/UploadImg_export";
 import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
 import { useGetDeckProgress } from "@/lib/query";
 import { motion, AnimatePresence } from "framer-motion";
@@ -48,9 +49,9 @@ const SlideExporting = () => {
   const brandKit = deck?.data?.brandKit || {};
 
   return (
-    <main className="flex-1 slide flex flex-col items-center justify-center">
-
-      {/* ✅ Add the print/export CSS rules here */}
+    <main className="flex-1 slide flex flex-col items-center justify-center ">
+   
+    
       <style>{`
         @page {
           size: 1600px 900px;
@@ -111,7 +112,6 @@ const SlideExporting = () => {
           }
         }
       `}</style>
-      {/* ✅ End of added CSS */}
 
       <AnimatePresence mode="wait">
         {isCompleted && (
@@ -138,7 +138,7 @@ const SlideExporting = () => {
                     style={{ backgroundColor: slideBackgroundColor }}
                     className="flex flex-col items-center border border-gray-200 transition-all duration-500 py-12 px-6"
                   >
-                    <div className="w-full space-y-4">
+                    <div className="w-[1600px] h-[900px] space-y-4">
                       <h2
                         style={{ color: slidetitleColor }}
                         className="text-2xl md:text-3xl font-extrabold text-white"
@@ -173,7 +173,7 @@ const SlideExporting = () => {
                           key={i}
                           className="bg-white shadow-md flex flex-col items-center pb-2 text-center transition-all duration-300"
                         >
-                          <UploadImg
+                          <UploadImgExport
                             caption={image.caption}
                             slideId={slide._id}
                             slideType={slide.slideType}
@@ -202,11 +202,11 @@ const SlideExporting = () => {
                   data-index={index}
                   ref={(el) => (slideRefs.current[index] = el)}
                   style={{ backgroundColor: slideBackgroundColor }}
-                  className={`flex flex-col ${
-                    index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-                  } items-center m-0 p-0 shadow-lg border border-gray-200 transition-all duration-500`}
+                  className={`flex flex-col  ${
+                    index % 2 === 1 ? "md:flex-row-reverse h-[900px]" : "md:flex-row w-[1600px] h-[900px]"
+                  } items-center m-0 p-0 shadow-lg  transition-all duration-500`}
                 >
-                  <div className="w-full md:w-[78%] space-y-7 px-8 max-sm:px-4 max-sm:py-4">
+                  <div className="w-[880px] h-[900px] py-[60px] px-[64px] space-y-7 ">
                     <h2
                       style={{ color: slidetitleColor }}
                       className="text-3xl font-extrabold text-white max-sm:text-xl leading-[150%]"
@@ -232,7 +232,7 @@ const SlideExporting = () => {
                   </div>
 
                   <div className="w-full md:w-[80%] flex flex-col items-center justify-center">
-                    <UploadImg
+                    <UploadImgExport
                       caption={slide.images?.[0]?.caption}
                       slideId={slide._id}
                       defaultImage={slide.images?.[0]?.url}
@@ -248,6 +248,7 @@ const SlideExporting = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      
     </main>
   );
 };
