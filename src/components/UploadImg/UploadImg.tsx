@@ -42,7 +42,7 @@ const UploadImg = ({ defaultImage, onSave, caption, slideId, slideType }) => {
     >
       {preview ? (
         <div
-          className={`group relative overflow-hidden shadow-lg rounded-lg transition-all duration-500 
+          className={`group relative overflow-hidden shadow-lg transition-all duration-500 
             ${
               slideType === "team"
                 ? "w-full h-[200px]" // Team grid style
