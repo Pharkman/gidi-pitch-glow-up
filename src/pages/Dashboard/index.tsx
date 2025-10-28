@@ -52,45 +52,76 @@ import { sidebarItems } from '@/components/SideBar/component/SideBarItems';
 import CreatePitchDeckModal from '../PitchDeck/component/CreatePitchDeckModal';
 import SearchBar from '@/components/SearchBar/SearchBar';
 // Reusable ToolCard component
-const ToolCard = ({ image, label, onClick, disabled, variant = 'grid', subtitle }: {
-  image: string,
-  label: string,
-  onClick?: () => void,
-  disabled?: boolean,
-  variant?: 'grid' | 'project',
-  subtitle?: string
+const ToolCard = ({
+  image,
+  label,
+  onClick,
+  disabled,
+  variant = 'grid',
+  subtitle,
 }) => {
-
-  
-
-
   if (variant === 'project') {
     return (
-      <div className="bg-white rounded-xl shadow-md p-0 w-full border-1 border-[#E4E4E4CC]">
-        <img src={image} alt={label} className="object-cover w-full h-[172px] rounded-t-xl" />
+      <div className="bg-white rounded-xl shadow-md p-0 w-full border border-[#E4E4E4CC]">
+        {/* Image */}
+        <img
+          src={image}
+          alt={label}
+          className="object-cover w-full h-[172px] rounded-t-xl"
+        />
+
+        {/* Content */}
         <div className="w-full px-4 py-3">
-          <div className="font-semibold text-base text-foreground mb-1">{label}</div>
-          {subtitle && <div className="text-sm text-muted-foreground">{subtitle}</div>}
+          {/* Title */}
+          <div className="font-semibold text-base text-foreground mb-1">
+            {label}
+          </div>
+
+          {/* Subtitle and Button Row */}
+          <div className="flex items-center justify-between">
+            {subtitle && (
+              <div className="text-sm text-muted-foreground">{subtitle}</div>
+            )}
+            <button
+              onClick={() => {
+                localStorage.setItem("deckId", onClick || "");
+                window.location.href = "/deck";
+              }}
+              className="border border-[#FF5A1F] text-[#FF5A1F] bg-white/90 backdrop-blur-sm text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-[#FF5A1F] hover:text-white transition-all duration-200"
+            >
+              View Deck
+            </button>
+          </div>
         </div>
       </div>
     );
   }
-  // Default to grid style
+
+  // Default (grid)
   return (
     <div
-      className={`flex flex-col items-center bg-white border-1 border-[#E4E4E4CC] shadow-md rounded-[12px] pb-3 p-[3px] ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+      className={`flex flex-col items-center bg-white border border-[#E4E4E4CC] shadow-md rounded-[12px] pb-3 p-[3px] ${
+        disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+      }`}
       onClick={disabled ? undefined : onClick}
       tabIndex={disabled ? -1 : 0}
       role="button"
       aria-disabled={disabled}
     >
-      <div className='bg-[#F5F5F5] mx-auto flex justify-center w-full mb-2 rounded-[12px] h-[106px]'>
+      <div className="bg-[#F5F5F5] mx-auto flex justify-center w-full mb-2 rounded-[12px] h-[106px]">
         <img src={image} alt={label} className="object-contain" />
       </div>
-      <span className={`font-semibold text-base text-center ${disabled ? 'opacity-50' : ''}`}>{label}</span>
+      <span
+        className={`font-semibold text-base text-center ${
+          disabled ? 'opacity-50' : ''
+        }`}
+      >
+        {label}
+      </span>
     </div>
   );
 };
+
 
 // Reusable InviteButton component
 // const InviteButton = () => (
@@ -277,18 +308,20 @@ const Dashboard = () => {
     <p className="text-gray-500 text-sm col-span-full text-center py-8">Loading your decks...</p>
   ) : generated_decks?.data?.decks?.length > 0 ? (
     generated_decks.data.decks.map((deck) => (
-      <ToolCard
-        key={deck._id}
-        variant="project"
-        image={
-          deck?.slides?.length > 0 && deck?.slides[0]?.imageUrl
-            ? deck.slides[0].imageUrl
-            : freePik_build1 // fallback image if no image available
-        }
-        label={deck.startupName || "Untitled Deck"}
-        subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
-        onClick={() => window.open(deck.pdfUrl || "#", "_blank")}
-      />
+      <div key={deck._id} className="relative">
+  <ToolCard
+  key={deck._id}
+  variant="project"
+  image={
+    deck?.slides?.length > 0 && deck?.slides[0]?.imageUrl
+      ? deck.slides[0].imageUrl
+      : freePik_build1
+  }
+  label={deck.startupName || "Untitled Deck"}
+  subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
+  onClick={deck._id}
+/>
+</div>
     ))
   ) : (
     <p className="text-gray-500 text-sm col-span-full text-center py-8">
