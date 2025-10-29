@@ -128,121 +128,128 @@ const SlideExporting = () => {
               const slidetitleColor = brandKit.title || 'bg-primary';
               const slidenoteColor = brandKit.note || 'bg-primary';
 
-              if (slide.slideType === "team") {
-                return (
-                  <section
-                    key={index}
-                    id={`slide-${index}`}
-                    data-index={index}
-                    ref={(el) => (slideRefs.current[index] = el)}
-                    style={{ backgroundColor: slideBackgroundColor }}
-                    className="flex flex-col items-center border border-gray-200 transition-all duration-500 py-12 px-6"
-                  >
-                    <div className="w-[1600px] h-[900px] space-y-4">
-                      <h2
-                        style={{ color: slidetitleColor }}
-                        className="text-2xl md:text-3xl font-extrabold text-white"
-                      >
-                        {slide.title}
-                      </h2>
+             if (slide.slideType === "team") {
+  return (
+    <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+      style={{ backgroundColor: slideBackgroundColor }}
+      className="flex flex-col min-h-[900px] py-10 px-3  transition-all duration-500"
+    >
+      {/* Section Header */}
+      <div className="space-y-6">
+        <h2
+          style={{ color: slidetitleColor }}
+          className="text-3xl font-extrabold tracking-tight text-white"
+        >
+          {slide.title}
+        </h2>
 
-                      {slide.bullets && (
-                        <ul
-                          style={{ color: slideBulletColor }}
-                          className="list-disc list-inside text-white text-[15px] space-y-2 w-fit text-left"
-                        >
-                          {slide.bullets.map((point, i) => (
-                            <li key={i}>{point}</li>
-                          ))}
-                        </ul>
-                      )}
+        {slide.bullets && (
+          <ul
+            style={{ color: slideBulletColor }}
+            className="list-disc list-inside text-white/90 text-[17px] md:text-lg space-y-2 text-left "
+          >
+            {slide.bullets.map((point, i) => (
+              <li key={i}>{point}</li>
+            ))}
+          </ul>
+        )}
 
-                      {slide.notes && (
-                        <p
-                          style={{ color: slidenoteColor }}
-                          className="italic text-white leading-relaxed text-[15px] mx-auto"
-                        >
-                          {slide.notes}
-                        </p>
-                      )}
-                    </div>
+        {slide.notes && (
+          <p
+            style={{ color: slidenoteColor }}
+            className="italic text-white/80 leading-relaxed text-lg "
+          >
+            {slide.notes}
+          </p>
+        )}
+      </div>
 
-                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-                      {slide.images?.map((image, i) => (
-                        <div
-                          key={i}
-                          className="bg-white shadow-md flex flex-col items-center pb-2 text-center transition-all duration-300"
-                        >
-                          <UploadImgExport
-                            caption={image.caption}
-                            slideId={slide._id}
-                            slideType={slide.slideType}
-                            defaultImage={image.url}
-                            onSave={(url) => {
-                              console.log(
-                                `Uploaded team image ${i + 1} for slide ${index + 1}:`,
-                                url
-                              );
-                            }}
-                          />
-                          <p className="text-gray-800 font-semibold mt-3 text-[14px]">
-                            {image.caption || "Team Member"}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                );
-              }
+      {/* Team Grid */}
+    <div className="w-full grid grid-cols-2 mt-16 gap-6">
+  {slide.images?.map((image, i) => (
+    <div
+      key={i}
+      className="group bg-white/5 backdrop-blur-sm  shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/10 hover:border-white/20"
+    >
+      <div className="relative  h-[600px] overflow-hidden">
+        <img
+          src={image.url}
+          alt={image.caption || `Team member ${i + 1}`}
+          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out"
+        />
+
+        {/* Overlay caption on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-6">
+          <p className="text-white text-lg font-semibold tracking-wide">
+            {image.caption || "Team Member"}
+          </p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+    </section>
+  );
+}
 
               return (
                 <section
-                  key={index}
-                  id={`slide-${index}`}
-                  data-index={index}
-                  ref={(el) => (slideRefs.current[index] = el)}
-                  style={{ backgroundColor: slideBackgroundColor }}
-                  className={`flex flex-col  ${
-                    index % 2 === 1 ? "md:flex-row-reverse h-[900px]" : "md:flex-row w-[1600px] h-[900px]"
-                  } items-center m-0 p-0 shadow-lg  transition-all duration-500`}
-                >
-                  <div className="w-[880px] h-[900px] py-[60px] px-[64px] space-y-7 ">
-                    <h2
-                      style={{ color: slidetitleColor }}
-                      className="text-3xl font-extrabold text-white max-sm:text-xl leading-[150%]"
-                    >
-                      {slide.title}
-                    </h2>
-                    {slide.bullets && (
-                      <ul
-                        style={{ color: slideBulletColor }}
-                        className="list-disc pl-5 space-y-2 text-white text-[17px]"
-                      >
-                        {slide.bullets.map((point, i) => (
-                          <li key={i}>{point}</li>
-                        ))}
-                      </ul>
-                    )}
-                    <p
-                      style={{ color: slidenoteColor }}
-                      className="italic text-white leading-relaxed text-[16px]"
-                    >
-                      {slide.notes}
-                    </p>
-                  </div>
+  key={index}
+  id={`slide-${index}`}
+  data-index={index}
+  ref={(el) => (slideRefs.current[index] = el)}
+  style={{ backgroundColor: slideBackgroundColor }}
+  className={`flex flex-col md:flex-row items-center gap-4 justify-center  ${
+    index % 2 === 1 ? "md:flex-row-reverse" : ""
+  } w-full h-[900px] shadow-lg`}
+>
+  {/* Image Section */}
+  <div className="w-full md:w-[110%] h-full flex items-center  justify-center bg-gray-100">
+    <UploadImgExport
+      caption={slide.images?.[0]?.caption}
+      slideId={slide._id}
+      defaultImage={slide.images?.[0]?.url}
+      slideType={""}
+      onSave={(url) => {
+        console.log(`Uploaded image for slide ${index + 1}:`, url);
+      }}
+    />
+  </div>
 
-                  <div className="w-full md:w-[80%] flex flex-col items-center justify-center">
-                    <UploadImgExport
-                      caption={slide.images?.[0]?.caption}
-                      slideId={slide._id}
-                      defaultImage={slide.images?.[0]?.url}
-                      slideType={""}
-                      onSave={(url) => {
-                        console.log(`Uploaded image for slide ${index + 1}:`, url);
-                      }}
-                    />
-                  </div>
-                </section>
+  {/* Text Section */}
+  <div className="w-full  h-full flex flex-col justify-center  md:px-4 py-10 space-y-6">
+    <h2
+      style={{ color: slidetitleColor }}
+      className="text-3xl font-extrabold leading-snug text-white max-sm:text-2xl"
+    >
+      {slide.title}
+    </h2>
+
+    {slide.bullets && (
+      <ul
+        style={{ color: slideBulletColor }}
+        className="list-disc pl-5 space-y-2 text-white text-[17px]"
+      >
+        {slide.bullets.map((point, i) => (
+          <li key={i}>{point}</li>
+        ))}
+      </ul>
+    )}
+
+    <p
+      style={{ color: slidenoteColor }}
+      className="italic text-white text-[16px] leading-relaxed"
+    >
+      {slide.notes}
+    </p>
+  </div>
+</section>
+
               );
             })}
           </motion.div>

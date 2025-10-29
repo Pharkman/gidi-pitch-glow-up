@@ -1,48 +1,11 @@
-import React, { useRef, useState } from "react";
-import { useUploadImg } from "@/lib/query";
+import React from "react";
 
-const UploadImgExport = ({ defaultImage, onSave, caption, slideId, slideType }) => {
-  const [preview, setPreview] = useState(defaultImage || null);
-  const [uploading, setUploading] = useState(false);
-  const { mutate: uploadImage } = useUploadImg();
-  const fileInputRef = useRef(null);
-
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (e) => {
-    const image = e.target.files[0];
-    if (!image) return;
-
-    setPreview(URL.createObjectURL(image));
-    setUploading(true);
-
-    // pass slideId and caption to mutation
-    uploadImage(
-      { image, slideId, caption },
-      {
-        onSuccess: (response) => {
-          const uploadedUrl = response?.data?.url;
-          if (uploadedUrl) onSave(uploadedUrl);
-          setUploading(false);
-        },
-        onError: (err) => {
-          console.error("Upload failed:", err);
-          setUploading(false);
-        },
-      }
-    );
-  };
-
+const UploadImgExport = ({ defaultImage, caption, slideType }) => {
   return (
-    <div
-      className="w-full flex flex-col items-center justify-center cursor-pointer"
-      onClick={handleClick}
-    >
-      {preview ? (
+    <div className="w-full flex flex-col items-center justify-center">
+      {defaultImage ? (
         <div
-          className={`group relative overflow-hidden shadow-lg transition-all duration-500 
+          className={`relative overflow-hidden shadow-lg transition-all duration-500 
             ${
               slideType === "team"
                 ? "w-full h-[200px]" // Team grid style
@@ -51,18 +14,17 @@ const UploadImgExport = ({ defaultImage, onSave, caption, slideId, slideType }) 
           `}
         >
           <img
-            src={preview || defaultImage}
+            src={defaultImage}
             alt={caption || "Slide image"}
             className="w-full h-full object-cover"
           />
 
-          {/* Overlay with hover effect */}
-          <div
-            className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 
-                       transition-opacity duration-300 ease-in-out"
-          >
-         
-          </div>
+          {/* Optional overlay or caption */}
+          {caption && (
+            <div className="absolute bottom-0 left-0 w-full bg-black/50 text-white text-center py-2 text-sm">
+              {caption}
+            </div>
+          )}
         </div>
       ) : (
         <div
@@ -75,18 +37,9 @@ const UploadImgExport = ({ defaultImage, onSave, caption, slideId, slideType }) 
             }
           `}
         >
-          {uploading ? "Uploading..." : "Click to Upload Image"}
+          No image available
         </div>
       )}
-
-      <input
-        type="file"
-        accept="image/*"
-        ref={fileInputRef}
-        className="hidden"
-        onChange={handleFileChange}
-        disabled={uploading}
-      />
     </div>
   );
 };
