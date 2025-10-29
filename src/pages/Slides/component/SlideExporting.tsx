@@ -205,7 +205,7 @@ const SlideExporting = () => {
   ref={(el) => (slideRefs.current[index] = el)}
   style={{ backgroundColor: slideBackgroundColor }}
   className={`flex flex-col md:flex-row items-center gap-4 justify-center  ${
-    index % 2 === 1 ? "md:flex-row-reverse" : ""
+    index % 2 === 1 ? "md:flex-row-reverse pl-4" : "pr-4"
   } w-full h-[900px] shadow-lg`}
 >
   {/* Image Section */}
