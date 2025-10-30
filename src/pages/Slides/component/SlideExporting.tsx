@@ -113,7 +113,7 @@ const SlideExporting = () => {
       data-index={index}
       ref={(el) => (slideRefs.current[index] = el)}
       style={{ backgroundColor: slideBackgroundColor }}
-      className="flex flex-col justify-between h-[900px] w-full py-10 px-12 overflow-hidden transition-all duration-500"
+      className="flex flex-col justify-between h-[900px] w-full py-14 px-20 overflow-hidden transition-all duration-500"
     >
       {/* Section Header */}
       <div className="space-y-8 flex-shrink-0">
@@ -146,7 +146,7 @@ const SlideExporting = () => {
       </div>
 
       {/* Team Grid */}
-      <div className="w-full grid grid-cols-2 gap-6 flex-1 min-h-0 mt-12">
+      <div className="w-full grid grid-cols-3 gap-6 flex-1 min-h-0 mt-12">
         {slide.images?.map((image, i) => (
           <div
             key={i}

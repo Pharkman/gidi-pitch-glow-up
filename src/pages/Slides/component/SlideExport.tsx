@@ -3,6 +3,7 @@ import { useExport, useGetExportedDeck } from "@/lib/query";
 import { LoadingSpinner } from "@/components/Loader";
 import { CheckCircle2 } from "lucide-react";
 import { toast } from "react-toastify";
+import { FaDownload } from "react-icons/fa";
 
 const SlideExport = () => {
   const { mutate: exportSlide, isPending } = useExport();
@@ -81,8 +82,8 @@ const SlideExport = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Export Modal */}
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-        <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl border border-gray-100 relative">
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center  z-50 px-4">
+        <div className="bg-white rounded-2xl w-full max-w-xl p-6 shadow-xl border border-gray-100 relative">
           <h2 className="text-xl font-semibold text-gray-900 mb-2 text-center">
             Export Slides
           </h2>
@@ -90,7 +91,7 @@ const SlideExport = () => {
             Choose the format you’d like to export your slides in.
           </p>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => handleExport("PDF")}
@@ -144,19 +145,19 @@ const SlideExport = () => {
       {/* Status Modal */}
       {showStatusModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-2">
-          <div className="bg-white rounded-xl w-full max-w-md p-6 text-center border border-gray-100 shadow-lg">
+          <div className="bg-white rounded-xl w-full max-w-xl p-6  border border-gray-100 shadow-lg">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">
               Export Status
             </h3>
 
             {exportStatus === "exporting" && (
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center ">
                 <span className="loaderr mb-2"></span>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-base">
                   Your deck is exporting. Please wait...
                 </p>
                 {deck?.activityStatus && (
-                  <p className="mt-1 text-gray-500 text-xs">
+                  <p className="mt-1 text-gray-500 text-sm">
                     {deck.activityStatus}
                   </p>
                 )}
@@ -164,9 +165,9 @@ const SlideExport = () => {
             )}
 
             {exportStatus === "ready" && (
-              <div className="flex flex-col items-center justify-center bg-white rounded-xl p-4 text-center">
+              <div className="flex flex-col items-center  bg-white rounded-xl  text-center">
                 <div className="bg-green-100 rounded-full p-3 mb-2">
-                  <CheckCircle2 className="w-6 h-6 text-green-600" />
+                  <CheckCircle2 className="w-6 h-6 text-green-600 animate-ping" />
                 </div>
 
                 <h2 className="text-lg font-semibold text-gray-800 mb-1">
@@ -183,7 +184,7 @@ const SlideExport = () => {
                       download
                       className="flex items-center justify-center gap-2 w-full py-2 bg-primary text-white rounded-md hover:opacity-90 transition-all"
                     >
-                      ⬇ Download PDF
+                      <FaDownload className="animate-pulse" /> Download PDF
                     </a>
                   )}
 
@@ -193,7 +194,7 @@ const SlideExport = () => {
                       download
                       className="flex items-center justify-center gap-2 w-full py-2 bg-primary text-white rounded-md hover:opacity-90 transition-all"
                     >
-                      ⬇ Download PPTX
+                      <FaDownload className="animate-pulse" /> Download PPTX
                     </a>
                   )}
 
@@ -206,7 +207,7 @@ const SlideExport = () => {
                           download
                           className="flex items-center justify-center gap-2 w-full py-2 bg-primary text-white rounded-md hover:opacity-90 transition-all"
                         >
-                          ⬇ Download PDF
+                          <FaDownload className="animate-pulse" /> Download PDF
                         </a>
                         <a
                           href={deck.pptxUrl}
