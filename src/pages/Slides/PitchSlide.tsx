@@ -110,8 +110,8 @@ if (slide.slideType === "team") {
       data-index={index}
       ref={(el) => (slideRefs.current[index] = el)}
      style={{ backgroundColor: slideBackgroundColor }}
-      className={`flex flex-col items-center shadow-lg border border-gray-200 
-      transition-all duration-500 mb-5 py-10 max-sm:py-0 px-6`}
+      className={`flex flex-col items-center shadow-lg 
+      mb-5 py-10 max-sm:py-0 px-6`}
     >
       {/* TOP CONTENT */}
       <div className="w-full  mb-10 space-y-4">
@@ -179,7 +179,7 @@ if (slide.slideType === "team") {
         style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col ${
         index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-      } items-center  shadow-lg border border-gray-200 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl mb-5 max-sm:mb-0 max-sm:pt-4`}
+      } items-center    mb-5 max-sm:mb-0 max-sm:pt-4`}
     >
       <div className="w-full md:w-[80%] space-y-7 px-8 max-sm:px-4 max-sm:mb-4">
         <h2
