@@ -124,7 +124,7 @@ if (slide.slideType === "team") {
         {slide.bullets && (
           <ul 
             style={{ color: slideBulletColor  }}
-          className="list-disc list-inside text-white text-[15px] space-y-2 mx-auto w-fit text-left">
+          className="list-disc list-inside text-white text-[15px] space-y-2 w-fit ">
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
             ))}
@@ -134,7 +134,7 @@ if (slide.slideType === "team") {
         {slide.notes && (
           <p 
             style={{ color: slidenoteColor }}
-          className="italic text-white leading-relaxed text-[15px]  mx-auto">
+          className="italic text-white leading-relaxed text-[15px] ">
             {slide.notes}
           </p>
         )}
@@ -145,7 +145,7 @@ if (slide.slideType === "team") {
         {slide.images?.map((image, i) => (
           <div
             key={i}
-            className="bg-white  shadow-md flex flex-col items-center pb-2  text-center hover:shadow-lg transition-all duration-300"
+            className="bg-white  shadow-md flex flex-col items-center pb-2  text-center"
           >
             <UploadImg
               caption={image.caption}
@@ -179,7 +179,7 @@ if (slide.slideType === "team") {
         style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col ${
         index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-      } items-center    mb-5 max-sm:mb-0 max-sm:pt-4`}
+      } items-center  shadow-lg border border-gray-200  mb-5 max-sm:mb-0 max-sm:pt-4`}
     >
       <div className="w-full md:w-[80%] space-y-7 px-8 max-sm:px-4 max-sm:mb-4">
         <h2
