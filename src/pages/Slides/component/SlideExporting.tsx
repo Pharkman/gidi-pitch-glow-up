@@ -1,3 +1,4 @@
+
 import { pitchData } from "@/components/dummy";
 import UploadImg from "@/components/UploadImg/UploadImg";
 import UploadImgExport from "@/components/UploadImg/UploadImg_export";
@@ -49,54 +50,46 @@ const SlideExporting = () => {
    
     
       <style>{`
-    @page {
-      margin: 0;
-      size: A4 portrait;
-    }
+       
+        @media print {
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
 
-    @media print {
-      html, body {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        color-adjust: exact !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        height: auto !important;
-        overflow: visible !important;
-        background: #0B0E11 !important;
-      }
+         
 
-      main, section[id^="slide-"] {
-        page-break-before: always;
-        page-break-after: always;
-        page-break-inside: avoid;
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-      }
+      
 
-      /* Hide UI elements during export */
-      [role="region"][aria-label*="Notifications"],
-      .Toastify,
-      nav,
-      button,
-      input[type="file"] {
-        display: none !important;
-      }
-    }
+          /* Hide UI elements when printing */
+          [role="region"][aria-label*="Notifications"],
+          .Toastify,
+          nav,
+          button,
+          input[type="file"] {
+            display: none !important;
+          }
+        }
 
-    /* On-screen preview styling */
-    @media screen {
-      body {
-        background-color: #0B0E11;
-      }
+        /* Screen preview styling (optional visual polish) */
+        @media screen {
+          body {
+            background-color: #1a1a1a;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+          }
 
-      section[id^="slide-"] {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        margin: 0 auto 30px auto;
-      }
-    }
-  `}</style>
+          section[id^="slide-"] {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+          }
+        }
+      `}</style>
 
       <AnimatePresence mode="wait">
         {isCompleted && (
@@ -115,68 +108,69 @@ const SlideExporting = () => {
 
     if (slide.slideType === "team") {
   return (
-   <section
-  key={index}
-  id={`slide-${index}`}
-  data-index={index}
-  ref={(el) => (slideRefs.current[index] = el)}
-  style={{ backgroundColor: slideBackgroundColor }}
-  className="flex flex-col py-12 px-6 w-full h-auto transition-all duration-500 print:h-auto print:min-h-0"
->
-  {/* Header */}
-  <div className="space-y-10">
-    <h2
-      style={{ color: slidetitleColor }}
-      className="text-[44px] font-extrabold tracking-tight text-white"
+    <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+      style={{ backgroundColor: slideBackgroundColor }}
+      className="flex flex-col justify-between py-10 px-3 h-[100%] z-50  transition-all duration-500"
     >
-      {slide.title}
-    </h2>
+      {/* Section Header */}
+      <div className="space-y-10 w-full ">
+        <h2
+          style={{ color: slidetitleColor }}
+          className="text-5xl font-extrabold tracking-tight text-white"
+        >
+          {slide.title}
+        </h2>
 
-    {slide.bullets && (
-      <ul
-        style={{ color: slideBulletColor }}
-        className="list-disc list-inside text-white/90 text-[23px] space-y-6"
-      >
-        {slide.bullets.map((point, i) => (
-          <li key={i}>{point}</li>
-        ))}
-      </ul>
-    )}
+        {slide.bullets && (
+          <ul
+            style={{ color: slideBulletColor }}
+            className="list-disc list-inside text-white/90 text-[23px] md:text-lg space-y-6"
+          >
+            {slide.bullets.map((point, i) => (
+              <li key={i}>{point}</li>
+            ))}
+          </ul>
+        )}
 
-    {slide.notes && (
-      <p
-        style={{ color: slidenoteColor }}
-        className="italic text-white/80 leading-relaxed text-[21px]"
-      >
-        {slide.notes}
-      </p>
-    )}
-  </div>
-
-  {/* Team Grid */}
-  <div className="w-full grid md:grid-cols-2 gap-6 mt-10">
-    {slide.images?.map((image, i) => (
-      <div
-        key={i}
-        className="bg-white/5 backdrop-blur-sm shadow-lg border border-white/10 rounded-xl overflow-hidden"
-      >
-        <div className="relative aspect-[4/5]">
-          <img
-            src={image.url}
-            alt={image.caption || `Team member ${i + 1}`}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent py-4 text-center">
-            <p className="text-white text-lg font-semibold tracking-wide">
-              {image.caption || "Team Member"}
-            </p>
-          </div>
-        </div>
+        {slide.notes && (
+          <p
+            style={{ color: slidenoteColor }}
+            className="italic text-white/80 leading-relaxed text-[21px]"
+          >
+            {slide.notes}
+          </p>
+        )}
       </div>
-    ))}
-  </div>
-</section>
 
+      {/* Team Grid */}
+      <div className="w-full grid md:grid-cols-2 gap-6 mt-10">
+        {slide.images?.map((image, i) => (
+          <div
+            key={i}
+            className=" transition-all duration-500 border border-white/10 hover:border-white/20 rounded-xl overflow-hidden"
+          >
+            <div className="">
+              <img
+                src={image.url}
+                alt={image.caption || `Team member ${i + 1}`}
+                className="w-full h-full object-cover"
+              />
+
+              {/* Caption fixed at bottom inside image */}
+              <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent py-4 text-center">
+                <p className="text-white text-lg font-semibold tracking-wide">
+                  {image.caption || "Team Member"}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
