@@ -10,6 +10,7 @@ import {
   LogOut,
   Menu,
   X,
+  Loader2,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -63,6 +64,14 @@ export default function Toolbar() {
     });
   };
 
+      if (isLoggingOut) {
+    return (
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-sm">
+        <Loader2 size={40} className="animate-spin bg-[#FF3D00]"/>
+      </div>
+    );
+  }
+
   return (
     <header className="w-full flex items-center justify-between px-4 md:px-6 py-3 border-b bg-white shadow-sm relative">
       {/* Left Section - Undo / Redo */}
@@ -100,60 +109,56 @@ export default function Toolbar() {
           </button>
         </div>
 
-        {/* Avatar dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center space-x-0">
-              <Avatar className="h-[38px] w-[38px]">
-                <AvatarImage src={user_data?.user?.profileImage || ""} />
-                <AvatarFallback className="bg-primary text-white uppercase font-semibold">
-                  {user_data?.user?.firstname && user_data?.user?.lastname
-                    ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`
-                    : user_data?.user?.email
-                    ? user_data.user.email.charAt(0).toUpperCase()
-                    : "NA"}
-                </AvatarFallback>
-              </Avatar>
-              <ChevronDown className="h-5 w-5" />
-            </Button>
-          </DropdownMenuTrigger>
+  <DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button
+      variant="ghost"
+      className="flex items-center gap-2 p-1.5 hover:bg-gray-50 rounded-full transition-all duration-300"
+    >
+      <Avatar className="h-10 w-10 border border-gray-200">
+        <AvatarImage src={user_data?.user?.profileImage || ""} />
+        <AvatarFallback className="bg-[#FF5619] text-white font-semibold">
+          {user_data?.user?.firstname && user_data?.user?.lastname
+            ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
+            : user_data?.user?.email
+            ? user_data.user.email.charAt(0).toUpperCase()
+            : "NA"}
+        </AvatarFallback>
+      </Avatar>
+      <ChevronDown className="h-5 w-5 text-gray-600" />
+    </Button>
+  </DropdownMenuTrigger>
 
-          <DropdownMenuContent
-            align="end"
-            className="w-44 mt-3 rounded-2xl bg-white/95 backdrop-blur-md shadow-xl border border-gray-200 text-[15px] text-gray-800 p-2"
-          >
-            <DropdownMenuItem
-              onClick={() => navigate("/profile")}
-              className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-orange-50 focus:bg-orange-100 focus:text-orange-600 cursor-pointer"
-            >
-              <User className="w-5 h-5 text-orange-500" />
-              <span>Profile</span>
-            </DropdownMenuItem>
+  <DropdownMenuContent
+    align="end"
+    className="w-48 rounded-lg mt-4 shadow-lg border border-gray-100 bg-primary space-y-3 p-4 text-white"
+  >
+    <DropdownMenuItem
+      onClick={() => navigate("/profile")}
+      className="cursor-pointer"
+    >
+      Profile
+    </DropdownMenuItem>
+    <DropdownMenuItem
+      onClick={() => navigate("/settings")}
+      className="cursor-pointer"
+    >
+      Settings
+    </DropdownMenuItem>
+    <DropdownMenuItem className="cursor-pointer">
+      Help
+    </DropdownMenuItem>
+    <Separator className="" />
+    <DropdownMenuItem
+      onClick={handleLogout}
+      className="hover:bg-red-500"
+    >
+      {isLoggingOut ? "Logging out..." : "Sign out"}
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
 
-            <DropdownMenuItem
-              onClick={() => navigate("/settings")}
-              className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-orange-50 focus:bg-orange-100 focus:text-orange-600 cursor-pointer"
-            >
-              <Settings className="w-5 h-5 text-orange-500" />
-              <span>Settings</span>
-            </DropdownMenuItem>
 
-            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-orange-50 focus:bg-orange-100 focus:text-orange-600 cursor-pointer">
-              <HelpCircle className="w-5 h-5 text-orange-500" />
-              <span>Help</span>
-            </DropdownMenuItem>
-
-            <Separator className="my-2" />
-
-            <DropdownMenuItem
-              onClick={handleLogout}
-              className="flex items-center gap-3 px-3 py-2 text-red-600 rounded-md hover:bg-red-50 focus:bg-red-100 cursor-pointer"
-            >
-              <LogOut className="w-5 h-5 text-red-500" />
-              <span>{isLoggingOut ? "Logging out..." : "Sign out"}</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
 
         {/* Hamburger menu for mobile */}
         <button

@@ -2,6 +2,8 @@ import { useState } from "react";
 import {
   Bell,
   ChevronDown,
+  Loader,
+  Loader2,
   Menu,
   PanelLeft,
   PanelLeftClose,
@@ -16,9 +18,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import GidiLogo from "@/assets/Frame 481473.png";
-import Gidi_small from "../../../../public/assets/Gidi_Logo_small.png";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+
 
 const DashboardHeader = ({
   user_data,
@@ -29,6 +31,15 @@ const DashboardHeader = ({
   setDesktopSidebarVisible,
 }) => {
   const navigate = useNavigate();
+
+    if (isLoggingOut) {
+    return (
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-sm">
+        <Loader2 size={40} className="animate-spin bg-[#FF3D00]"/>
+      </div>
+    );
+  }
+
 
   return (
     <header className="border-b bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
@@ -139,6 +150,8 @@ const DashboardHeader = ({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          
         </div>
       </div>
     </header>

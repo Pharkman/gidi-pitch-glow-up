@@ -95,7 +95,7 @@ const SlideExport = () => {
               <button
                 onClick={() => handleExport("PDF")}
                 disabled={isPending}
-                className="py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-sm disabled:opacity-70"
+                className="py-2.5 bg-primary text-white rounded-lg text-sm font-medium  disabled:opacity-70"
               >
                 {loadingType === "PDF" && isPending ? (
                   <LoadingSpinner />

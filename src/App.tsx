@@ -58,43 +58,33 @@ function AppRoutes() {
   const [pageTitle, setPageTitle] = useState("");
 
   // Set page title based on current route
- useEffect(() => {
-  const path = location.pathname;
-
-  // Map routes to page titles
-  const routeTitles: Record<string, string> = {
-    "/": "Home",
-    "/signin": "Sign In",
-    "/signup": "Sign Up",
-    "/verify-email": "Verify Email",
-    "/forgot-password": "Forgot Password",
-    "/auth/password/reset": "Reset Password",
-    "/waitlist": "Join Waitlist",
-
-    // Onboarding flow
-    "/onboarding": "Onboarding",
-    "/onboarding/about-startup": "About Your Startup",
-    "/onboarding/shape-startup": "Shape Your Startup",
-    "/onboarding/goal_preference": "Goals & Preferences",
-
-    // Dashboard and Pitch Decks
-    "/dashboard": "Dashboard",
-    "/pitch-deck": "Pitch Deck",
-    "/pitch-decks": "Pitch Decks",
-    "/pitch-deck-outline": "Pitch Deck Outline",
-    "/pitch-deck-generating": "Generating Pitch Deck",
-    "/pitch-deck-editor": "Pitch Deck Editor",
-
-    // Resume-related pages
-    "/resume-builder": "Resume Builder",
-    "/resume-builder-editor": "Resume Editor",
-    "/resume-generating": "Generating Resume",
-
-    // Team and People
-    "/team-members": "Team Members",
-    "/people": "People Data",
-
-    // Pitch Creation Steps
+  useEffect(() => {
+    const path = location.pathname;
+    
+    // Map routes to page titles
+    const routeTitles: Record<string, string> = {
+      "/": "Home",
+      "/signin": "Sign In",
+      "/signup": "Sign Up",
+      "/verify-email": "Verify Email",
+      "/forgot-password": "Forgot Password",
+      "/auth/password/reset": "Reset Password",
+      "/waitlist": "Join Waitlist",
+      "/onboarding": "Onboarding",
+      "/onboarding/about-startup": "About Your Startup",
+      "/onboarding/shape-startup": "Shape Your Startup",
+      "/onboarding/goal_preference": "Goals & Preferences",
+      "/dashboard": "Dashboard",
+      "/pitch-decks": "Pitch Decks",
+      "/resume-builder": "Resume Builder",
+      "/resume-builder-editor": "Resume Editor",
+      "/team-members": "Team Members",
+      "/pitch-deck-outline": "Pitch Deck Outline",
+      "/pitch-deck-generating": "Generating Pitch Deck",
+      "/pitch-deck-editor": "Pitch Deck Editor",
+      "/resume-generating": "Generating Resume",
+      
+      
     "/create-pitchdeck/step-one": "Create Pitch Deck - Step 1",
     "/create-pitchdeck/step-two": "Create Pitch Deck - Step 2",
     "/create-pitchdeck/step-three": "Create Pitch Deck - Step 3",
@@ -114,16 +104,10 @@ function AppRoutes() {
     "/change-name": "Change Name",
     "/change-email": "Change Email",
     "/change-password": "Change Password",
-  };
-
-  // Match dynamic routes like /export-slide/:deckId or /correct-slide/:slideId
-  const matchedRoute = Object.keys(routeTitles).find((route) =>
-    path.startsWith(route)
-  );
-
-  setPageTitle(routeTitles[matchedRoute || ""] || "Page Not Found");
-}, [location]);
-
+    };
+    
+    setPageTitle(routeTitles[path] || "Page Not Found");
+  }, [location]);
 
   // Apply the document title
   useDocumentTitle(pageTitle);

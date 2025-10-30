@@ -77,7 +77,6 @@ const SlideExporting = () => {
           body {
             background-color: #1a1a1a;
             margin: 0;
-            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -114,13 +113,13 @@ const SlideExporting = () => {
       data-index={index}
       ref={(el) => (slideRefs.current[index] = el)}
       style={{ backgroundColor: slideBackgroundColor }}
-      className="grid grid-cols-1 h-[900px]  py-10 px-3   transition-all duration-500"
+      className="flex flex-col justify-between h-[900px] w-full py-10 px-12 overflow-hidden transition-all duration-500"
     >
       {/* Section Header */}
-      <div className="space-y-10">
+      <div className="space-y-8 flex-shrink-0">
         <h2
           style={{ color: slidetitleColor }}
-          className="text-4xl font-extrabold tracking-tight text-white"
+          className="text-3xl font-extrabold tracking-tight text-white leading-tight"
         >
           {slide.title}
         </h2>
@@ -128,7 +127,7 @@ const SlideExporting = () => {
         {slide.bullets && (
           <ul
             style={{ color: slideBulletColor }}
-            className="list-disc list-inside text-white/90 text-[20px] md:text-lg space-y-6"
+            className="list-disc list-inside text-white/90 text-[17px] space-y-3 leading-snug"
           >
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
@@ -147,27 +146,27 @@ const SlideExporting = () => {
       </div>
 
       {/* Team Grid */}
-      <div className="w-full grid md:grid-cols-2 gap-6 mt-10">
+      <div className="w-full grid grid-cols-2 gap-6 flex-1 min-h-0 mt-12">
         {slide.images?.map((image, i) => (
           <div
             key={i}
-            className="bg-white/5 backdrop-blur-sm shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/10 hover:border-white/20 rounded-xl overflow-hidden h-[450px]"
+            className="bg-white/5 backdrop-blur-sm duration-500 border border-white/10 hover:border-white/20 rounded-xl overflow-hidden flex flex-col h-full"
           >
-            <div className="relative aspect-square">
+            <div className="relative flex-1 overflow-hidden ">
               <img
                 src={image.url}
                 alt={image.caption || `Team member ${i + 1}`}
-                className="w-full h-[450px] object-cover"
+                className="w-full h-full object-cover"
               />
 
               {/* Caption fixed at bottom inside image */}
-              <div className="-full bg-gradient-to-t from-black/70 to-transparent py-4 text-center">
+              <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/50 to-transparent py-3 px-2">
                 <p className="text-white text-lg font-semibold tracking-wide">
                   {image.caption || "Team Member"}
                 </p>
               </div>
             </div>
-            
+           
           </div>
         ))}
       </div>
@@ -183,8 +182,8 @@ const SlideExporting = () => {
   data-index={index}
   ref={(el) => (slideRefs.current[index] = el)}
   style={{ backgroundColor: slideBackgroundColor }}
-  className={`flex flex-col md:flex-row items-center gap-4 justify-center  ${
-    index % 2 === 1 ? "md:flex-row-reverse pl-4" : "pr-4"
+  className={`flex flex-col md:flex-row items-center  justify-center  ${
+    index % 2 === 1 ? "md:flex-row-reverse " : ""
   } w-full h-[900px] shadow-lg`}
 >
   {/* Image Section */}
@@ -201,7 +200,7 @@ const SlideExporting = () => {
   </div>
 
   {/* Text Section */}
-  <div className="w-full  h-full flex flex-col justify-center  md:px-4 py-10 space-y-10">
+  <div className="w-full  h-full flex flex-col justify-center py-10 px-14  space-y-10">
     <h2
       style={{ color: slidetitleColor }}
       className="text-4xl font-extrabold leading-snug text-white"
