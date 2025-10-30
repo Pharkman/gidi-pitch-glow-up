@@ -114,13 +114,13 @@ const SlideExporting = () => {
       data-index={index}
       ref={(el) => (slideRefs.current[index] = el)}
       style={{ backgroundColor: slideBackgroundColor }}
-      className="flex flex-col justify-between py-10 px-3 h-[100%] z-50  transition-all duration-500"
+      className="grid grid-cols-1 h-[900px]  py-10 px-3   transition-all duration-500"
     >
       {/* Section Header */}
-      <div className="space-y-10 w-full ">
+      <div className="space-y-10">
         <h2
           style={{ color: slidetitleColor }}
-          className="text-5xl font-extrabold tracking-tight text-white"
+          className="text-4xl font-extrabold tracking-tight text-white"
         >
           {slide.title}
         </h2>
@@ -128,7 +128,7 @@ const SlideExporting = () => {
         {slide.bullets && (
           <ul
             style={{ color: slideBulletColor }}
-            className="list-disc list-inside text-white/90 text-[23px] md:text-lg space-y-6"
+            className="list-disc list-inside text-white/90 text-[20px] md:text-lg space-y-6"
           >
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
@@ -139,7 +139,7 @@ const SlideExporting = () => {
         {slide.notes && (
           <p
             style={{ color: slidenoteColor }}
-            className="italic text-white/80 leading-relaxed text-[21px]"
+            className="italic text-white/80 leading-relaxed text-[19px]"
           >
             {slide.notes}
           </p>
@@ -151,22 +151,23 @@ const SlideExporting = () => {
         {slide.images?.map((image, i) => (
           <div
             key={i}
-            className=" transition-all duration-500 border border-white/10 hover:border-white/20 rounded-xl overflow-hidden"
+            className="bg-white/5 backdrop-blur-sm shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/10 hover:border-white/20 rounded-xl overflow-hidden h-[450px]"
           >
-            <div className="">
+            <div className="relative aspect-square">
               <img
                 src={image.url}
                 alt={image.caption || `Team member ${i + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-[450px] object-cover"
               />
 
               {/* Caption fixed at bottom inside image */}
-              <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent py-4 text-center">
+              <div className="-full bg-gradient-to-t from-black/70 to-transparent py-4 text-center">
                 <p className="text-white text-lg font-semibold tracking-wide">
                   {image.caption || "Team Member"}
                 </p>
               </div>
             </div>
+            
           </div>
         ))}
       </div>
@@ -203,7 +204,7 @@ const SlideExporting = () => {
   <div className="w-full  h-full flex flex-col justify-center  md:px-4 py-10 space-y-10">
     <h2
       style={{ color: slidetitleColor }}
-      className="text-[44px] font-extrabold leading-snug text-white"
+      className="text-4xl font-extrabold leading-snug text-white"
     >
       {slide.title}
     </h2>
@@ -211,7 +212,7 @@ const SlideExporting = () => {
     {slide.bullets && (
       <ul
         style={{ color: slideBulletColor }}
-        className="list-disc pl-5 space-y-5 text-white text-[23px]"
+        className="list-disc pl-5 space-y-5 text-white text-[20px]"
       >
         {slide.bullets.map((point, i) => (
           <li key={i}>{point}</li>
@@ -221,7 +222,7 @@ const SlideExporting = () => {
 
     <p
       style={{ color: slidenoteColor }}
-      className="italic text-white text-[21px] leading-relaxed"
+      className="italic text-white text-[19px] leading-relaxed"
     >
       {slide.notes}
     </p>
