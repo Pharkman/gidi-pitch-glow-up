@@ -50,6 +50,11 @@ import SlideSidebar from "./pages/Slides/component/SlideSidebar";
 import CorrectedSlideProgress from "./pages/Slides/component/CorrectedSlideProgress";
 import SlideExport from "./pages/Slides/component/SlideExport";
 import SlideExporting from "./pages/Slides/component/SlideExporting";
+import Resume from "./pages/Resume/Resume";
+import BusModel from "./pages/BusModal/BusModel";
+import Yc from "./pages/Yc/Yc";
+import AiCoach from "./pages/aiCoach/AiCoach";
+import TokenPurchase from "./pages/CryptoPayment/TokenPurchase";
 
 
 function AppRoutes() {
@@ -161,7 +166,11 @@ function AppRoutes() {
         <Route path="/pitch-deck-outline" element={<ProtectedRoute><PitchDeckOutlinePage /></ProtectedRoute>} />
         <Route path="/pitch-deck-generating" element={<ProtectedRoute><PitchDeckGeneratingPage /></ProtectedRoute>} />
         <Route path="/pitch-deck-editor" element={<ProtectedRoute><PitchDeckEditorPage /></ProtectedRoute>} />
-        <Route path="/resume-generating" element={<ProtectedRoute><ResumeGeneratingPage /></ProtectedRoute>} />
+        <Route path="/resume" element={<ProtectedRoute><Resume /></ProtectedRoute>} />
+        <Route path="/bus-modal" element={<ProtectedRoute><BusModel /></ProtectedRoute>} />
+        <Route path="/yc" element={<ProtectedRoute><Yc /></ProtectedRoute>} />
+        <Route path="/ai-coach" element={<ProtectedRoute><AiCoach /></ProtectedRoute>} />
+        <Route path="/crypto-payment" element={<ProtectedRoute><TokenPurchase /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

@@ -49,6 +49,7 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
+    "ethers": "^5.7.2",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.15",
     "gsap": "^3.13.0",
