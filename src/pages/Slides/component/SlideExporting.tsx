@@ -145,7 +145,6 @@ const SlideExporting = () => {
         )}
       </div>
 
-      {/* Team Grid */}
       <div className="w-full grid grid-cols-3 gap-6 flex-1 min-h-0 mt-12">
         {slide.images?.map((image, i) => (
           <div

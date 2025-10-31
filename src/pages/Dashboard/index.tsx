@@ -1,25 +1,5 @@
 import { useEffect, useState } from 'react';
-import { 
-  Plus, 
-  FileText, 
-  User, 
-  BarChart3, 
-  Target, 
-  Users, 
-  Brain, 
-  Bell, 
-  ChevronDown,
-  Clock,
-  ArrowUpRight,
-  Sparkles,
-  FileUp,
-  Zap,
-  X,
-  UserPlus,
-  Menu,
-  PanelLeftClose,
-  PanelLeft
-} from 'lucide-react';
+import noDecks from '../../../public/assets/nodecks.png'
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -51,6 +31,7 @@ import Sidebar from '@/components/SideBar/SideBar';
 import { sidebarItems } from '@/components/SideBar/component/SideBarItems';
 import CreatePitchDeckModal from '../PitchDeck/component/CreatePitchDeckModal';
 import SearchBar from '@/components/SearchBar/SearchBar';
+import GreetingHeader from '@/components/Greeting/GreetingHeader';
 // Reusable ToolCard component
 const ToolCard = ({
   image,
@@ -73,7 +54,7 @@ const ToolCard = ({
         {/* Content */}
         <div className="w-full px-4 py-3">
           {/* Title */}
-          <div className="font-semibold text-base text-foreground mb-1">
+          <div className="font-semibold text-[#1D1D1D] text-base text-foreground mb-1">
             {label}
           </div>
 
@@ -123,16 +104,6 @@ const ToolCard = ({
 };
 
 
-// Reusable InviteButton component
-// const InviteButton = () => (
-//   <button
-//     className="flex items-center justify-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-3 rounded-lg font-semibold text-base shadow-md transition-all duration-200 hover:shadow-lg w-full mx-auto mb-6 border border-[#FF5A1F]"
-//     type="button"
-//   >
-//     <UserPlus className="w-5 h-5" />
-//     Invite to GIDIPitch
-//   </button>
-// );
 
 const Dashboard = () => {
   const {data:user_data, isLoading} = useGetUser();
@@ -217,7 +188,7 @@ const Dashboard = () => {
   />
 
       <div className="flex">
-        {/* Sidebar (Desktop) */}
+  
  <Sidebar
   sidebarItems={sidebarItems}
   sidebarOpen={sidebarOpen}
@@ -238,22 +209,14 @@ const Dashboard = () => {
            <div className="flex flex-col items-start space-y-6 max-sm:space-y-4">
  
     <div>
-      <h2
-        className="
-          text-2xl font-bold tracking-tight text-gray-900 
-          sm:text-2xl md:text-2xl max-sm:text-xl 
-          capitalize leading-tight mb-2
-        "
-      >
-        {username ? `Welcome back, ${username}` : "Welcome back"}
-      </h2>
+      <GreetingHeader username={username} />
       <p
         className="
-          text-gray-600 text-base md:text-lg 
-          max-sm:text-sm max-sm:leading-snug
+          text-[#858585] text-[14px] md:text-[14px]  
+          max-sm:text-[13px] max-sm:leading-snug
         "
       >
-        Ready to build your next <span className="text-[16px] font-medium">investor-ready</span> document?
+        Ready to  your next <span className="text-[16px] font-medium">investor-ready</span> document?
       </p>
     </div>
   </div>
@@ -324,9 +287,15 @@ const Dashboard = () => {
 </div>
     ))
   ) : (
-    <p className="text-gray-500 text-sm col-span-full text-center py-8">
-      No decks created yet. Click <span className="text-[#FF5619] font-medium cursor-pointer" onClick={() => setShowPitchDeckModal(true)}>here</span> to create one.
-    </p>
+    // <p className="text-gray-500 text-sm col-span-full text-center py-8">
+    //   No decks created yet. Click <span className="text-[#FF5619] font-medium cursor-pointer" onClick={() => setShowPitchDeckModal(true)}>here</span> to create one.
+    // </p>
+
+    <div className='flex flex-col items-center justify-center gap-8'>
+       <img src={noDecks} alt='no deck'/>
+       <p className='text-[#1D1D1D] font-semibold leading-[100%] '>No Recent Work Yet</p>
+       <p className='text-[#5D5D5D] text-[16px] font-[400] leading-[100%] '>Your recent projects will appear here once you create a pitch deck or resume.</p>
+    </div>
   )}
 </div>
 

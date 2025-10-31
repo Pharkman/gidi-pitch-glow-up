@@ -1,16 +1,30 @@
-import { X, UserPlus } from "lucide-react";
+import { X, UserPlus, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import Plus from '../../../public/assets/UserPlus.png'
 
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { logout, useGetUser } from "@/lib/query";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+import { useState } from "react";
+import { FiCreditCard } from "react-icons/fi";
+
+
 const InviteButton = () => (
   <button
-    className="flex items-center justify-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-3 rounded-lg font-medium text-sm  transition-all duration-200 hover:shadow-lg w-full mx-auto mb-6 border border-[#FF5A1F]"
+    className="flex items-center justify-center gap-2 bg-[#FF5A1F] hover:bg-[#e14e17] text-white px-6 py-3 rounded-lg font-medium text-sm  transition-all duration-200 hover:shadow-lg w-full mx-auto mb-4 border border-[#FF5A1F]"
     type="button"
   >
     <img src={Plus} alt=""/>
-    Invite to GIDIPitch
+    Invite to GidiPitch
   </button>
 );
 
@@ -49,6 +63,14 @@ export default function Sidebar({
       setSidebarOpen(false);
     }
   };
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const {data:user_data, isLoading} = useGetUser();
+
+  const handleLogout = async () => {
+  setIsLoggingOut(true);
+  await logout();
+  setIsLoggingOut(false);
+};
 
   return (
     <>
@@ -69,7 +91,7 @@ export default function Sidebar({
                 className={`w-full justify-start flex items-center gap-3 leading-[100%] text-[#858585] text-sm font-medium transition-all duration-200  rounded-[8px] p-[12px]
                   ${
                     item.active
-                      ? "bg-[#FFF1EC] text-[#FF5A1F] p-[12px]"
+                      ? "bg-[#FFF1EC] text-[#FF5A1F] hover:text-white p-[12px]"
                       : "bg-transparent text-[#858585] hover:text-white"
                   }
                   ${!item.available ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -104,7 +126,31 @@ export default function Sidebar({
           }
         >
           {desktopSidebarVisible ? (
-            <InviteButton />
+            <div className="">
+  {/* Invite Button */}
+  <div className="w-full">
+    <InviteButton />
+  </div>
+
+  {/* Purchase Token Button */}
+  <hr />
+  <button
+    type="button"
+    className="
+    mt-4
+      flex items-center justify-center gap-2
+      w-full py-3 px-4 rounded-xl
+      bg-gradient-to-r from-[#FF5A1F] to-[#FF7845]
+      text-white font-semibold text-sm
+      shadow-md hover:shadow-lg hover:scale-[1.02]
+      active:scale-95 transition-all duration-200
+    "
+  >
+    <FiCreditCard className="w-4 h-4" />
+    Purchase Tokens
+  </button>
+</div>
+
           ) : (
             // <Button
             //   size="icon"
@@ -167,6 +213,60 @@ export default function Sidebar({
             <div className="p-4">
               <InviteButton />
             </div>
+
+            <hr />
+
+            {/* <div>
+                <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 p-1.5 hover:bg-gray-50 rounded-full transition-all duration-300"
+              >
+                <Avatar className="h-10 w-10 border border-gray-200">
+                  <AvatarImage src={user_data?.user?.profileImage || ""} />
+                  <AvatarFallback className="bg-[#FF5619] text-white font-semibold">
+                    {user_data?.user?.firstname && user_data?.user?.lastname
+                      ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
+                      : user_data?.user?.email
+                      ? user_data.user.email.charAt(0).toUpperCase()
+                      : "NA"}
+                  </AvatarFallback>
+                </Avatar>
+                <ChevronDown className="h-5 w-5 text-gray-600" />
+              </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent
+              align="end"
+              className="w-48 rounded-lg shadow-lg border border-gray-100"
+            >
+              <DropdownMenuItem
+                onClick={() => navigate("/profile")}
+                className="hover:bg-gray-50"
+              >
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => navigate("/settings")}
+                className="hover:bg-gray-50"
+              >
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-gray-50">
+                Help
+              </DropdownMenuItem>
+              <Separator />
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="text-red-600 hover:bg-red-50"
+              >
+                {isLoggingOut ? "Logging out..." : "Sign out"}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+            </div> */}
           </aside>
         </div>
       )}

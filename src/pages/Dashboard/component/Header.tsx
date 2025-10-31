@@ -19,7 +19,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import GidiLogo from "@/assets/Frame 481473.png";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { useGetUser } from "@/lib/query";
 
 
 const DashboardHeader = ({
@@ -31,11 +32,17 @@ const DashboardHeader = ({
   setDesktopSidebarVisible,
 }) => {
   const navigate = useNavigate();
+  const token = `${user_data?.user?.tokens}` ;
+
+
+
+  
+
 
     if (isLoggingOut) {
     return (
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-sm">
-        <Loader2 size={40} className="animate-spin bg-[#FF3D00]"/>
+        <Loader2 size={40} className="animate-spin text-[#FF3D00]"/>
       </div>
     );
   }
@@ -95,6 +102,17 @@ const DashboardHeader = ({
 
         {/* RIGHT SECTION */}
         <div className="flex items-center gap-3 md:gap-5">
+         <div className="flex items-center justify-center bg-primary p-[2px] rounded-full">
+  <div className="flex items-center gap-2 bg-white dark:bg-gray-900 rounded-full py-[4px] px-4">
+    <span className="text-sm font-semibold text-gray-700 dark:text-gray-200 tracking-wide uppercase">
+      Tokens: 
+    </span>
+    <p className="text-[16px] sm:text-[16px] font-bold text-primary animate-pulse">
+      {token}
+    </p>
+  </div>
+</div>
+
           {/* Notification Bell */}
           <button className=" sm:flex items-center justify-center p-2 rounded-full bg-gray-50 hover:bg-[#FFF3EF] hover:text-[#FF5619] border border-gray-200 transition-all duration-300 relative">
             <Bell className="h-5 w-5" />
@@ -127,7 +145,7 @@ const DashboardHeader = ({
               className="w-48 rounded-lg shadow-lg border border-gray-100"
             >
               <DropdownMenuItem
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate("/settings")}
                 className="hover:bg-gray-50"
               >
                 Profile
