@@ -131,12 +131,12 @@ export default function Sidebar({
   <div className="w-full">
     <InviteButton />
   </div>
-
-  {/* Purchase Token Button */}
   <hr />
   <button
     type="button"
+    onClick={() => navigate("/crypto-payment")}
     className="
+
     mt-4
       flex items-center justify-center gap-2
       w-full py-3 px-4 rounded-xl
