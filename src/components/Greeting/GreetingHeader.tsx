@@ -15,7 +15,7 @@ const GreetingHeader = ({ username }) => {
     <h2
       className="
         text-[18px] font-bold tracking-tight text-gray-900
-        sm:text-[18px] md:text-[18px] max-sm:text-[16px]
+        sm:text-[18px] md:text-[20px] max-sm:text-[16px]
         capitalize leading-tight mb-2
       "
     >
