@@ -1,6 +1,7 @@
 import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
 import { Home, CheckCircle } from "lucide-react"; // 👈 Import CheckCircle
 import GidiLogo from '../../../../public/assets/Gidipitch Logo.svg'
+import { useNavigate } from "react-router-dom";
 
 // Helper function to get the hex color from a Tailwind class
 const getHexColor = (tailwindClass) => {
@@ -8,6 +9,7 @@ const getHexColor = (tailwindClass) => {
 };
 
 export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, brandKit }) {
+  const navigate = useNavigate();
   const handleClick = (index) => {
     onSlideSelect(index);
   };
@@ -24,7 +26,7 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
       <div className="flex items-center gap-2 px-5 py-4 border-b border-gray-100">
         {/* <Home className="text-gray-700" size={18} /> */}
         {/* <h1 className="text-[15px] font-medium text-gray-800">Social Startup</h1> */}
-        <img src={GidiLogo} alt="GidiPitch Logo" />
+        <img src={GidiLogo} alt="GidiPitch Logo" className="w-[100px] h-[30px]" onClick={() => navigate('/dashboard')}/>
       </div>
 
       {/* Slides list */}

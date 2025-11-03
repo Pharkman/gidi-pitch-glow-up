@@ -319,15 +319,16 @@ const Dashboard = () => {
 </div>
     ))
   ) : (
-    // <p className="text-gray-500 text-sm col-span-full text-center py-8">
-    //   No decks created yet. Click <span className="text-[#FF5619] font-medium cursor-pointer" onClick={() => setShowPitchDeckModal(true)}>here</span> to create one.
-    // </p>
+    <p className="text-gray-500  col-span-full text-center py-8">
 
-    <div className='flex flex-col items-center justify-center gap-8'>
+
+          <div className='flex flex-col items-center justify-center gap-3 mx-auto'>
        <img src={noDecks} alt='no deck'/>
-       <p className='text-[#1D1D1D] font-semibold leading-[100%] '>No Recent Work Yet</p>
-       <p className='text-[#5D5D5D] text-[16px] font-[400] leading-[100%] '>Your recent projects will appear here once you create a pitch deck or resume.</p>
+       <p className='text-[#1D1D1D] font-semibold leading-[100%]'>No Recent Work Yet</p>
+       <p className='text-[#5D5D5D] text-center text-[16px] font-[400] leading-[100%] '>Your recent projects will appear here once you create a pitch deck or resume.</p>
+             {/* No decks created yet. Click <span className="text-[#FF5619] font-medium cursor-pointer" onClick={() => setShowPitchDeckModal(true)}>here</span> to create one. */}
     </div>
+    </p>
   )}
 </div>
 
