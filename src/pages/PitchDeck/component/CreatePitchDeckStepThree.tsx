@@ -207,7 +207,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
 
                   <button
                     type="submit"
-                    className="bg-gradient-to-r from-[#FF5619] to-[#FF7B3C] text-white text-sm font-medium px-6 py-2.5 rounded-2xl hover:scale-105 hover:shadow-lg transition-all duration-300 shadow-sm"
+                    className="bg-[#FF5619] text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-orange-600 transition"
                   >
                     Next
                   </button>

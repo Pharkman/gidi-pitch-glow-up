@@ -404,6 +404,7 @@ export async function logout() {
 
 export const useCreatePitchDeck = () => {
   const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({
@@ -446,11 +447,9 @@ export const useCreatePitchDeck = () => {
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error || 'Something went wrong');
 
-        console.log('Pitch deck response:', data);
-
-        // Success flow
-        toast.success('Pitch deck created successfully!');
-        navigate('/dashboard/pitchdecks'); // redirect to dashboard or anywhere you prefer
+        
+              queryClient.invalidateQueries({ queryKey: ["GET_GENERATED_DECKS"] });
+        navigate('/dashboard/pitchdecks'); 
 
         return data;
       } catch (error) {
@@ -727,3 +726,24 @@ export const useGetGeneratedDecks = () => {
     },
   });
 }
+
+export const useDeleteDeneratedDeck = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (deckId: string) => {
+      const res = await fetch(`${BASE_URL}/pitch/deck/delete/${deckId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Failed to delete generated deck");
+      return res.json();
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["GET_GENERATED_DECKS"] });
+    },
+  });
+};

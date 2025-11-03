@@ -134,13 +134,13 @@ export default function Sidebar({
   <hr />
   <button
     type="button"
-    onClick={() => navigate("/crypto-payment")}
+    onClick={() => navigate("/payment")}
     className="
 
     mt-4
       flex items-center justify-center gap-2
       w-full py-3 px-4 rounded-xl
-      bg-gradient-to-r from-[#FF5A1F] to-[#FF7845]
+      bg-primary
       text-white font-semibold text-sm
       shadow-md hover:shadow-lg hover:scale-[1.02]
       active:scale-95 transition-all duration-200

@@ -24,7 +24,7 @@ import freepik_build3 from "@/assets/freepik_buld3.png"
 import freepik_build4 from "@/assets/freepik_build4.png"
 import freepik_build5 from "@/assets/freepik_build5.png"
 import freepik_build6 from "@/assets/freepik_build6.png"
-import { getUserDetails, logout, useGetGeneratedDecks, useGetTokenFromQuery, useGetUser } from '@/lib/query';
+import { getUserDetails, logout, useDeleteDeneratedDeck, useGetGeneratedDecks, useGetTokenFromQuery, useGetUser } from '@/lib/query';
 import { useSearchParams } from 'react-router-dom';
 import DashboardHeader from './component/Header';
 import Sidebar from '@/components/SideBar/SideBar';
@@ -32,16 +32,37 @@ import { sidebarItems } from '@/components/SideBar/component/SideBarItems';
 import CreatePitchDeckModal from '../PitchDeck/component/CreatePitchDeckModal';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import GreetingHeader from '@/components/Greeting/GreetingHeader';
+import { FiTrash2 } from 'react-icons/fi';
+import { Loader2 } from 'lucide-react';
+import { toast } from 'react-toastify';
 // Reusable ToolCard component
 const ToolCard = ({
   image,
   label,
   onClick,
   disabled,
-  variant = 'grid',
+  variant = "grid",
   subtitle,
 }) => {
-  if (variant === 'project') {
+  const { mutate: deleteDeck, isPending } = useDeleteDeneratedDeck();
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDelete = (e) => {
+    e.stopPropagation(); 
+    setDeleting(true);
+    deleteDeck(onClick, {
+      onSuccess: () => {
+        setDeleting(false);
+        toast.success("Deck deleted successfully");
+      },
+      onError: () => {
+        setDeleting(false);
+       toast.error("Failed to delete deck");
+      },
+    });
+  };
+
+  if (variant === "project") {
     return (
       <div className="bg-white rounded-xl shadow-md p-0 w-full border border-[#E4E4E4CC]">
         {/* Image */}
@@ -63,15 +84,27 @@ const ToolCard = ({
             {subtitle && (
               <div className="text-sm text-muted-foreground">{subtitle}</div>
             )}
-            <button
-              onClick={() => {
-                localStorage.setItem("deckId", onClick || "");
-                window.location.href = "/deck";
-              }}
-              className="border border-[#FF5A1F] text-[#FF5A1F] bg-white/90 backdrop-blur-sm text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-[#FF5A1F] hover:text-white transition-all duration-200"
-            >
-              View Deck
-            </button>
+            <div className="flex items-center gap-2">
+              {/* View Deck Button */}
+              <button
+                onClick={() => {
+                  localStorage.setItem("deckId", onClick || "");
+                  window.location.href = "/deck";
+                }}
+                className="border border-[#FF5A1F] text-[#FF5A1F] bg-white/90 backdrop-blur-sm text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-[#FF5A1F] hover:text-white transition-all duration-200"
+              >
+                View Deck
+              </button>
+
+              {/* Delete Button */}
+              <button
+                onClick={handleDelete}
+                disabled={isPending || deleting}
+                className="border border-red-500 text-red-500 bg-white/90 text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-red-500 hover:text-white transition-all duration-200 flex items-center gap-1"
+              >
+                {deleting ? <Loader2 size={16} className='animate-spin'/> : <FiTrash2 className="text-sm" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -82,7 +115,7 @@ const ToolCard = ({
   return (
     <div
       className={`flex flex-col items-center bg-white border border-[#E4E4E4CC] shadow-md rounded-[12px] pb-3 p-[3px] ${
-        disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+        disabled ? "cursor-not-allowed" : "cursor-pointer"
       }`}
       onClick={disabled ? undefined : onClick}
       tabIndex={disabled ? -1 : 0}
@@ -94,7 +127,7 @@ const ToolCard = ({
       </div>
       <span
         className={`font-semibold text-base text-center ${
-          disabled ? 'opacity-50' : ''
+          disabled ? "opacity-50" : ""
         }`}
       >
         {label}
@@ -102,7 +135,6 @@ const ToolCard = ({
     </div>
   );
 };
-
 
 
 const Dashboard = () => {

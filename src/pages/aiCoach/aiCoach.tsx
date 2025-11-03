@@ -1,6 +1,6 @@
 import React from "react";
 
-const aiCoach = () => {
+const AiCoach = () => {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white px-4">
       <div className="max-w-xl w-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-100 p-8 text-center">
@@ -78,5 +78,5 @@ const aiCoach = () => {
   );
 };
 
-export default aiCoach;
+export default AiCoach;
 
