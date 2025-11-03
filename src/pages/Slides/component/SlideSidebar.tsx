@@ -2,6 +2,7 @@ import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
 import { Home, CheckCircle } from "lucide-react"; // 👈 Import CheckCircle
 import GidiLogo from '../../../../public/assets/Gidipitch Logo.svg'
 import { useNavigate } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
 
 // Helper function to get the hex color from a Tailwind class
 const getHexColor = (tailwindClass) => {
@@ -23,11 +24,23 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 h-screen flex flex-col max-sm:hidden">
       {/* Header */}
-      <div className="flex items-center gap-2 px-5 py-4 border-b border-gray-100">
-        {/* <Home className="text-gray-700" size={18} /> */}
-        {/* <h1 className="text-[15px] font-medium text-gray-800">Social Startup</h1> */}
-        <img src={GidiLogo} alt="GidiPitch Logo" className="w-[140px] cursor-pointer h-[30px]" onClick={() => navigate('/dashboard')}/>
-      </div>
+    <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
+  {/* Back button */}
+  <button
+    onClick={() => navigate('/dashboard')}
+    className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
+  >
+    <FiArrowLeft size={20} className="text-gray-700" />
+  </button>
+
+  {/* Logo */}
+  <img
+    src={GidiLogo}
+    alt="GidiPitch Logo"
+    className="w-[140px] cursor-pointer h-[30px]"
+    onClick={() => navigate("/dashboard")}
+  />
+</div>
 
       {/* Slides list */}
       <div className="flex-1 overflow-y-auto py-4 space-y-4 px-5 scrollbar-hide">

@@ -190,7 +190,7 @@ if (slide.slideType === "team") {
         {slide.bullets && (
           <ul
            style={{ color: slideBulletColor  }}
-          className="list-disc pl-5 space-y-2 text-white text-[15px]">
+          className="list-disc pl-5 space-y-4 text-white text-[15px]">
             {slide.bullets.map((point, i) => (
               <li key={i}>{point}</li>
             ))}
