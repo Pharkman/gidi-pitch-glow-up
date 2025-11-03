@@ -59,164 +59,162 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
     }
   }, [isCompleted, onComplete]);
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900/80 via-black/60 to-gray-900/80 backdrop-blur-sm font-[Geist] text-gray-800 p-6">
-      <AnimatePresence mode="wait">
-        {isFetching ? (
-          <motion.div
-            key="skeleton"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex flex-col space-y-6 items-center w-64"
+ <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#0F1114] to-[#1A1C1F] text-gray-100 p-6 font-[Geist]">
+  <AnimatePresence mode="wait">
+    {isFetching ? (
+      <motion.div
+        key="skeleton"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="flex flex-col space-y-6 items-center w-64"
+      >
+        <Skeleton className="w-48 h-48 rounded-full bg-white/10" />
+        <Skeleton className="w-40 h-5 rounded-md bg-white/10" />
+        <Skeleton className="w-32 h-3 rounded-md bg-white/10" />
+      </motion.div>
+    ) : !isCompleted ? (
+      <motion.div
+        key="progress"
+        initial={{ opacity: 0, scale: 0.92 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="flex flex-col items-center text-center space-y-8"
+      >
+        {/* Progress Ring */}
+        <div className="relative w-56 h-56 flex items-center justify-center">
+          <motion.svg
+            className="w-full h-full drop-shadow-[0px_0px_20px_rgba(255,120,60,0.25)]"
+            viewBox="0 0 100 100"
+            initial={{ rotate: -90 }}
           >
-            <Skeleton className="w-48 h-48 rounded-full" />
-            <Skeleton className="w-40 h-5 rounded-md" />
-            <Skeleton className="w-32 h-3 rounded-md" />
-          </motion.div>
-        ) : !isCompleted ? (
+            {/* Track */}
+            <circle
+              cx="50"
+              cy="50"
+              r="45"
+              stroke="#2B2E33"
+              strokeWidth="8"
+              fill="none"
+              strokeLinecap="round"
+            />
+
+            {/* Progress */}
+            <motion.circle
+              cx="50"
+              cy="50"
+              r="45"
+              stroke="url(#premiumGrad)"
+              strokeWidth="8"
+              fill="none"
+              strokeDasharray="283"
+              strokeDashoffset={283 - (283 * progress) / 100}
+              strokeLinecap="round"
+              animate={{ strokeDashoffset: 283 - (283 * progress) / 100 }}
+              transition={{
+                duration: 1.2,
+                ease: "easeInOut",
+              }}
+            />
+
+            <defs>
+              <linearGradient id="premiumGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#FF9E5A" />
+                <stop offset="100%" stopColor="#FF4A18" />
+              </linearGradient>
+            </defs>
+          </motion.svg>
+
+          {/* Center Text */}
           <motion.div
-            key="progress"
+            key={progress}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="flex flex-col items-center text-center space-y-6"
+            transition={{ duration: 0.4 }}
+            className="absolute flex flex-col items-center"
           >
-            {/* Circular Progress Ring */}
-            <div className="relative w-48 h-48 flex items-center justify-center">
-              <motion.svg
-                className="w-full h-full"
-                viewBox="0 0 100 100"
-                initial={{ rotate: -90 }}
-              >
-                {/* Background circle */}
-                <circle cx="50" cy="50" r="45" stroke="#E5E7EB" strokeWidth="8" fill="none" />
-                {/* Progress ring */}
-                <motion.circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="url(#progressGradient)"
-                  strokeWidth="8"
-                  fill="none"
-                  strokeDasharray="283"
-                  strokeDashoffset={283 - (283 * progress) / 100}
-                  strokeLinecap="round"
-                  initial={{ strokeDashoffset: 283 }}
-                  animate={{ strokeDashoffset: 283 - (283 * progress) / 100 }}
-                  transition={{ duration: 1, ease: "easeInOut" }}
-                />
-                <defs>
-                  <linearGradient id="progressGradient" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#FF7442" />
-                    <stop offset="100%" stopColor="#FF5619" />
-                  </linearGradient>
-                </defs>
-              </motion.svg>
-
-              {/* Center Text */}
-              <motion.div
-                key={progress}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="absolute flex flex-col items-center"
-              >
-                <span className="text-4xl font-semibold text-gray-900 max-sm:text-2xl">{progress}%</span>
-                <span className="text-xs text-gray-500">
-                  {completedSlides}/{totalSlides} slides
-                </span>
-              </motion.div>
-
-              {/* Breathing glow */}
-              <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FF7442]/20 to-[#FF5619]/20 blur-3xl"
-                animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
-
-            {/* Activity Status with sliding animation */}
-            <motion.p
-              key={activityStatus}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5 }}
-              className="text-white font-medium text-lg max-w-sm max-sm:text-base"
-            >
-              {activityStatus}
-            </motion.p>
-
-            {/* Breathing dot indicator */}
-            <motion.div
-              className="w-4 h-4 bg-[#FF5619] rounded-full"
-              animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            />
+            <span className="text-4xl font-semibold text-white drop-shadow-md">
+              {progress}%
+            </span>
+            <span className="text-sm text-gray-300">
+              {completedSlides}/{totalSlides} slides
+            </span>
           </motion.div>
-        ) : (
+
+          {/* Premium Glow */}
           <motion.div
-  key="ready"
-  initial={{ opacity: 0, scale: 0.8 }}
-  animate={{ opacity: 1, scale: 1 }}
-  exit={{ opacity: 0 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
-  className="text-center flex flex-col items-center space-y-5"
->
-  {/* Glowing circular check */}
-  <motion.div
-    initial={{ scale: 0 }}
-    animate={{ scale: 1 }}
-    transition={{ type: "spring", stiffness: 180, damping: 12 }}
-    className="relative w-24 h-24 flex items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-500 shadow-[0_0_25px_rgba(16,185,129,0.4)]"
-  >
-    <motion.div
-      className="absolute inset-0 rounded-full bg-white/20 blur-md"
-      animate={{
-        opacity: [0.4, 0.8, 0.4],
-        scale: [1, 1.1, 1],
-      }}
-      transition={{
-        repeat: Infinity,
-        duration: 2,
-        ease: "easeInOut",
-      }}
-    />
-    <motion.span
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ delay: 0.3, type: "spring" }}
-      className="text-white text-5xl font-bold"
-    >
-      ✓
-    </motion.span>
-  </motion.div>
+            className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FF7F50]/20 to-[#FF3D00]/10 blur-2xl"
+            animate={{
+              opacity: [0.2, 0.5, 0.2],
+              scale: [1, 1.06, 1],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
 
-  {/* Success text */}
-  <motion.h2
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: 0.5 }}
-    className="text-2xl font-semibold text-white"
-  >
-    Deck created successfully!
-  </motion.h2>
+        {/* Status */}
+        <motion.p
+          key={activityStatus}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-gray-300 font-medium text-lg max-w-xs leading-snug"
+        >
+          {activityStatus}
+        </motion.p>
 
-  {/* Subtext */}
-  <motion.p
-    initial={{ opacity: 0, y: 5 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: 0.7 }}
-    className="text-white text-sm"
-  >
-    Your pitch deck is now ready to view.
-  </motion.p>
-</motion.div>
+        {/* Breathing Dot */}
+        <motion.div
+          className="w-5 h-5 bg-gradient-to-br from-[#FF7843] to-[#FF4C16] rounded-full shadow-[0_0_15px_rgba(255,80,30,0.6)]"
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.5, 1, 0.5],
+          }}
+          transition={{
+            duration: 1.6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.div>
+    ) : (
+      // ✅ Completion remains same feel but polished
+      <motion.div
+        key="ready"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.7 }}
+        className="text-center flex flex-col items-center space-y-5"
+      >
+        <motion.div
+          initial={{ scale: 0.7 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 160, damping: 10 }}
+          className="relative w-28 h-28 flex items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.45)]"
+        >
+          <motion.span className="text-white text-5xl font-bold">
+            ✓
+          </motion.span>
+        </motion.div>
 
-        )}
-      </AnimatePresence>
-    </div>
+        <motion.h2 className="text-2xl font-semibold text-white">
+          Deck created successfully!
+        </motion.h2>
+
+        <motion.p className="text-gray-300 text-sm">
+          Your pitch deck is now ready to view.
+        </motion.p>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
+
   );
 };
 
