@@ -84,10 +84,10 @@ const SlideExport = () => {
       {/* Export Modal */}
       <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center  z-50 px-4">
         <div className="bg-white rounded-2xl w-full max-w-xl p-6 shadow-xl border border-gray-100 relative">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2 text-center">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
             Export Slides
           </h2>
-          <p className="text-gray-500 mb-6 text-center text-sm">
+          <p className="text-gray-500 mb-6  text-sm">
             Choose the format you’d like to export your slides in.
           </p>
 
@@ -96,7 +96,7 @@ const SlideExport = () => {
               <button
                 onClick={() => handleExport("PDF")}
                 disabled={isPending}
-                className="py-2.5 bg-primary text-white rounded-lg text-sm font-medium  disabled:opacity-70"
+                className="py-3 bg-primary text-white rounded-lg text-base font-medium  disabled:opacity-70"
               >
                 {loadingType === "PDF" && isPending ? (
                   <LoadingSpinner />
@@ -108,7 +108,7 @@ const SlideExport = () => {
               <button
                 onClick={() => handleExport("PPTX")}
                 disabled={isPending}
-                className="py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-sm disabled:opacity-70"
+                className="py-3 bg-primary text-white rounded-lg text-base font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-sm disabled:opacity-70"
               >
                 {loadingType === "PPTX" && isPending ? (
                   <LoadingSpinner />
@@ -121,7 +121,7 @@ const SlideExport = () => {
             <button
               onClick={() => handleExport("Both")}
               disabled={isPending}
-              className="w-full py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-sm disabled:opacity-70"
+              className="w-full py-3 bg-primary text-white rounded-lg text-base font-medium hover:opacity-90 hover:scale-[1.02] transition-transform duration-200 shadow-sm disabled:opacity-70"
             >
               {loadingType === "Both" && isPending ? (
                 <LoadingSpinner />
