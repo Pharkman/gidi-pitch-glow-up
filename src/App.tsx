@@ -53,7 +53,7 @@ import SlideExporting from "./pages/Slides/component/SlideExporting";
 import Resume from "./pages/Resume/Resume";
 import BusModel from "./pages/BusModal/BusModel";
 import Yc from "./pages/Yc/Yc";
-import AiCoach from "./pages/aiCoach/AiCoach";
+import AiCoach from "./pages/AiCoach/AiCoach";
 import TokenPurchase from "./pages/Payment/CryptoPayment/TokenPurchase";
 import PurchaseTokens from "./pages/Payment/paystackPayment/paystack";
 import Payment from "./pages/Payment/Payment";
