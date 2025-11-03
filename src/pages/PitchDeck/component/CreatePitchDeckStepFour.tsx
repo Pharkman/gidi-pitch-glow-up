@@ -79,52 +79,50 @@ export default function CreatePitchDeckStepFour({ onClose }) {
                   className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:outline-none"
                 />
               </div>
+{/* Image Generation Type */}
+<div className="mb-4">
+  <label className="block text-sm font-medium text-gray-800 mb-2">
+    Image Generation Type
+  </label>
+  <div className="flex gap-4 border border-gray-200 rounded-lg px-3 py-2.5">
+    <label
+      className={`flex items-center gap-2 text-sm cursor-pointer px-2 py-1 rounded-md transition ${
+        values.imageGenType === "manual"
+          ? "bg-orange-50 border border-orange-500 text-orange-600"
+          : "text-gray-700 hover:bg-gray-50"
+      }`}
+    >
+      <Field
+        type="radio"
+        name="imageGenType"
+        value="manual"
+        checked={values.imageGenType === "manual"}
+        onChange={() => setFieldValue("imageGenType", "manual")}
+        className="text-orange-500 accent-black focus:ring-black"
+      />
+      Manual
+    </label>
 
-              {/* Image Generation Type */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-800 mb-2">Image Generation Type</label>
-                <div className="flex gap-4 border border-gray-200 rounded-lg px-3 py-2.5">
-                  <label
-                    className={`flex items-center gap-2 text-sm cursor-pointer px-2 py-1 rounded-md transition ${
-                      values.imageGenType === "manual"
-                        ? "bg-orange-50 border border-orange-500 text-orange-600"
-                        : "text-gray-700 hover:bg-gray-50"
-                    }`}
-                  >
-                    <Field
-                      type="radio"
-                      name="imageGenType"
-                      value="manual"
-                      checked={values.imageGenType === "manual"}
-                      onChange={() => setFieldValue("imageGenType", "manual")}
-                      className="text-orange-500  accent-black focus:ring-black"
-                    />
-                    Manual
-                  </label>
-                  <label
-                    className={`flex items-center gap-2 text-sm cursor-pointer px-2 py-1 rounded-md transition ${
-                      values.imageGenType === "ai"
-                        ? "bg-orange-50 border border-orange-500 text-orange-600"
-                        : "text-gray-700 hover:bg-gray-50"
-                    }`}
+    <label
+      className={`flex items-center gap-2 text-sm cursor-pointer px-2 py-1 rounded-md transition ${
+        values.imageGenType === "ai"
+          ? "bg-orange-50 border border-orange-500 text-orange-600"
+          : "text-gray-700 hover:bg-gray-50"
+      }`}
+    >
+      <Field
+        type="radio"
+        name="imageGenType"
+        value="ai"
+        checked={values.imageGenType === "ai"}
+        onChange={() => setFieldValue("imageGenType", "ai")}
+        className="text-orange-500 focus:ring-orange-500"
+      />
+      AI
+    </label>
+  </div>
+</div>
 
-                     onClick={(e) => {
-                      e.preventDefault();
-                      toast("🚀 AI image generation is coming soon!");
-                    }}
-                  >
-                    <Field
-                      type="radio"
-                      name="imageGenType"
-                      value="ai"
-                      checked={values.imageGenType === "ai"}
-                      onChange={() => setFieldValue("imageGenType", "ai")}
-                      className="text-orange-500 focus:ring-orange-500"
-                    />
-                    AI
-                  </label>
-                </div>
-              </div>
 
               {/* Slide Selector */}
               {isLoading ? (

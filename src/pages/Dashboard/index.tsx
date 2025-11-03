@@ -298,7 +298,7 @@ const Dashboard = () => {
             </section>
             
          {/* Recents Section */}
-<div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
   {isLoadingGeneratedDecks ? (
     <p className="text-gray-500 text-sm col-span-full text-center py-8">Loading your decks...</p>
   ) : generated_decks?.data?.decks?.length > 0 ? (
