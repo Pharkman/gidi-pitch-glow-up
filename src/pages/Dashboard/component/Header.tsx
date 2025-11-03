@@ -21,6 +21,7 @@ import GidiLogo from "@/assets/Frame 481473.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useGetUser } from "@/lib/query";
+import NotificationButton from "@/pages/Notification/NotificationButton";
 
 
 const DashboardHeader = ({
@@ -114,10 +115,7 @@ const DashboardHeader = ({
 </div>
 
           {/* Notification Bell */}
-          <button className=" sm:flex items-center justify-center p-2 rounded-full bg-gray-50 hover:bg-[#FFF3EF] hover:text-[#FF5619] border border-gray-200 transition-all duration-300 relative">
-            <Bell className="h-5 w-5" />
-            <span className="absolute top-0 right-1 block h-2.5 w-2.5 bg-[#FF5619] rounded-full"></span>
-          </button>
+          <NotificationButton />
 
           {/* USER MENU */}
           <DropdownMenu>
@@ -156,7 +154,7 @@ const DashboardHeader = ({
               >
                 Settings
               </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-gray-50">
+              <DropdownMenuItem className="hover:bg-gray-50" onClick={() => navigate("/help")}>
                 Help
               </DropdownMenuItem>
               <Separator />

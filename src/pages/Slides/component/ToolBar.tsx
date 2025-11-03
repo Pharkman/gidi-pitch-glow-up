@@ -131,27 +131,27 @@ export default function Toolbar() {
 
   <DropdownMenuContent
     align="end"
-    className="w-48 rounded-lg mt-4 shadow-lg border border-gray-100 bg-primary space-y-3 p-4 text-white"
+    className="w-48  mt-3 shadow-lg border border-gray-100 bg-gray-200 space-y-3 p-4 text-black"
   >
     <DropdownMenuItem
-      onClick={() => navigate("/profile")}
-      className="cursor-pointer"
+      onClick={() => navigate("/settings")}
+      className="cursor-pointer border-none outline-none hover:bg-primary hover:p-2 rounded-md"
     >
       Profile
     </DropdownMenuItem>
     <DropdownMenuItem
-      onClick={() => navigate("/settings")}
-      className="cursor-pointer"
+      onClick={() => navigate("/profile")}
+      className="cursor-pointer border-none outline-none hover:bg-primary hover:p-2 rounded-md hover:outline"
     >
       Settings
     </DropdownMenuItem>
-    <DropdownMenuItem className="cursor-pointer">
+    <DropdownMenuItem className="cursor-pointer border-none outline-none hover:bg-primary hover:p-2 rounded-md" onClick={() => navigate("/help")}>
       Help
     </DropdownMenuItem>
     <Separator className="" />
     <DropdownMenuItem
       onClick={handleLogout}
-      className="hover:bg-red-500"
+      className="hover:bg-primary hover:p-2 cursor-pointer"
     >
       {isLoggingOut ? "Logging out..." : "Sign out"}
     </DropdownMenuItem>
