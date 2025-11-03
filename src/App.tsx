@@ -56,7 +56,7 @@ import Yc from "./pages/Yc/Yc";
 import TokenPurchase from "./pages/Payment/CryptoPayment/TokenPurchase";
 import PurchaseTokens from "./pages/Payment/paystackPayment/paystack";
 import Payment from "./pages/Payment/Payment";
-import AiCoach from "./pages/AiCoach/AiCoach";
+// import AiCoach from "./pages/AiCoach/AiCoach";
 
 
 
@@ -172,7 +172,7 @@ function AppRoutes() {
         <Route path="/resume" element={<ProtectedRoute><Resume /></ProtectedRoute>} />
         <Route path="/bus-modal" element={<ProtectedRoute><BusModel /></ProtectedRoute>} />
         <Route path="/yc" element={<ProtectedRoute><Yc /></ProtectedRoute>} />
-        <Route path="/ai-coach" element={<ProtectedRoute><AiCoach /></ProtectedRoute>} />
+        {/* <Route path="/ai-coach" element={<ProtectedRoute><AiCoach /></ProtectedRoute>} /> */}
         <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
         <Route path="/crypto-payment" element={<ProtectedRoute><TokenPurchase /></ProtectedRoute>} />
         <Route path="/paystack-payment" element={<ProtectedRoute><PurchaseTokens /></ProtectedRoute>} />
