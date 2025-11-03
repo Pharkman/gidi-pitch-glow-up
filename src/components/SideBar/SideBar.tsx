@@ -190,7 +190,7 @@ export default function Sidebar({
                       className={`w-full justify-start flex items-center gap-3 leading-[100%] text-[#858585] text-sm font-medium transition-all duration-200  rounded-[8px] p-[12px]
                   ${
                     item.active
-                      ? "bg-[#FFF1EC] text-[#FF5A1F] p-[12px]"
+                      ? "bg-[#FFF1EC] text-[#FF5A1F] p-[12px] hover:text-white"
                       : "bg-transparent text-[#858585] hover:text-white"
                   }
                   ${!item.available ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -210,9 +210,31 @@ export default function Sidebar({
                 ))}
               </nav>
             </div>
-            <div className="p-4">
-              <InviteButton />
-            </div>
+                     <div className="p-5 mt-36">
+  {/* Invite Button */}
+  <div className="w-full ">
+    <InviteButton />
+  </div>
+  <hr />
+  <button
+    type="button"
+    onClick={() => navigate("/payment")}
+    className="
+
+    mt-4
+      flex items-center justify-center gap-2
+      w-full py-3 px-4 rounded-xl
+      bg-primary
+      text-white font-semibold text-sm
+      shadow-md hover:shadow-lg hover:scale-[1.02]
+      active:scale-95 transition-all duration-200
+    "
+  >
+    <FiCreditCard className="w-4 h-4" />
+    Purchase Tokens
+  </button>
+</div>
+
 
             <hr />
 

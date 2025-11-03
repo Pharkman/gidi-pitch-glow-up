@@ -32,13 +32,13 @@ const Help = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0F1114] to-[#1A1C1F] text-gray-100 p-8 font-[Geist]">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#0F1114] to-[#1A1C1F] text-gray-100 p-8 max-sm:p-4 font-[Geist]">
+      <div className="max-w-6xl mx-auto space-y-6 max-sm:max-w-xl">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl font-semibold text-white"
+          className="text-2xl sm:text-4xl font-semibold text-white max-sm:mt-2"
         >
           Help & Getting Started
         </motion.h1>
