@@ -172,7 +172,7 @@ function AppRoutes() {
         <Route path="/resume" element={<ProtectedRoute><Resume /></ProtectedRoute>} />
         <Route path="/bus-modal" element={<ProtectedRoute><BusModel /></ProtectedRoute>} />
         <Route path="/yc" element={<ProtectedRoute><Yc /></ProtectedRoute>} />
-        <Route path="/ai-coach" element={<ProtectedRoute><AiCoach /></ProtectedRoute>} />
+        {/* <Route path="/ai-coach" element={<ProtectedRoute><AiCoach /></ProtectedRoute>} /> */}
         <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
         <Route path="/crypto-payment" element={<ProtectedRoute><TokenPurchase /></ProtectedRoute>} />
         <Route path="/paystack-payment" element={<ProtectedRoute><PurchaseTokens /></ProtectedRoute>} />
