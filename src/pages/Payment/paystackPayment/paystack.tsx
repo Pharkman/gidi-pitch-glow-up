@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import PaystackPop from "@paystack/inline-js";
+import { useNavigate } from "react-router-dom";
 import { useGetUser } from "@/lib/query";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const tokenPriceUSD = 0.015;
 const exchangeRate = import.meta.env.VITE_USD_NGN_EXCHANGE_RATE || 1500;
 
-// 🔹 Helper to extract user email safely
+// 🔹 Helper to safely extract user email
 const getUserEmail = (user) => {
   if (!user) return null;
-  // Depending on your API shape:
   return user.email || user?.data?.email || user?.user?.email || null;
 };
 
+// 🔸 Paystack Payment Function
 export const purchaseTokensWithPaystack = async ({
   quantity,
   user,
   setIsPurchasing,
+  navigate,
 }) => {
   const email = getUserEmail(user);
 
@@ -29,7 +31,8 @@ export const purchaseTokensWithPaystack = async ({
   try {
     setIsPurchasing(true);
 
-    if (quantity < 20) throw new Error("You can only purchase a minimum of 20 tokens.");
+    if (quantity < 20)
+      throw new Error("You can only purchase a minimum of 20 tokens.");
 
     const amount = quantity * tokenPriceUSD; // USD total
     const nairaAmount = amount * exchangeRate;
@@ -53,7 +56,15 @@ export const purchaseTokensWithPaystack = async ({
           });
 
           const result = await response.json();
+
+          if (!response.ok) throw new Error(result.message || "Purchase failed");
+
           toast.success(result.message || "Tokens purchased successfully!");
+
+          // ✅ Navigate to dashboard after success
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 1500);
         } catch (error) {
           toast.error(error.message || "Error confirming payment.");
         } finally {
@@ -79,6 +90,7 @@ export const purchaseTokensWithPaystack = async ({
   }
 };
 
+// 🔹 PurchaseTokens Component
 const PurchaseTokens = () => {
   const [quantity, setQuantity] = useState(20);
   const [usdAmount, setUsdAmount] = useState("0.00");
@@ -86,6 +98,7 @@ const PurchaseTokens = () => {
   const [isPurchasing, setIsPurchasing] = useState(false);
 
   const { data: user, isLoading, isError } = useGetUser();
+  const navigate = useNavigate();
 
   const email = getUserEmail(user);
 
@@ -108,7 +121,7 @@ const PurchaseTokens = () => {
     if (quantity > 10000) return toast.error("Maximum 10,000 tokens allowed.");
     if (!email) return toast.error("Unable to fetch user email. Please log in again.");
 
-    await purchaseTokensWithPaystack({ quantity, user, setIsPurchasing });
+    await purchaseTokensWithPaystack({ quantity, user, setIsPurchasing, navigate });
   };
 
   if (isLoading) {
@@ -132,12 +145,13 @@ const PurchaseTokens = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA] px-4 py-10">
       <div className="bg-white rounded-2xl shadow-lg p-8 max-w-xl w-full border border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4 ">
-          Purchase Tokens
-        </h1>
-        <p className="text-gray-600  mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">Purchase Tokens</h1>
+        <p className="text-gray-600 mb-6">
           Buy tokens to access premium features.
-          <br /> <p className="text-sm text-gray-500 mt-2"> Minimum 20, Maximum 10,000 tokens.</p>
+          <br />
+          <span className="text-sm text-gray-500 mt-2 block">
+            Minimum 20, Maximum 10,000 tokens.
+          </span>
         </p>
 
         {/* Quantity Input */}

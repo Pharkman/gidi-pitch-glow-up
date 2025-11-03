@@ -747,3 +747,25 @@ export const useDeleteDeneratedDeck = () => {
     },
   });
 };
+
+
+export const useGetTransaction = ({ page = 1, pageSize = 10 } = {}) => {
+  return useQuery({
+    queryKey: ["GET_TRANSACTIONS", page, pageSize],
+    queryFn: async () => {
+      const url = new URL(`${BASE_URL}/tokens/transactions`);
+      url.searchParams.append("page", page);
+      url.searchParams.append("pageSize", pageSize);
+
+      const res = await fetch(url.toString(), {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch transactions");
+      return res.json();
+    },
+    keepPreviousData: true, // 👈 this keeps old data when fetching next page
+  });
+};

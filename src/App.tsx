@@ -56,6 +56,8 @@ import Yc from "./pages/Yc/Yc";
 import TokenPurchase from "./pages/Payment/CryptoPayment/TokenPurchase";
 import PurchaseTokens from "./pages/Payment/paystackPayment/paystack";
 import Payment from "./pages/Payment/Payment";
+import Notification from "./pages/Notification/Notification";
+import Help from "./pages/Help/Help";
 // import AiCoach from "./pages/AiCoach/AiCoach";
 
 
@@ -177,6 +179,10 @@ function AppRoutes() {
         <Route path="/crypto-payment" element={<ProtectedRoute><TokenPurchase /></ProtectedRoute>} />
         <Route path="/paystack-payment" element={<ProtectedRoute><PurchaseTokens /></ProtectedRoute>} />
         {/* <Route path="/paystack-payment" element={<ProtectedRoute><PurchaseTokensWithPaystack /></ProtectedRoute>} /> */}
+
+        {/* Notification  */}
+        <Route path="/notification" element={<ProtectedRoute><Notification /></ProtectedRoute>} />
+        <Route path="/help" element={<ProtectedRoute><Help /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
