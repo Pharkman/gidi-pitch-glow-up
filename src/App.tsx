@@ -56,7 +56,7 @@ import Yc from "./pages/Yc/Yc";
 import TokenPurchase from "./pages/Payment/CryptoPayment/TokenPurchase";
 import PurchaseTokens from "./pages/Payment/paystackPayment/paystack";
 import Payment from "./pages/Payment/Payment";
-import AiCoach from "./pages/AiCoach/AiCoach";
+// import AiCoach from "./pages/AiCoach/AiCoach";
 
 
 
