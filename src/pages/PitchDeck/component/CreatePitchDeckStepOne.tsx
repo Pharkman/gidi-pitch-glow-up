@@ -158,7 +158,7 @@ export default function CreatePitchDeckStepOne({ onClose }) {
 
                 <button
                   type="submit"
-                  className="bg-orange-500 text-white text-sm font-semibold px-6 py-3 rounded-xl hover:bg-orange-600 transition shadow-md"
+                  className="bg-[#FF5619] text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-orange-600 transition"
                 >
                   Next
                 </button>

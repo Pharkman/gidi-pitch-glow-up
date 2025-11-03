@@ -2,9 +2,11 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetDeckProgress } from "@/lib/query";
+import audio_loading from '../../../../public/audio/lofi-study-calm-peaceful-chill-hop-112191.mp3'
+
 
 const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
-  const deckId = localStorage.getItem("deckId");
+   const deckId = localStorage.getItem("deckId");
   const { data: deckProgress, isFetching, refetch } = useGetDeckProgress(deckId || "");
 
   const progress = deckProgress?.data?.progress ?? 0;
@@ -16,26 +18,48 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
 
   const isCompleted = progress >= 100 || status === "completed";
 
-  // Keep polling until deck is ready
+  // 🎵 Add: play background music while loading
+  React.useEffect(() => {
+    let audio: HTMLAudioElement | null = null;
+
+    if (!isCompleted) {
+      // Replace the URL with your preferred subtle/subtle ambient track
+      audio = new Audio(audio_loading);
+      audio.loop = true;
+      audio.volume = 0.01; // low subtle volume
+      audio.play().catch(() => {
+        console.warn("Autoplay blocked, will start when user interacts.");
+      });
+    }
+
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [isCompleted]);
+  // 🎵 End of music effect
+
+  // Poll until deck is ready
   React.useEffect(() => {
     if (!isCompleted) {
       const interval = setInterval(() => {
         refetch();
-      }, 3000); // refresh every 3s
+      }, 3000);
       return () => clearInterval(interval);
     }
   }, [isCompleted, refetch]);
 
-  // Trigger onComplete when ready
+  // Trigger onComplete
   React.useEffect(() => {
     if (isCompleted) {
       const timer = setTimeout(() => onComplete(), 2500);
       return () => clearTimeout(timer);
     }
   }, [isCompleted, onComplete]);
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 font-[Geist] text-gray-800 p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900/80 via-black/60 to-gray-900/80 backdrop-blur-sm font-[Geist] text-gray-800 p-6">
       <AnimatePresence mode="wait">
         {isFetching ? (
           <motion.div
@@ -119,7 +143,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
-              className="text-gray-700 font-medium text-lg max-w-sm max-sm:text-base"
+              className="text-white font-medium text-lg max-w-sm max-sm:text-base"
             >
               {activityStatus}
             </motion.p>
@@ -174,7 +198,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 0.5 }}
-    className="text-2xl font-semibold text-gray-900"
+    className="text-2xl font-semibold text-white"
   >
     Deck created successfully!
   </motion.h2>
@@ -184,7 +208,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
     initial={{ opacity: 0, y: 5 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 0.7 }}
-    className="text-gray-500 text-sm"
+    className="text-white text-sm"
   >
     Your pitch deck is now ready to view.
   </motion.p>
