@@ -26,7 +26,7 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
       <div className="flex items-center gap-2 px-5 py-4 border-b border-gray-100">
         {/* <Home className="text-gray-700" size={18} /> */}
         {/* <h1 className="text-[15px] font-medium text-gray-800">Social Startup</h1> */}
-        <img src={GidiLogo} alt="GidiPitch Logo" className="w-[100px] h-[30px]" onClick={() => navigate('/dashboard')}/>
+        <img src={GidiLogo} alt="GidiPitch Logo" className="w-[140px] cursor-pointer h-[30px]" onClick={() => navigate('/dashboard')}/>
       </div>
 
       {/* Slides list */}
