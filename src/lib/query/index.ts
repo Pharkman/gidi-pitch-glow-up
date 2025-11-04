@@ -769,3 +769,21 @@ export const useGetTransaction = ({ page = 1, pageSize = 10 } = {}) => {
     keepPreviousData: true, // 👈 this keeps old data when fetching next page
   });
 };
+
+
+export const useSearchDeck = (searchValue) => {
+  return useQuery({
+    queryKey: ["SEARCH_DECK", searchValue],
+    queryFn: async () => {
+      if (!searchValue) return [];
+      const res = await fetch(`${BASE_URL}/pitch/deck/search?q=${searchValue}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Failed to search decks");
+      return res.json();
+    },
+    enabled: !!searchValue, // only run when there's a search value
+  });
+};
