@@ -24,7 +24,7 @@ import freepik_build3 from "@/assets/freepik_buld3.png"
 import freepik_build4 from "@/assets/freepik_build4.png"
 import freepik_build5 from "@/assets/freepik_build5.png"
 import freepik_build6 from "@/assets/freepik_build6.png"
-import { getUserDetails, logout, useDeleteDeneratedDeck, useGetGeneratedDecks, useGetTokenFromQuery, useGetUser } from '@/lib/query';
+import { getUserDetails, logout, useDeleteDeneratedDeck, useGetGeneratedDecks, useGetTokenFromQuery, useGetUser, useSearchDeck } from '@/lib/query';
 import { useSearchParams } from 'react-router-dom';
 import DashboardHeader from './component/Header';
 import Sidebar from '@/components/SideBar/SideBar';
@@ -35,6 +35,7 @@ import GreetingHeader from '@/components/Greeting/GreetingHeader';
 import { FiTrash2 } from 'react-icons/fi';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'react-toastify';
+import Spinner from '@/components/spinner';
 // Reusable ToolCard component
 const ToolCard = ({
   image,
@@ -138,7 +139,9 @@ const ToolCard = ({
 
 
 const Dashboard = () => {
-  const {data:user_data, isLoading} = useGetUser();
+  const {data:user_data} = useGetUser();
+  const [searchValue, setSearchValue] = useState("");
+  const { data: searchResults, isLoading: isSearching } = useSearchDeck(searchValue);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [selectedTool, setSelectedTool] = useState('');
@@ -254,7 +257,7 @@ const Dashboard = () => {
   </div>
 
   <div>
-     <SearchBar />
+  <SearchBar onSearch={(term) => setSearchValue(term)} />
   </div>
   </div>
 
@@ -299,37 +302,55 @@ const Dashboard = () => {
             
          {/* Recents Section */}
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-  {isLoadingGeneratedDecks ? (
-    <p className="text-gray-500 text-sm col-span-full text-center py-8">Loading your decks...</p>
-  ) : generated_decks?.data?.decks?.length > 0 ? (
-    generated_decks.data.decks.map((deck) => (
-      <div key={deck._id} className="relative">
-  <ToolCard
-  key={deck._id}
-  variant="project"
-  image={
-    deck?.slides?.length > 0 && deck?.slides[0]?.imageUrl
-      ? deck.slides[0].imageUrl
-      : freePik_build1
-  }
-  label={deck.startupName || "Untitled Deck"}
-  subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
-  onClick={deck._id}
-/>
-</div>
+  {isSearching ? (
+  <p className="text-gray-500 text-sm col-span-full text-center py-8">
+      <div className='flex justify-center items-center mx-auto'>
+     <Spinner />
+  </div>
+  </p>
+) : searchValue ? (
+  searchResults?.data?.decks?.length > 0 ? (
+    searchResults.data.decks.map((deck) => (
+      <ToolCard
+        key={deck._id}
+        variant="project"
+        image={deck?.slides?.[0]?.imageUrl || freePik_build1}
+        label={deck.startupName || "Untitled Deck"}
+        subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
+        onClick={deck._id}
+      />
     ))
   ) : (
-    <p className="text-gray-500  col-span-full text-center py-8">
-
-
-          <div className='flex flex-col items-center justify-center gap-3 mx-auto'>
-       <img src={noDecks} alt='no deck'/>
-       <p className='text-[#1D1D1D] font-semibold leading-[100%]'>No Recent Work Yet</p>
-       <p className='text-[#5D5D5D] text-center text-[16px] font-[400] leading-[100%] '>Your recent projects will appear here once you create a pitch deck or resume.</p>
-             {/* No decks created yet. Click <span className="text-[#FF5619] font-medium cursor-pointer" onClick={() => setShowPitchDeckModal(true)}>here</span> to create one. */}
-    </div>
+    <p className="text-gray-500 text-center col-span-full py-8">
+      No decks found for “{searchValue}”
     </p>
-  )}
+  )
+) : isLoadingGeneratedDecks ? (
+   <p className="text-gray-500 text-sm col-span-full text-center py-8">
+      <div className='flex justify-center items-center mx-auto'>
+     <Spinner />
+  </div>
+  </p>
+) : generated_decks?.data?.decks?.length > 0 ? (
+  generated_decks.data.decks.map((deck) => (
+    <ToolCard
+      key={deck._id}
+      variant="project"
+      image={deck?.slides?.[0]?.imageUrl || freePik_build1}
+      label={deck.startupName || "Untitled Deck"}
+      subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
+      onClick={deck._id}
+    />
+  ))
+) : (
+  <div className="text-center col-span-full py-8">
+    <img src={noDecks} alt="No decks" className="mx-auto mb-4" />
+    <p className="font-semibold text-[#1D1D1D]">No Recent Work Yet</p>
+    <p className="text-[#5D5D5D] text-sm">
+      Your recent projects will appear here once you create a pitch deck or resume.
+    </p>
+  </div>
+)}
 </div>
 
 
