@@ -1,19 +1,15 @@
-import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
-import { Home, CheckCircle } from "lucide-react"; // 👈 Import CheckCircle
-import GidiLogo from '../../../../public/assets/Gidipitch Logo.svg'
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { CheckCircle } from "lucide-react";
 import { FiArrowLeft } from "react-icons/fi";
-
-// Helper function to get the hex color from a Tailwind class
-const getHexColor = (tailwindClass) => {
-  return tailwindClass || '#6366f1';
-};
+import { useNavigate } from "react-router-dom";
+import GidiLogo from "../../../../public/assets/Gidipitch Logo.svg";
 
 export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, brandKit }) {
   const navigate = useNavigate();
-  const handleClick = (index) => {
-    onSlideSelect(index);
-  };
+  const scrollContainerRef = useRef(null);
+  const activeItemRefs = useRef([]);
+
+  const getHexColor = (tailwindClass) => tailwindClass || "#6366f1";
 
   const activeSlideBgClass = brandKit?.background || "bg-primary";
   const activeSlidetitleClass = brandKit?.title || "bg-primary";
@@ -21,52 +17,70 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
   const activeSlidetitleHex = getHexColor(activeSlidetitleClass);
   const activeRingHex = getHexColor(activeSlideBgClass);
 
+  // 🔥 Automatically scroll sidebar to keep active slide visible
+  useEffect(() => {
+    const activeEl = activeItemRefs.current[activeIndex];
+    const container = scrollContainerRef.current;
+    if (activeEl && container) {
+      const elTop = activeEl.offsetTop;
+      const elHeight = activeEl.offsetHeight;
+      const containerHeight = container.offsetHeight;
+      const scrollTop = container.scrollTop;
+
+      // Only scroll if element is not fully visible
+      if (elTop < scrollTop || elTop + elHeight > scrollTop + containerHeight) {
+        container.scrollTo({
+          top: elTop - containerHeight / 2 + elHeight / 2,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [activeIndex]);
+
   return (
     <aside className="w-64 bg-white border-r border-gray-200 h-screen flex flex-col max-sm:hidden">
       {/* Header */}
-    <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
-  {/* Back button */}
-  <button
-    onClick={() => navigate('/dashboard')}
-    className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
-  >
-    <FiArrowLeft size={20} className="text-gray-700" />
-  </button>
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="flex items-center justify-center p-2 rounded-full hover:bg-gray-200 bg-gray-100 transition-colors duration-200"
+        >
+          <FiArrowLeft size={20} className="text-gray-700" />
+        </button>
 
-  {/* Logo */}
-  <img
-    src={GidiLogo}
-    alt="GidiPitch Logo"
-    className="w-[140px] cursor-pointer h-[30px]"
-    onClick={() => navigate("/dashboard")}
-  />
-</div>
+        <img
+          src={GidiLogo}
+          alt="GidiPitch Logo"
+          className="w-[140px] cursor-pointer h-[30px]"
+          onClick={() => navigate("/dashboard")}
+        />
+      </div>
 
       {/* Slides list */}
-      <div className="flex-1 overflow-y-auto py-4 space-y-4 px-5 scrollbar-hide">
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 overflow-y-auto py-4 space-y-4 px-5 scrollbar-hide"
+      >
         {slides.map((slide, i) => (
           <div
             key={i}
-            onClick={() => handleClick(i)}
-            // Ensure 'relative' is part of the className which it already is
+            ref={(el) => (activeItemRefs.current[i] = el)}
+            onClick={() => onSlideSelect(i)}
             className={`group relative cursor-pointer transition-all duration-300 overflow-hidden ${
               activeIndex === i
-                // Removed the hardcoded ring color here since we use inline style for ring/shadow
-                ? "ring-2 shadow-lg border border-1" 
+                ? "ring-2 shadow-lg border border-1"
                 : "hover:ring-1 hover:ring-gray-300"
             }`}
-
             style={
               activeIndex === i
                 ? { borderColor: activeRingHex, boxShadow: `0 0 0 2px ${activeRingHex}` }
                 : {}
             }
           >
-            {/* 👇 CHECK MARK ICON ADDED HERE 👇 */}
             {activeIndex === i && (
-              <div 
+              <div
                 className="absolute top-[-8px] right-[-8px] z-10 rounded-full bg-white p-[2px]"
-                style={{ color: activeRingHex, boxShadow: `0 0 0 2px ${activeRingHex}` }} // Border/shadow for the white circle
+                style={{ color: activeRingHex, boxShadow: `0 0 0 2px ${activeRingHex}` }}
               >
                 <CheckCircle size={20} fill={activeRingHex} stroke="white" />
               </div>
@@ -76,7 +90,7 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
               <div className="w-[50%] h-full overflow-hidden flex-shrink-0">
                 {slide.images?.[0]?.url ? (
                   <img
-                    src={slide.images?.[0]?.url}
+                    src={slide.images[0].url}
                     alt={slide.title || ""}
                     className="object-cover w-full h-full"
                   />
@@ -87,9 +101,8 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
                 )}
               </div>
 
-              {/* Apply dynamic color using inline style */}
               <div
-                className={`flex-1 flex flex-col justify-center h-full overflow-hidden pr-2 text-center px-2 py-2 shadow-sm`}
+                className="flex-1 flex flex-col justify-center h-full overflow-hidden pr-2 text-center px-2 py-2 shadow-sm"
                 style={
                   activeIndex === i
                     ? { backgroundColor: activeSlideBgHex }
@@ -97,10 +110,10 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
                 }
               >
                 <h3 className="text-sm font-semibold text-white truncate">
-              <p 
-                       style={{ color: activeSlidetitleHex  }}
-              >    {slide.title || `Slide ${i + 1}`}</p>
-                  {slide.bullets && slide.bullets.length > 0 && (
+                  <p style={{ color: activeSlidetitleHex }}>
+                    {slide.title || `Slide ${i + 1}`}
+                  </p>
+                  {slide.bullets?.length > 0 && (
                     <span className="text-xs text-white font-normal ml-1 mt-1 line-clamp-2 truncate">
                       {slide.bullets[0]}
                     </span>

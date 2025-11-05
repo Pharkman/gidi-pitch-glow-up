@@ -10,7 +10,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
   const [tokenQuantity, setTokenQuantity] = useState(20); // default min
-  const [totalCost, setTotalCost] = useState(0.2); // 20 * 0.01
+  const [totalCost, setTotalCost] = useState(0.3); // 20 * 0.01
 
   const connectWallet = async () => {
     setIsConnecting(true);
@@ -73,7 +73,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
         const receipt = await tx.wait();
 
         setStatus("Payment confirmed! Completing purchase...");
-        const finalResponse = await fetch(`${BASE_URL}/tokens/purchase`, {
+        const finalResponse = await fetch(`${BASE_URL}/tokens/purchase/crypto`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -108,14 +108,14 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
     const value = Number(e.target.value);
     if (value >= 20 && value <= 10000) {
       setTokenQuantity(value);
-      setTotalCost(value * 0.01);
+      setTotalCost(value * 0.015);
     }
   };
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4">
-      <div className="max-w-lg w-full bg-white/90 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl p-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.05)]">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-2 ">
+      <div className="max-w-2xl w-full bg-white/90 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl p-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.05)]">
+        <h2 className="text-2xl font-extrabold text-gray-900 mb-2 ">
           Purchase Tokens
         </h2>
         <p className="text-gray-600  mb-6">

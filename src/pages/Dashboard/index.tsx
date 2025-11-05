@@ -247,11 +247,11 @@ const Dashboard = () => {
       <GreetingHeader username={username} />
       <p
         className="
-          text-[#858585] text-[14px] md:text-[14px]  
+          text-[#858585] text-[15px] md:text-[15px]  
           max-sm:text-[13px] max-sm:leading-snug
         "
       >
-        Ready to  your next <span className="text-[16px] font-medium">investor-ready</span> document?
+        Ready to  your next <span className="">investor-ready</span> document?
       </p>
     </div>
   </div>
