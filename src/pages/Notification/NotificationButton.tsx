@@ -13,25 +13,32 @@ import Notification from "@/pages/Notification/Notification";
 const NotificationButton = () => {
   const { data, isLoading } = useGetTransaction({ page: 1, pageSize: 10 });
   const transactions = data?.data?.transactions || [];
-  const [hasNewNotifications, setHasNewNotifications] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     if (!isLoading && transactions.length > 0) {
       const lastViewed = localStorage.getItem("lastNotificationViewedAt");
-      const latestCreatedAt = transactions[0]?.createdAt;
+      let newCount = 0;
 
-      if (!lastViewed || new Date(latestCreatedAt) > new Date(lastViewed)) {
-        setHasNewNotifications(true);
+      if (!lastViewed) {
+        // If user has never viewed notifications, count all
+        newCount = transactions.length;
       } else {
-        setHasNewNotifications(false);
+        const lastViewedDate = new Date(lastViewed);
+        newCount = transactions.filter(
+          (txn) => new Date(txn.createdAt) > lastViewedDate
+        ).length;
       }
+
+      setUnreadCount(newCount);
     }
   }, [transactions, isLoading]);
 
   const handleOpenChange = (open) => {
     if (!open) {
+      // Mark all as viewed when closing the sheet
       localStorage.setItem("lastNotificationViewedAt", new Date().toISOString());
-      setHasNewNotifications(false);
+      setUnreadCount(0);
     }
   };
 
@@ -39,11 +46,13 @@ const NotificationButton = () => {
     <Sheet onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
         <button
-          className="sm:flex items-center justify-center p-2 rounded-full bg-gray-50 hover:bg-[#FFF3EF] hover:text-[#FF5619] border border-gray-200 transition-all duration-300 relative"
+          className="relative sm:flex items-center justify-center p-2 rounded-full bg-gray-50 hover:bg-[#FFF3EF] hover:text-[#FF5619] border border-gray-200 transition-all duration-300"
         >
           <Bell className="h-5 w-5" />
-          {hasNewNotifications && (
-            <span className="absolute top-0 right-1 block h-2.5 w-2.5 bg-[#FF5619] rounded-full"></span>
+          {unreadCount > 0 && (
+            <span className="absolute -top-1 -right-1 flex items-center justify-center bg-[#FF5619] text-white text-[10px] font-semibold rounded-full w-4 h-4 sm:w-5 sm:h-5">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </span>
           )}
         </button>
       </SheetTrigger>
@@ -58,7 +67,7 @@ const NotificationButton = () => {
           </SheetTitle>
         </SheetHeader>
 
-        {/* 👇 Notification fills the entire space, no side padding */}
+        {/* 👇 Full-height notification content */}
         <div className="h-[calc(100%-64px)] overflow-y-auto">
           <Notification />
         </div>
