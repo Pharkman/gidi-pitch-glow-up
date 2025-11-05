@@ -50,6 +50,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
       const response = await fetch(`${BASE_URL}/tokens/purchase/crypto`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           amount: tokenQuantity,
           walletAddress,
@@ -75,6 +76,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
         setStatus("Payment confirmed! Completing purchase...");
         const finalResponse = await fetch(`${BASE_URL}/tokens/purchase/crypto`, {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             "X-Payment": receipt.transactionHash,
