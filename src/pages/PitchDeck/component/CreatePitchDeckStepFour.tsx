@@ -37,7 +37,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-lg font-extrabold text-gray-900">Create Pitch Deck</h2>
-          <button onClick={onClose} className="text-gray-700 hover:text-gray-900 transition">
+          <button onClick={() => navigate("/dashboard")} className="text-gray-700 hover:text-gray-900 transition">
             <IoClose size={22} />
           </button>
         </div>
