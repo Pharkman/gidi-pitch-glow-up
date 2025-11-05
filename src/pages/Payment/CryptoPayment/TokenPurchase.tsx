@@ -47,7 +47,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
       const signer = provider.getSigner();
 
       setStatus("Requesting payment details...");
-      const response = await fetch(`${BASE_URL}/tokens/purchase`, {
+      const response = await fetch(`${BASE_URL}/tokens/purchase/crypto`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
