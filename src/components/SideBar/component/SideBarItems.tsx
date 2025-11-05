@@ -28,9 +28,9 @@ import Coach from '../../../../public/assets/Robot.png'
 export const sidebarItems = [
   { name: 'Dashboard', img: Home, active: true, available: true, path: '/' },
   { name: 'Pitch Deck Generator', img: Presentaion, active: false, available: true, path: '/pitch-deck' },
+  { name: 'AI Pitch Practice', img: Coach, active: false, available: true, path: '/ai-coach' },
+  { name: 'Business Proposal', img: Market, active: false, available: true, path: '/bus-modal' },
   { name: 'Resume Builder', img: Resume, active: false, available: true, path: '/resume' },
   { name: 'YC Assistant', img: Yc, active: false, available: true, path: '/yc' },
-  { name: 'Business Proposal', img: Market, active: false, available: true, path: '/bus-modal' },
-  { name: 'AI Coach', img: Coach, active: false, available: true, path: '/ai-coach' },
 ];
 

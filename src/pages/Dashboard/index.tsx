@@ -264,10 +264,10 @@ const Dashboard = () => {
             {/* Tools Grid */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 max-sm:gap-4 mb-8">
               <ToolCard image={FreePik2} label="Pitch Deck" onClick={() => handleCreateNew('Pitch Deck')} />
+              <ToolCard image={FreePiks5} label="AI Pitch Practice" onClick={() => handleCreateNew('AI Picth Practice')} disabled />
+              <ToolCard image={FreePiks4} label="Business Proposal" onClick={() => handleCreateNew('Business Proposal')} disabled />
               <ToolCard image={FreePik3} label="Resume Builder" onClick={() => handleCreateNew('Resume')} disabled />
               <ToolCard image={Freepik1} label="YC Assistant" onClick={() => handleCreateNew('YC Assistant')} disabled />
-              <ToolCard image={FreePiks4} label="Business Proposal" onClick={() => handleCreateNew('Business Proposal')} disabled />
-              <ToolCard image={FreePiks5} label="AI Coach" onClick={() => handleCreateNew('AI Coach')} disabled />
             </div>
 
 
