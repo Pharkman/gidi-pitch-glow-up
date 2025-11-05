@@ -129,7 +129,7 @@ export default function Sidebar({
             <div className="">
   {/* Invite Button */}
   <div className="w-full">
-    <InviteButton />
+    {/* <InviteButton /> */}
   </div>
   <hr />
   <button

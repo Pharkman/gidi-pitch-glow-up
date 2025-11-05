@@ -16,7 +16,6 @@ const Notification = () => {
   const userName = userData?.user?.firstname || "there";
   const pagination = data?.data?.pagination;
 
-  // Merge transactions on new page load
   useEffect(() => {
     if (data?.data?.transactions) {
       setTransactions((prev) => [
@@ -28,7 +27,6 @@ const Notification = () => {
     }
   }, [data]);
 
-  // Dynamic greeting
   const hours = new Date().getHours();
   let greeting = "Hello";
   if (hours < 12) greeting = "Good morning";
@@ -42,37 +40,36 @@ const Notification = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FFF7F4] via-white to-[#FFEDE6] text-gray-800">
+    <div className="h-full overflow-y-auto bg-gradient-to-b from-[#FFF9F6] via-white to-[#FFF3EE] text-gray-800">
       <motion.div
-        initial={{ opacity: 0, y: 25 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="max-w-3xl mx-auto w-full flex flex-col px-6 py-10"
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="flex flex-col px-4 sm:px-5 py-6"
       >
         {/* Greeting Section */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-6">
           <motion.div
-            initial={{ scale: 0.9 }}
+            initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center justify-center gap-2 mb-4"
+            transition={{ duration: 0.4 }}
+            className="flex items-center justify-center gap-2 mb-3"
           >
-            <div className="p-3 bg-[#FFF1EB] rounded-full border border-[#FFD9CC] shadow-sm">
-              <FiBell className="text-[#FF5619] text-2xl" />
+            <div className="p-2.5 bg-[#FFF1EB] rounded-full border border-[#FFD9CC] shadow-sm">
+              <FiBell className="text-[#FF5619] text-xl" />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900">
+            <h1 className="text-lg font-semibold text-gray-900 capitalize">
               {greeting}, {userName.split("@")[0]} 👋
             </h1>
           </motion.div>
 
-          <p className="text-gray-600 text-[15px] sm:text-[16px] leading-relaxed">
-            Welcome to your{" "}
-            <span className="font-medium text-[#FF5619]">Notifications</span>{" "}
-            dashboard.  
-            Stay on top of your latest activities and token updates.
+          <p className="text-gray-600 text-sm leading-relaxed max-w-sm mx-auto">
+            Stay on top of your latest{" "}
+            <span className="font-medium text-[#FF5619]">token</span> updates and
+            activities.
           </p>
 
-          <div className="w-20 h-[3px] mx-auto mt-4 rounded-full bg-gradient-to-r from-[#FF7442] to-[#FF5619]" />
+          <div className="w-16 h-[3px] mx-auto mt-3 rounded-full bg-gradient-to-r from-[#FF7442] to-[#FF5619]" />
         </div>
 
         {/* Transaction Section */}
@@ -82,44 +79,44 @@ const Notification = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center text-gray-500 mt-10"
+            className="text-center text-gray-500 mt-8"
           >
-            <p className="text-lg font-medium">No recent activities yet ✨</p>
+            <p className="text-base font-medium">No recent activities yet ✨</p>
             <p className="text-sm text-gray-400">
               Your transactions will appear here once available.
             </p>
           </motion.div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {transactions.map((txn, index) => (
               <motion.div
                 key={txn._id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="flex justify-between items-center bg-white p-4 sm:p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all"
+                transition={{ duration: 0.25, delay: index * 0.04 }}
+                className="flex justify-between items-center bg-white p-3 sm:p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all"
               >
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-[#FFF4F0] rounded-xl">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 bg-[#FFF4F0] rounded-lg">
                     {txn.type === "add" ? (
-                      <BiWalletAlt className="text-[#FF5619] text-xl" />
+                      <BiWalletAlt className="text-[#FF5619] text-lg" />
                     ) : (
-                      <MdOutlinePayment className="text-[#FF5619] text-xl" />
+                      <MdOutlinePayment className="text-[#FF5619] text-lg" />
                     )}
                   </div>
                   <div>
-                    <p className="text-gray-900 font-medium capitalize">
+                    <p className="text-gray-900 font-medium text-[13px] capitalize">
                       {txn.type === "add"
                         ? "Token Added Successfully"
                         : "Transaction Completed"}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs text-gray-500">
                       {new Date(txn.createdAt).toLocaleString()}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-[#FF5619] font-semibold text-[15px]">
+                  <p className="text-[#FF5619] font-semibold text-sm">
                     +{txn.quantity} tokens
                   </p>
                   <p className="text-xs text-gray-500">
@@ -136,12 +133,12 @@ const Notification = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-8 flex justify-center"
+            className="mt-6 flex justify-center"
           >
             <button
               disabled={isFetching}
               onClick={handleLoadMore}
-              className="px-6 py-2.5 bg-[#FF5619] text-white rounded-full font-medium hover:bg-[#e24e17] shadow-md hover:shadow-lg transition disabled:opacity-60"
+              className="px-5 py-2 bg-[#FF5619] text-white text-sm rounded-full font-medium hover:bg-[#e24e17] shadow-sm hover:shadow-md transition disabled:opacity-60"
             >
               {isFetching ? "Loading..." : "Load More"}
             </button>
