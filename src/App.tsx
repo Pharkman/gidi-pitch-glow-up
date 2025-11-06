@@ -115,6 +115,7 @@ function AppRoutes() {
     "/change-name": "Change Name",
     "/change-email": "Change Email",
     "/change-password": "Change Password",
+    "/check-token-balance" : "Check Token Balance",
     };
     
     setPageTitle(routeTitles[path] || "Page Not Found");
