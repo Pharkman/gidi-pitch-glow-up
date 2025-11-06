@@ -61,6 +61,7 @@ export const purchaseTokensWithPaystack = async ({
           if (!response.ok) throw new Error(result.message || "Purchase failed");
 
           toast.success(result.message || "Tokens purchased successfully!");
+          localStorage.removeItem("pendingTokenPurchase");
 
           // ✅ Redirect user based on origin
           setTimeout(() => {
@@ -97,7 +98,11 @@ export const purchaseTokensWithPaystack = async ({
 
 // 🔹 PurchaseTokens Component
 const PurchaseTokens = () => {
-  const [quantity, setQuantity] = useState(20);
+  const [quantity, setQuantity] = useState(() => {
+  const savedQuantity = localStorage.getItem("pendingTokenPurchase");
+  return savedQuantity ? Number(savedQuantity) : 20;
+});
+
   const [usdAmount, setUsdAmount] = useState("0.00");
   const [nairaAmount, setNairaAmount] = useState("0.00");
   const [isPurchasing, setIsPurchasing] = useState(false);
