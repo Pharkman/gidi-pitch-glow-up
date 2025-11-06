@@ -106,21 +106,21 @@ const CheckTokenBalance = () => {
         >
           {toPay ? (
             <button
-             onClick={() => navigate("/payment", { state: { from: "check-balance" } })}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl text-base font-semibold shadow-lg transition-all flex items-center justify-center gap-2 w-full"
-            >
-              <BiWalletAlt className="text-lg" />
-              Buy Token
-            </button>
+    onClick={() => {
+      // ✅ Save balanceToPurchase to localStorage
+      localStorage.setItem("pendingTokenPurchase", balanceToPurchase);
+
+      // ✅ Navigate to payment page
+      navigate("/payment", { state: { from: "check-balance" } });
+    }}
+    className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl text-base font-semibold shadow-lg transition-all flex items-center justify-center gap-2 w-full"
+  >
+    <BiWalletAlt className="text-lg" />
+    Buy Token
+  </button>
           ) : (
             <button
-              onClick={() => {
-  // Save balanceToPurchase to localStorage
-  localStorage.setItem("pendingTokenPurchase", balanceToPurchase);
-
-  // Navigate to payment page
-  navigate("/payment", { state: { from: "check-balance" } });
-}}
+              onClick={() => navigate("/create-pitchdeck/step-five")}
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl text-base font-semibold shadow-lg transition-all flex items-center justify-center gap-2 w-full"
             >
               <FiCheckCircle className="text-lg" />
