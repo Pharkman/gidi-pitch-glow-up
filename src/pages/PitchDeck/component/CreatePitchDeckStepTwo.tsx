@@ -16,12 +16,12 @@ export default function CreatePitchDeckStepTwo({ onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 px-4 py-6 max-sm:z-0 max-sm:py-0 max-sm:px-0">
-      <div className="bg-white w-full max-w-xl rounded-3xl p-8 max-sm:p-5 shadow-2xl border max-sm:rounded-none border-gray-100">
+      <div className="bg-white w-full max-w-2xl rounded-3xl p-8 max-sm:p-5 shadow-2xl border max-sm:rounded-none border-gray-100">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Create Pitch Deck</h2>
           <button
-            onClick={onClose}
+            onClick={() => navigate("/dashboard")}
             className="text-gray-500 hover:text-gray-900 transition"
           >
             <IoClose size={24} />

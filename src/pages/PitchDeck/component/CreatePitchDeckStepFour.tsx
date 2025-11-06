@@ -27,17 +27,17 @@ export default function CreatePitchDeckStepFour({ onClose }) {
     const previousData = JSON.parse(localStorage.getItem("pitchDeckData") || "{}");
     const mergedData = { ...previousData, ...values };
     localStorage.setItem("pitchDeckData", JSON.stringify(mergedData));
-    navigate("/create-pitchdeck/step-five");
+    navigate("/check-token-balance");
   };
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 max-sm:z-0">
-      <div className="bg-white w-full max-w-xl rounded-2xl p-6 max-sm:p-4 shadow-xl border border-gray-100 max-sm:max-h-[100vh] max-sm:rounded-none  max-h-[90vh] overflow-y-auto scrollbar-hide">
+      <div className="bg-white w-full max-w-2xl rounded-2xl p-6 max-sm:p-4 shadow-xl border border-gray-100 max-sm:max-h-[100vh] max-sm:rounded-none  max-h-[90vh] overflow-y-auto scrollbar-hide">
 
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-lg font-extrabold text-gray-900">Create Pitch Deck</h2>
-          <button onClick={onClose} className="text-gray-700 hover:text-gray-900 transition">
+          <h2 className="text-xl font-extrabold text-gray-900">Create Pitch Deck</h2>
+          <button onClick={() => navigate("/dashboard")} className="text-gray-700 hover:text-gray-900 transition">
             <IoClose size={22} />
           </button>
         </div>

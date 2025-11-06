@@ -224,9 +224,9 @@ const Notification = () => {
             </h1>
           </motion.div>
 
-          <p className="text-gray-600 text-sm leading-relaxed text-left">
+          <p className="text-gray-600 text-sm leading-relaxed">
             Stay on top of your latest{" "}
-            <span className="font-medium text-[#FF5619]">token</span> updates and
+            <span className="font-medium  text-[#FF5619]">token</span> updates and
             activities.
           </p>
 
@@ -234,70 +234,72 @@ const Notification = () => {
         </div>
 
         {/* Transaction Section */}
-        {isLoading ? (
-          <p className="text-center text-gray-500">Fetching transactions...</p>
-        ) : transactions.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center text-gray-500 mt-8"
-          >
-            <p className="text-base font-medium">No recent activities yet ✨</p>
-            <p className="text-sm text-gray-400">
-              Your transactions will appear here once available.
-            </p>
-          </motion.div>
-        ) : (
-          <div className="space-y-3">
-            {transactions.map((txn, index) => {
-              const isUnread =
-                lastViewedAt && new Date(txn.createdAt) > lastViewedAt;
-              return (
-                <motion.div
-                  key={txn._id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="relative flex justify-between items-center bg-white p-3 sm:p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all"
-                >
-                  {/* 🔸 Unread indicator */}
-                  {isUnread && (
-                    <span className="absolute top-3 left-3 block w-2 h-2 bg-[#FF5619] rounded-full"></span>
-                  )}
+  {/* Transaction Section */}
+{isLoading ? (
+  <p className="text-center text-gray-500">Fetching transactions...</p>
+) : transactions.length === 0 ? (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    className="text-center text-gray-500 mt-8"
+  >
+    <p className="text-base font-medium">No recent activities yet ✨</p>
+    <p className="text-sm text-gray-400">
+      Your transactions will appear here once available.
+    </p>
+  </motion.div>
+) : (
+  // 🔹 Added scrollable wrapper here
+  <div className="max-h-[450px] overflow-y-auto space-y-3 pr-1">
+    {transactions.map((txn, index) => {
+      const isUnread =
+        lastViewedAt && new Date(txn.createdAt) > lastViewedAt;
+      return (
+        <motion.div
+          key={txn._id}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25, delay: index * 0.04 }}
+          className="relative flex justify-between items-center bg-white p-3 sm:p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all"
+        >
+          {/* 🔸 Unread indicator */}
+          {isUnread && (
+            <span className="absolute top-3 left-3 block w-2 h-2 bg-[#FF5619] rounded-full"></span>
+          )}
 
-                  <div className="flex items-center gap-3 ml-2">
-                    <div className="p-2.5 bg-[#FFF4F0] rounded-lg">
-                      {txn.type === "add" ? (
-                        <BiWalletAlt className="text-[#FF5619] text-lg" />
-                      ) : (
-                        <MdOutlinePayment className="text-[#FF5619] text-lg" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="text-gray-900 font-medium text-[13px] capitalize">
-                        {txn.type === "add"
-                          ? "Token Added Successfully"
-                          : "Transaction Completed"}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {new Date(txn.createdAt).toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="text-right">
-                    <p className="text-[#FF5619] font-semibold text-sm">
-                      +{txn.quantity} tokens
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Balance: {txn.balanceAfter}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
+          <div className="flex items-center gap-3 ml-2">
+            <div className="p-2.5 bg-[#FFF4F0] rounded-lg">
+              {txn.type === "add" ? (
+                <BiWalletAlt className="text-[#FF5619] text-lg" />
+              ) : (
+                <MdOutlinePayment className="text-[#FF5619] text-lg" />
+              )}
+            </div>
+            <div>
+              <p className="text-gray-900 font-medium text-[13px] capitalize">
+                {txn.type === "add"
+                  ? "Token Added Successfully"
+                  : "Transaction Completed"}
+              </p>
+              <p className="text-xs text-gray-500">
+                {new Date(txn.createdAt).toLocaleString()}
+              </p>
+            </div>
           </div>
-        )}
+
+          <div className="text-right">
+            <p className="text-[#FF5619] font-semibold text-sm">
+              +{txn.quantity} tokens
+            </p>
+            <p className="text-xs text-gray-500">
+              Balance: {txn.balanceAfter}
+            </p>
+          </div>
+        </motion.div>
+      );
+    })}
+  </div>
+)}
 
         {/* Load More Button */}
         {pagination && page < pagination.totalPages && (

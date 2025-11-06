@@ -58,6 +58,7 @@ import PurchaseTokens from "./pages/Payment/paystackPayment/paystack";
 import Payment from "./pages/Payment/Payment";
 import Notification from "./pages/Notification/Notification";
 import Help from "./pages/Help/Help";
+import CheckTokenBalance from "./pages/PitchDeck/component/CheckTokenBalance";
 // import AiCoach from "./pages/AiCoach/AiCoach";
 
 
@@ -152,6 +153,7 @@ function AppRoutes() {
         <Route path="/create-pitchdeck/step-two" element={<CreatePitchDeckStepTwo />} />
         <Route path="/create-pitchdeck/step-three" element={<CreatePitchDeckStepThree />} />
         <Route path="/create-pitchdeck/step-four" element={<CreatePitchDeckSteFour />} />
+        <Route path="/check-token-balance" element={<CheckTokenBalance />} />
         <Route path="/deck" element={<DeckPage />} />
         <Route path="/correct-slide/:slideId" element={<CorrectedSlideProgress />} />
         <Route path="/exportslide" element={<SlideExport />} />

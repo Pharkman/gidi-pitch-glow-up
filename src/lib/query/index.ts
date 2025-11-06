@@ -787,3 +787,36 @@ export const useSearchDeck = (searchValue) => {
     enabled: !!searchValue, // only run when there's a search value
   });
 };
+
+
+export const useCheckPitchDeckCost = () => {
+  return useQuery({ 
+    queryKey: ["pitchDeckCost"],
+    queryFn: async () => {
+      // ✅ Get saved pitch data from localStorage
+      const savedData = JSON.parse(localStorage.getItem("pitchDeckData") || "{}");
+
+      // Extract required fields
+      const slides = savedData.slides || [];
+      const imageGenType = savedData.imageGenType || "manual";
+
+      // Safety check
+      if (!slides.length) {
+        throw new Error("Slides data is missing. Please complete previous steps.");
+      }
+
+      // ✅ Send POST request to check deck cost
+      const response = await fetch(`${BASE_URL}/pitch/deck/cost`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({slides, imageGenType}),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err?.message || "Failed to check deck cost");
+      }
+      return response.json(); 
+}});
+};
