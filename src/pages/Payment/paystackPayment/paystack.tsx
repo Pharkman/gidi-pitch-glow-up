@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import PaystackPop from "@paystack/inline-js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useGetUser } from "@/lib/query";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -20,6 +20,7 @@ export const purchaseTokensWithPaystack = async ({
   user,
   setIsPurchasing,
   navigate,
+  fromCheckBalance,
 }) => {
   const email = getUserEmail(user);
 
@@ -61,9 +62,13 @@ export const purchaseTokensWithPaystack = async ({
 
           toast.success(result.message || "Tokens purchased successfully!");
 
-          // ✅ Navigate to dashboard after success
+          // ✅ Redirect user based on origin
           setTimeout(() => {
-            navigate("/dashboard");
+            if (fromCheckBalance) {
+              navigate("/check-token-balance", { replace: true });
+            } else {
+              navigate("/dashboard", { replace: true });
+            }
           }, 1500);
         } catch (error) {
           toast.error(error.message || "Error confirming payment.");
@@ -99,6 +104,10 @@ const PurchaseTokens = () => {
 
   const { data: user, isLoading, isError } = useGetUser();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Detect if the user came from the check balance page
+  const fromCheckBalance = location.state?.from === "check-balance";
 
   const email = getUserEmail(user);
 
@@ -121,7 +130,13 @@ const PurchaseTokens = () => {
     if (quantity > 10000) return toast.error("Maximum 10,000 tokens allowed.");
     if (!email) return toast.error("Unable to fetch user email. Please log in again.");
 
-    await purchaseTokensWithPaystack({ quantity, user, setIsPurchasing, navigate });
+    await purchaseTokensWithPaystack({
+      quantity,
+      user,
+      setIsPurchasing,
+      navigate,
+      fromCheckBalance,
+    });
   };
 
   if (isLoading) {
