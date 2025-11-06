@@ -343,13 +343,18 @@ const Dashboard = () => {
     />
   ))
 ) : (
-  <div className="text-center col-span-full py-8">
-    <img src={noDecks} alt="No decks" className="mx-auto mb-4" />
-    <p className="font-semibold text-[#1D1D1D]">No Recent Work Yet</p>
-    <p className="text-[#5D5D5D] text-sm">
-      Your recent projects will appear here once you create a pitch deck or resume.
-    </p>
-  </div>
+<div className="text-center col-span-full py-8">
+  <img
+    src={noDecks}
+    alt="No decks"
+    className="mx-auto mb-4 animate-float"
+  />
+  <p className="font-semibold text-[#1D1D1D]">No Recent Work Yet</p>
+  <p className="text-[#5D5D5D] text-sm">
+    Your recent projects will appear here once you create a pitch deck or resume.
+  </p>
+</div>
+
 )}
 </div>
 

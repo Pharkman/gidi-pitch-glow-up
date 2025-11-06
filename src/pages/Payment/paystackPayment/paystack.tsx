@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import PaystackPop from "@paystack/inline-js";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useGetUser } from "@/lib/query";
+import Confetti from "react-confetti"; // 🎉 Import confetti
+import { useWindowSize } from "react-use"; 
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const tokenPriceUSD = 0.015;
@@ -19,6 +21,7 @@ export const purchaseTokensWithPaystack = async ({
   quantity,
   user,
   setIsPurchasing,
+  setShowConfetti, // 🎉 add this
   navigate,
   fromCheckBalance,
 }) => {
@@ -63,14 +66,18 @@ export const purchaseTokensWithPaystack = async ({
           toast.success(result.message || "Tokens purchased successfully!");
           localStorage.removeItem("pendingTokenPurchase");
 
-          // ✅ Redirect user based on origin
+          // 🎉 Show confetti on success
+          setShowConfetti(true);
+
+          // ✅ Redirect user after a short delay
           setTimeout(() => {
+            setShowConfetti(false); // stop confetti after redirect
             if (fromCheckBalance) {
               navigate("/check-token-balance", { replace: true });
             } else {
               navigate("/dashboard", { replace: true });
             }
-          }, 1500);
+          }, 3500); // wait 3.5 seconds for confetti
         } catch (error) {
           toast.error(error.message || "Error confirming payment.");
         } finally {
@@ -99,21 +106,21 @@ export const purchaseTokensWithPaystack = async ({
 // 🔹 PurchaseTokens Component
 const PurchaseTokens = () => {
   const [quantity, setQuantity] = useState(() => {
-  const savedQuantity = localStorage.getItem("pendingTokenPurchase");
-  return savedQuantity ? Number(savedQuantity) : 20;
-});
+    const savedQuantity = localStorage.getItem("pendingTokenPurchase");
+    return savedQuantity ? Number(savedQuantity) : 20;
+  });
 
   const [usdAmount, setUsdAmount] = useState("0.00");
   const [nairaAmount, setNairaAmount] = useState("0.00");
   const [isPurchasing, setIsPurchasing] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false); // 🎉 new state
 
+  const { width, height } = useWindowSize(); // for confetti dimensions
   const { data: user, isLoading, isError } = useGetUser();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Detect if the user came from the check balance page
   const fromCheckBalance = location.state?.from === "check-balance";
-
   const email = getUserEmail(user);
 
   useEffect(() => {
@@ -139,6 +146,7 @@ const PurchaseTokens = () => {
       quantity,
       user,
       setIsPurchasing,
+      setShowConfetti,
       navigate,
       fromCheckBalance,
     });
@@ -163,8 +171,11 @@ const PurchaseTokens = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA] px-4 py-10">
-      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-xl w-full border border-gray-200">
+    <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA] px-4 py-10 relative overflow-hidden">
+      {/* 🎉 Confetti Animation */}
+      {showConfetti && <Confetti width={width} height={height} numberOfPieces={400} recycle={false} />}
+
+      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl w-full border border-gray-200 relative z-10">
         <h1 className="text-2xl font-bold text-gray-900 mb-4">Purchase Tokens</h1>
         <p className="text-gray-600 mb-6">
           Buy tokens to access premium features.
