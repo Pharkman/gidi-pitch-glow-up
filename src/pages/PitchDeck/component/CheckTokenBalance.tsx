@@ -115,7 +115,7 @@ const CheckTokenBalance = () => {
           ) : (
             <button
               onClick={() => navigate("/create-pitchdeck/step-five")}
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl text-base font-semibold shadow-lg transition-all flex items-center justify-center gap-2 w-full"
+              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl text-base font-semibold shadow-lg transition-all flex items-center justify-center gap-2 w-full"
             >
               <FiCheckCircle className="text-lg" />
               Continue
