@@ -114,7 +114,13 @@ const CheckTokenBalance = () => {
             </button>
           ) : (
             <button
-              onClick={() => navigate("/create-pitchdeck/step-five")}
+              onClick={() => {
+  // Save balanceToPurchase to localStorage
+  localStorage.setItem("pendingTokenPurchase", balanceToPurchase);
+
+  // Navigate to payment page
+  navigate("/payment", { state: { from: "check-balance" } });
+}}
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl text-base font-semibold shadow-lg transition-all flex items-center justify-center gap-2 w-full"
             >
               <FiCheckCircle className="text-lg" />
