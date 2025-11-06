@@ -25,7 +25,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 px-4 max-sm:px-0  max-sm:z-0">
-      <div className="bg-white w-full max-w-xl rounded-3xl p-6  max-sm:p-4 shadow-2xl border max-sm:rounded-none border-gray-100 max-h-[90vh] max-sm:max-h-[100vh] flex flex-col">
+      <div className="bg-white w-full max-w-2xl rounded-3xl p-6  max-sm:p-4 shadow-2xl border max-sm:rounded-none border-gray-100 max-h-[90vh] max-sm:max-h-[100vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between mb-5 border-b border-gray-200 pb-3">
           <h2 className="text-xl font-bold text-gray-900 tracking-tight">
