@@ -64,14 +64,14 @@ const CheckTokenBalance = () => {
           className="flex justify-center mb-5"
         >
           {toPay ? (
-            <FiXCircle className="text-red-500 text-6xl drop-shadow-md" />
+            <FiXCircle className="text-red-500 text-6xl drop-shadow-md animate-pulse" />
           ) : (
-            <FiCheckCircle className="text-green-500 text-6xl drop-shadow-md" />
+            <FiCheckCircle className="text-green-500 text-6xl drop-shadow-md animate-pulse" />
           )}
         </motion.div>
 
         {/* Title Message */}
-        <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">
           {costData.message}
         </h2>
         <p className="text-sm text-gray-600 mb-6">
