@@ -27,6 +27,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
 
   if (isLoading) return <GlobalLoader />;
+  
 
   // Render protected content if authenticated
   return user ? <>{children}</> : null;
