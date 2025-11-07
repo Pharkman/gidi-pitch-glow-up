@@ -35,8 +35,8 @@ export const purchaseTokensWithPaystack = async ({
   try {
     setIsPurchasing(true);
 
-    if (quantity < 20)
-      throw new Error("You can only purchase a minimum of 20 tokens.");
+    if (quantity < 4)
+      throw new Error("You can only purchase a minimum of 4 tokens.");
 
     const amount = quantity * tokenPriceUSD; // USD total
     const nairaAmount = amount * exchangeRate;
@@ -70,14 +70,17 @@ export const purchaseTokensWithPaystack = async ({
           setShowConfetti(true);
 
           // ✅ Redirect user after a short delay
-          setTimeout(() => {
-            setShowConfetti(false); // stop confetti after redirect
-            if (fromCheckBalance) {
-              navigate("/check-token-balance", { replace: true });
-            } else {
-              navigate("/dashboard", { replace: true });
-            }
-          }, 3500); // wait 3.5 seconds for confetti
+         const redirectTarget = localStorage.getItem("redirectAfterPurchase");
+
+setTimeout(() => {
+  setShowConfetti(false);
+  if (redirectTarget === "check-balance") {
+    localStorage.removeItem("redirectAfterPurchase"); // ✅ cleanup
+    navigate("/check-token-balance", { replace: true });
+  } else {
+    navigate("/dashboard", { replace: true });
+  }
+}, 3500);
         } catch (error) {
           toast.error(error.message || "Error confirming payment.");
         } finally {
@@ -107,7 +110,7 @@ export const purchaseTokensWithPaystack = async ({
 const PurchaseTokens = () => {
   const [quantity, setQuantity] = useState(() => {
     const savedQuantity = localStorage.getItem("pendingTokenPurchase");
-    return savedQuantity ? Number(savedQuantity) : 20;
+    return savedQuantity ? Number(savedQuantity) : 4;
   });
 
   const [usdAmount, setUsdAmount] = useState("0.00");
@@ -124,7 +127,7 @@ const PurchaseTokens = () => {
   const email = getUserEmail(user);
 
   useEffect(() => {
-    if (quantity >= 20 && quantity <= 10000) {
+    if (quantity >= 4 && quantity <= 10000) {
       const totalUsd = (quantity * tokenPriceUSD).toFixed(2);
       const totalNaira = (totalUsd * exchangeRate).toFixed(2);
       setUsdAmount(totalUsd);
@@ -138,7 +141,7 @@ const PurchaseTokens = () => {
   const handlePurchase = async () => {
     if (isPurchasing) return;
 
-    if (quantity < 20) return toast.error("Minimum 20 tokens required.");
+    if (quantity < 4) return toast.error("Minimum 4 tokens required.");
     if (quantity > 10000) return toast.error("Maximum 10,000 tokens allowed.");
     if (!email) return toast.error("Unable to fetch user email. Please log in again.");
 
@@ -181,7 +184,7 @@ const PurchaseTokens = () => {
           Buy tokens to access premium features.
           <br />
           <span className="text-sm text-gray-500 mt-2 block">
-            Minimum 20, Maximum 10,000 tokens.
+            Minimum 4, Maximum 10,000 tokens.
           </span>
         </p>
 
@@ -198,7 +201,7 @@ const PurchaseTokens = () => {
             type="number"
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}
-            min="20"
+            min="4"
             max="10000"
             className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#FF5A1F] focus:border-[#FF5A1F] outline-none transition"
           />
