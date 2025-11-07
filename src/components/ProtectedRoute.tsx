@@ -1,6 +1,7 @@
 import { useGetUser } from '@/lib/query';
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import GlobalLoader from './Loader';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -24,8 +25,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     }
   }, [user, isError, isLoading, isFetching, navigate, location.pathname]);
 
-  // While verifying user, show nothing or a loader
-  if (isLoading) return null;
+
+  if (isLoading) return <GlobalLoader />;
+  
 
   // Render protected content if authenticated
   return user ? <>{children}</> : null;

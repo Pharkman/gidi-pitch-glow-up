@@ -8,6 +8,8 @@ import audio_loading from '../../../../public/audio/lofi-study-calm-peaceful-chi
 const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
    const deckId = localStorage.getItem("deckId");
   const { data: deckProgress, isFetching, refetch } = useGetDeckProgress(deckId || "");
+  console.log('error', deckProgress);
+  
   const progress = deckProgress?.data?.progress ?? 0;
   const status = deckProgress?.data?.status ?? "loading";
   const activityStatus = deckProgress?.data?.activityStatus ?? "Processing deck...";
