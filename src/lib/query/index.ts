@@ -820,3 +820,29 @@ export const useCheckPitchDeckCost = () => {
       return response.json(); 
 }});
 };
+
+
+
+export const useRetryDeck = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (deckId: string) => {
+      const res = await fetch(`${BASE_URL}/pitch/deck/resume/${deckId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        const body = await res.text().catch(() => null);
+        throw new Error(`Failed to retry deck${body ? `: ${body}` : ""}`);
+      }
+      return res.json();
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["GET_DECK_PROGRESS"] });
+    },
+  });
+};
