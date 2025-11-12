@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
@@ -7,18 +7,26 @@ import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function TokenPurchase({ onPurchaseSuccess }) {
+  const tokenToBuy = Number(localStorage.getItem("pendingTokenPurchase")) || 20;
+
   const [walletAddress, setWalletAddress] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
-  const [tokenQuantity, setTokenQuantity] = useState(20);
-  const [totalCost, setTotalCost] = useState(0.3);
+  const [validationMsg, setValidationMsg] = useState("");
 
-  // 🎉 Confetti setup
+  const [tokenQuantity, setTokenQuantity] = useState(tokenToBuy);
+  const [totalCost, setTotalCost] = useState(tokenToBuy * 0.015);
+
   const [showConfetti, setShowConfetti] = useState(false);
   const { width, height } = useWindowSize();
   const navigate = useNavigate();
+
+  // 🧮 Update cost dynamically whenever quantity changes
+  useEffect(() => {
+    setTotalCost(tokenQuantity * 0.015);
+  }, [tokenQuantity]);
 
   const connectWallet = async () => {
     setIsConnecting(true);
@@ -100,38 +108,36 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
 
         if (onPurchaseSuccess) onPurchaseSuccess(result);
 
-        // 🎉 Show confetti and redirect (same as Paystack)
         setShowConfetti(true);
         const redirectTarget = localStorage.getItem("redirectAfterPurchase");
 
         setTimeout(() => {
           setShowConfetti(false);
           localStorage.removeItem("redirectAfterPurchase");
-
-          if (redirectTarget === "check-balance") {
-            navigate("/check-token-balance", { replace: true });
-          } else {
-            navigate("/dashboard", { replace: true });
-          }
+          navigate(
+            redirectTarget === "check-balance"
+              ? "/check-token-balance"
+              : "/dashboard",
+            { replace: true }
+          );
         }, 3500);
       } else if (response.ok) {
         const result = await response.json();
         setStatus("Purchase successful! ✅");
         if (onPurchaseSuccess) onPurchaseSuccess(result);
 
-        // 🎉 Same success flow
         setShowConfetti(true);
         const redirectTarget = localStorage.getItem("redirectAfterPurchase");
 
         setTimeout(() => {
           setShowConfetti(false);
           localStorage.removeItem("redirectAfterPurchase");
-
-          if (redirectTarget === "check-balance") {
-            navigate("/check-token-balance", { replace: true });
-          } else {
-            navigate("/dashboard", { replace: true });
-          }
+          navigate(
+            redirectTarget === "check-balance"
+              ? "/check-token-balance"
+              : "/dashboard",
+            { replace: true }
+          );
         }, 3500);
       } else {
         throw new Error("Purchase failed");
@@ -146,19 +152,24 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
 
   const handleTokenChange = (e) => {
     const value = Number(e.target.value);
-    if (value >= 20 && value <= 10000) {
+    const minAllowed = Math.max(20, tokenToBuy);
+
+    if (value >= minAllowed && value <= 10000) {
       setTokenQuantity(value);
-      setTotalCost(value * 0.015);
+      setValidationMsg("");
+    } else {
+      setValidationMsg(`Minimum purchase is ${minAllowed} tokens`);
     }
   };
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4 relative overflow-hidden">
-      {/* 🎉 Confetti */}
-      {showConfetti && <Confetti width={width} height={height} numberOfPieces={400} recycle={false} />}
+      {showConfetti && (
+        <Confetti width={width} height={height} numberOfPieces={400} recycle={false} />
+      )}
 
       <div className="max-w-2xl w-full bg-white/90 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl p-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.05)] relative z-10">
-        <h2 className="text-2xl font-extrabold text-gray-900 mb-2 ">
+        <h2 className="text-2xl font-extrabold text-gray-900 mb-2">
           Purchase Tokens
         </h2>
         <p className="text-gray-600 mb-6">
@@ -167,9 +178,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
 
         {!walletAddress ? (
           <div className="space-y-5">
-            <p className="text-gray-600 text-sm ">
-              Connect your wallet to begin.
-            </p>
+            <p className="text-gray-600 text-sm">Connect your wallet to begin.</p>
             <button
               onClick={connectWallet}
               disabled={isConnecting}
@@ -204,14 +213,18 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
               </label>
               <input
                 type="number"
-                min="20"
+                min={Math.max(20, tokenToBuy)}
                 max="10000"
                 value={tokenQuantity}
                 onChange={handleTokenChange}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
+              {validationMsg && (
+                <p className="text-sm text-red-600">{validationMsg}</p>
+              )}
+
               <p className="text-sm text-gray-600">
-                Cost:{" "}
+                Total Cost:{" "}
                 <span className="font-semibold text-gray-900">
                   ${totalCost.toFixed(2)}
                 </span>
@@ -224,9 +237,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
               >
                 {isPurchasing
                   ? "Processing..."
-                  : `Purchase ${tokenQuantity} Tokens for $${totalCost.toFixed(
-                      2
-                    )}`}
+                  : `Purchase ${tokenQuantity} Tokens for $${totalCost.toFixed(2)}`}
               </button>
             </div>
 
@@ -239,7 +250,6 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
           </div>
         )}
 
-        {/* Status & Error messages */}
         {status && (
           <div className="mt-6 bg-primary/40 border border-primary/50 rounded-lg p-3 text-center">
             <p className="text-sm text-primary">{status}</p>
