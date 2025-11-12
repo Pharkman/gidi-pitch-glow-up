@@ -43,9 +43,9 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
       <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
         <button
           onClick={() => navigate("/dashboard")}
-          className="flex items-center justify-center p-2 rounded-full hover:bg-gray-200 bg-gray-100 transition-colors duration-200"
+          className="flex items-center justify-center p-2 rounded-full hover:bg-gray-200 bg-gray-100 transition-colors duration-200 border-2 border-black"
         >
-          <FiArrowLeft size={20} className="text-gray-700" />
+          <FiArrowLeft size={20} className="text-gray-700 " />
         </button>
 
         <img

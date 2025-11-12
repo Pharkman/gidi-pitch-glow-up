@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useCreatePitchDeck, useGetDeckProgress } from "@/lib/query";
 import { toast } from "react-toastify";
 import { FiArrowLeft } from "react-icons/fi";
+import { Loader2 } from "lucide-react";
 
 export default function CreatePitchDeckStepFive() {
   const navigate = useNavigate();
@@ -128,12 +129,9 @@ export default function CreatePitchDeckStepFive() {
             }`}
           >
             {isPending ? (
-              <span className="flex items-center gap-2">
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                Submitting...
-              </span>
+             <Loader2 size={18} className="animate-spin"/>
             ) : (
-              "Submit Pitch Deck"
+              "Create Pitch Deck"
             )}
           </button>
         </section>
