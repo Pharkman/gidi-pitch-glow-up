@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { ethers } from "ethers";
+import Confetti from "react-confetti";
+import { useWindowSize } from "react-use";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -9,21 +12,26 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
-  const [tokenQuantity, setTokenQuantity] = useState(20); // default min
-  const [totalCost, setTotalCost] = useState(0.3); // 20 * 0.01
+  const [tokenQuantity, setTokenQuantity] = useState(20);
+  const [totalCost, setTotalCost] = useState(0.3);
+
+  // 🎉 Confetti setup
+  const [showConfetti, setShowConfetti] = useState(false);
+  const { width, height } = useWindowSize();
+  const navigate = useNavigate();
 
   const connectWallet = async () => {
     setIsConnecting(true);
     setError("");
 
     try {
-      if (!(window).ethereum) {
+      if (!window.ethereum) {
         setError("Please install Metamask wallet extension");
         setIsConnecting(false);
         return;
       }
 
-      const provider = new ethers.providers.Web3Provider((window).ethereum);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
       const address = await signer.getAddress();
@@ -43,7 +51,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
     setStatus("Initiating purchase...");
 
     try {
-      const provider = new ethers.providers.Web3Provider((window).ethereum);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
 
       setStatus("Requesting payment details...");
@@ -52,7 +60,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
-          amount: tokenQuantity,
+          amount: Number(totalCost.toFixed(2)),
           walletAddress,
         }),
       });
@@ -82,7 +90,7 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
             "X-Payment": receipt.transactionHash,
           },
           body: JSON.stringify({
-            amount: tokenQuantity,
+            amount: Number(totalCost.toFixed(2)),
             walletAddress,
           }),
         });
@@ -91,10 +99,40 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
         setStatus("Purchase successful! ✅");
 
         if (onPurchaseSuccess) onPurchaseSuccess(result);
+
+        // 🎉 Show confetti and redirect (same as Paystack)
+        setShowConfetti(true);
+        const redirectTarget = localStorage.getItem("redirectAfterPurchase");
+
+        setTimeout(() => {
+          setShowConfetti(false);
+          localStorage.removeItem("redirectAfterPurchase");
+
+          if (redirectTarget === "check-balance") {
+            navigate("/check-token-balance", { replace: true });
+          } else {
+            navigate("/dashboard", { replace: true });
+          }
+        }, 3500);
       } else if (response.ok) {
         const result = await response.json();
         setStatus("Purchase successful! ✅");
         if (onPurchaseSuccess) onPurchaseSuccess(result);
+
+        // 🎉 Same success flow
+        setShowConfetti(true);
+        const redirectTarget = localStorage.getItem("redirectAfterPurchase");
+
+        setTimeout(() => {
+          setShowConfetti(false);
+          localStorage.removeItem("redirectAfterPurchase");
+
+          if (redirectTarget === "check-balance") {
+            navigate("/check-token-balance", { replace: true });
+          } else {
+            navigate("/dashboard", { replace: true });
+          }
+        }, 3500);
       } else {
         throw new Error("Purchase failed");
       }
@@ -115,12 +153,15 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4">
-      <div className="max-w-2xl w-full bg-white/90 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl p-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.05)]">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4 relative overflow-hidden">
+      {/* 🎉 Confetti */}
+      {showConfetti && <Confetti width={width} height={height} numberOfPieces={400} recycle={false} />}
+
+      <div className="max-w-2xl w-full bg-white/90 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl p-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.05)] relative z-10">
         <h2 className="text-2xl font-extrabold text-gray-900 mb-2 ">
           Purchase Tokens
         </h2>
-        <p className="text-gray-600  mb-6">
+        <p className="text-gray-600 mb-6">
           Get tokens to access premium pitch deck generation features.
         </p>
 
