@@ -60,11 +60,11 @@ const HeroSection = () => {
 
         {/* Buttons */}
         <div className="mb-16 flex flex-col items-center justify-center gap-4 md:flex-row">
-          <button className="inline-flex items-center justify-center gap-2 btn-hero py-3 w-full md:w-fit max-sm:text-[16px] font-bold">
-            <a href="#" >Try for free</a> <ArrowRight size={18} />
+          <button className="inline-flex items-center justify-center gap-2 btn-hero py-3 w-full md:w-fit max-sm:text-[16px] font-medium text-[16px]">
+            <a href="/signup" >Try For Free</a> <ArrowRight size={18} />
           </button>
-          <button className="w-full md:w-fit rounded-lg border border-[#FF5619]  text-[#FF5619] py-3 px-6 
-  transition-all duration-300 hover:bg-[#FF5619] max-sm:text-[16px] hover:text-white font-bold">
+          <button className=" text-[16px] w-full md:w-fit rounded-lg border border-[#FF5619]  text-[#FF5619] py-3 px-6 
+  transition-all duration-300 hover:bg-[#FF5619] max-sm:text-[16px] hover:text-white font-medium">
             Watch Demo
           </button>
 
