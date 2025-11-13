@@ -106,11 +106,12 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
         const result = await finalResponse.json();
         setStatus("Purchase successful! ✅");
 
+        
         if (onPurchaseSuccess) onPurchaseSuccess(result);
-
+        
         setShowConfetti(true);
         const redirectTarget = localStorage.getItem("redirectAfterPurchase");
-
+        
         setTimeout(() => {
           setShowConfetti(false);
           localStorage.removeItem("redirectAfterPurchase");
@@ -125,10 +126,11 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
         const result = await response.json();
         setStatus("Purchase successful! ✅");
         if (onPurchaseSuccess) onPurchaseSuccess(result);
-
+        
         setShowConfetti(true);
         const redirectTarget = localStorage.getItem("redirectAfterPurchase");
-
+        // console.log("💰 Total cost:", totalCost.toFixed(2));
+        
         setTimeout(() => {
           setShowConfetti(false);
           localStorage.removeItem("redirectAfterPurchase");
