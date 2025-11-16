@@ -59,6 +59,8 @@ import Payment from "./pages/Payment/Payment";
 import Notification from "./pages/Notification/Notification";
 import Help from "./pages/Help/Help";
 import CheckTokenBalance from "./pages/PitchDeck/component/CheckTokenBalance";
+import SolutionSlide from "./pages/Slides/component/SolutionSlide";
+import TeamSlide from "./pages/Slides/component/TeamSlide";
 // import AiCoach from "./pages/AiCoach/AiCoach";
 
 
@@ -160,6 +162,8 @@ function AppRoutes() {
         <Route path="/exportslide" element={<SlideExport />} />
         <Route path="/export-slide/:deckId" element={<SlideExporting />} />
         <Route path="/pitch-slide" element={<PitchSlide />} />
+        <Route path="/pitch-sol" element={<SolutionSlide />} />
+        <Route path="/pitch-team" element={<TeamSlide />} />
         <Route path="/slidebar" element={<SlideSidebar />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/change-name" element={<ChangeNameModal />} />

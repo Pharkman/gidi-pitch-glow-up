@@ -38,6 +38,7 @@ export default function CreatePitchDeckStepFive() {
       slides: pitchData.slides || [],
       imageGenType: pitchData.imageGenType || "manual",
       competitions: pitchData.competitions || "",
+      moreInfo: pitchData.moreInfo || "",
     };
 
     console.log("🚀 Sending full payload:", payload);

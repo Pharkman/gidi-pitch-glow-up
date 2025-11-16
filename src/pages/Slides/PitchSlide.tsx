@@ -111,7 +111,7 @@ if (slide.slideType === "team") {
       ref={(el) => (slideRefs.current[index] = el)}
      style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col items-center shadow-lg 
-      mb-5 py-10 max-sm:py-0 px-6`}
+      mb-5 py-10 max-sm:py-0 px-6 border border-gray`}
     >
       {/* TOP CONTENT */}
       <div className="w-full  mb-10 space-y-4">
