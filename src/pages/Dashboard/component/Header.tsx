@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
-import GidiLogo from "@/assets/Frame 481473.png";
+import DeckloLogo from "../../../../public/assets/DecloLogo.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useGetUser } from "@/lib/query";
@@ -43,7 +43,7 @@ const DashboardHeader = ({
     if (isLoggingOut) {
     return (
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-sm">
-        <Loader2 size={40} className="animate-spin text-[#FF3D00]"/>
+        <Loader2 size={40} className="animate-spin text-primary"/>
       </div>
     );
   }
@@ -64,15 +64,16 @@ const DashboardHeader = ({
               className="h-8 block md:hidden transition-all duration-300"
             /> */}
             <img
-              src={GidiLogo}
-              alt="Gidi Logo"
-              className="h-8 hidden md:block transition-all duration-300"
-            />
+  src={DeckloLogo}
+  alt="Gidi Logo"
+  className="h-5 hidden md:block transition-all duration-300"
+/>
+
           </div>
 
   {/* Mobile Menu Button */}
           <button
-            className="md:hidden flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200 hover:border-[#FF5619] hover:bg-[#FFF3EF] transition-all duration-300 shadow-sm"
+            className="md:hidden flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200 hover:border-primary hover:bg-primary/30 transition-all duration-300 shadow-sm"
             onClick={() => setSidebarOpen(true)}
           >
             <Menu className="h-5 w-5 text-gray-800" />
@@ -126,7 +127,7 @@ const DashboardHeader = ({
               >
                 <Avatar className="h-10 w-10 border border-gray-200">
                   <AvatarImage src={user_data?.user?.profileImage || ""} />
-                  <AvatarFallback className="bg-[#FF5619] text-white font-semibold">
+                  <AvatarFallback className="bg-primary text-white font-semibold">
                     {user_data?.user?.firstname && user_data?.user?.lastname
                       ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
                       : user_data?.user?.email

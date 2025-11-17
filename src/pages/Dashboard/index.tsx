@@ -92,7 +92,7 @@ const ToolCard = ({
                   localStorage.setItem("deckId", onClick || "");
                   window.location.href = "/deck";
                 }}
-                className="border border-[#FF5A1F] text-[#FF5A1F] bg-white/90 backdrop-blur-sm text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-[#FF5A1F] hover:text-white transition-all duration-200"
+                className="border border-primary text-primary bg-white/90 backdrop-blur-sm text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-primary hover:text-white transition-all duration-200"
               >
                 View Deck
               </button>
@@ -101,7 +101,7 @@ const ToolCard = ({
               <button
                 onClick={handleDelete}
                 disabled={isPending || deleting}
-                className="border border-red-500 text-red-500 bg-white/90 text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-red-500 hover:text-white transition-all duration-200 flex items-center gap-1"
+                className="border border-primary text-primay bg-white/90 text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-primary hover:text-white transition-all duration-200 flex items-center gap-1"
               >
                 {deleting ? <Loader2 size={16} className='animate-spin'/> : <FiTrash2 className="text-sm" />}
               </button>

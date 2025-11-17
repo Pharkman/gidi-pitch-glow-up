@@ -91,7 +91,7 @@ export default function Sidebar({
                 className={`w-full justify-start flex items-center gap-3 leading-[100%] text-[#858585] text-sm font-medium transition-all duration-200  rounded-[8px] p-[12px]
                   ${
                     item.active
-                      ? "bg-[#FFF1EC] text-[#FF5A1F] hover:text-white p-[12px]"
+                      ? "bg-[#F0F7FF] text-primary hover:text-white p-[12px]"
                       : "bg-transparent text-[#858585] hover:text-white"
                   }
                   ${!item.available ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -190,7 +190,7 @@ export default function Sidebar({
                       className={`w-full justify-start flex items-center gap-3 leading-[100%] text-[#858585] text-sm font-medium transition-all duration-200  rounded-[8px] p-[12px]
                   ${
                     item.active
-                      ? "bg-[#FFF1EC] text-[#FF5A1F] p-[12px] hover:text-white"
+                      ? "bg-[#FFF1EC] text-primary p-[12px] hover:text-white"
                       : "bg-transparent text-[#858585] hover:text-white"
                   }
                   ${!item.available ? "opacity-50 cursor-not-allowed" : ""}`}

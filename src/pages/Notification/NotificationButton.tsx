@@ -46,12 +46,12 @@ const NotificationButton = () => {
     <Sheet onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
         <button
-          className="relative sm:flex items-center justify-center p-2 rounded-full bg-gray-50 hover:bg-[#FFF3EF] hover:text-[#FF5619] border border-gray-200 transition-all duration-300"
+          className="relative sm:flex items-center justify-center p-2 rounded-full bg-gray-50 hover:bg-primary/30 hover:text-primary border border-gray-200 transition-all duration-300"
         >
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex items-center justify-center bg-[#FF5619] text-white text-[10px] font-semibold rounded-full w-4 h-4 sm:w-5 sm:h-5">
-              {unreadCount > 9 ? "9+" : unreadCount}
+            <span className="absolute -top-1 -right-1 flex items-center justify-center bg-primary text-white text-[10px] font-semibold rounded-full w-4 h-4 sm:w-5 sm:h-5">
+             <p className="text-center"> {unreadCount > 9 ? "9+" : unreadCount}</p>
             </span>
           )}
         </button>
