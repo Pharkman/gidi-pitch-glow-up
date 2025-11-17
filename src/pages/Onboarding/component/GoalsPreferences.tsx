@@ -19,8 +19,9 @@ const goalsSchema = Yup.object().shape({
 
 const goalsOptions = [
   { label: "Create pitch deck", icon: <BsBarChartFill size={24} /> },
+  // { label: "Create Business Proposal", icon: <FaRegFileAlt size={24} /> },
+  { label: "Create Business Proposal", icon: <AiOutlineBulb size={24} /> },
   { label: "Resume Builder", icon: <FaRegFileAlt size={24} /> },
-  { label: "Application Assistant", icon: <AiOutlineBulb size={24} /> },
   { label: "AI Pitch Practice", icon: <GiSparkles size={24} /> },
 ];
 
@@ -29,7 +30,7 @@ export default function GoalsPreferences() {
   const navigate = useNavigate(); // ✅ init navigate
 
   return (
-    <div className="min-h-screen py-10 flex flex-col items-center justify-center bg-white px-4">
+    <div className="min-h-screen py-10 flex flex-col items-center justify-center  bg-white px-4">
       {/* Back button */}
       <div
       onClick={() => navigate("/onboarding/shape-startup")}
@@ -40,7 +41,7 @@ export default function GoalsPreferences() {
     </div>
 
       {/* Logo */}
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-4 max-w-2xl">
         <div className="mb-6">
           <img src={g} alt="Gidi Logo" />
         </div>
@@ -49,7 +50,7 @@ export default function GoalsPreferences() {
        <div className="flex space-x-2 mb-6">
         <div className="w-16 h-2 bg-gray-300 rounded-full"></div>
         <div className="w-16 h-2 bg-gray-300 rounded-full"></div>
-        <div className="w-16 h-2 bg-orange-500 rounded-full"></div>
+        <div className="w-16 h-2 bg-primary rounded-full"></div>
       </div>
 
         {/* Headings */}
@@ -71,7 +72,7 @@ export default function GoalsPreferences() {
           mutate(payload, {
             onSuccess: () => {
               console.log("User goals updated successfully!");
-              navigate("/signin"); 
+              navigate("/dashboard"); 
             },
             onError: (error) => {
               console.error("Failed to update user goals:", error);
@@ -110,14 +111,14 @@ export default function GoalsPreferences() {
                         }
                         className={`relative flex flex-col items-center justify-center p-6 rounded-xl border cursor-pointer transition ${
                           isSelected
-                            ? "bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white border-none"
-                            : "bg-white border-gray-300 text-gray-700 hover:border-orange-400"
+                            ? "bg-gradient-to-r from-[#3083DC] to-[#2563EB] text-white border-none"
+                            : "bg-white border-gray-300 text-gray-700 hover:border-primary"
                         }`}
                       >
                        
                         {isSelected && (
                           <div className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-full bg-white">
-                            <Check className="w-4 h-4 text-orange-500" />
+                            <Check className="w-4 h-4 text-primary" />
                           </div>
                         )}
                         <div className="mb-2">{goal.icon}</div>

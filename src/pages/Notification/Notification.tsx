@@ -48,7 +48,7 @@ const Notification = () => {
   };
 
   return (
-    <div className="h-full overflow-y-auto bg-gradient-to-b from-[#FFF9F6] via-white to-[#FFF3EE] text-gray-800">
+    <div className="h-full overflow-y-auto bg-gradient-to-b from-[#F0F7FF]  to-[#85BEFC] text-gray-800">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -63,8 +63,8 @@ const Notification = () => {
             transition={{ duration: 0.4 }}
             className="flex items-center gap-2 mb-3"
           >
-            <div className="p-2.5 bg-[#FFF1EB] rounded-full border border-[#FFD9CC] shadow-sm">
-              <FiBell className="text-[#FF5619] text-xl" />
+            <div className="p-2.5 bg-[#F0F7FF] rounded-full border border-[#85BEFC] shadow-sm">
+              <FiBell className="text-primary text-xl" />
             </div>
             <h1 className="text-lg font-semibold text-gray-900 capitalize">
               {greeting}, {userName.split("@")[0]} 👋
@@ -73,11 +73,11 @@ const Notification = () => {
 
           <p className="text-gray-600 text-sm leading-relaxed">
             Stay on top of your latest{" "}
-            <span className="font-medium text-[#FF5619]">token</span> updates and
+            <span className="font-medium text-primary">token</span> updates and
             activities.
           </p>
 
-          <div className="w-16 h-[3px] mx-auto mt-3 rounded-full bg-gradient-to-r from-[#FF7442] to-[#FF5619]" />
+          <div className="w-16 h-[3px] mx-auto mt-3 rounded-full bg-gradient-to-r from-primary to-primary" />
         </div>
 
         {/* 🟣 Transaction Section */}
@@ -95,7 +95,7 @@ const Notification = () => {
             </p>
           </motion.div>
         ) : (
-          <div className="max-h-[450px] overflow-y-auto space-y-3 pr-1">
+          <div className="max-h-[450px] overflow-y-auto space-y-3 ">
             {transactions.map((txn, index) => {
               const isUnread =
                 lastViewedAt && new Date(txn.createdAt) > lastViewedAt;
@@ -110,15 +110,15 @@ const Notification = () => {
                 >
                   {/* 🔸 Unread indicator */}
                   {isUnread && (
-                    <span className="absolute top-3 left-3 block w-2 h-2 bg-[#FF5619] rounded-full"></span>
+                    <span className="absolute top-3 left-3 block w-2 h-2 bg-primary rounded-full"></span>
                   )}
 
                   <div className="flex items-center gap-3 ml-2">
-                    <div className="p-2.5 bg-[#FFF4F0] rounded-lg">
+                    <div className="p-2.5 bg-[#F0F7FF] rounded-lg">
                       {txn.type === "add" ? (
-                        <BiWalletAlt className="text-[#FF5619] text-lg" />
+                        <BiWalletAlt className="text-primary text-lg" />
                       ) : (
-                        <MdOutlinePayment className="text-[#FF5619] text-lg" />
+                        <MdOutlinePayment className="text-primary text-lg" />
                       )}
                     </div>
                     <div>
@@ -143,7 +143,7 @@ const Notification = () => {
 
                   <div className="text-right">
                     {/* ✅ Plus or minus sign */}
-                    <p className="text-[#FF5619] font-semibold text-sm">
+                    <p className="text-primary font-semibold text-sm">
                       {txn.type === "add" ? "+" : "-"}
                       {txn.quantity} tokens
                     </p>
@@ -167,7 +167,7 @@ const Notification = () => {
             <button
               disabled={isFetching}
               onClick={handleLoadMore}
-              className="px-5 py-2 bg-[#FF5619] text-white text-sm rounded-full font-medium hover:bg-[#e24e17] shadow-sm hover:shadow-md transition disabled:opacity-60"
+              className="px-5 py-2 bg-primary text-white text-sm rounded-full font-medium hover:bg-primary shadow-sm hover:shadow-md transition disabled:opacity-60"
             >
               {isFetching ? "Loading..." : "Load More"}
             </button>

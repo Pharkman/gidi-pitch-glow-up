@@ -57,7 +57,7 @@ const SlideCorrectionContainer = () => {
             onClick={() => setShowInput(true)}
           >
             <div className="flex items-center gap-2">
-              <AiOutlineRobot className="text-[#FF5A1F]" size={22} />
+              <AiOutlineRobot className="text-primary" size={22} />
               <span className="text-gray-700 font-medium">AI Correction</span>
             </div>
             {/* <div className="flex-shrink-0">

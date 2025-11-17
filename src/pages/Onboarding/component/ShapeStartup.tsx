@@ -36,7 +36,7 @@ const ShapeStartup = () => {
       {/* Progress Indicator */}
       <div className="flex space-x-2 mb-6">
         <div className="w-16 h-2 bg-gray-300 rounded-full"></div>
-        <div className="w-16 h-2 bg-orange-500 rounded-full"></div>
+        <div className="w-16 h-2 bg-primary rounded-full"></div>
         <div className="w-16 h-2 bg-gray-300 rounded-full"></div>
       </div>
 
@@ -65,7 +65,7 @@ const ShapeStartup = () => {
         }}
       >
         {({ errors, touched }) => (
-          <Form className="w-full max-w-2xl flex flex-col space-y-6 max-sm:max-w-xl">
+          <Form className="w-full max-w-2xl flex flex-col space-y-8 max-sm:max-w-xl">
             {/* Target Audience */}
             <div className="flex flex-col">
               <label className="mb-3 text-[#1D1D1D] font-medium">

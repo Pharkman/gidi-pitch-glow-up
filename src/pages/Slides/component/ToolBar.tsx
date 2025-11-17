@@ -67,7 +67,7 @@ export default function Toolbar() {
       if (isLoggingOut) {
     return (
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-sm">
-        <Loader2 size={40} className="animate-spin bg-[#FF3D00]"/>
+        <Loader2 size={40} className="animate-spin bg-primary"/>
       </div>
     );
   }
@@ -103,7 +103,7 @@ export default function Toolbar() {
               const deckId = localStorage.getItem("deckId");
               if (deckId) navigate(`/exportslide`);
             }}
-            className="flex items-center gap-2 bg-[#FF5619] text-white px-4 py-2 rounded-md hover:bg-[#e04c15] transition"
+            className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary transition"
           >
             <span className="text-sm font-medium">Export</span>
           </button>
@@ -117,7 +117,7 @@ export default function Toolbar() {
     >
       <Avatar className="h-10 w-10 border border-gray-200">
         <AvatarImage src={user_data?.user?.profileImage || ""} />
-        <AvatarFallback className="bg-[#FF5619] text-white font-semibold">
+        <AvatarFallback className="bg-primary text-white font-semibold">
           {user_data?.user?.firstname && user_data?.user?.lastname
             ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
             : user_data?.user?.email

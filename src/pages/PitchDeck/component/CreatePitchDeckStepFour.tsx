@@ -76,7 +76,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
                   name="businessModel"
                   type="text"
                   placeholder="e.g. Subscription, Marketplace"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-primary focus:outline-none"
                 />
               </div>
 {/* Image Generation Type */}
@@ -88,7 +88,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
     <label
       className={`flex items-center gap-2 text-sm cursor-pointer px-2 py-1 rounded-md transition ${
         values.imageGenType === "manual"
-          ? "bg-orange-50 border border-orange-500 text-orange-600"
+          ? "bg-orange-50 border border-primary text-primary"
           : "text-gray-700 hover:bg-gray-50"
       }`}
     >
@@ -98,7 +98,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
         value="manual"
         checked={values.imageGenType === "manual"}
         onChange={() => setFieldValue("imageGenType", "manual")}
-        className="text-orange-500 accent-black focus:ring-black"
+        className="text-primary accent-black focus:ring-black"
       />
       Manual
     </label>
@@ -106,7 +106,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
     <label
       className={`flex items-center gap-2 text-sm cursor-pointer px-2 py-1 rounded-md transition ${
         values.imageGenType === "ai"
-          ? "bg-orange-50 border border-orange-500 text-orange-600"
+          ? "bg-orange-50 border border-primary text-primary"
           : "text-gray-700 hover:bg-gray-50"
       }`}
     >
@@ -116,11 +116,10 @@ export default function CreatePitchDeckStepFour({ onClose }) {
         value="ai"
         checked={values.imageGenType === "ai"}
         onChange={() => setFieldValue("imageGenType", "ai")}
-        className="text-orange-500 focus:ring-orange-500"
+        className="text-primary focus:ring-primary"
       />
       AI
-    </label>
-  </div>
+    </label>  </div>
 </div>
 
 
@@ -147,7 +146,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
 
                 <button
                   type="submit"
-                  className="bg-[#FF5619] text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-orange-600 transition"
+                  className="bg-primary text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-primary-600 transition"
                 >
                   Next
                 </button>

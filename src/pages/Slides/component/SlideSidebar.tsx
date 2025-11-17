@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { CheckCircle } from "lucide-react";
 import { FiArrowLeft } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import GidiLogo from "../../../../public/assets/Gidipitch Logo.svg";
+import DeckLogo from "../../../../public/assets/DecloLogo.png";
 
 export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, brandKit }) {
   const navigate = useNavigate();
@@ -43,15 +43,15 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
       <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
         <button
           onClick={() => navigate("/dashboard")}
-          className="flex items-center justify-center p-2 rounded-full hover:bg-gray-200 bg-gray-100 transition-colors duration-200 border-2 border-black"
+          className="flex items-center justify-center p-2 rounded-full hover:bg-gray-200 bg-gray-100 transition-colors duration-200 border-2 border-primary"
         >
-          <FiArrowLeft size={20} className="text-gray-700 " />
+          <FiArrowLeft size={18} className="text-primary animate-[slideBack_1.2s_linear_infinite animate-fade-in-up" />
         </button>
 
         <img
-          src={GidiLogo}
+          src={DeckLogo}
           alt="GidiPitch Logo"
-          className="w-[140px] cursor-pointer h-[30px]"
+          className=" cursor-pointer h-[22px] mt-1"
           onClick={() => navigate("/dashboard")}
         />
       </div>
