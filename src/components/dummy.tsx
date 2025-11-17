@@ -1,5 +1,5 @@
 import { FileInput, Settings, Sparkles, Download, Instagram } from 'lucide-react';
-import check from '../assets/check.png';
+import check from '../../public/assets/check.png';
 import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 
   export const steps = [

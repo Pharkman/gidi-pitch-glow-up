@@ -16,7 +16,7 @@ export default function GlobalLoader() {
     <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
       {/* Spinner Ring */}
       <div className="relative flex items-center justify-center">
-        <div className="w-28 h-28 border-4 border-[#FF5619]/30 border-t-[#FF5619] rounded-full animate-spin" />
+        <div className="w-28 h-28 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
 
         {/* Logo in the middle */}
         <img

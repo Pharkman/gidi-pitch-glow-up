@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function CTASection() {
   return (
-    <section className="w-full py-16 md:py-24 bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white text-center">
+    <section className="w-full py-16 md:py-24 bg-primary text-white text-center">
       <div className="max-w-3xl mx-auto px-4">
         {/* Animated Heading */}
         <motion.h2
@@ -58,11 +58,11 @@ export default function CTASection() {
           viewport={{ once: true }}
           className="flex flex-col sm:flex-row justify-center items-center gap-4"
         >
-          <button className="w-full sm:w-auto bg-white text-[#FF5619] font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-orange-100 transition">
+          <button className="w-full sm:w-auto bg-white text-primary font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2  transition">
             Try for free <AiOutlineArrowRight size={18} />
           </button>
 
-          <button className="w-full sm:w-auto border border-white text-white py-3 px-6 rounded-xl hover:bg-white font-semibold hover:text-[#FF5619] transition">
+          <button className="w-full sm:w-auto border border-white text-white py-3 px-6 rounded-xl hover:bg-white font-semibold hover:text-primary transition">
             Watch Demo
           </button>
         </motion.div>

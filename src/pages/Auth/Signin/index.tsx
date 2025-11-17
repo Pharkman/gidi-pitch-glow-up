@@ -124,7 +124,7 @@ const SignIn = () => {
 
           <p className="mt-4 text-center font-medium text-[#5D5D5D]">
             Don’t have an account?{" "}
-            <Link to="/signup" className="text-[#FF5619] font-semibold">
+            <Link to="/signup" className="text-[#3083DC] font-semibold">
               Sign Up
             </Link>
           </p>

@@ -7,7 +7,7 @@ interface AuthBgTemplateProps {
 
 const AuthBgTemplate = ({ children }: AuthBgTemplateProps) => {
   return (
-    <div className="flex min-h-full bg-white p-4">
+    <div className="flex min-h-full bg-white py-6">
       {/* Left image section */}
       <div className="hidden md:flex w-1/2 items-center justify-center flex-1">
         <img src={twoGuys} alt="Two guys working" className="" />
