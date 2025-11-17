@@ -41,7 +41,7 @@ export default function AboutStartup() {
 
       {/* Progress Bar */}
       <div className="flex space-x-2 mb-8">
-        <div className="w-16 h-2 bg-orange-500 rounded-full"></div>
+        <div className="w-16 h-2 bg-primary rounded-full"></div>
         <div className="w-16 h-2 bg-gray-300 rounded-full"></div>
         <div className="w-16 h-2 bg-gray-300 rounded-full"></div>
       </div>

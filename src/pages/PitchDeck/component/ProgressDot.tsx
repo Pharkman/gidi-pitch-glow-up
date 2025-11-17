@@ -8,7 +8,7 @@ const ProgressDots = ({ activeIndex = 0, total = 3 }) => {
           key={index}
           className={`w-12 h-2 rounded-full transition-all duration-300 ${
             index === activeIndex
-              ? "bg-orange-500 shadow-inner"
+              ? "bg-primary shadow-inner"
               : "bg-gray-200"
           }`}
         ></div>

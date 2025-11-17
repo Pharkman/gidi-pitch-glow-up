@@ -172,7 +172,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
 <button
   type="button"
   onClick={() => push({ name: "", role: "", expertise: "" })}
-  className="flex items-center gap-2 bg-orange-50 text-orange-600 border border-orange-200 rounded-md px-4 py-2 text-sm font-medium hover:bg-orange-100 hover:shadow-sm transition-all duration-200"
+  className="flex items-center gap-2  text-primary border border-primary/50 rounded-md px-4 py-2 text-sm font-medium  hover:shadow-sm transition-all duration-200"
 >
   <span className="text-lg font-bold">+</span>
   Add Team Member
@@ -209,7 +209,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
 
                   <button
                     type="submit"
-                    className="bg-[#FF5619] text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-orange-600 transition"
+                    className="bg-primary text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-primary transition"
                   >
                     Next
                   </button>

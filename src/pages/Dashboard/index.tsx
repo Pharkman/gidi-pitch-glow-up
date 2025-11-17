@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import noDecks from '../../../public/assets/nodecks.png'
+import noDecks from '../../../public/assets/emptyBox.png'
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -354,7 +354,6 @@ const Dashboard = () => {
     Your recent projects will appear here once you create a pitch deck or resume.
   </p>
 </div>
-
 )}
 </div>
 

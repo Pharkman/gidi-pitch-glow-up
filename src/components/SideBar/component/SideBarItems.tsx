@@ -19,7 +19,7 @@
   PanelLeftClose,
   PanelLeft
 } from 'lucide-react';
-import Home from '../../../../public/assets/Home.png'
+import Home from '../../../../public/assets/House.png'
 import Presentaion from '../../../../public/assets/Presentation.png'
 import Resume from '../../../../public/assets/ReadCvLogo.png'
 import Yc from '../../../../public/assets/HeadCircuit.png'

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import Plus from '../../../public/assets/UserPlus.png'
+import QuestionIcon from '../../../public/assets/QuestionIcon.png'
 
 
 import {
@@ -149,6 +150,11 @@ export default function Sidebar({
     <FiCreditCard className="w-4 h-4" />
     Purchase Tokens
   </button>
+
+<div className="w-full flex items-center justify-center gap-2 mt-4">
+  <img src={QuestionIcon} alt="" />
+  <p className="text-[#A4A4A4] text-[14px] font-medium hover:text-black cursor-pointer" onClick={() => navigate("/help")}>Help & Support</p>
+  </div>
 </div>
 
           ) : (
