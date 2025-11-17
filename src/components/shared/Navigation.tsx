@@ -43,7 +43,7 @@ const Navigation = () => {
           <div className="md:flex md:gap-10">
             {/* Logo */}
             <Link to="/">
-              <img src={DeckLogo} alt="" className="w-[86%]"/>
+              <img src={DeckLogo} alt="" className=" h-5 mt-1"/>
             </Link>
 
             {/* Desktop Navigation */}
