@@ -93,7 +93,7 @@ const WhyGidiPitch: React.FC<WhyGidiPitchProps> = ({
           {/* Content */}
           <div className="why-header">
             <h2 className="text-[52px] font-bold lg:text-5xl mb-10 max-sm:text-2xl">
-              Why Choose <span style={{ color: '#FD621E' }}>GidiPitch</span>?
+              Why Choose <span style={{ color: '#3083DC' }}>GidiPitch</span>?
             </h2>
             <div className="space-y-6">
               {benefits.slice(0, 3).map((benefit, index) => {

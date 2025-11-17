@@ -38,9 +38,9 @@
     --popover-foreground: 240 10% 3.9%;
 
     /* Primary brand colors - vibrant orange/red gradient */
-    --primary: 14 100% 57%;
-    --primary-foreground: 0 0% 98%;
-    --primary-glow: 24 95% 53%;
+    --primary: 212 68% 54%;
+    --primary-foreground: 0 0% 100%;
+--primary-glow: 212 68% 54%;
 
     /* Secondary - deep purple */
     --secondary: 263 70% 50%;
@@ -64,10 +64,10 @@
     --radius: 0.75rem;
 
     /* Custom gradients for African-inspired design */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--accent)));
-    --gradient-hero: linear-gradient(135deg, hsl(14 100% 97%) 0%, hsl(173 58% 96%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(240 4.8% 98%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(212 68% 54%), hsl(212 68% 54%));
+--gradient-secondary: linear-gradient(135deg, hsl(212 68% 54%), hsl(212 68% 54%));
+--gradient-hero: linear-gradient(135deg, hsl(212 68% 54%) 0%, hsl(212 68% 54%) 100%);
+--gradient-card: linear-gradient(145deg, hsl(212 68% 54%) 0%, hsl(212 68% 54%) 100%);
 
     /* Shadows */
     --shadow-soft: 0 2px 10px -3px hsl(var(--primary) / 0.1);
@@ -179,6 +179,9 @@
     @apply bg-gradient-to-br from-card to-muted/50 border border-border rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300;
   }
 
+  .text-primary {
+    @apply text-[#3083DC]
+  }
   /* Text gradients */
   .text-gradient-primary {
     @apply bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent;

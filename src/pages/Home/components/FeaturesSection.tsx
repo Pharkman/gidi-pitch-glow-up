@@ -1,9 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
-import pitchDeck from "/assets/features/landing_succed4.png";
-import resumeBuilder from "/assets/features/landing_succed1.png";
-import applicationAssistant from "/assets/features/landing_succed2.png";
-import pitchPractice from "/assets/features/landing_succed3.png";
+import pitchDeck from "../../../../public/assets/pitchDeck_lan.png";
+import resumeBuilder from "../../../../public/assets/resume_lan.png";
+import applicationAssistant from "../../../../public/assets/proposal_lan.png";
+import pitchPractice from "../../../../public/assets/aiCoach_lan.png";
 
 
 const features = [
@@ -58,7 +58,7 @@ const FeaturesSection = () => {
           transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true, amount: 0.3 }}
         >
-          <p className="mb-2 p-1 text-sm font-medium capitalize border mx-auto text-[#5D5D5D] border-[#DBDBDB] rounded-xl bg-[#F5F5F5] w-fit px-4 max-sm:mb-2 max-sm:hidden">
+          <p className="mb-2 p-1 text-sm font-medium capitalize border mx-auto text-primary border-[#DBDBDB] rounded-xl bg-[#F5F5F5] w-fit px-4 max-sm:mb-2 max-sm:hidden">
             Features
           </p>
           <h2 className="mb-4 text-3xl font-bold text-[#2D2D2D] md:text-[52px] leading-[1.2] max-sm:text-[1.4rem]">
@@ -99,7 +99,7 @@ const FeaturesSection = () => {
                 href="#"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="group inline-flex items-center gap-2 rounded-xl bg-[#FF5619] px-5 py-2 font-semibold text-white shadow-md transition-all duration-300 hover:bg-[#ff6b33] hover:shadow-lg active:scale-95"
+                className="group inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 font-semibold text-white shadow-md transition-all duration-300 hover:bg-[#ff6b33] hover:shadow-lg active:scale-95"
               >
                 <span>Try for free</span>
                 <ArrowUpRight

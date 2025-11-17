@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
-import GidiLogo from "../../../public/assets/Gidipitch Logo.svg";
+import DeckLogo from "../../../public/assets/DecloLogo.png";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -43,7 +43,7 @@ const Navigation = () => {
           <div className="md:flex md:gap-10">
             {/* Logo */}
             <Link to="/">
-              <img src={GidiLogo} alt="" className="w-[86%]"/>
+              <img src={DeckLogo} alt="" className="w-[86%]"/>
             </Link>
 
             {/* Desktop Navigation */}

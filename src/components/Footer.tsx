@@ -1,15 +1,15 @@
-import GidiLogo from '@/assets/Frame 481473.png'
+import DeckloLogo from '../../public/assets/DecloLogo.png'
 import { footerLinks, socialLinks } from './dummy';
 
 const Footer = () => {
 
   return (
     <footer className="bg-[white] ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
-          <img src={GidiLogo} alt=''/>
+          <img src={DeckloLogo} alt='Decklo Logo' className='mb-3'/>
             <p className="text-muted-foreground mb-6 leading-relaxed mt-1 max-w-md">
               Empowering African founders to build investor-ready materials with AI. 
               From pitch decks to financial models, we help you tell your story professionally.
