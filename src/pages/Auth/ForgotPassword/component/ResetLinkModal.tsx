@@ -18,7 +18,7 @@ const ResetLinkSentModal = ({ email, onClose }: { email: string; onClose: () => 
         {/* Button */}
         <button
           onClick={onClose}
-          className="w-full bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white py-3 rounded-lg font-semibold shadow-md hover:shadow-lg hover:from-[#FF6330] hover:to-[#FF3E0D] transition-all duration-200"
+          className="w-full bg-primary text-white py-3 rounded-lg font-semibold shadow-md hover:shadow-lg hover:from-[#FF6330] hover:to-[#FF3E0D] transition-all duration-200"
         >
           Close
         </button>

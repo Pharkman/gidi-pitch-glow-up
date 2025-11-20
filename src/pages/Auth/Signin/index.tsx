@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import AuthBgTemplate from "@/components/shared/AuthBgTemplate";
-import g from "/assets/gLogo.svg";
+import decklo from "../../../../public/assets/DeckLogoSmall.jpg";
 import google from "/assets/google-icon.svg";
 import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -25,7 +25,7 @@ const SignIn = () => {
         <div>
           <div className="text-center mb-12 md:mb-16">
             <Link to="/">
-              <img src={g} alt="Logo" className="mx-auto h-14 cursor-pointer" />
+              <img src={decklo} alt="Logo" className="mx-auto h-12 mb-3 cursor-pointer" />
             </Link>
             <h1 className="text-[26px] md:text-4xl font-extrabold text-[#1d1d1d] mb-3 ">
               Log into your account
