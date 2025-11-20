@@ -1,6 +1,6 @@
 import { ClipLoader } from "react-spinners";
 import { motion } from "framer-motion";
-import logo from '../../../public/assets/gLogo.svg'
+import logo from '../../../public/assets/DeckLogoSmall.jpg'
 export const LoadingSpinner = () => {
   return (
       <div >
@@ -24,7 +24,7 @@ export default function GlobalLoader() {
           alt="Loading..."
           className="absolute w-12 h-12"
         />
-      </div>
+    </div>
     </div>
   );
 }

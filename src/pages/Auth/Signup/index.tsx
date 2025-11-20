@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AuthBgTemplate from "@/components/shared/AuthBgTemplate";
-import g from "/assets/gLogo.svg";
+import decklo from "../../../../public/assets/DeckLogoSmall.jpg";
 import google from "/assets/google-icon.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
@@ -52,7 +52,7 @@ const SignUp = () => {
         <div>
           <div className="text-center mb-12 md:mb-16">
             <Link to="/">
-              <img src={g} alt="Logo" className="mx-auto h-14 cursor-pointer" />
+                 <img src={decklo} alt="Logo" className="mx-auto h-12 mb-3 cursor-pointer" />
             </Link>
             <h1 className="text-[27px] md:text-4xl mb-3 font-extrabold text-[#1d1d1d]">
               Create Your Account
@@ -178,7 +178,7 @@ const SignUp = () => {
 
           <p className="mt-4 text-center font-medium text-[#5D5D5D]">
             Already have an account?{" "}
-            <Link to="/signin" className="text-[#FF5619] font-semibold">
+            <Link to="/signin" className="text-primary font-semibold">
               Sign In
             </Link>
           </p>
