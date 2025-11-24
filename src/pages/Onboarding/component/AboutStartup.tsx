@@ -51,7 +51,7 @@ export default function AboutStartup() {
         Tell us about your startup
       </h1>
       <p className="text-gray-500 mb-6 text-center font-medium">
-        This helps GidiPitch personalize your pitch and recommendations.
+        This helps Decklo personalize your pitch and recommendations.
       </p>
 
       {/* Formik Form */}

@@ -9,6 +9,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import Notification from "@/pages/Notification/Notification";
+import { FiBell } from "react-icons/fi";
 
 const NotificationButton = () => {
   const { data, isLoading } = useGetTransaction({ page: 1, pageSize: 10 });
@@ -59,12 +60,16 @@ const NotificationButton = () => {
 
       <SheetContent
         side="right"
-        className="w-full sm:w-[420px] md:w-[480px] lg:w-[500px] h-full p-0 overflow-hidden bg-white"
+        className="w-full sm:w-[420px] md:w-[480px] lg:w-[500px]  h-full p-0 overflow-hidden bg-white"
       >
-        <SheetHeader className="px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
+        <SheetHeader className="px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10  ">
           <SheetTitle className="text-lg font-semibold text-gray-900">
             Notifications
           </SheetTitle>
+
+           {/* <div className="p-2.5 bg-[#F0F7FF] rounded-full border border-[#85BEFC] shadow-sm">
+              <FiBell className="text-primary text-xl" />
+            </div> */}
         </SheetHeader>
 
         {/* 👇 Full-height notification content */}

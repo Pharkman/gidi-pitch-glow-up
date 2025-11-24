@@ -157,7 +157,7 @@ const Waitlist = () => {
 
         {/* Subtitle */}
         <p className="mx-auto mb-8 max-w-xl text-[16.5px] text-[#777777] max-sm:text-base font-medium ">
-          GidiPitch helps African founders create pitch decks, financials,
+          Decklo helps African founders create pitch decks, financials,
           resumes,  pratice their pitch with AI, and do so much more. Get investor-ready in minutes, not weeks.
         </p>
 

@@ -63,17 +63,13 @@ const Notification = () => {
             transition={{ duration: 0.4 }}
             className="flex items-center gap-2 mb-3"
           >
-            <div className="p-2.5 bg-[#F0F7FF] rounded-full border border-[#85BEFC] shadow-sm">
-              <FiBell className="text-primary text-xl" />
-            </div>
             <h1 className="text-lg font-semibold text-gray-900 capitalize">
               {greeting}, {userName.split("@")[0]} 👋
             </h1>
           </motion.div>
-
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Stay on top of your latest{" "}
-            <span className="font-medium text-primary">token</span> updates and
+          <p className="text-gray-600 text-sm leading-relaxed text-left">
+            Stay on top of your latest
+            <span className="font-medium text-primary"> token</span> updates and
             activities.
           </p>
 
