@@ -308,8 +308,8 @@ html, body {
     position: relative;
     margin: auto;
     box-sizing: border-box;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     border: 4px solid rgba(255, 255, 255, 0.1);
     transform-origin: 50% 50%;
@@ -331,7 +331,7 @@ html, body {
     border-top-color: #000;
   }
   .loaderr:after {
-    border-top-color: #ff3d00;
+    border-top-color: #3083DC ;
     animation-delay: 0.4s;
   }
 
