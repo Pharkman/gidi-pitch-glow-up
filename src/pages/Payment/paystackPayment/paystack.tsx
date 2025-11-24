@@ -203,7 +203,7 @@ const PurchaseTokens = () => {
             onChange={(e) => setQuantity(Number(e.target.value))}
             min="4"
             max="10000"
-            className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#FF5A1F] focus:border-[#FF5A1F] outline-none transition"
+            className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
           />
         </div>
 
@@ -232,7 +232,7 @@ const PurchaseTokens = () => {
           className={`w-full py-3 rounded-lg font-medium transition-all duration-200 shadow-sm ${
             isPurchasing
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-[#FF5A1F] text-white hover:bg-[#e14e17]"
+              : "bg-primary text-white hover:bg-primary"
           }`}
         >
           {isPurchasing ? "Processing..." : "Purchase Tokens"}
