@@ -51,7 +51,7 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
         <img
           src={DeckLogo}
           alt="GidiPitch Logo"
-          className=" cursor-pointer h-[22px] mt-1"
+          className=" cursor-pointer h-[20px] mt-[2px] ml-2"
           onClick={() => navigate("/dashboard")}
         />
       </div>
