@@ -44,7 +44,7 @@ const AuthModal = ({ isOpen, onClose, onAuthSuccess }: AuthModalProps) => {
       <DialogContent className="sm:max-w-md p-0 gap-0 bg-white rounded-2xl shadow-2xl border border-border">
         <DialogHeader className="p-6 pb-4">
           <DialogTitle className="text-2xl font-bold text-center text-gradient-primary">
-            Join GidiPitch
+            Join Decklo
           </DialogTitle>
         </DialogHeader>
 

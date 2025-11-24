@@ -51,46 +51,46 @@ import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
 
   export const faqs = [
     {
-      question: 'What is GidiPitch and who is it for?',
-      answer: 'GidiPitch is an AI-powered toolkit that helps African founders create investor-ready pitch decks, resumes, and startup materials — fast. It’s built for early-stage founders who want to tell their story clearly and attract investors with confidence.'
+      question: 'What is Decklo and who is it for?',
+      answer: 'Decklo is an AI-powered toolkit that helps African founders create investor-ready pitch decks, resumes, and startup materials — fast. It’s built for early-stage founders who want to tell their story clearly and attract investors with confidence.'
     },
     {
       question: 'How does joining the waitlist help me?',
-      answer: 'By joining the waitlist, you’ll be among the first to access GidiPitch when we launch. You’ll also get early product updates, sneak peeks, and special founder-only perks before the public rollout.'
+      answer: 'By joining the waitlist, you’ll be among the first to access Decklo when we launch. You’ll also get early product updates, sneak peeks, and special founder-only perks before the public rollout.'
     },
     {
-      question: 'When will GidiPitch launch?',
-      answer: 'We’re working hard to make sure GidiPitch delivers the best possible experience. While there’s no fixed date yet, waitlist members will be the first to know once we go live.'
+      question: 'When will Decklo launch?',
+      answer: 'We’re working hard to make sure Decklo delivers the best possible experience. While there’s no fixed date yet, waitlist members will be the first to know once we go live.'
     },
     {
       question: 'Will I get early access or rewards for signing up?',
       answer: 'Yes! Early supporters on the waitlist will get exclusive early access and priority invites — plus a few surprises we’re preparing for our first batch of founders.'
     },
     {
-      question: 'Is GidiPitch free to use?',
+      question: 'Is Decklo free to use?',
       answer: 'Yes! We offer a free tier that includes basic pitch deck generation and limited financial forecasting. Our premium plans unlock advanced features like unlimited exports, custom branding, and priority support.'
     }
   ];
   export const faqs_landing = [
     {
-      question: 'Is GidiPitch free to use?',
-      answer: 'GidiPitch is an AI-powered toolkit that helps African founders create investor-ready pitch decks, resumes, and startup materials — fast. It’s built for early-stage founders who want to tell their story clearly and attract investors with confidence.'
+      question: 'Is Decklo free to use?',
+      answer: 'Decklo is an AI-powered toolkit that helps African founders create investor-ready pitch decks, resumes, and startup materials — fast. It’s built for early-stage founders who want to tell their story clearly and attract investors with confidence.'
     },
     {
       question: 'Can I edit the generated pitch deck?',
-      answer: 'By joining the waitlist, you’ll be among the first to access GidiPitch when we launch. You’ll also get early product updates, sneak peeks, and special founder-only perks before the public rollout.'
+      answer: 'By joining the waitlist, you’ll be among the first to access Decklo when we launch. You’ll also get early product updates, sneak peeks, and special founder-only perks before the public rollout.'
     },
     {
-      question: 'When will GidiPitch launch?',
-      answer: 'We’re working hard to make sure GidiPitch delivers the best possible experience. While there’s no fixed date yet, waitlist members will be the first to know once we go live.'
+      question: 'When will Decklo launch?',
+      answer: 'We’re working hard to make sure Decklo delivers the best possible experience. While there’s no fixed date yet, waitlist members will be the first to know once we go live.'
     },
     {
       question: 'Will I get early access or rewards for signing up?',
       answer: 'Yes! Early supporters on the waitlist will get exclusive early access and priority invites — plus a few surprises we’re preparing for our first batch of founders.'
     },
     {
-      question: 'Is GidiPitch free to use?',
-      answer: 'GidiPitch will have a free plan so you can explore and create right away, with more advanced tools available through premium options once we launch.'
+      question: 'Is Decklo free to use?',
+      answer: 'Decklo will have a free plan so you can explore and create right away, with more advanced tools available through premium options once we launch.'
     }
   ];
 

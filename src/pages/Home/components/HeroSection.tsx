@@ -54,7 +54,7 @@ const HeroSection = () => {
 
         {/* Subtitle */}
         <p className="mx-auto mb-8 max-w-xl text-lg text-[#777777] max-sm:text-base font-medium">
-          GidiPitch helps African founders create pitch decks, financials, and
+          Decklo helps African founders create pitch decks, financials, and
           resumes with AI. Get investor-ready in minutes, not weeks.
         </p>
 

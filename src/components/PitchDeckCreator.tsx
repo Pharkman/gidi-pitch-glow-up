@@ -216,7 +216,7 @@ export function PitchDeckCreator({ isOpen, onClose }: PitchDeckCreatorProps) {
             <div className="p-6 pt-0 space-y-4 overflow-y-auto max-h-[60vh]">
               <div className="space-y-2">
                 <Label htmlFor="startup-name">Startup/Business Name</Label>
-                <Input id="startup-name" placeholder="e.g. GidiPitch" />
+                <Input id="startup-name" placeholder="e.g. Decklo" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="industry">Industry</Label>

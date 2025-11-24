@@ -46,7 +46,7 @@ export default function CTASection() {
             }}
             className="md:block mt-2"
           >
-            GIDIPitch guides you every step of the way.
+            Decklo guides you every step of the way.
           </motion.span>
         </motion.p>
 

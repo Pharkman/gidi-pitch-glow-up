@@ -86,7 +86,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            © 2024 GidiPitch. All rights reserved.
+            © 2024 Decklo. All rights reserved.
           </p>
           
           <div className="flex space-x-6 mt-4 sm:mt-0">

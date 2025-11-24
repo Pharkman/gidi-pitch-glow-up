@@ -34,17 +34,17 @@ export default function CreatePitchDeckModal({ onClose }: { onClose: () => void 
         >
           <div className="flex items-center justify-center w-[50px] h-[50px] bg-[#F5F5F5] rounded-lg">
             <img
-              src={File_img}
+              src={Sparkles}
               alt="file"
               className="w-[20px] h-[24px] object-contain"
             />
           </div>
           <div>
             <h3 className="font-medium text-gray-900 text-sm mb-1">
-              Start from scratch
+              Start with AI
             </h3>
             <p className="text-xs text-gray-500">
-              Build completely from blank template
+              Let AI help you create initial content
             </p>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function CreatePitchDeckModal({ onClose }: { onClose: () => void 
         </div>
 
         {/* Option 3 */}
-        <div className="flex items-center gap-3 bg-[#F9F9F9] rounded-xl p-3 hover:bg-gray-100 cursor-pointer transition border border-[#EFEFEFB2]">
+        {/* <div className="flex items-center gap-3 bg-[#F9F9F9] rounded-xl p-3 hover:bg-gray-100 cursor-pointer transition border border-[#EFEFEFB2]">
           <div className="flex items-center justify-center w-[50px] h-[50px] bg-[#F5F5F5] rounded-lg">
             <img
               src={Sparkles}
@@ -85,7 +85,7 @@ export default function CreatePitchDeckModal({ onClose }: { onClose: () => void 
               Let AI help you create initial content
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

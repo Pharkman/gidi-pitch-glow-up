@@ -25,7 +25,7 @@ const InviteButton = () => (
     type="button"
   >
     <img src={Plus} alt=""/>
-    Invite to GidiPitch
+    Invite to Decklo
   </button>
 );
 

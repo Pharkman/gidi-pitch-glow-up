@@ -13,7 +13,7 @@ const HowItWorks = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            How <span className="text-gradient-primary">GidiPitch</span> Works
+            How <span className="text-gradient-primary">Decklo</span> Works
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             From startup idea to investor-ready materials in just 4 simple steps. 

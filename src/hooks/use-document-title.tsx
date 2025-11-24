@@ -5,7 +5,7 @@ import { useEffect } from 'react';
  * @param title - The title to set for the current page
  * @param suffix - Optional suffix to append to the title (defaults to "GidiPitch")
  */
-export const useDocumentTitle = (title: string, suffix: string = "GidiPitch") => {
+export const useDocumentTitle = (title: string, suffix: string = "Decklo") => {
   useEffect(() => {
     // Create the full title with the suffix
     const fullTitle = title ? `${title} | ${suffix}` : `${suffix} - Build Your Investor Pitch in Minutes`;

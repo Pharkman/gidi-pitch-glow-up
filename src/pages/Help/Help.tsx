@@ -5,27 +5,27 @@ import { FaRobot, FaFilePowerpoint, FaCoins, FaUser, FaEnvelopeOpenText } from "
 const Help = () => {
   const steps = [
     {
-      icon: <FaUser size={28} className="text-[#FF5A1F]" />,
+      icon: <FaUser size={28} className="text-primary" />,
       title: "1. Sign In or Create an Account",
       desc: "Start by creating your account or signing in with your existing credentials. This allows the app to personalize your experience and save your progress.",
     },
     {
-      icon: <FaFilePowerpoint size={28} className="text-[#FF5A1F]" />,
+      icon: <FaFilePowerpoint size={28} className="text-primary" />,
       title: "2. Create a New Deck",
       desc: "Click on 'New Deck' to begin generating your pitch deck or presentation. Provide your topic or company name, and our AI will generate the initial slides for you.",
     },
     {
-      icon: <FaRobot size={28} className="text-[#FF5A1F]" />,
+      icon: <FaRobot size={28} className="text-primary" />,
       title: "3. AI Correction & Editing",
       desc: "You can refine your slides using the AI Correction feature. Click the AI icon at the bottom of the slide to suggest updates or improvements to your deck.",
     },
     {
-      icon: <FaCoins size={28} className="text-[#FF5A1F]" />,
+      icon: <FaCoins size={28} className="text-primary" />,
       title: "4. Manage Your Tokens",
       desc: "Each AI generation or correction consumes tokens. Keep track of your token balance on your dashboard and purchase more when needed using Paystack.",
     },
     {
-      icon: <FaEnvelopeOpenText size={28} className="text-[#FF5A1F]" />,
+      icon: <FaEnvelopeOpenText size={28} className="text-primary" />,
       title: "5. Notifications & Updates",
       desc: "Stay updated with system alerts and transaction updates through your notification center. Red dot indicators show when new updates are available.",
     },
@@ -60,9 +60,9 @@ const Help = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
-              className="flex items-start gap-5 bg-white/5 rounded-2xl p-5 border border-white/10 hover:border-[#FF5A1F]/50 hover:bg-white/10 transition-all duration-300"
+              className="flex items-start gap-5 bg-white/5 rounded-2xl p-5 border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all duration-300"
             >
-              <div className="p-3 bg-[#FF5A1F]/10 rounded-xl">{step.icon}</div>
+              <div className="p-3 bg-primary/20 rounded-xl">{step.icon}</div>
               <div className="text-left space-y-2">
                 <h3 className="text-lg font-semibold text-white">{step.title}</h3>
                 <p className="text-sm text-gray-300 leading-relaxed">{step.desc}</p>
@@ -96,8 +96,8 @@ const Help = () => {
           className="mt-12 text-sm text-gray-400"
         >
           Need more help? Contact our support team at{" "}
-          <span className="text-[#FF5A1F] font-medium cursor-pointer hover:underline">
-            support@gidipitch.com
+          <span className="text-primary font-medium cursor-pointer hover:underline">
+            support@decklo.com
           </span>
         </motion.div>
       </div>
