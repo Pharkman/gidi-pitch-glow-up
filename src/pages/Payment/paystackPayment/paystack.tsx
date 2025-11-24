@@ -44,7 +44,7 @@ export const purchaseTokensWithPaystack = async ({
     const popup = new PaystackPop();
 
     popup.newTransaction({
-      key: "pk_test_005fcbe82f26ecad58f3d0e87760e936a5d39546",
+      key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
       email,
       amount: nairaAmount * 100, // Convert to kobo
       onSuccess: async (transaction) => {
