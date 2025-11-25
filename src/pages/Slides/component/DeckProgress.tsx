@@ -180,7 +180,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
                     Cancel
                   </button>
                   <button
-                    className="flex-1 px-5 py-2 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition"
+                    className="flex-1 px-5 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-primary transition"
                     onClick={() => {
                       localStorage.setItem("pendingTokenPurchase", "1");
                       localStorage.setItem("redirectAfterPurchase", "deck");
@@ -284,7 +284,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
             </motion.p>
 
             <motion.div
-              className="w-5 h-5 bg-gradient-to-br from-[#FF7843] to-[#FF4C16] rounded-full shadow-[0_0_15px_rgba(255,80,30,0.6)]"
+              className="w-5 h-5 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full shadow-[0_0_15px_rgba(255,80,30,0.6)]"
               animate={{ scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             />
