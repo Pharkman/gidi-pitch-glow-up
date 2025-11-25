@@ -67,7 +67,7 @@ export default function Toolbar() {
       if (isLoggingOut) {
     return (
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-sm">
-        <Loader2 size={40} className="animate-spin bg-primary"/>
+        <Loader2 size={40} className="animate-spin "/>
       </div>
     );
   }

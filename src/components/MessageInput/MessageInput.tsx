@@ -25,7 +25,7 @@ export default function MessageInputBox({ onSend }) {
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Describe your startup, who it’s for, and your goal..."
         rows={2}
-        className="flex-1 resize-none outline-none border-none text-sm text-gray-800 placeholder-gray-400 px-3 py-2  bg-gray-50 shadow-inner focus:ring-2 focus:ring-orange-400 transition-all duration-200"
+        className="flex-1 resize-none outline-none border-none text-sm text-gray-800 placeholder-gray-400 px-3 py-2  bg-gray-50 shadow-inner focus:ring-2 focus:ring-primary transition-all duration-200"
       />
 
       {/* Icons section */}

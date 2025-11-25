@@ -135,7 +135,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
             className={`px-10 py-2.5 rounded-lg text-white font-medium transition-transform duration-300 ${
               isRetrying || isRetryingDeck
                 ? "bg-gray-500 cursor-not-allowed"
-                : "bg-orange-600 hover:scale-105"
+                : "bg-primary hover:scale-105"
             }`}
           >
             {isRetrying || isRetryingDeck ? "Retrying..." : "Retry"}
