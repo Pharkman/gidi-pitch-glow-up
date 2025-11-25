@@ -54,7 +54,7 @@ export default function CreatePitchDeckStepTwo({ onClose }) {
                   type="text"
                   name="competitions"
                   placeholder="e.g. Paystack, Flutterwave, Deel"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
               </div>
 
@@ -68,7 +68,7 @@ export default function CreatePitchDeckStepTwo({ onClose }) {
                   name="problems"
                   rows="3"
                   placeholder="e.g. African freelancers struggle to get paid on time."
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
               </div>
 
@@ -82,11 +82,9 @@ export default function CreatePitchDeckStepTwo({ onClose }) {
                   name="solutions"
                   rows="3"
                   placeholder="e.g. A payment platform that automates invoicing and payouts for freelancers."
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
               </div>
-
-              {/* Competitors */}
               
               {/* Buttons */}
               <section className="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">

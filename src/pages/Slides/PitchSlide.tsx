@@ -184,8 +184,14 @@ if (slide.slideType === "team") {
       <div className="w-full md:w-[80%] space-y-7 px-8 max-sm:px-4 max-sm:mb-4">
         <h2
          style={{ color: slidetitleColor  }}
-        className="text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]">
-          {slide.title}
+        className={
+  slide.slideType === "cover"
+    ? "text-4xl font-extrabold text-white max-sm:text-xl leading-[150%]"
+    : "text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]"
+}
+>
+       {slide.slideType === "cover" ? `Introducing ${slide.title}` : slide.title }
+          
         </h2>
         {slide.bullets && (
           <ul
@@ -199,7 +205,8 @@ if (slide.slideType === "team") {
         <p
          style={{ color: slidenoteColor  }}
         className="italic text-white leading-relaxed text-[14px]">
-          {slide.notes}
+      {/* {slide.slideType === "cover" ? '' : slide.notes} */}
+      {slide.notes}
         </p>
       </div>
 

@@ -65,7 +65,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
                   name="brandColor"
                   type="text"
                   placeholder="e.g. Blue, Red"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-primary focus:outline-none"
                 />
               </div>
 
@@ -88,7 +88,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
     <label
       className={`flex items-center gap-2 text-sm cursor-pointer px-2 py-1 rounded-md transition ${
         values.imageGenType === "manual"
-          ? "bg-orange-50 border border-primary text-primary"
+          ? "bg-gray-50 border border-primary text-primary"
           : "text-gray-700 hover:bg-gray-50"
       }`}
     >
@@ -98,7 +98,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
         value="manual"
         checked={values.imageGenType === "manual"}
         onChange={() => setFieldValue("imageGenType", "manual")}
-        className="text-primary accent-black focus:ring-black"
+        className="text-primary accent-primary focus:ring-primary"
       />
       Manual
     </label>
@@ -106,7 +106,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
     <label
       className={`flex items-center gap-2 text-sm cursor-pointer px-2 py-1 rounded-md transition ${
         values.imageGenType === "ai"
-          ? "bg-orange-50 border border-primary text-primary"
+          ? "bg-gray-50 border border-primary text-primary"
           : "text-gray-700 hover:bg-gray-50"
       }`}
     >
@@ -116,7 +116,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
         value="ai"
         checked={values.imageGenType === "ai"}
         onChange={() => setFieldValue("imageGenType", "ai")}
-        className="text-primary focus:ring-primary"
+        className="text-primary accent-primary focus:ring-primary"
       />
       AI
     </label>  </div>

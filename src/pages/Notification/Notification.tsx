@@ -48,7 +48,7 @@ const Notification = () => {
   };
 
   return (
-    <div className="h-full overflow-y-auto bg-gradient-to-b from-[#F0F7FF]  to-[#85BEFC] text-gray-800">
+    <div className="h-full overflow-y-auto bg-primary/30 text-gray-800">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -140,9 +140,10 @@ const Notification = () => {
                   <div className="text-right">
                     {/* ✅ Plus or minus sign */}
                     <p className="text-primary font-semibold text-sm">
-                      {txn.type === "add" ? "+" : "-"}
-                      {txn.quantity} tokens
-                    </p>
+  {(txn.type === "add" || (txn.operation && txn.operation.toLowerCase().includes("refund"))) ? "+" : "-"}
+  {txn.quantity} tokens
+</p>
+
                     <p className="text-xs text-gray-500">
                       Balance: {txn.balanceAfter}
                     </p>
