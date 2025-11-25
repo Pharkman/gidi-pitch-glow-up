@@ -85,7 +85,7 @@ const PitchSlide = () => {
           <Toolbar />
         </header>
 
-<main className="flex-1 overflow-y-auto pt-20 pb-20 px-3 max-sm:px-0 max-sm:pt-[65px] space-y-16 flex flex-col items-center justify-center">
+<main className="flex-1 overflow-y-auto  pb-20  max-sm:px-0 max-sm:pt-[65px] space-y-8 flex flex-col items-center justify-center">
   <AnimatePresence mode="wait">
     {isCompleted && (
       <motion.div
@@ -179,7 +179,7 @@ if (slide.slideType === "team") {
         style={{ backgroundColor: slideBackgroundColor }}
       className={`flex flex-col ${
         index % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"
-      } items-center  shadow-lg border border-gray-200  mb-5 max-sm:mb-0 max-sm:pt-4`}
+      } items-center  shadow-lg border border-gray-200  max-sm:mb-0 max-sm:pt-4`}
     >
       <div className="w-full md:w-[80%] space-y-7 px-8 max-sm:px-4 max-sm:mb-4">
         <h2

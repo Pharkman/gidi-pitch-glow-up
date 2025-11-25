@@ -73,7 +73,7 @@ export default function Toolbar() {
   }
 
   return (
-    <header className="w-full flex items-center justify-between px-4 md:px-6 py-3 border-b bg-white shadow-sm relative">
+    <header className="w-full flex items-center justify-between px-4 md:px-6 py-3  bg-white shadow-sm relative">
       {/* Left Section - Undo / Redo */}
       <div className="flex items-center gap-4 md:gap-6">
         <div  onClick={handleUndoRedo} className="flex items-center gap-2 text-gray-600 hover:text-black transition cursor-pointer">

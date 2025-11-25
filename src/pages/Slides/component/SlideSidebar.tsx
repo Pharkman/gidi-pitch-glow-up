@@ -38,9 +38,9 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
   }, [activeIndex]);
 
   return (
-    <aside className="w-64 bg-white border-r-2 border-gray-200 h-screen flex flex-col max-sm:hidden">
+    <aside className="w-64 bg-white border-r-2 border-gray-400 h-screen flex flex-col max-sm:hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-[0.82rem] border-b-2 border-gray-100">
+      <div className="flex items-center gap-3 px-5 py-[0.82rem] border-b-2 border-gray-400">
         <button
           onClick={() => navigate("/dashboard")}
           className="flex items-center justify-center p-2 rounded-full hover:bg-gray-200 bg-gray-100 transition-colors duration-200 border-2 border-primary"
