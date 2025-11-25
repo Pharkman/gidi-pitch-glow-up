@@ -103,7 +103,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
       return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-[#0F1114] text-white">
           <div className="text-center space-y-4">
-            <div className="animate-spin w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full mx-auto"></div>
+            <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
             <p className="text-gray-300">Retrying deck, please wait...</p>
           </div>
         </div>
@@ -225,24 +225,25 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
           >
             <div className="relative w-56 h-56 flex items-center justify-center">
               <motion.svg
-                className="w-full h-full drop-shadow-[0px_0px_20px_rgba(255,120,60,0.25)]"
+                className="w-full h-full drop-shadow-[0px_0px_20px_rgba(30,144,255,0.25)]"
                 viewBox="0 0 100 100"
                 initial={{ rotate: -90 }}
               >
-                <circle cx="50" cy="50" r="45" stroke="#2B2E33" strokeWidth="8" fill="none" />
-                <motion.circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="url(#premiumGrad)"
-                  strokeWidth="8"
-                  fill="none"
-                  strokeDasharray="283"
-                  strokeDashoffset={283 - (283 * progress) / 100}
-                  strokeLinecap="round"
-                  animate={{ strokeDashoffset: 283 - (283 * progress) / 100 }}
-                  transition={{ duration: 1.2, ease: "easeInOut" }}
-                />
+                <circle cx="50" cy="50" r="45" stroke="#91C3FF" strokeWidth="8" fill="none" />
+               <motion.circle
+  cx="50"
+  cy="50"
+  r="45"
+  stroke="#3083DC"
+  strokeWidth="8"
+  fill="none"
+  strokeDasharray="283"
+  strokeDashoffset={283 - (283 * progress) / 100}
+  strokeLinecap="round"
+  animate={{ strokeDashoffset: 283 - (283 * progress) / 100 }}
+  transition={{ duration: 1.2, ease: "easeInOut" }}
+/>
+
                 <defs>
                   <linearGradient id="premiumGrad" x1="0" y1="0" x2="1" y2="1">
                     <stop offset="0%" stopColor="#FF9E5A" />
@@ -267,7 +268,8 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
               </motion.div>
 
               <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FF7F50]/20 to-[#FF3D00]/10 blur-2xl"
+                className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#1E90FF]/20 to-[#1E3DFF]/10
+ blur-2xl"
                 animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.06, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
@@ -284,7 +286,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
             </motion.p>
 
             <motion.div
-              className="w-5 h-5 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full shadow-[0_0_15px_rgba(255,80,30,0.6)]"
+              className="w-5 h-5 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full shadow-[0_0_15px_rgba(30,144,255,0.6)"
               animate={{ scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             />

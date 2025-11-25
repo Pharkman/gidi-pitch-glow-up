@@ -80,7 +80,7 @@ export default function CreatePitchDeckStepOne({ onClose }) {
                   name="startupName"
                   type="text"
                   placeholder="e.g. PayLink Africa"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
                 <ErrorMessage
                   name="startupName"
@@ -104,7 +104,7 @@ export default function CreatePitchDeckStepOne({ onClose }) {
                       setSelectedIndustry(value);
                       setFieldValue("industry", value);
                     }}
-                    className="appearance-none w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-white shadow-sm pr-10"
+                    className="appearance-none w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-primary focus:outline-none bg-white shadow-sm pr-10"
                   >
                     <option value="" disabled>
                       Select industry
@@ -137,7 +137,7 @@ export default function CreatePitchDeckStepOne({ onClose }) {
                   name="features"
                   rows="3"
                   placeholder="e.g. We help small businesses accept cross-border payments in seconds."
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
                 <ErrorMessage
                   name="features"

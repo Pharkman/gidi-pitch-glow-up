@@ -202,9 +202,14 @@ const SlideExporting = () => {
   <div className="w-full  h-full flex flex-col justify-center py-10 px-14  space-y-10">
     <h2
       style={{ color: slidetitleColor }}
-      className="text-4xl font-extrabold leading-snug text-white"
+       className={
+  slide.slideType === "cover"
+    ? "text-5xl font-extrabold text-white max-sm:text-xl leading-[150%]"
+    : "text-4xl font-extrabold text-white max-sm:text-xl leading-[150%]"
+}
     >
-      {slide.title}
+             {slide.slideType === "cover" ? `Introducing ${slide.title}` : slide.title }
+
     </h2>
 
     {slide.bullets && (
