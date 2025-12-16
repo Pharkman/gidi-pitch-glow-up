@@ -42,11 +42,14 @@ const SlideExport = () => {
 
   useEffect(() => {
     if (!exportedDeck?.data?.deck || !hasExported) return;
+
     const deck = exportedDeck.data.deck;
 
     if (deck.status === "exporting") {
       setExportStatus("exporting");
-    } else if (deck.pdfUrl || deck.pptxUrl) {
+    }
+
+    if (deck.pdfUrl || deck.pptxUrl) {
       setExportStatus("ready");
       toast.success("Deck export completed successfully!");
     }
@@ -69,6 +72,7 @@ const SlideExport = () => {
       pdfLink.download = "";
       pdfLink.click();
     }
+
     setTimeout(() => {
       if (deck?.pptxUrl) {
         const pptxLink = document.createElement("a");
@@ -126,9 +130,11 @@ const SlideExport = () => {
               className="h-11 w-full rounded-md bg-gray-900 text-white font-medium
                          hover:bg-gray-800 disabled:opacity-60"
             >
-              {loadingType === "Both" && isPending
-                ? <LoadingSpinner />
-                : "Export PDF & PPTX"}
+              {loadingType === "Both" && isPending ? (
+                <LoadingSpinner />
+              ) : (
+                "Export PDF & PPTX"
+              )}
             </button>
           </div>
 
@@ -154,56 +160,52 @@ const SlideExport = () => {
               We’ll notify you once your files are ready.
             </p>
 
-           {exportStatus === "exporting" && (
-  <div className="rounded-lg border border-gray-200 bg-white p-6">
-    {/* Header */}
-    <div className="flex items-center gap-3 mb-5">
-      <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
-        <LoadingSpinner />
-      </div>
-      <div>
-        <p className="text-sm font-medium text-gray-900">
-          Export in progress
-        </p>
-        <p className="text-xs text-gray-500">
-          Your deck is being prepared in the background
-        </p>
-      </div>
-    </div>
+            {exportStatus === "exporting" && (
+              <div className="rounded-lg border border-gray-200 bg-white p-6">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+                    <LoadingSpinner />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">
+                      Export in progress
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Your deck is being prepared in the background
+                    </p>
+                  </div>
+                </div>
 
-    {/* Steps */}
-    <div className="space-y-3">
-      <div className="flex items-center gap-3">
-        <span className="h-2 w-2 rounded-full bg-green-500"></span>
-        <p className="text-sm text-gray-700">
-          Request received
-        </p>
-      </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <span className="h-2 w-2 rounded-full bg-green-500" />
+                    <p className="text-sm text-gray-700">
+                      Request received
+                    </p>
+                  </div>
 
-      <div className="flex items-center gap-3">
-        <span className="h-2 w-2 rounded-full bg-green-500"></span>
-        <p className="text-sm text-gray-700">
-          Processing slides
-        </p>
-      </div>
+                  <div className="flex items-center gap-3">
+                    <span className="h-2 w-2 rounded-full bg-green-500" />
+                    <p className="text-sm text-gray-700">
+                      Processing slides
+                    </p>
+                  </div>
 
-      <div className="flex items-center gap-3">
-        <span className="h-2 w-2 rounded-full bg-gray-300 animate-pulse"></span>
-        <p className="text-sm text-gray-500">
-          Finalizing export files
-        </p>
-      </div>
-    </div>
+                  <div className="flex items-center gap-3">
+                    <span className="h-2 w-2 rounded-full bg-gray-300 animate-pulse" />
+                    <p className="text-sm text-gray-500">
+                      Finalizing export files
+                    </p>
+                  </div>
+                </div>
 
-    {/* Footer note */}
-    <div className="mt-5 pt-4 border-t border-gray-100">
-      <p className="text-xs text-gray-400">
-        You can safely close this window. We’ll keep working in the background.
-      </p>
-    </div>
-  </div>
-)}
-
+                <div className="mt-5 pt-4 border-t border-gray-100">
+                  <p className="text-xs text-gray-400">
+                    You can safely close this window. We’ll keep working in the background.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {exportStatus === "ready" && (
               <div className="rounded-lg border border-green-200 bg-green-50 p-5">
@@ -243,35 +245,41 @@ const SlideExport = () => {
                     </a>
                   )}
 
-                  {exportType === "Both" && deck?.pdfUrl && deck?.pptxUrl && (
+                  {exportType === "Both" && (
                     <>
-                      <a
-                        href={deck.pdfUrl}
-                        download
-                        className="flex items-center justify-center gap-2 h-10
-                                   rounded-md border border-gray-300 text-gray-800
-                                   hover:bg-gray-50 text-sm"
-                      >
-                        <FaDownload /> Download PDF
-                      </a>
+                      {deck?.pdfUrl && (
+                        <a
+                          href={deck.pdfUrl}
+                          download
+                          className="flex items-center justify-center gap-2 h-10
+                                     rounded-md border border-gray-300 text-gray-800
+                                     hover:bg-gray-50 text-sm"
+                        >
+                          <FaDownload /> Download PDF
+                        </a>
+                      )}
 
-                      <a
-                        href={deck.pptxUrl}
-                        download
-                        className="flex items-center justify-center gap-2 h-10
-                                   rounded-md border border-gray-300 text-gray-800
-                                   hover:bg-gray-50 text-sm"
-                      >
-                        <FaDownload /> Download PPTX
-                      </a>
+                      {deck?.pptxUrl && (
+                        <a
+                          href={deck.pptxUrl}
+                          download
+                          className="flex items-center justify-center gap-2 h-10
+                                     rounded-md border border-gray-300 text-gray-800
+                                     hover:bg-gray-50 text-sm"
+                        >
+                          <FaDownload /> Download PPTX
+                        </a>
+                      )}
 
-                      <button
-                        onClick={handleDownloadBoth}
-                        className="h-10 w-full rounded-md bg-gray-900 text-white
-                                   text-sm font-medium hover:bg-gray-800"
-                      >
-                        Download all files
-                      </button>
+                      {deck?.pdfUrl && deck?.pptxUrl && (
+                        <button
+                          onClick={handleDownloadBoth}
+                          className="h-10 w-full rounded-md bg-gray-900 text-white
+                                     text-sm font-medium hover:bg-gray-800"
+                        >
+                          Download all files
+                        </button>
+                      )}
                     </>
                   )}
                 </div>

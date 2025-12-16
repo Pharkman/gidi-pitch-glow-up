@@ -8,7 +8,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import IconTemplateSlide from "./IconTemplateComponent/IconTemplateSlide";
+import IconTemplateSlideExport from "./IconTemplateComponent/IconTemplateSlideExport";
 import TeamSlide from "./TeamSlide";
+import TeamSlideExport from "./TeamSlideExport";
 
 const SlideExporting = (startupName: string) => {
   const { deckId } = useParams(); 
@@ -117,7 +119,7 @@ if (slide.slideType === "solution") {
       ref={(el) => (slideRefs.current[index] = el)}
       className="w-full flex justify-center"
     >
-      <IconTemplateSlide
+      <IconTemplateSlideExport
         slide={slide}
         brandKit={brandKit}
         startupName={slide.startupName}
@@ -135,7 +137,7 @@ if(slide.slideType === "problem") {
       ref={(el) => (slideRefs.current[index] = el)}
       className="w-full flex justify-center"
     >
-      <IconTemplateSlide
+      <IconTemplateSlideExport
         slide={slide}
         brandKit={brandKit}
         startupName={slide.startupName}
@@ -152,7 +154,7 @@ if(slide.slideType === "businessModel") {
       ref={(el) => (slideRefs.current[index] = el)}
       className="w-full flex justify-center"
     >
-      <IconTemplateSlide
+      <IconTemplateSlideExport
         slide={slide}
         brandKit={brandKit}
         startupName={slide.startupName}
@@ -169,7 +171,7 @@ if(slide.slideType === "goMarket") {
       ref={(el) => (slideRefs.current[index] = el)}
       className="w-full flex justify-center"
     >
-      <IconTemplateSlide
+      <IconTemplateSlideExport
         slide={slide}
         brandKit={brandKit}
         startupName={slide.startupName}
@@ -186,7 +188,7 @@ if(slide.slideType === "market") {
       ref={(el) => (slideRefs.current[index] = el)}
       className="w-full flex justify-center"
     >
-      <IconTemplateSlide
+      <IconTemplateSlideExport
         slide={slide}
         brandKit={brandKit}
         startupName={slide.startupName}
@@ -204,7 +206,7 @@ if(slide.slideType === "market") {
       ref={(el) => (slideRefs.current[index] = el)}
       className="w-full flex justify-center"
     >
-      <TeamSlide key={index}   slide={slide}
+      <TeamSlideExport key={index}   slide={slide}
         brandKit={brandKit}  startupName={slide.startupName} />
         </section>
     ) 
