@@ -165,7 +165,7 @@ const CorrectSlideProgress = () => {
 
             {/* Breathing Dot */}
             <motion.div
-              className="w-5 h-5 bg-gradient-to-br from-[#FF7843] to-[#FF4C16] rounded-full shadow-[0_0_15px_rgba(255,80,30,0.6)]"
+              className="w-5 h-5 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full shadow-[0_0_15px_rgba(255,80,30,0.6)]"
               animate={{
                 scale: [1, 1.4, 1],
                 opacity: [0.5, 1, 0.5],

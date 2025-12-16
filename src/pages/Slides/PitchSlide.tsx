@@ -9,6 +9,8 @@ import EditWithAIButton from "@/components/EditAiButton/EditAiButton";
 import MessageInputBox from "@/components/MessageInput/MessageInput";
 import SlideCorrectionContainer from "./component/SlideCorrectionContainer";
 import { TAILWIND_COLOR_MAP } from "@/hooks/useTailwindColorMap";
+import IconTemplateSlide from "./component/IconTemplateComponent/IconTemplateSlide";
+import TeamSlide from "./component/TeamSlide";
 
 const PitchSlide = () => {
     const [showInput, setShowInput] = useState(false);
@@ -64,8 +66,10 @@ const PitchSlide = () => {
   };
 
    const brandKit = deck?.data?.brandKit || {};
+   const startupName = deck?.data?.startupName || "";
+   
 
-   console.log(brandKit.background);
+   console.log(brandKit?.background);
   return (
     <div className="flex min-h-screen bg-gray-50 text-gray-800 font-[Geist]">
       {/* Sidebar */}
@@ -97,78 +101,178 @@ const PitchSlide = () => {
       >
       {deck?.data?.slides?.map((slide, index) => {
         
-       const slideBackgroundColor = brandKit.background || 'bg-primary';
-       const slideBulletColor = brandKit.bullets || 'bg-primary';
-       const slidetitleColor = brandKit.title || 'bg-primary';
-       const slidenoteColor = brandKit.note || 'bg-primary';
-        
-if (slide.slideType === "team") {
+       const slideBackgroundColor = brandKit?.background || 'bg-primary';
+       const slideBulletColor = brandKit?.bullets || 'bg-primary';
+       const slidetitleColor = brandKit?.title || 'bg-primary';
+       const slidenoteColor = brandKit?.note || 'bg-primary';
+    
+  if(slide.slideType === "team") {
+    return(
+        <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+      className="w-full flex justify-center"
+    >
+      <TeamSlide key={index}   slide={slide}
+        brandKit={brandKit}  startupName={startupName} />
+        </section>
+    ) 
+  }     
+// if (slide.slideType === "team") {
+//   return (
+//     <section
+//       key={index}
+//       id={`slide-${index}`}
+//       data-index={index}
+//       ref={(el) => (slideRefs.current[index] = el)}
+//      style={{ backgroundColor: slideBackgroundColor }}
+//       className={`flex flex-col items-center shadow-lg 
+//       mb-5 py-10 max-sm:py-0 px-6 border border-gray`}
+//     >
+     
+//       <div className="w-full  mb-10 space-y-4">
+//         <h2
+//           style={{ color: slidetitleColor }}
+//         className="text-xl md:text-2xl font-extrabold text-white">
+//           {slide.title}
+//         </h2>
+
+//         {slide.bullets && (
+//           <ul 
+//             style={{ color: slideBulletColor  }}
+//           className="list-disc list-inside text-white text-[15px] space-y-2 w-fit ">
+//             {slide.bullets.map((point, i) => (
+//               <li key={i}>{point}</li>
+//             ))}
+//           </ul>
+//         )}
+
+//         {slide.notes && (
+//           <p 
+//             style={{ color: slidenoteColor }}
+//           className="italic text-white leading-relaxed text-[15px] ">
+//             {slide.notes}
+//           </p>
+//         )}
+//       </div>
+
+//       {/* TEAM MEMBERS GRID */}
+//       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+//         {slide.images?.map((image, i) => (
+//           <div
+//             key={i}
+//             className="bg-white  shadow-md flex flex-col items-center pb-2  text-center"
+//           >
+//             <UploadImg
+//               caption={image.caption}
+//               slideId={slide._id}
+//               slideType={slide.slideType}
+//               defaultImage={image.url}
+//               onSave={(url) => {
+//                 console.log(
+//                   `Uploaded team image ${i + 1} for slide ${index + 1}:`,
+//                   url
+//                 );
+//               }}
+//             />
+//             <p className="text-gray-800 font-semibold mt-3 text-[14px]">
+//               {image.caption || "Team Member"}
+//             </p>
+//           </div>
+//         ))}
+//       </div>
+//     </section>
+//   );
+// }
+
+if (slide.slideType === "solution") {
   return (
     <section
       key={index}
       id={`slide-${index}`}
       data-index={index}
       ref={(el) => (slideRefs.current[index] = el)}
-     style={{ backgroundColor: slideBackgroundColor }}
-      className={`flex flex-col items-center shadow-lg 
-      mb-5 py-10 max-sm:py-0 px-6 border border-gray`}
+      className="w-full flex justify-center"
     >
-      {/* TOP CONTENT */}
-      <div className="w-full  mb-10 space-y-4">
-        <h2
-          style={{ color: slidetitleColor }}
-        className="text-xl md:text-2xl font-extrabold text-white">
-          {slide.title}
-        </h2>
-
-        {slide.bullets && (
-          <ul 
-            style={{ color: slideBulletColor  }}
-          className="list-disc list-inside text-white text-[15px] space-y-2 w-fit ">
-            {slide.bullets.map((point, i) => (
-              <li key={i}>{point}</li>
-            ))}
-          </ul>
-        )}
-
-        {slide.notes && (
-          <p 
-            style={{ color: slidenoteColor }}
-          className="italic text-white leading-relaxed text-[15px] ">
-            {slide.notes}
-          </p>
-        )}
-      </div>
-
-      {/* TEAM MEMBERS GRID */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {slide.images?.map((image, i) => (
-          <div
-            key={i}
-            className="bg-white  shadow-md flex flex-col items-center pb-2  text-center"
-          >
-            <UploadImg
-              caption={image.caption}
-              slideId={slide._id}
-              slideType={slide.slideType}
-              defaultImage={image.url}
-              onSave={(url) => {
-                console.log(
-                  `Uploaded team image ${i + 1} for slide ${index + 1}:`,
-                  url
-                );
-              }}
-            />
-            <p className="text-gray-800 font-semibold mt-3 text-[14px]">
-              {image.caption || "Team Member"}
-            </p>
-          </div>
-        ))}
-      </div>
+      <IconTemplateSlide
+        slide={slide}
+        brandKit={brandKit}
+        startupName={startupName}
+      />
     </section>
   );
 }
 
+if(slide.slideType === "problem") {
+  return (
+    <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+      className="w-full flex justify-center"
+    >
+      <IconTemplateSlide
+        slide={slide}
+        brandKit={brandKit}
+        startupName={startupName}
+      />
+    </section>
+  )
+}
+if(slide.slideType === "businessModel") {
+  return (
+    <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+      className="w-full flex justify-center"
+    >
+      <IconTemplateSlide
+        slide={slide}
+        brandKit={brandKit}
+        startupName={startupName}
+      />
+    </section>
+  )
+}
+if(slide.slideType === "goMarket") {
+  return (
+  <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+      className="w-full flex justify-center"
+    >
+      <IconTemplateSlide
+        slide={slide}
+        brandKit={brandKit}
+        startupName={startupName}
+      />
+    </section>
+  )
+}
+if(slide.slideType === "market") {
+  return (
+  <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+      className="w-full flex justify-center"
+    >
+      <IconTemplateSlide
+        slide={slide}
+        brandKit={brandKit}
+        startupName={startupName}
+      />
+    </section>
+  )
+}
 
   return (
     <section
@@ -190,7 +294,7 @@ if (slide.slideType === "team") {
     : "text-2xl font-extrabold text-white max-sm:text-xl leading-[150%]"
 }
 >
-       {slide.slideType === "cover" ? `Introducing ${slide.title}` : slide.title }
+       {slide.slideType === "cover" ? `${slide.title}` : slide.title }
           
         </h2>
         {slide.bullets && (
