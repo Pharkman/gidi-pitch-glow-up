@@ -13,6 +13,7 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
 
   const activeSlideBgClass = brandKit?.background || "bg-primary";
   const activeSlidetitleClass = brandKit?.title || "bg-primary";
+  const activeSlidebulletClass = brandKit?.bullets || "bg-primary";
   const activeSlideBgHex = getHexColor(activeSlideBgClass);
   const activeSlidetitleHex = getHexColor(activeSlidetitleClass);
   const activeRingHex = getHexColor(activeSlideBgClass);
@@ -59,7 +60,7 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
       {/* Slides list */}
       <div
         ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto py-4 space-y-4 px-5 scrollbar-hide"
+        className="flex-1 overflow-y-auto py-2 space-y-4 px-2 scrollbar-hide"
       >
         {slides.map((slide, i) => (
           <div
@@ -87,12 +88,26 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
             )}
 
             <div className="bg-gray-50 flex flex-row items-center h-36 overflow-hidden">
-              <div className="w-[50%] h-full overflow-hidden flex-shrink-0">
+              {/**
+               * For icon-based slides (solution, problem), show a slightly smaller image.
+               * Other slides retain the default sizing.
+               */}
+              <div
+                className={`${
+                  (slide?.slideType === "solution" || slide?.slideType === "problem" || slide?.slideType === "goMarket" || slide?.slideType === "market" ||slide?.slideType === "goMarket" || slide?.slideType === "businessModel" )
+                    ? "w-[50%]"
+                    : "w-[50%]"
+                } h-full overflow-hidden flex-shrink-0`}
+              >
                 {slide.images?.[0]?.url ? (
                   <img
                     src={slide.images[0].url}
                     alt={slide.title || ""}
-                    className="object-cover w-full h-full"
+                    className={`${
+                      (slide?.slideType === "solution" || slide?.slideType === "problem" || slide?.slideType === "goMarket" || slide?.slideType === "market" ||slide?.slideType === "goMarket" || slide?.slideType === "businessModel")
+                        ? "object-contain w-full h-full p-2"
+                        : "object-cover w-full h-full"
+                    }`}
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
@@ -114,10 +129,11 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
                     {slide.title || `Slide ${i + 1}`}
                   </p>
                   {slide.bullets?.length > 0 && (
-                    <span className="text-xs text-white font-normal ml-1 mt-1 line-clamp-2 truncate">
+                    <span style={{ color: activeSlidebulletClass }} className="text-xs font-normal ml-1 mt-1 line-clamp-2 truncate">
                       {slide.bullets[0]}
                     </span>
                   )}
+                 
                 </h3>
               </div>
             </div>

@@ -18,7 +18,7 @@ export default function Settings() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 max-sm:p-0">
-      <div className="w-full max-w-3xl bg-white rounded-[24px] shadow-md px-5 py-6 sm:px-8 sm:py-8 transition-all duration-300">
+      <div className="w-full max-w-3xl bg-white rounded-[10px] shadow-md px-5 py-6 sm:px-8 sm:py-8 transition-all duration-300">
         {/* Header */}
         <div className="flex justify-between items-start mb-6">
           <h2 className="text-2xl sm:text-3xl font-semibold text-[#2D2D2D] mb-2 sm:mb-3">
@@ -26,7 +26,7 @@ export default function Settings() {
           </h2>
           <X
             size={22}
-            className="text-black hover:text-[#FF5619] cursor-pointer transition-all duration-200"
+            className="text-black hover:text-primary cursor-pointer transition-all duration-200"
             onClick={() => navigate("/dashboard")}
           />
         </div>
@@ -35,12 +35,12 @@ export default function Settings() {
         <div className="flex flex-col sm:flex-row sm:items-start gap-6 sm:gap-10">
           {/* Profile Image */}
           <div className="flex flex-col items-center sm:items-start sm:w-[25%]">
-            <div className="w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] rounded-full bg-[#FFECE5] flex items-center justify-center text-[#FF5619] text-[28px] font-semibold">
+            <div className="w-[90px] h-[90px] sm:w-[100px] sm:h-[100px] rounded-full bg-primary/10 flex items-center justify-center text-primary text-3xl font-semibold shadow-inner">
               {`${user?.firstname?.[0]?.toUpperCase() || ""}${
                 user?.lastname?.[0]?.toUpperCase() || ""
               }`}
             </div>
-            <p className="text-[#000000] text-[15px] font-semibold mt-2 cursor-pointer hover:text-[#FF5619] transition">
+            <p className="text-[#000000] text-[15px] font-semibold mt-2 cursor-pointer hover:text-primary transition">
               Change
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function Settings() {
                     : "—"}
                 </p>
                 <button
-                  className="bg-[#FF5619] text-white px-4 py-2 rounded-md text-sm hover:bg-orange-600 transition-all duration-200 w-full sm:w-auto"
+                  className="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary transition-all duration-200 w-full sm:w-auto"
                   onClick={() => navigate("/change-name")}
                 >
                   Change name
@@ -77,7 +77,7 @@ export default function Settings() {
                   {user?.email || "—"}
                 </p>
                 <button
-                  className="bg-[#FF5619] text-white px-4 py-2 rounded-md text-sm hover:bg-orange-600 transition-all duration-200 w-full sm:w-auto"
+                  className="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary transition-all duration-200 w-full sm:w-auto"
                   onClick={() => navigate("/change-email")}
                 >
                   Update email
@@ -93,7 +93,7 @@ export default function Settings() {
               <div className="border border-[#DBDBDB] shadow-sm w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 px-4 py-3 rounded-md">
                 <p className="text-[#1D1D1D] text-[15px]">Free Plan</p>
                 <button
-                  className="bg-[#FF5619] text-white px-4 py-2 rounded-md text-sm hover:bg-orange-600 transition-all duration-200 w-full sm:w-auto"
+                  className="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary transition-all duration-200 w-full sm:w-auto"
                 >
                   Upgrade
                 </button>
@@ -108,7 +108,7 @@ export default function Settings() {
               <div className="border border-[#DBDBDB] shadow-sm w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 px-4 py-3 rounded-md">
                 <p className="text-[#1D1D1D] text-[15px]">********</p>
                 <button
-                  className="bg-[#FF5619] text-white px-4 py-2 rounded-md text-sm hover:bg-orange-600 transition-all duration-200 w-full sm:w-auto"
+                  className="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary transition-all duration-200 w-full sm:w-auto"
                   onClick={() => navigate("/change-password")}
                 >
                   Change password

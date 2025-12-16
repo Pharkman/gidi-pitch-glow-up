@@ -1,45 +1,91 @@
 import React from "react";
-import smartPhoneIcon from '../../../../public/assets/smart-phone.png'
-import aiSchedulingIcon from '../../../../public/assets/ai-scheduling.png'
-import folderCloud from '../../../../public/assets/folder-cloud.png'
-import Team from '../../../../public/assets/team.png'
+import UploadImg from "@/components/UploadImg/UploadImg";
 
-export default function TeamSlide() {
+export default function TeamSlide({
+  slide,
+  brandKit,
+  startupName,
+}: {
+  slide: Slide;
+  brandKit: BrandKit;
+  startupName: string;
+}) {
+  const slideBackgroundColor = brandKit?.iconSlide?.background || "#F2F4FF";
+  const slideBulletColor = brandKit?.iconSlide?.bullets || "#5063FF";
+  const slideTitleColor = brandKit?.iconSlide?.title || "#ffffff";
+  const slideNoteColor = brandKit?.iconSlide?.note || "#D9DBFF";
+
+
   return (
-    <div className="w-full min-h-screen bg-[#F2F4FF] text-[#5063FF] px-8 py-12 flex flex-col">
-
+    <div
+      className="w-full bg-[#F2F4FF] text-[#5063FF] px-5 py-8 flex flex-col"
+      style={{ backgroundColor: slideBackgroundColor }}
+    >
       {/* Header */}
       <div className="flex justify-between items-start w-full opacity-80">
-        <p className="text-lg tracking-wide font-semibold">TAM AI</p>
-        <p className="text-lg tracking-wide font-semibold">OCTOBER, 2025</p>
+        <p
+         style={{ color: slideNoteColor }}
+        className="text-lg tracking-wide font-semibold">{startupName}</p>
       </div>
 
       {/* Title */}
-      <h1 className="text-[85px] leading-[100px] font-extrabold mt-10 mb-20 uppercase tracking-tight">
-        Meet the Team
+      <h1
+        className="text-[35px] leading-[100px] font-extrabold mb-6 uppercase tracking-tight"
+        style={{ color: slideTitleColor }}
+      >
+        {slide.title}
       </h1>
 
-      {/* Main Content */}
-      <div className="grid grid-cols-3 gap-4"> 
-        {[1, 2, 3, 4].map((_, index) => (
-          <div key={index} className="flex flex-col bg-white   p-6 transition-all duration-300 border border-[#E4E7FF]">
+      {/* Team Members Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {slide?.images?.map((member, index) => (
+       <div
+  key={index}
+  className="relative group overflow-hidden rounded-xl border border-[#E4E7FF] bg-white"
+>
+  {/* Image */}
+  <UploadImg
+    caption={member.caption}
+    slideId={slide._id}
+    slideType={slide.slideType}
+    defaultImage={member.url}
+    onSave={(url) => {
+      console.log(
+        `Uploaded team image ${index + 1} for slide ${slide.title}:`,
+        url
+      );
+    }}
+  />
 
-            {/* Image */}
-            <img
-              src={Team}
-              alt="team-member"
-              className="h-80 mb-6 object-cover "
-            />
+  {/* Gradient Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
 
-            {/* Name */}
-            <h2 className="text-2xl font-bold text-[#3E4CE0] ">James Mike</h2>
-            <p className="text-lg font-medium mt-1  opacity-80">(Product Designer)</p>
+  {/* Text Overlay */}
+  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+    <h2
+     style={{ color: slideTitleColor }}
+    className="text-lg font-semibold leading-tight">
+      {member.caption || "Team Member"}
+    </h2>
 
-            {/* Bio */}
-            <p className="text-[16px] font-medium opacity-70 leading-[24px] mt-5">
-              Led previous SaaS venture to $10M+ ARR by securing 50+ Fortune 500 clients, mastering enterprise GTM.
-            </p>
-          </div>
+    {/* <p 
+     style={{ color: slideBulletColor }}
+    className="text-sm font-medium text-white/80 mt-1">
+      {slide?.bullets?.[index]
+        ? slide.bullets[index].split(":")[0]
+        : "Role"}
+    </p> */}
+
+    <p 
+     style={{ color: slideBulletColor }}
+    className="text-sm text-white/70 leading-snug mt-2 line-clamp-3">
+      {slide?.bullets?.[index]
+        ? slide.bullets[index].split(":")[1]?.trim()
+        : slide?.notes || "No bio available"}
+    </p>
+  </div>
+</div>
+
         ))}
       </div>
     </div>
