@@ -12,6 +12,7 @@ export default function IconTemplateSlideExport({
   const slideTitleColor = brandKit?.iconSlide?.title || "#ffffff";
   const slideNoteColor = brandKit?.iconSlide?.note || "#D9DBFF";
 
+console.log('the startup name', slide);
 
 
   return (
@@ -39,25 +40,31 @@ export default function IconTemplateSlideExport({
           {slide.note}
         </p>
       </div>
-   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
   {slide.images?.slice(0, 3).map((img: any, index: number) => (
     <div
       key={index}
       className="flex flex-col justify-start items-start h-full pr-3 border-r border-gray-300"
     >
+
+         <div className="flex justify-between items-start w-full opacity-80">
+        <p className="text-md tracking-wide font-medium text-white" 
+          style={{ color: slideNoteColor }}
+        >{slide.startupName}</p>
+      </div>
       {/* Image */}
       <div className="w-full mb-12">
         <img
           src={img.url}
           alt={`solution-image-${index}`}
-          className="w-[400px] h-[400px]"
+          className="w-[330px] h-[330px]"
         />
       </div>
 
       {/* Bullet title */}
       <h2
-        className="text-4xl mb-3 font-bold uppercase text-[#5063FF]"
-        style={{ color: slideNoteColor }}
+        className="text-3xl mb-3 font-bold uppercase text-[#5063FF]"
+        style={{ color: slideTitleColor }}
       >
         {img.caption || "Key Highlight"}
       </h2>
