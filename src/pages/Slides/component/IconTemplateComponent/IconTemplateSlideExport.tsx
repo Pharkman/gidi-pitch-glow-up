@@ -57,13 +57,13 @@ console.log('the startup name', slide);
         <img
           src={img.url}
           alt={`solution-image-${index}`}
-          className="w-[350px] h-[350px]"
+          className="w-[340px] h-[340px]"
         />
       </div>
 
       {/* Bullet title */}
       <h2
-        className="text-2xl mb-3 font-bold uppercase text-[#5063FF]"
+        className="text-[20px] mb-3 font-bold uppercase text-[#5063FF]"
         style={{ color: slideTitleColor }}
       >
         {img.caption || "Key Highlight"}
