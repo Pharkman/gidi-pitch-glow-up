@@ -99,7 +99,7 @@ const FeaturesSection = () => {
                 href="#"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="group inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 font-semibold text-white shadow-md transition-all duration-300 hover:bg-[#ff6b33] hover:shadow-lg active:scale-95"
+                className="group inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 font-semibold text-white shadow-md transition-all duration-300 hover:bg-primary/90 hover:shadow-lg active:scale-95"
               >
                 <span>Try for free</span>
                 <ArrowUpRight

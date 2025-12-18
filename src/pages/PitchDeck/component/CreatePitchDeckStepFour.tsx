@@ -73,6 +73,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-800 mb-1">Business Model</label>
                 <Field
+                  as="textarea"
                   name="businessModel"
                   type="text"
                   placeholder="e.g. Subscription, Marketplace"

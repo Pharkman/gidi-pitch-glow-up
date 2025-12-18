@@ -44,6 +44,7 @@ const ToolCard = ({
   disabled,
   variant = "grid",
   subtitle,
+  viewMode = "grid",
 }) => {
   const { mutate: deleteDeck, isPending } = useDeleteDeneratedDeck();
   const [deleting, setDeleting] = useState(false);
@@ -63,7 +64,58 @@ const ToolCard = ({
     });
   };
 
+
+
   if (variant === "project") {
+    if (viewMode === 'list') {
+      return (
+        <div className="bg-white rounded-xl shadow-md p-0 w-full border border-[#E4E4E4CC] flex flex-row h-[120px]">
+          {/* Image */}
+          <img
+            src={image}
+            alt={label}
+            className="object-cover w-[200px] h-full rounded-l-xl"
+          />
+
+          {/* Content */}
+          <div className="flex-1 px-4 py-3 flex flex-col justify-center w-full">
+             <div className="flex justify-between items-center h-full">
+                <div className="flex flex-col justify-center">
+                   <div className="font-semibold text-[#1D1D1D] text-base text-foreground mb-1">
+                     {label}
+                   </div>
+                   {subtitle && (
+                     <div className="text-sm text-muted-foreground">{subtitle}</div>
+                   )}
+                </div>
+                
+                <div className="flex items-center gap-2">
+                   {/* View Deck Button */}
+                   <button
+                     onClick={() => {
+                       localStorage.setItem("deckId", onClick || "");
+                       window.location.href = "/deck";
+                     }}
+                     className="border border-primary text-primary bg-white/90 backdrop-blur-sm text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-primary hover:text-white transition-all duration-200"
+                   >
+                     View Deck
+                   </button>
+
+                   {/* Delete Button */}
+                   <button
+                     onClick={handleDelete}
+                     disabled={isPending || deleting}
+                     className="border border-primary text-primay bg-white/90 text-xs px-3 py-1.5 rounded-md shadow-sm hover:bg-primary hover:text-white transition-all duration-200 flex items-center gap-1"
+                   >
+                     {deleting ? <Loader2 size={16} className='animate-spin'/> : <FiTrash2 className="text-sm" />}
+                   </button>
+                </div>
+             </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="bg-white rounded-xl shadow-md p-0 w-full border border-[#E4E4E4CC]">
         {/* Image */}
@@ -138,6 +190,22 @@ const ToolCard = ({
 };
 
 
+  const getDeckImage = (deck) => {
+  // If slides is an array of objects and has imageUrl
+  if (Array.isArray(deck?.slides)) {
+    const slideWithImage = deck.slides.find(
+      (slide) => slide?.imageUrl
+    );
+
+    if (slideWithImage?.imageUrl) {
+      return slideWithImage.imageUrl;
+    }
+  }
+
+  // fallback
+  return freePik_build1;
+};
+
 const Dashboard = () => {
   const {data:user_data} = useGetUser();
   const [searchValue, setSearchValue] = useState("");
@@ -167,8 +235,12 @@ const Dashboard = () => {
 
 
   const handleCreateNew = (tool: string) => {
-    setSelectedTool(tool);
-    setShowCreateModal(true);
+    if (tool === 'Pitch Deck') {
+      setShowPitchDeckModal(true);
+    } else {
+      setSelectedTool(tool);
+      setShowCreateModal(true);
+    }
   };
 
  const handleLogout = async () => {
@@ -301,61 +373,60 @@ const Dashboard = () => {
             </section>
             
          {/* Recents Section */}
-<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div className={view === 'list' ? "flex flex-col gap-4 mb-8" : "grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"}>
   {isSearching ? (
-  <p className="text-gray-500 text-sm col-span-full text-center py-8">
-      <div className='flex justify-center items-center mx-auto'>
-     <Spinner />
-  </div>
-  </p>
-) : searchValue ? (
-  searchResults?.data?.decks?.length > 0 ? (
-    searchResults.data.decks.map((deck) => (
+    <div className="col-span-full flex justify-center py-8">
+      <Spinner />
+    </div>
+  ) : searchValue ? (
+    searchResults?.data?.decks?.length > 0 ? (
+      searchResults.data.decks.map((deck) => (
+        <ToolCard
+          key={deck._id}
+          variant="project"
+          viewMode={view}
+          image={getDeckImage(deck)}
+          label={deck.startupName || "Untitled Deck"}
+          subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
+          onClick={deck._id}
+        />
+      ))
+    ) : (
+      <p className="text-gray-500 text-center col-span-full py-8">
+        No decks found for “{searchValue}”
+      </p>
+    )
+  ) : isLoadingGeneratedDecks ? (
+    <div className="col-span-full flex justify-center py-8">
+      <Spinner />
+    </div>
+  ) : generated_decks?.data?.decks?.length > 0 ? (
+    generated_decks.data.decks.map((deck) => (
       <ToolCard
         key={deck._id}
         variant="project"
-        image={deck?.slides?.[0]?.imageUrl || freePik_build1}
+        viewMode={view}
+        image={getDeckImage(deck)}
         label={deck.startupName || "Untitled Deck"}
         subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
         onClick={deck._id}
       />
     ))
   ) : (
-    <p className="text-gray-500 text-center col-span-full py-8">
-      No decks found for “{searchValue}”
-    </p>
-  )
-) : isLoadingGeneratedDecks ? (
-   <p className="text-gray-500 text-sm col-span-full text-center py-8">
-      <div className='flex justify-center items-center mx-auto'>
-     <Spinner />
-  </div>
-  </p>
-) : generated_decks?.data?.decks?.length > 0 ? (
-  generated_decks.data.decks.map((deck) => (
-    <ToolCard
-      key={deck._id}
-      variant="project"
-      image={deck?.slides?.[0]?.imageUrl || freePik_build1}
-      label={deck.startupName || "Untitled Deck"}
-      subtitle={`Updated ${new Date(deck.updatedAt).toLocaleDateString()}`}
-      onClick={deck._id}
-    />
-  ))
-) : (
-<div className="text-center col-span-full py-8">
-  <img
-    src={noDecks}
-    alt="No decks"
-    className="mx-auto mb-4 animate-float"
-  />
-  <p className="font-semibold text-[#1D1D1D]">No Recent Work Yet</p>
-  <p className="text-[#5D5D5D] text-sm">
-    Your recent projects will appear here once you create a pitch deck or resume.
-  </p>
+    <div className="text-center col-span-full py-8">
+      <img
+        src={noDecks}
+        alt="No decks"
+        className="mx-auto mb-4 animate-float"
+      />
+      <p className="font-semibold text-[#1D1D1D]">No Recent Work Yet</p>
+      <p className="text-[#5D5D5D] text-sm">
+        Your recent projects will appear here once you create a pitch deck or resume.
+      </p>
+    </div>
+  )}
 </div>
-)}
-</div>
+
 
 
                  </div>

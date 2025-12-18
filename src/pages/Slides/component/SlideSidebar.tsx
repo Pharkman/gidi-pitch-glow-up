@@ -101,14 +101,15 @@ export default function SlideSidebar({ slides = [], onSlideSelect, activeIndex, 
               >
                 {slide.images?.[0]?.url ? (
                   <img
-                    src={slide.images[0].url}
-                    alt={slide.title || ""}
-                    className={`${
-                      (slide?.slideType === "solution" || slide?.slideType === "problem" || slide?.slideType === "goMarket" || slide?.slideType === "market" ||slide?.slideType === "goMarket" || slide?.slideType === "businessModel")
-                        ? "object-contain w-full h-full p-2"
-                        : "object-cover w-full h-full"
-                    }`}
-                  />
+  src={slide.images[0].url}
+  alt={slide.title || ""}
+  className={`${
+    !["cover", "competition", "team", "thinking"].includes(slide?.slideType)
+      ? "object-contain w-full h-full p-2"
+      : "object-cover w-full h-full "
+  }`}
+/>
+
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
                     No Image
