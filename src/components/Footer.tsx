@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
-          <img src={DeckloLogo} alt='Decklo Logo' className='mb-3'/>
+          <img src={DeckloLogo} alt='Decklo Logo' className='mb-3 h-5'/>
             <p className="text-muted-foreground mb-6 leading-relaxed mt-1 max-w-md">
               Empowering African founders to build investor-ready materials with AI. 
               From pitch decks to financial models, we help you tell your story professionally.

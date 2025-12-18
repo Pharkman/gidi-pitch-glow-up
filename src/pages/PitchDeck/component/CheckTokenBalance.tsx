@@ -49,7 +49,7 @@ const CheckTokenBalance = () => {
   } = costData.data;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-500 via-blue-400 to-blue-200
+    <div className="flex items-center justify-center min-h-screen bg-black/40 backdrop-blur-sm 
  px-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}

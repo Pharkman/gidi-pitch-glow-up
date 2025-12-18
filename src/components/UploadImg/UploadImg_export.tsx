@@ -8,7 +8,7 @@ const UploadImgExport = ({ defaultImage, caption, slideType }) => {
           className={`relative overflow-hidden shadow-lg transition-all duration-500 
             ${
               slideType === "team"
-                ? "w-full  h-[700px]" // Team grid style
+                ? "w-full  h-[400px]" // Team grid style
                 : "w-full h-[900px] max-sm:h-[720px]" // Default full slide image
             }
           `}

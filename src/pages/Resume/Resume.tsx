@@ -58,7 +58,7 @@ const Resume = () => {
         {/* Actions */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            href="/"
+            href="/dashboard"
             className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-primary text-white font-semibold shadow-md hover:scale-[1.02] transition-transform"
           >
             Go Home
