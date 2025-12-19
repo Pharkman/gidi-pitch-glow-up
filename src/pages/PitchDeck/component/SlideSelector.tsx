@@ -17,6 +17,7 @@ export default function SlideSelector({
     "goMarket",
     "competitions",
     "market",
+    "thankYou",
   ];
 
   // Auto-select these slides only on first mount

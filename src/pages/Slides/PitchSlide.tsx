@@ -137,6 +137,42 @@ const PitchSlide = () => {
                     );
                   }
 
+                 /** THANK YOU SLIDE */
+if (slide.slideType === "thankYou") {
+  return (
+    <section
+      key={index}
+      id={`slide-${index}`}
+      data-index={index}
+      ref={(el) => (slideRefs.current[index] = el)}
+      className="w-full min-h-[80vh]"
+      style={{
+        backgroundColor: brandKit?.background || "#0F172A",
+      }}
+    >
+      {startupName && (
+          <p
+            className="text-xs uppercase tracking-[0.25em] p-5"
+            style={{ color: slideBulletColor}}
+          >
+            {startupName}
+          </p>
+        )}
+        
+     <div className="flex flex-col items-center justify-center text-center px-6 space-y-8 min-h-[70vh]">
+  <h1
+    className="text-[120px] max-sm:text-3xl font-bold tracking-tight"
+    style={{ color: brandKit?.title || "#FFFFFF" }}
+  >
+    Thank You
+  </h1>
+</div>
+
+    </section>
+  );
+}
+
+
                   /** ICON TEMPLATE SLIDES */
                   if (
                     !NON_ICON_TEMPLATE_SLIDES.includes(
