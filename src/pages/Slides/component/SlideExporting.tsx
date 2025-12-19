@@ -215,6 +215,7 @@ if(slide.slideType === "market") {
             style={{ color: slideBulletColor}}
           >
             {slide.startupName}
+            
           </p>
         )}
         
