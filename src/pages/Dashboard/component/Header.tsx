@@ -120,53 +120,98 @@ const DashboardHeader = ({
 
           {/* USER MENU */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="flex items-center gap-2 p-1.5 hover:bg-gray-50 rounded-full transition-all duration-300"
-              >
-                <Avatar className="h-10 w-10 border border-gray-200">
-                  <AvatarImage src={user_data?.user?.profileImage || ""} />
-                  <AvatarFallback className="bg-primary text-white font-semibold">
-                    {user_data?.user?.firstname && user_data?.user?.lastname
-                      ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
-                      : user_data?.user?.email
-                      ? user_data.user.email.charAt(0).toUpperCase()
-                      : "NA"}
-                  </AvatarFallback>
-                </Avatar>
-                <ChevronDown className="h-5 w-5 text-gray-600" />
-              </Button>
-            </DropdownMenuTrigger>
+  <DropdownMenuTrigger asChild>
+    <Button
+      variant="ghost"
+      className="
+        flex items-center gap-2 p-1.5 rounded-full transition-all duration-300
+        hover:bg-blue-50
+        data-[state=open]:bg-blue-50
+      "
+    >
+      <Avatar className="h-10 w-10 border border-gray-200">
+        <AvatarImage src={user_data?.user?.profileImage || ""} />
+        <AvatarFallback className="bg-primary text-white font-semibold">
+          {user_data?.user?.firstname && user_data?.user?.lastname
+            ? `${user_data.user.firstname.charAt(0)}${user_data.user.lastname.charAt(0)}`.toUpperCase()
+            : user_data?.user?.email
+            ? user_data.user.email.charAt(0).toUpperCase()
+            : "NA"}
+        </AvatarFallback>
+      </Avatar>
 
-            <DropdownMenuContent
-              align="end"
-              className="w-48 rounded-lg shadow-lg border border-gray-100"
-            >
-              <DropdownMenuItem
-                onClick={() => navigate("/settings")}
-                className="hover:bg-gray-50"
-              >
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => navigate("/settings")}
-                className="hover:bg-gray-50"
-              >
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-gray-50" onClick={() => navigate("/help")}>
-                Help
-              </DropdownMenuItem>
-              <Separator />
-              <DropdownMenuItem
-                onClick={handleLogout}
-                className="text-red-600 hover:bg-red-50"
-              >
-                {isLoggingOut ? "Logging out..." : "Sign out"}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <ChevronDown className="h-5 w-5 text-gray-600" />
+    </Button>
+  </DropdownMenuTrigger>
+
+  <DropdownMenuContent
+    align="end"
+    className="w-48 rounded-lg shadow-lg border border-gray-100"
+  >
+    <DropdownMenuItem
+      onClick={() => navigate("/settings")}
+      className="
+       cursor-pointer
+        hover:bg-primary
+        focus:bg-primary
+        data-[highlighted]:bg-primary
+        active:bg-primary
+        focus:text-white
+        data-[highlighted]:text-white
+      "
+    >
+      Profile
+    </DropdownMenuItem>
+
+    <DropdownMenuItem
+      onClick={() => navigate("/settings")}
+      className="
+        cursor-pointer
+        hover:bg-primary
+        focus:bg-primary
+        data-[highlighted]:bg-primary
+        active:bg-primary
+        focus:text-white
+        data-[highlighted]:text-white
+      "
+    >
+      Settings
+    </DropdownMenuItem>
+
+    <DropdownMenuItem
+      onClick={() => navigate("/help")}
+      className="
+        cursor-pointer
+        hover:bg-primary
+        focus:bg-primary
+        data-[highlighted]:bg-primary
+        active:bg-primary
+        focus:text-white
+        data-[highlighted]:text-white
+        hover:mb-2
+      "
+    >
+      Help
+    </DropdownMenuItem>
+
+    <Separator />
+
+    <DropdownMenuItem
+      onClick={handleLogout}
+      className="
+        cursor-pointer
+        hover:text-white
+        hover:bg-red-800
+        focus:bg-red-500
+        data-[highlighted]:bg-red-600
+        hover:mt-3
+      "
+    >
+      {isLoggingOut ? "Logging out..." : "Sign out"}
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+
 
           
         </div>

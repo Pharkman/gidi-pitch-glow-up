@@ -72,7 +72,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                   <Field
                     name="scope"
                     type="text"
-                    placeholder="e.g. PayLink Africa"
+                    placeholder="Specify the regions, countries, or cities where you currently or plan to acquire users."
                     className={`w-full border ${
                       errors.scope && touched.scope
                         ? "border-red-400"
@@ -103,7 +103,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                             <div>
                               <Field
                                 name={`team[${index}].name`}
-                                placeholder="Full Name"
+                                placeholder="Full name of the team member."
                                 className={`w-full border ${
                                   errors.team?.[index]?.name &&
                                   touched.team?.[index]?.name
@@ -122,7 +122,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                             <div>
                               <Field
                                 name={`team[${index}].role`}
-                                placeholder="Role (e.g. Co-founder)"
+                                placeholder="Their primary title and specific areas of responsibility (e.g., Co-founder & Head of Product)"
                                 className={`w-full border ${
                                   errors.team?.[index]?.role &&
                                   touched.team?.[index]?.role
@@ -142,7 +142,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                               <div className="flex items-center gap-2">
                                 <Field
                                   name={`team[${index}].expertise`}
-                                  placeholder="Exp (e.g. CEO)"
+                                  placeholder="Summarize their professional background, notable past achievements, or specific expertise that qualifies them."
                                   className={`w-full border ${
                                     errors.team?.[index]?.expertise &&
                                     touched.team?.[index]?.expertise
@@ -192,7 +192,7 @@ export default function CreatePitchDeckStepThree({ onClose }) {
                     as="textarea"
                     name="moreInfo"
                     rows="3"
-                    placeholder="e.g. Raising $50k to scale across Africa."
+                    placeholder="Provide a comprehensive overview of your startup's journey and future roadmap. Detail your current progress (e.g., MVP completion, current user base, or revenue) alongside your upcoming future milestones and expansion goals. Mention any critical assets like licenses, patents, or strategic partnerships."
                     className="w-full border border-gray-200 rounded-2xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary focus:outline-none shadow-sm transition"
                   />
                 </div>

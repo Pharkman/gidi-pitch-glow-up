@@ -53,7 +53,7 @@ export default function CreatePitchDeckStepTwo({ onClose }) {
                 <Field
                   type="text"
                   name="competitions"
-                  placeholder="e.g. Paystack, Flutterwave, Deel"
+                  placeholder=" List the existing businesses, services, or manual workarounds that your target users currently rely on."
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
               </div>
@@ -67,7 +67,7 @@ export default function CreatePitchDeckStepTwo({ onClose }) {
                   as="textarea"
                   name="problems"
                   rows="3"
-                  placeholder="e.g. African freelancers struggle to get paid on time."
+                  placeholder="Describe the specific pain point, inefficiency, or gap in the market that your startup is dedicated to solving."
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
               </div>
@@ -81,7 +81,7 @@ export default function CreatePitchDeckStepTwo({ onClose }) {
                   as="textarea"
                   name="solutions"
                   rows="3"
-                  placeholder="e.g. A payment platform that automates invoicing and payouts for freelancers."
+                  placeholder="Explain how your product directly addresses the problem described above and improves the user's experience."
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
               </div>

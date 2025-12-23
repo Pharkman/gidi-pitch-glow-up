@@ -97,7 +97,7 @@ const Help = () => {
         >
           Need more help? Contact our support team at{" "}
           <span className="text-primary font-medium cursor-pointer hover:underline">
-            support@decklo.com
+            Decklo.info@gmail.com
           </span>
         </motion.div>
       </div>

@@ -11,6 +11,7 @@ import { LoadingSpinner } from "@/components/Loader";
 import { toast } from "react-toastify";
 import { socialLinks } from "@/components/dummy";
 import FAQ from "@/components/FAQ";
+import DeckloLogo from '../../../public/assets/DecloLogo.png'
 
 
 const Waitlist = () => {
@@ -90,7 +91,7 @@ const Waitlist = () => {
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/">
-                 <img src={GidiLogo} alt="" className="w-[86%]"/>
+                 <img src={DeckloLogo} alt="" className="w-[73%]"/>
               </Link>
             </div>
 
@@ -130,9 +131,9 @@ const Waitlist = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-b from-[#FFFCFB] to-[#FFDCCF] px-4 pt-4 md:rounded-md">
+      <div className="bg-gradient-to-b from-[#F0F7FF] px-4 pt-4 to-[#85BEFC] md:rounded-md">
         {/* Badge */}
-        <p className="inline-block rounded-full px-4 py-1 font-medium text-[#FF5619] text-[14px] mb-3 bg-[#FFF1EC] max-sm:mt-2">
+        <p className="inline-block rounded-full px-4 py-1 font-medium text-primary text-[14px] mb-3 bg-[#E2F6FF]  max-sm:mt-2">
           Built for African Entrepreneurs
         </p>
 
@@ -170,7 +171,7 @@ const Waitlist = () => {
     placeholder="Enter email address"
     className="w-full md:flex-1 rounded-l-lg border-none outline-none px-4 py-3 max-sm:rounded-lg placeholder:text-[15px]"
   />
-  <button className="w-full md:w-auto rounded-r-lg bg-[#FF5619] text-white font-semibold px-6 py-3 transition-all duration-300 hover:bg-[#e14e18] max-sm:rounded-lg text-sm"
+  <button className="w-full md:w-auto rounded-r-lg bg-primary text-white font-semibold px-6 py-3 transition-all duration-300 hover:bg-primary max-sm:rounded-lg text-sm"
   onClick={handleJoinWaitlist}
   >
     {isPending ? <LoadingSpinner /> : "Join Waitlist"}

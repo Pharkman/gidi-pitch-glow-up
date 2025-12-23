@@ -64,7 +64,8 @@ export default function CreatePitchDeckStepFour({ onClose }) {
                 <Field
                   name="brandColor"
                   type="text"
-                  placeholder="e.g. Blue, Red"
+                  placeholder="Input your primary brand hex code (e.g., #3083DC) or describe the color palette for your slides.
+"
                   className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-primary focus:outline-none"
                 />
               </div>
@@ -76,7 +77,7 @@ export default function CreatePitchDeckStepFour({ onClose }) {
                   as="textarea"
                   name="businessModel"
                   type="text"
-                  placeholder="e.g. Subscription, Marketplace"
+                  placeholder="Describe your revenue streams, pricing strategy, and how you intend to generate profit from your market."
                   className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-primary focus:outline-none"
                 />
               </div>
