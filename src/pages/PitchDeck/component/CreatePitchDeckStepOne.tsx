@@ -79,7 +79,8 @@ export default function CreatePitchDeckStepOne({ onClose }) {
                 <Field
                   name="startupName"
                   type="text"
-                  placeholder="e.g. PayLink Africa"
+                  placeholder="Enter the full brand name of your venture as you want it to appear on the cover.
+"
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
                 <ErrorMessage
@@ -136,7 +137,7 @@ export default function CreatePitchDeckStepOne({ onClose }) {
                   as="textarea"
                   name="features"
                   rows="3"
-                  placeholder="e.g. We help small businesses accept cross-border payments in seconds."
+                  placeholder="Detail the core functionalities and unique technical capabilities that make your product stand out."
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm placeholder-gray-400 resize-none focus:ring-2 focus:ring-primary focus:outline-none shadow-sm"
                 />
                 <ErrorMessage
