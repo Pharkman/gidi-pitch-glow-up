@@ -56,12 +56,12 @@ React.useEffect(() => {
             id="email"
             type="text"
             defaultValue={user?.email}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
 
         <div className="text-right">
-          <button disabled className="bg-[#FF7442] hover:bg-[#FF5619] text-white font-medium rounded-md px-5 py-2 transition">
+          <button disabled className="bg-primary text-white font-medium rounded-md px-5 py-2 transition">
             Save
           </button>
         </div>

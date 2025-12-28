@@ -63,7 +63,7 @@ export default function ChangeNameModal() {
             type="text"
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
             placeholder="Enter your first name"
           />
         </div>
@@ -81,7 +81,7 @@ export default function ChangeNameModal() {
             type="text"
             value={lastname}
             onChange={(e) => setLastname(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
             placeholder="Enter your last name"
           />
         </div>
@@ -91,7 +91,7 @@ export default function ChangeNameModal() {
           <button
             onClick={handleSubmit}
             disabled={isPending}
-            className={`bg-gradient-to-r from-[#FF7442] to-[#FF5619] text-white font-medium rounded-md px-6 py-2 transition-all duration-200 shadow-sm ${
+            className={`bg-primary text-white font-medium rounded-md px-6 py-2 transition-all duration-200 shadow-sm ${
               isPending
                 ? "opacity-70 cursor-not-allowed"
                 : "hover:shadow-md hover:scale-[1.02]"

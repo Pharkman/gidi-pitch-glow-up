@@ -65,7 +65,7 @@ export default function ChangePasswordModal() {
             type="password"
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Enter current password"
           />
         </div>
@@ -79,7 +79,7 @@ export default function ChangePasswordModal() {
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Enter new password"
           />
         </div>
@@ -88,7 +88,7 @@ export default function ChangePasswordModal() {
           <button
             onClick={handleSubmit}
             disabled={isPending}
-            className={`bg-[#FF7442] hover:bg-[#FF5619] text-white font-medium rounded-md px-5 py-2 transition ${
+            className={`bg-primary text-white font-medium rounded-md px-5 py-2 transition ${
               isPending ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >

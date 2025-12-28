@@ -304,7 +304,7 @@ const DeckProgress = ({ onComplete }: { onComplete: () => void }) => {
               initial={{ scale: 0.7 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 160, damping: 10 }}
-              className="relative w-28 h-28 flex items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.45)]"
+              className="relative w-28 h-28 flex items-center justify-center rounded-full bg-primary shadow-[0_0_30px_hsl(var(--primary)/0.45)]"
             >
               <motion.span className="text-white text-5xl font-bold">✓</motion.span>
             </motion.div>

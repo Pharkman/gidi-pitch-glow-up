@@ -16,16 +16,25 @@ export default function MessageInputBox({ onSend }) {
     textareaRef.current?.focus();
   }, []);
 
+  // Handle Enter key submit
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault(); // prevent new line
+      handleSend();
+    }
+  };
+
   return (
-    <div className="flex items-center justify-between w-full bg-white shadow-lg px-4 py-3 border border-gray-200 ">
+    <div className="flex items-center justify-between w-full bg-white shadow-lg px-4 py-3 border border-gray-200">
       {/* Editable textarea */}
       <textarea
         ref={textareaRef}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Describe your startup, who it’s for, and your goal..."
         rows={2}
-        className="flex-1 resize-none outline-none border-none text-sm text-gray-800 placeholder-gray-400 px-3 py-2  bg-gray-50 shadow-inner focus:ring-2 focus:ring-primary transition-all duration-200"
+        className="flex-1 resize-none outline-none border-none text-sm text-gray-800 placeholder-gray-400 px-3 py-2 bg-gray-50 shadow-inner focus:ring-2 focus:ring-primary transition-all duration-200"
       />
 
       {/* Icons section */}
@@ -36,7 +45,9 @@ export default function MessageInputBox({ onSend }) {
           className="flex items-center justify-center w-10 h-10 rounded-full bg-primary"
         >
           <ArrowUp
-            className={`w-5 h-5 text-white ${message.trim() ? "opacity-100" : "opacity-50"}`}
+            className={`w-5 h-5 text-white ${
+              message.trim() ? "opacity-100" : "opacity-50"
+            }`}
           />
         </button>
       </div>
