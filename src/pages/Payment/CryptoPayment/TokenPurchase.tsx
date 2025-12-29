@@ -1,12 +1,36 @@
 import { useState, useEffect } from "react";
-import { privateKeyToAccount } from "viem/accounts";
+import { ethers } from "ethers";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 import { useNavigate } from "react-router-dom";
-import { x402Client, wrapFetchWithPayment } from "@x402/fetch";
-import { registerExactEvmScheme } from "@x402/evm/exact/client";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+// 🌐 Network Configuration - Easy switch between testnet and mainnet
+const NETWORK_CONFIG = {
+  testnet: {
+    chainId: "0x14a34", // 84532 in hex
+    chainIdDecimal: 84532,
+    chainName: "Base Sepolia",
+    rpcUrl: "https://sepolia.base.org",
+    blockExplorer: "https://sepolia.basescan.org",
+    usdcAddress: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    networkName: "base-sepolia",
+  },
+  mainnet: {
+    chainId: "0x2105", // 8453 in hex
+    chainIdDecimal: 8453,
+    chainName: "Base",
+    rpcUrl: "https://mainnet.base.org",
+    blockExplorer: "https://basescan.org",
+    usdcAddress: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    networkName: "base",
+  },
+};
+
+// 🔧 Switch this to 'mainnet' when going live
+const ACTIVE_NETWORK = import.meta.env.VITE_NETWORK || "testnet";
+const NETWORK = NETWORK_CONFIG[ACTIVE_NETWORK];
 
 export default function TokenPurchase({ onPurchaseSuccess }) {
   const tokenToBuy = Number(localStorage.getItem("pendingTokenPurchase")) || 20;
@@ -25,23 +49,45 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
   const { width, height } = useWindowSize();
   const navigate = useNavigate();
 
-  // x402 client - will be initialized after wallet connection
-  const [fetchWithPayment, setFetchWithPayment] = useState(null);
-
-  // Update cost dynamically whenever quantity changes
   useEffect(() => {
     setTotalCost(tokenQuantity * 0.015);
   }, [tokenQuantity]);
 
-  /**
-   * FIXED: Connect wallet and initialize x402 client properly
-   *
-   * Key Changes:
-   * 1. Get the signer/account from MetaMask
-   * 2. Create x402Client instance
-   * 3. Register the EVM payment scheme
-   * 4. Create the fetchWithPayment wrapper
-   */
+  const switchToBaseNetwork = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: NETWORK.chainId }],
+      });
+    } catch (switchError) {
+      // Chain not added, let's add it
+      if (switchError.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: NETWORK.chainId,
+                chainName: NETWORK.chainName,
+                nativeCurrency: {
+                  name: "ETH",
+                  symbol: "ETH",
+                  decimals: 18,
+                },
+                rpcUrls: [NETWORK.rpcUrl],
+                blockExplorerUrls: [NETWORK.blockExplorer],
+              },
+            ],
+          });
+        } catch (addError) {
+          throw new Error(`Failed to add ${NETWORK.chainName} network`);
+        }
+      } else {
+        throw switchError;
+      }
+    }
+  };
+
   const connectWallet = async () => {
     setIsConnecting(true);
     setError("");
@@ -53,46 +99,17 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
         return;
       }
 
-      // Request account access
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
      
-      const address = accounts[0];
+      // Switch to correct Base network
+      await switchToBaseNetwork();
+     
+      const signer = provider.getSigner();
+      const address = await signer.getAddress();
+
       setWalletAddress(address);
-
-      // CRITICAL: Initialize x402 client with the wallet
-      // This is what the junior engineer missed entirely!
-      const client = new x402Client();
-     
-      // Create a signer that works with viem
-      // MetaMask provides the signing capability
-      const signer = {
-        address: address,
-        // viem-compatible sign function that uses MetaMask
-        signMessage: async ({ message }) => {
-          return await window.ethereum.request({
-            method: "personal_sign",
-            params: [message, address],
-          });
-        },
-        // For typed data signing (ERC-3009 requires this)
-        signTypedData: async (typedData) => {
-          return await window.ethereum.request({
-            method: "eth_signTypedData_v4",
-            params: [address, JSON.stringify(typedData)],
-          });
-        },
-      };
-
-      // Register the EVM payment scheme (for Base Sepolia or mainnet)
-      registerExactEvmScheme(client, { signer });
-
-      // Create the payment-enabled fetch wrapper
-      const paymentFetch = wrapFetchWithPayment(fetch, client);
-      setFetchWithPayment(() => paymentFetch);
-
-      setStatus("Wallet connected and x402 client initialized!");
+      setStatus(`Wallet connected to ${NETWORK.chainName}!`);
     } catch (err) {
       setError("Failed to connect wallet: " + err.message);
     } finally {
@@ -100,109 +117,138 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
     }
   };
 
-  /**
-   * FIXED: Purchase tokens using x402 protocol
-   *
-   * Key Changes:
-   * 1. Use fetchWithPayment instead of regular fetch
-   * 2. Remove manual payment transaction handling
-   * 3. Let x402 handle the 402 response automatically
-   * 4. Payment signature is added automatically by x402
-   */
   const purchaseTokens = async () => {
-    if (!fetchWithPayment) {
-      setError("x402 client not initialized. Please reconnect your wallet.");
-      return;
-    }
-
     setIsPurchasing(true);
     setError("");
     setStatus("Initiating purchase...");
 
     try {
-      setStatus("Processing payment via x402...");
-     
-      // CRITICAL: Use fetchWithPayment instead of regular fetch
-      // This automatically handles:
-      // 1. Initial request
-      // 2. Receiving 402 Payment Required
-      // 3. Creating payment authorization (ERC-3009 signature)
-      // 4. Retrying with X-PAYMENT header
-      const response = await fetchWithPayment(
-        `${BASE_URL}/tokens/purchase/crypto`,
-        {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      // Ensure we're on correct Base network
+      const network = await provider.getNetwork();
+      if (network.chainId !== NETWORK.chainIdDecimal) {
+        setStatus(`Switching to ${NETWORK.chainName}...`);
+        await switchToBaseNetwork();
+      }
+
+      setStatus("Requesting payment details...");
+      const response = await fetch(`${BASE_URL}/tokens/purchase/crypto`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          amount: Number(totalCost.toFixed(2)),
+          walletAddress,
+        }),
+      });
+
+      if (response.status === 402) {
+        const paymentRequired = await response.json();
+        console.log("Payment required:", paymentRequired);
+
+        // Extract payment details from X402 v1 response
+        const paymentDetails = paymentRequired.accepts[0];
+        const recipient = paymentDetails.payTo;
+        const amountInUSDC = paymentDetails.maxAmountRequired; // Already in USDC base units (6 decimals)
+        const usdcContract = paymentDetails.asset;
+
+        setStatus("Please approve USDC transfer in your wallet...");
+
+        // ERC20 Transfer ABI
+        const erc20ABI = [
+          "function transfer(address to, uint256 amount) returns (bool)",
+        ];
+
+        const usdcContractInstance = new ethers.Contract(
+          usdcContract,
+          erc20ABI,
+          signer
+        );
+
+        // Send USDC transfer
+        const tx = await usdcContractInstance.transfer(recipient, amountInUSDC);
+
+        setStatus("Payment sent. Waiting for confirmation...");
+        const receipt = await tx.wait();
+
+        setStatus("Payment confirmed! Verifying with backend...");
+
+        // Create payment proof for X402 v1
+        const paymentProof = {
+          scheme: "exact",
+          network: NETWORK.networkName, // Use dynamic network name
+          transactionHash: receipt.transactionHash,
+          from: walletAddress,
+          to: recipient,
+          amount: amountInUSDC,
+          asset: usdcContract,
+          blockNumber: receipt.blockNumber,
+        };
+
+        // Retry request with X-PAYMENT header
+        const finalResponse = await fetch(`${BASE_URL}/tokens/purchase/crypto`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "X-PAYMENT": JSON.stringify(paymentProof),
+          },
           body: JSON.stringify({
             amount: Number(totalCost.toFixed(2)),
-            tokenQuantity: tokenQuantity,
             walletAddress,
           }),
+        });
+
+        if (!finalResponse.ok) {
+          const errorData = await finalResponse.json();
+          throw new Error(errorData.message || "Payment verification failed");
         }
-      );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Purchase failed");
-      }
+        const result = await finalResponse.json();
+        setStatus("Purchase successful! ✅");
 
-      const result = await response.json();
-     
-      // OPTIONAL: Extract payment settlement details from response headers
-      // The server may include X-PAYMENT-RESPONSE header with transaction details
-      const paymentResponseHeader = response.headers.get("X-PAYMENT-RESPONSE");
-      if (paymentResponseHeader) {
-        try {
-          const paymentDetails = JSON.parse(
-            atob(paymentResponseHeader) // Base64 decode
+        if (onPurchaseSuccess) onPurchaseSuccess(result);
+
+        setShowConfetti(true);
+        const redirectTarget = localStorage.getItem("redirectAfterPurchase");
+
+        setTimeout(() => {
+          setShowConfetti(false);
+          localStorage.removeItem("redirectAfterPurchase");
+          navigate(
+            redirectTarget === "check-balance"
+              ? "/check-token-balance"
+              : "/dashboard",
+            { replace: true }
           );
-          console.log("Payment settled on blockchain:", paymentDetails);
-          // You can show the transaction hash to the user
-          if (paymentDetails.txHash) {
-            setStatus(`Payment successful! Tx: ${paymentDetails.txHash.slice(0, 10)}...`);
-          }
-        } catch (e) {
-          console.warn("Could not parse payment response:", e);
-        }
-      }
+        }, 3500);
+      } else if (response.ok) {
+        const result = await response.json();
+        setStatus("Purchase successful! ✅");
+        if (onPurchaseSuccess) onPurchaseSuccess(result);
 
-      setStatus("Purchase successful! ✅");
-     
-      if (onPurchaseSuccess) onPurchaseSuccess(result);
-     
-      setShowConfetti(true);
-      const redirectTarget = localStorage.getItem("redirectAfterPurchase");
-     
-      setTimeout(() => {
-        setShowConfetti(false);
-        localStorage.removeItem("redirectAfterPurchase");
-        localStorage.removeItem("pendingTokenPurchase");
-        navigate(
-          redirectTarget === "check-balance"
-            ? "/check-token-balance"
-            : "/dashboard",
-          { replace: true }
-        );
-      }, 3500);
+        setShowConfetti(true);
+        const redirectTarget = localStorage.getItem("redirectAfterPurchase");
 
-    } catch (err) {
-      console.error("Purchase error:", err);
-     
-      // Handle specific x402 errors
-      if (err.message.includes("No scheme registered")) {
-        setError("Payment method not supported for this network");
-      } else if (err.message.includes("Payment already attempted")) {
-        setError("Payment failed. Please try again.");
-      } else if (err.message.includes("Insufficient funds")) {
-        setError("Insufficient USDC balance in your wallet");
-      } else if (err.message.includes("User rejected")) {
-        setError("Payment signature rejected. Please try again.");
+        setTimeout(() => {
+          setShowConfetti(false);
+          localStorage.removeItem("redirectAfterPurchase");
+          navigate(
+            redirectTarget === "check-balance"
+              ? "/check-token-balance"
+              : "/dashboard",
+            { replace: true }
+          );
+        }, 3500);
       } else {
-        setError("Purchase failed: " + err.message);
+        throw new Error("Purchase failed");
       }
-     
+    } catch (err) {
+      setError("Purchase failed: " + err.message);
       setStatus("");
+      console.error("Purchase error:", err);
     } finally {
       setIsPurchasing(false);
     }
@@ -220,22 +266,10 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
     }
   };
 
-  const disconnectWallet = () => {
-    setWalletAddress(null);
-    setFetchWithPayment(null);
-    setStatus("");
-    setError("");
-  };
-
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4 relative overflow-hidden">
       {showConfetti && (
-        <Confetti
-          width={width}
-          height={height}
-          numberOfPieces={400}
-          recycle={false}
-        />
+        <Confetti width={width} height={height} numberOfPieces={400} recycle={false} />
       )}
 
       <div className="max-w-2xl w-full bg-white/90 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl p-8 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.05)] relative z-10">
@@ -246,19 +280,20 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
           Get tokens to access premium pitch deck generation features.
         </p>
 
+        {/* Show network indicator */}
+        <div className="mb-4 text-center">
+          <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+            ACTIVE_NETWORK === 'testnet'
+              ? 'bg-yellow-100 text-yellow-800'
+              : 'bg-green-100 text-green-800'
+          }`}>
+            {NETWORK.chainName} {ACTIVE_NETWORK === 'testnet' ? '(Testnet)' : ''}
+          </span>
+        </div>
+
         {!walletAddress ? (
           <div className="space-y-5">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-              <p className="text-sm text-blue-800">
-                <strong>Using x402 Protocol:</strong> Pay directly with USDC on Base network.
-                No gas fees, instant settlement.
-              </p>
-            </div>
-           
-            <p className="text-gray-600 text-sm">
-              Connect your wallet to begin. Make sure you have USDC on Base network.
-            </p>
-           
+            <p className="text-gray-600 text-sm">Connect your wallet to begin.</p>
             <button
               onClick={connectWallet}
               disabled={isConnecting}
@@ -266,9 +301,9 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
             >
               {isConnecting ? "Connecting..." : "Connect Wallet"}
             </button>
-           
             <p className="text-xs text-center text-gray-500">
               Don't have a wallet?{" "}
+              {/* ✅ FIXED: Added missing opening anchor tag */}
               <a
                 href="https://metamask.io"
                 target="_blank"
@@ -303,35 +338,27 @@ export default function TokenPurchase({ onPurchaseSuccess }) {
               {validationMsg && (
                 <p className="text-sm text-red-600">{validationMsg}</p>
               )}
-              
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                <p className="text-sm text-gray-600">
-                  Token Cost: <span className="font-semibold">${totalCost.toFixed(2)} USDC</span>
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Payment processed via x402 protocol on Base network
-                </p>
-              </div>
+
+              <p className="text-sm text-gray-600">
+                Total Cost:{" "}
+                <span className="font-semibold text-gray-900">
+                  ${totalCost.toFixed(2)} USDC
+                </span>
+              </p>
 
               <button
                 onClick={purchaseTokens}
-                disabled={isPurchasing || !fetchWithPayment}
+                disabled={isPurchasing}
                 className="w-full bg-primary text-white py-3 px-4 rounded-xl font-semibold hover:opacity-90 disabled:opacity-50 transition"
               >
                 {isPurchasing
-                  ? "Processing Payment..."
+                  ? "Processing..."
                   : `Purchase ${tokenQuantity} Tokens for $${totalCost.toFixed(2)}`}
               </button>
-             
-              {isPurchasing && (
-                <p className="text-xs text-center text-gray-600">
-                  Please approve the signature request in MetaMask...
-                </p>
-              )}
             </div>
 
             <button
-              onClick={disconnectWallet}
+              onClick={() => setWalletAddress(null)}
               className="w-full text-sm text-gray-500 hover:text-gray-700 transition"
             >
               Disconnect Wallet
